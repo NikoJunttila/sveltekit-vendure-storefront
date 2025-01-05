@@ -54,8 +54,17 @@
 	const addToCart = async (variantId: string): Promise<void> => {
 		processing = true
 		const result = await client.mutation(AddItemToOrder, { variantId: variantId, quantity: 1 }, { additionalTypenames: ['ActiveOrder'] }).toPromise()
-		if (result.error) toast.error('Error adding item to cart')
-		else if (result.data) toast.success('Item added to cart')
+		switch(result?.data?.addItemToOrder?.__typename) {
+			case 'InsufficientStockError':
+				toast.error('Insufficient stock')
+				break
+			case 'Order':
+				toast.success('Item added to cart')
+				break
+			default:
+				toast.error('Error adding item to cart')
+				break
+		}
 		processing = false
 	}
 

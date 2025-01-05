@@ -53,7 +53,7 @@
 {#if naked}
 	{@render children?.()}
 {:else}
-	<Toaster theme={'light'} position="top-right" />
+	<Toaster theme={'light'} position="top-center" />
 	<NavBar {collections} />
 	<div class="relative">{@render children?.()}</div>
 	<Footer />
