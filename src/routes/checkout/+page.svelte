@@ -28,6 +28,7 @@
 	import Image from '$lib/components/Image.svelte';
 	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_SITE_NAME } from '$env/static/public';
 	import CheckoutForm from '$lib/components/CheckoutForm.svelte';
+	import * as m from '$lib/paraglide/messages.js';
 
 	let { data } = $props();
 
@@ -200,11 +201,11 @@
 />
 <div class="h-full min-h-screen w-full bg-[#f1f1f1]">
 	{#if loaded && !order?.lines}
-		<p>Your cart is empty.</p>
+		<p>{m.cart_empty()}</p>
 	{:else if loaded && order?.lines && order?.lines.length > 0}
 		<div class="mx-auto max-w-screen-2xl p-4 pt-6 md:flex md:justify-between">
 			<div class="flex">
-				<h1 class="sr-only">Checkout</h1>
+				<h1 class="sr-only">{m.checkout()}</h1>
 				<a href="/" class="mx-auto"
 					><img src="/logo.png" class="h-10 w-auto sm:m-0 md:h-12" alt={PUBLIC_SITE_NAME} /></a
 				>
@@ -228,7 +229,7 @@
 							/></svg
 						>
 					</div>
-					<span class="text-sm text-gray-400">SAFE AND SECURE CHECKOUT 128-bit SSL encryption</span>
+					<span class="text-sm text-gray-400">{m.safe_checkout()} {m.ssl_encryption()}</span>
 				</div>
 			</div>
 		</div>
@@ -241,38 +242,34 @@
 				<div class="col-span-1 rounded-md">
 					<section id="cart-items" class="rounded-t-md border border-gray-300 bg-white p-2">
 						<ul role="list" class="flex-auto">
-							{#each lines as line}
-								<li class="flex space-x-6 py-6">
-									<Image
-										preview={line.featuredAsset?.preview}
-										alt={line.productVariant.name}
-										preset="thumb"
-										class="object-fit h-16 w-28 flex-none rounded-md bg-gray-200 object-center"
-									/>
-									<div class="my-auto flex w-full justify-between space-y-4">
+							{#if order?.lines}
+								{#each order.lines as line}
+								<li class="flex space-x-6 py-6 border-b border-gray-200">
+									<Image preview={line.featuredAsset?.preview} alt={line.productVariant.name} preset="thumb" class="h-28 w-auto flex-none rounded-md bg-gray-200 object-cover object-center" />
+									<div class="flex flex-col justify-between space-y-4 my-auto">
 										<div class="space-y-1 text-sm font-medium">
-											<h3 class="text-gray-900">{line.productVariant.product.name}</h3>
-											<select
-												name="quantity"
-												class="rounded-lg border-gray-300 bg-gray-200 text-sm font-medium text-black focus:border-none focus:ring-gray-300"
-												onchange={async (e) => adjustOrderLine(line.id, e)}
-											>
-												<option value="1" selected={1 === line.quantity} class="text-sm text-black"
-													>Qty: 1</option
+											<h3 class="text-gray-900">{line.productVariant.name}</h3>
+											<p class="text-gray-900">facets</p>
+											<p class="text-gray-500">Price: {formatCurrency(line.unitPrice, PUBLIC_DEFAULT_CURRENCY)}</p>
+											<div class="flex items-center space-x-2">
+												<p class="text-gray-500">{m.quantity({ count: line.quantity })}</p>
+												<select 
+													name="quantity" 
+													class="text-sm font-medium rounded-lg focus:ring-gray-700 focus:border-none text-black" 
+													onchange="{async(e) => adjustOrderLine(line.id, e)}"
 												>
-												<option value="2" selected={2 === line.quantity} class="text-sm text-black"
-													>Qty: 2</option
-												>
-											</select>
-										</div>
-										<div class="ml-auto flex space-x-4">
-											<p class="p-2 text-xl">
-												{formatCurrency(line.linePrice, PUBLIC_DEFAULT_CURRENCY)}
-											</p>
+													{#each Array.from({length: 20}, (_, i) => i + 1) as qty}
+														<option value={qty} selected={qty === line.quantity} class="text-sm text-black">
+															{qty}
+														</option>
+													{/each}
+												</select>
+											</div>
 										</div>
 									</div>
 								</li>
-							{/each}
+								{/each}
+							{/if}
 						</ul>
 					</section>
 
@@ -285,7 +282,7 @@
 						{/each}
 					</select> -->
 						<div role="radiogroup">
-							<p class="label">Delivery methods</p>
+							<p class="label">{m.delivery_methods()}</p>
 							{#each useFragment(ShippingMethodQuote, shippingOptions) as shippingOption}
 								<div class="my-1 ml-1">
 									<label class="text-sm text-gray-500">
@@ -309,7 +306,7 @@
 
 					<section id="discount-code" class="border-x border-b border-gray-300 bg-white px-3 py-6">
 						<button type="button" onclick={toggleDiscountForm} class="underline"
-							>Have a discount coupon?</button
+							>{m.discount_coupon()}</button
 						>
 						<div id="discount-form" class="hidden py-2">
 							<div class="flex space-x-4">
@@ -317,13 +314,13 @@
 									type="text"
 									id="discount-code"
 									name="discount-code"
-									placeholder="Enter code"
+									placeholder={m.enter_code()}
 									class="input"
 								/>
 								<button
 									type="submit"
 									class="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#c7b598] to-[#dac8a6] px-10 py-4 text-lg font-semibold tracking-wide text-white transition duration-200 hover:text-gray-900"
-									>Redeem</button
+									>{m.redeem()}</button
 								>
 							</div>
 						</div>
@@ -352,7 +349,7 @@
 									{/each}
 								{/if}
 								<div class="flex justify-between">
-									<dt>Subtotal:</dt>
+									<dt>{m.subtotal()}</dt>
 									<dd class="text-gray-900">
 										{formatCurrency(order.subTotal, PUBLIC_DEFAULT_CURRENCY)}
 									</dd>
@@ -383,7 +380,7 @@
 							<p
 								class="my-6 flex items-center justify-between border-t border-gray-200 py-2 text-sm font-medium text-gray-900"
 							>
-								<span class="text-lg">Total</span>
+								<span class="text-lg">{m.total()}</span>
 								<span class="text-2xl"
 									>{formatCurrency(order.totalWithTax, PUBLIC_DEFAULT_CURRENCY)}</span
 								>
@@ -434,7 +431,7 @@
 							{disabled}
 							onclick={sendPayment}
 						>
-							Place order
+							{m.place_order()}
 						</button>
 					</div>
 				</div>

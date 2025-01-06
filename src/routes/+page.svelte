@@ -24,7 +24,7 @@
 			<p class="hidden md:block text-gray-900 max-w-[400px] text-lg mx-1 mt-6">
 				{m.hero_description()}
 			</p>
-			<button type="button" onclick={async () => await goto(`/collection/${collections[1].slug}`)} class="inline-block my-4 py-4 px-10 text-lg font-semibold whitespace-nowrap tracking-wide text-white bg-gradient-to-r from-lime-800 to-lime-700 hover:text-gray-900 rounded-lg transition duration-200">
+			<button type="button" onclick={async () => await goto(`/categories`)} class="inline-block my-4 py-4 px-10 text-lg font-semibold whitespace-nowrap tracking-wide text-white bg-gradient-to-r from-lime-800 to-lime-700 hover:text-gray-900 rounded-lg transition duration-200">
 				{m.shop_now()} →
 			</button>
 		</header>

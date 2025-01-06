@@ -4,6 +4,7 @@
 	import { ActiveOrder } from '$lib/vendure'
 	import { formatCurrency } from '$lib/utils'
 	import Image from '$lib/components/Image.svelte'
+	import * as m from '$lib/paraglide/messages.js'
 
 	interface Props {
 		currency: string;
@@ -17,7 +18,7 @@
 </script>
 {#if order}
 <section class="flex-col w-fullp-6 overflow-auto">
-	<h2 id="summary-heading" class="sr-only">Order summary</h2>
+	<h2 id="summary-heading" class="sr-only">{m.shopping_cart()}</h2>
 	<div class="mx-auto max-w-lg">
 			<ul role="list" class="flex-auto">
 				{#each lines as line}
@@ -38,14 +39,14 @@
 
 			<dl class="py-6 space-y-6 text-sm font-medium text-gray-500">
 				<div class="flex justify-between">
-					<dt>Subtotal</dt>
+					<dt>{m.subtotal()}</dt>
 					<dd class="text-gray-900">{formatCurrency(order.subTotal, currency)}</dd>
 				</div>
 				{#if order.discounts.length > 0}
 					{#each order.discounts as discount}
 						<div class="flex justify-between">
 							<dt class="flex">
-								Discount
+								{m.discount()}
 								<span class="ml-2 rounded-full bg-gray-200 px-2 py-0.5 text-xs tracking-wide text-gray-600">{discount.description}</span>
 							</dt>
 							<dd class="text-gray-900">{formatCurrency(discount.amountWithTax, currency)}</dd>
@@ -73,7 +74,7 @@
 			</dl>
 			
 			<p class="py-6 flex items-center justify-between border-t border-gray-200 text-sm font-medium text-gray-900">
-				<span class="text-base">Total</span>
+				<span class="text-base">{m.total()}</span>
 				<span class="text-base">{formatCurrency(order.totalWithTax, currency)}</span>
 			</p>
 	</div>

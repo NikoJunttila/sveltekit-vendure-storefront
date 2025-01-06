@@ -3,16 +3,21 @@
 	import { getContextClient, queryStore } from '@urql/svelte'
 	import { useFragment } from '$lib/gql'
 	import { type CollectionFragment, type SearchResultFragment } from '$lib/gql/graphql'
-	import { Collection, GetCollection, SearchResult } from '$lib/vendure'
+	import { Collection, GetCollection, SearchResult, GetCollections } from '$lib/vendure'
 	import Image from '$lib/components/Image.svelte'
-
+	import * as m from '$lib/paraglide/messages.js'
+	import CollectionComponent from '$lib/components/Collection.svelte'
 	let { data } = $props()
 
 	// this will load the data in prerendering and initial site load
 	let collection: CollectionFragment | null | undefined = $state(useFragment(Collection, data.collection))
 	let products: SearchResultFragment[] = $state(useFragment(SearchResult, data.products) || [])
+	let collections: CollectionFragment[] = $state(useFragment(Collection, data.collections) || [])
 
+	const collectionsQuery = $derived(queryStore({ client: getContextClient(), query: GetCollections, variables: {} }))
+	const filteredCollections = $derived(collections.filter(collection => collection.parent?.slug === page.params.slug))
 	// this will load the data in client side navigation
+	
 	const collectionQuery = $derived(queryStore({ client: getContextClient(), query: GetCollection, variables: { slug: page.params.slug } }))
 	$effect(() => {
 		if ($collectionQuery?.data?.collection) {
@@ -20,6 +25,9 @@
 		}
 		if ($collectionQuery?.data?.search?.items) {
 			products = useFragment(SearchResult, $collectionQuery.data.search.items)
+		}
+		if ($collectionsQuery?.data?.collections?.items) {
+			collections = useFragment(Collection, $collectionsQuery.data.collections.items)
 		}
 	})
 </script>
@@ -32,8 +40,13 @@
 			<h1 class="text-2xl sm:text-4xl font-bold text-white">{collection.name}</h1>
 		</div>
 	</section>
+		<div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{#each filteredCollections as collection, i}
+				<CollectionComponent {collection} index={i} />
+			{/each}
+		</div>
 	<div class="mx-auto max-w-screen-2xl">
-		<h2 id="products-heading" class="sr-only">Products</h2>
+		<h2 id="products-heading" class="sr-only">{m.products_heading()}</h2>
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 gap-y-16 gap-x-6 my-8">
 			{#each products as { slug, productName, productAsset }}
 				<a href="/product/{slug}" class="group">
@@ -46,7 +59,7 @@
 					</div>
 				</a>
 			{:else}
-				<p>No products found</p>
+				<p>{m.no_products_found()}</p>
 			{/each}
 		</div>
 	</div>

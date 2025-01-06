@@ -5,6 +5,7 @@
 	import { SearchResult, SearchProducts } from '$lib/vendure'
 	import MetaTags from '$lib/components/Meta.svelte'
 	import SearchHit from '$lib/components/SearchHit.svelte'
+	import * as m from '$lib/paraglide/messages.js'
 
 	const q = queryParam('q')
 	let hits: any = $state([])
@@ -24,18 +25,18 @@
 	}
 </script>
 <MetaTags config={{
-	title: "Search"
+	title: m.search()
  }} />
 <div class="max-w-screen-2xl mx-auto my-8 px-6 md:px-8">
-		<label for="q" class="sr-only">Search</label>
-		<input type="search" bind:value={$q} class="w-full block py-3 px-4 text-sm border border-gray-200 rounded-lg text-gray-700 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500" aria-label="Search" />
+		<label for="q" class="sr-only">{m.search()}</label>
+		<input type="search" bind:value={$q} class="w-full block py-3 px-4 text-sm border border-gray-200 rounded-lg text-gray-700 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500" aria-label={m.search()} placeholder={m.search_placeholder()} />
 	{#each hits as hit}
 		<SearchHit {hit} on:click={handleClick} />
 	{:else}
 		{#if $q}
-			<p>No results found.</p>
+			<p>{m.no_results()}</p>
 		{:else}
-			<p>Enter a search term.</p>
+			<p>{m.enter_search()}</p>
 		{/if}
 	{/each}
 </div>

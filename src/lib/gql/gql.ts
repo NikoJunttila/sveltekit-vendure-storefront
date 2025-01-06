@@ -14,9 +14,9 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
-    "\n\tfragment Collection on Collection {\n\t\tid\n\t\tname\n\t\tslug\n\t\tdescription\n\t\tfeaturedAsset {\n\t\t\tid\n\t\t\tpreview\n\t\t}\n\t}\n": types.CollectionFragmentDoc,
+    "\n\tfragment Collection on Collection {\n\t\tid\n\t\tname\n\t\tslug\n\t\tdescription\n\t\tparent {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t}\n\t\tfeaturedAsset {\n\t\t\tid\n\t\t\tpreview\n\t\t}\n\t}\n": types.CollectionFragmentDoc,
     "\n\tquery GetCollection($slug: String!, $skip: Int, $take: Int) {\n\t\tcollection(slug: $slug) {\n\t\t\t...Collection\n\t\t}\n\t\tsearch(\n\t\t\tinput: {\n\t\t\t\tcollectionSlug: $slug,\n\t\t\t\tgroupByProduct: true,\n\t\t\t\tskip: $skip,\n\t\t\t\ttake: $take \n\t\t\t}\n\t\t) {\n\t\t\titems {\n\t\t\t\t...SearchResult\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n": types.GetCollectionDocument,
-    "\n\tquery GetCollections($options: CollectionListOptions) {\n\t\tcollections {\n\t\t\titems {\n\t\t\t\t...Collection\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n": types.GetCollectionsDocument,
+    "\n\tquery GetCollections($options: CollectionListOptions) {\n\t\tcollections(options: $options) {\n\t\t\titems {\n\t\t\t\t...Collection\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n": types.GetCollectionsDocument,
     "\n\tquery GetTopLevelCollections {\n\t\tcollections(options: { topLevelOnly: true }) {\n\t\t\titems {\n\t\t\t\t...Collection\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n": types.GetTopLevelCollectionsDocument,
     "\n\tfragment Customer on Customer {\n\t\t__typename\n\t\tid\n\t\tfirstName\n\t\tlastName\n\t\temailAddress\n\t}\n": types.CustomerFragmentDoc,
     "\n\tfragment Address on Address {\n\t\tid\n\t\tfullName\n\t\tcompany\n\t\tstreetLine1\n\t\tstreetLine2\n\t\tcity\n\t\tprovince\n\t\tpostalCode\n\t\tcountry {\n\t\t\tcode\n\t\t\tname\n\t\t}\n\t\tphoneNumber\n\t\tdefaultShippingAddress\n\t\tdefaultBillingAddress\n\t}\n": types.AddressFragmentDoc,
@@ -75,7 +75,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n\tfragment Collection on Collection {\n\t\tid\n\t\tname\n\t\tslug\n\t\tdescription\n\t\tfeaturedAsset {\n\t\t\tid\n\t\t\tpreview\n\t\t}\n\t}\n"): (typeof documents)["\n\tfragment Collection on Collection {\n\t\tid\n\t\tname\n\t\tslug\n\t\tdescription\n\t\tfeaturedAsset {\n\t\t\tid\n\t\t\tpreview\n\t\t}\n\t}\n"];
+export function gql(source: "\n\tfragment Collection on Collection {\n\t\tid\n\t\tname\n\t\tslug\n\t\tdescription\n\t\tparent {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t}\n\t\tfeaturedAsset {\n\t\t\tid\n\t\t\tpreview\n\t\t}\n\t}\n"): (typeof documents)["\n\tfragment Collection on Collection {\n\t\tid\n\t\tname\n\t\tslug\n\t\tdescription\n\t\tparent {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t}\n\t\tfeaturedAsset {\n\t\t\tid\n\t\t\tpreview\n\t\t}\n\t}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -83,7 +83,7 @@ export function gql(source: "\n\tquery GetCollection($slug: String!, $skip: Int,
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n\tquery GetCollections($options: CollectionListOptions) {\n\t\tcollections {\n\t\t\titems {\n\t\t\t\t...Collection\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetCollections($options: CollectionListOptions) {\n\t\tcollections {\n\t\t\titems {\n\t\t\t\t...Collection\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n"];
+export function gql(source: "\n\tquery GetCollections($options: CollectionListOptions) {\n\t\tcollections(options: $options) {\n\t\t\titems {\n\t\t\t\t...Collection\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetCollections($options: CollectionListOptions) {\n\t\tcollections(options: $options) {\n\t\t\titems {\n\t\t\t\t...Collection\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

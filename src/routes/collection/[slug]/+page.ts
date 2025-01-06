@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types'
-import { GetCollection } from '$lib/vendure'
+import { GetCollection, GetCollections } from '$lib/vendure'
 
 export const prerender = true
 
@@ -8,6 +8,7 @@ export const load = (async function ({ parent, params }) {
 	return {
 		client,
 		collection: await client.query(GetCollection, { slug: params.slug }).toPromise().then(result => result?.data?.collection),
-		products: await client.query(GetCollection, { slug: params.slug }).toPromise().then(result => result?.data?.search?.items)
+		products: await client.query(GetCollection, { slug: params.slug }).toPromise().then(result => result?.data?.search?.items),
+		collections: await client.query(GetCollections, {}).toPromise().then(result => result?.data?.collections?.items)
 	}
 }) satisfies PageLoad

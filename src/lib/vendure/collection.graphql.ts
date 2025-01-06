@@ -6,6 +6,11 @@ export const Collection = gql(`
 		name
 		slug
 		description
+		parent {
+			id
+			name
+			slug
+		}
 		featuredAsset {
 			id
 			preview
@@ -36,7 +41,7 @@ export const GetCollection = gql(`
 
 export const GetCollections = gql(`
 	query GetCollections($options: CollectionListOptions) {
-		collections {
+		collections(options: $options) {
 			items {
 				...Collection
 			}

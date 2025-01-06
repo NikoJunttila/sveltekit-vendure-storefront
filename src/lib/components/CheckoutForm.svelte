@@ -4,6 +4,7 @@
 	import { getContextClient } from '@urql/svelte'
 	import { type CreateCustomerInput, type CreateAddressInput } from '$lib/gql/graphql';
 	import { SetOrderCustomer, SetOrderBillingAddress, SetOrderShippingAddress } from '$lib/vendure';
+	import * as m from '$lib/paraglide/messages.js';
 	
 	const client = getContextClient();
 
@@ -177,13 +178,14 @@
 	});
 </script>
 
-<div class="col-span-1 space-y-4">
+<div class="col-span-1 space-y-4 text-black">
 	<!-- Customer Form -->
+	<h1 class="text-xl font-bold mb-4">{m.checkout()}</h1>
 	<div class="bg-white p-4 rounded shadow">
-		<h2 class="text-xl font-bold mb-4">Customer Information</h2>
+	<h2 class="text-xl font-bold mb-4">{m.customer_information()}</h2>
 		<div class="space-y-3">
 			<div>
-				<label for="name" class="block text-sm font-medium">First Name*</label>
+				<label for="name" class="block text-sm font-medium">{m.first_name()}*</label>
 				<input
 					type="text"
 					value={form.customerForm.firstName}
@@ -194,7 +196,7 @@
 				/>
 			</div>
 			<div>
-				<label for="lastName" class="block text-sm font-medium">Last Name*</label>
+				<label for="lastName" class="block text-sm font-medium">{m.last_name()}*</label>
 				<input
 					type="text"
 					value={form.customerForm.lastName}
@@ -205,7 +207,7 @@
 				/>
 			</div>
 			<div>
-				<label for="emailaddr" class="block text-sm font-medium">Email*</label>
+				<label for="emailaddr" class="block text-sm font-medium">{m.email()}*</label>
 				<input
 					type="email"
 					value={form.customerForm.emailAddress}
@@ -216,7 +218,7 @@
 				/>
 			</div>
 			<div>
-				<label for="phone" class="block text-sm font-medium">Phone*</label>
+				<label for="phone" class="block text-sm font-medium">{m.phone()}*</label>
 				<input
 					type="tel"
 					value={form.customerForm.phoneNumber}
@@ -234,10 +236,10 @@
 
 	<!-- Address Form -->
 	<div class="bg-white p-4 rounded shadow">
-		<h2 class="text-xl font-bold mb-4">Address Information</h2>
+		<h2 class="text-xl font-bold mb-4">{m.address_information()}</h2>
 		<div class="space-y-3">
 			<div>
-				<label for="company" class="block text-sm font-medium">Company</label>
+				<label for="company" class="block text-sm font-medium">{m.company()}</label>
 				<input
 					type="text"
 					value={form.addressForm.company}
@@ -247,7 +249,7 @@
 				/>
 			</div>
 			<div>
-				<label for="street1" class="block text-sm font-medium">Street Line 1*</label>
+				<label for="street1" class="block text-sm font-medium">{m.street_line_1()}*</label>
 				<input
 					name="street1"
 					type="text"
@@ -258,7 +260,7 @@
 				/>
 			</div>
 			<div>
-				<label for="street2" class="block text-sm font-medium">Street Line 2</label>
+				<label for="street2" class="block text-sm font-medium">{m.street_line_2()}</label>
 				<input
 					type="text"
 					name="street2"
@@ -268,7 +270,7 @@
 				/>
 			</div>
 			<div>
-				<label for="city" class="block text-sm font-medium">City*</label>
+				<label for="city" class="block text-sm font-medium">{m.city()}*</label>
 				<input
 					name="city"
 					type="text"
@@ -279,7 +281,7 @@
 				/>
 			</div>
 			<div>
-				<label for="postal" class="block text-sm font-medium">Postal Code*</label>
+				<label for="postal" class="block text-sm font-medium">{m.postal_code()}*</label>
 				<input
 					name="postal"
 					type="text"
@@ -290,7 +292,7 @@
 				/>
 			</div>
 			<div>
-				<label for="country" class="block text-sm font-medium">Country*</label>
+				<label for="country" class="block text-sm font-medium">{m.country()}*</label>
 				<select
 					name="country"
 					value={form.addressForm.countryCode}

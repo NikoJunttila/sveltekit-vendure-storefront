@@ -15,6 +15,7 @@
 	import Gallery from '$lib/components/Gallery.svelte'
 	import Highlights from '$lib/components/Highlights.svelte'
 	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_ORGANIZATION } from '$env/static/public'
+	import * as m from '$lib/paraglide/messages.js'
 
 	let { data } = $props()
 	const client = getContextClient()
@@ -56,13 +57,13 @@
 		const result = await client.mutation(AddItemToOrder, { variantId: variantId, quantity: 1 }, { additionalTypenames: ['ActiveOrder'] }).toPromise()
 		switch(result?.data?.addItemToOrder?.__typename) {
 			case 'InsufficientStockError':
-				toast.error('Insufficient stock')
+				toast.error(m.insufficient_stock())
 				break
 			case 'Order':
-				toast.success('Item added to cart')
+				toast.success(m.item_added())
 				break
 			default:
-				toast.error('Error adding item to cart')
+				toast.error(m.error_adding_item())
 				break
 		}
 		processing = false
@@ -139,18 +140,18 @@
 			</div>
 		{/each}
 		<div class="mt-6">
-			<h3 class="text-sm font-medium">Price</h3>
+			<h3 class="text-sm font-medium">{m.price()}</h3>
 			{#if product.variants[product.variants.findIndex(v => v.id === selectedVariantId)]}
 				<div class="mt-1 flex items-baseline">
 					<p class="text-xl font-semibold">{formatCurrency(product.variants[product.variants.findIndex(v => v.id === selectedVariantId)].price, PUBLIC_DEFAULT_CURRENCY)}</p>
 					<p class="ml-1 text-sm font-medium">/ {product.variants[product.variants.findIndex(v => v.id === selectedVariantId)]?.name}</p>
 				</div>
 			{:else}
-				Select a Variant
+				{m.select_variant()}
 			{/if}
 		</div> 
 		<button type="button" disabled={processing} onclick={ async () => { addToCart(selectedVariantId) }} class="mt-6 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white hover:bg-lime-700">
-			Add to Cart
+			{m.add_to_cart()}
 		</button>
 	</div>
 	<div class="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 items-start">
@@ -166,14 +167,14 @@
 				<button type="button" class="{tab === 'reviews' ? 
 					"whitespace-nowrap p-3 pr-4 mr-4 border-b-2 font-medium border-lime-600" : 
 					"whitespace-nowrap p-3 pr-4 mr-4 text-gray-500 hover:text-gray-700 border-b border-gray-300 hover:border-b-2 hover:border-gray-300"}">
-					Customer Reviews
+					{m.customer_reviews()}
 				</button>
 			</a>
 			<a href={`/product/${product.slug}?variant=${selectedVariantId}&tab=faq`}>
 				<button type="button" class="{tab === 'faq' ? 
 					"whitespace-nowrap p-3 px-4 mr-4 border-b-2 font-medium border-lime-600" : 
 					"whitespace-nowrap p-3 px-4 mr-4 text-gray-500 hover:text-gray-700 border-b border-gray-300 hover:border-b-2 hover:border-gray-300"}">
-					FAQ
+					{m.faq()}
 				</button>
 			</a>
 		</div>
