@@ -120,8 +120,8 @@
 							</div>
 						</li>
 					{:else}
-						<div class="my-6">
-							Cart is empty
+						<div class="my-6 ">
+							<p class="text-white">Cart is empty</p>
 						</div>
 					{/each}
 				</ul>

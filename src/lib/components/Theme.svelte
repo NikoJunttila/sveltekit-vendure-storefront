@@ -63,6 +63,7 @@
 	const initialTheme = getTheme(storageKey, defaultTheme)
 
 	themeStore.set({
+		//@ts-ignore
 		theme: initialTheme,
 		forcedTheme,
 		resolvedTheme: initialTheme === 'system' ? getTheme(storageKey) : initialTheme,
@@ -108,6 +109,7 @@
 	const storageHandler = (e: StorageEvent) => {
 		if (e.key !== storageKey) return
 		// If default theme set, use it if localstorage === null (happens on local storage manual deletion)
+		//@ts-ignore
 		setTheme(e.newValue || defaultTheme)
 	}
 

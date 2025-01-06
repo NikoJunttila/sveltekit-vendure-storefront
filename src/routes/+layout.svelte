@@ -5,10 +5,11 @@
 	import { page } from '$app/state'
 	import { browser } from '$app/environment'
 	import { GetActiveOrder, GetCustomer } from '$lib/vendure'
-	import { cartStore, userStore } from '$lib/stores'
+	import { cartStore, userStore, themeStore } from '$lib/stores'
 	import { i18n } from '$lib/i18n';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import Theme from '$src/lib/components/Theme.svelte';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import { Toaster } from 'svelte-sonner'
 
@@ -53,7 +54,8 @@
 {#if naked}
 	{@render children?.()}
 {:else}
-	<Toaster theme={'light'} position="top-center" />
+	<Theme />
+	<Toaster theme={$themeStore.theme} position="top-center" />
 	<NavBar {collections} />
 	<div class="relative">{@render children?.()}</div>
 	<Footer />

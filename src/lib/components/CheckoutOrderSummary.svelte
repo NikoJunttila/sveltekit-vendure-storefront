@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { cartStore } from '$lib/stores'
 	import { useFragment } from '$lib/gql'
-	import { ActiveOrder } from '$lib/majel'
+	import { ActiveOrder } from '$lib/vendure'
 	import { formatCurrency } from '$lib/utils'
 	import Image from '$lib/components/Image.svelte'
 

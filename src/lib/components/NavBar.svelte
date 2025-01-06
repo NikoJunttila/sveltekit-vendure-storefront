@@ -5,7 +5,8 @@
 	import Account from '$lib/components/Account.svelte'
 	import SearchBox from '$lib/components/SearchBox.svelte'
 	import SideBar from '$lib/components/SideBar.svelte'
-	//import ThemeSwitcher from './ThemeSwitcher.svelte'
+	import ThemeSwitcher from './ThemeSwitcher.svelte'
+	import LanguageSwitch from './LanguageSwitch.svelte'
 	let { collections = [] } = $props()
 	// export let collections: FragmentType<typeof Collection>[] = []
 </script>
@@ -36,10 +37,11 @@
 				<SideBar {collections} />
 			</div>
 			<div class="p-2">  
-				<!-- <ThemeSwitcher />	 -->		
+				<ThemeSwitcher />			
 			</div>
 			<div class="hidden md:block p-2">
-				<Account />
+				<LanguageSwitch />
+				<!-- <Account /> -->
 			</div>
 			<div class="pl-2">
 				<Cart />

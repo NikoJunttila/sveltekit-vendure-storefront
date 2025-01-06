@@ -11,7 +11,7 @@ let _onSetLanguageTag
  *     return
  *   }
  */
-export const sourceLanguageTag = "en"
+export const sourceLanguageTag = "fi"
 
 /**
  * The project's available language tags.

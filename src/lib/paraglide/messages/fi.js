@@ -16,3 +16,27 @@
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const hello_world = (params) => `Hello, ${params.name} from fi!`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hero_title = () => `Parasta tavaraa.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hero_description = () => `Myymme parasta tavaraa kaikkialla.  Kaikki rakastavat sitä.  Parhaat kamerat.  Parhaat kasvit.  Parhaat sohvat.  Emme oikeastaan lähetä mitään.  Tämä on esimerkkisivusto.  Tyytyväisyys taattu.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const shop_now = () => `Osta nyt`
