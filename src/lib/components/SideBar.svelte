@@ -20,19 +20,19 @@
 		open.set(false)
 	})
 </script>
-{#if $open}
+	{#if $open}
 	<button {...$close} class="align-middle items-center grow-on-hover" use:close aria-label="close">
 		<X class="w-9 h-9" />
 	</button>
-{:else}
+	{:else}
 	<button class="align-middle items-center grow-on-hover" {...$trigger} use:trigger aria-label="open">
 		<Menu class="w-9 h-9" />
 	</button>
-{/if}
-<div use:portalled>
-	{#if $open}
+	{/if}
+	<div use:portalled>
+		{#if $open}
 		<div {...$overlay} use:overlay class="fixed inset-0 z-20 bg-white/50" transition:fade={{ duration: 150 }}></div>
-		<div {...$content} use:content class="overflow-auto fixed left-0 top-0 z-50 h-screen w-full bg-white p-[20px] shadow-lg focus:outline-none" transition:fly={{ x: '-100%', duration: 300, opacity: 1, }}>
+		<div {...$content} use:content class="overflow-auto fixed left-0 top-0 z-50 h-screen w-full bg-black text-white p-[20px] shadow-lg focus:outline-none" transition:fly={{ x: '-100%', duration: 300, opacity: 1, }}>
 			<div class="flex items-middle mb-6">
 				<div class="mr-auto mt-3">
 					<a href="/">
@@ -46,22 +46,23 @@
 			<div class="flex flex-col space-y-12 my-8 pb-6">
 				<div class="flex flex-col">
 					{#each useFragment(Collection, collections) as collection}
-						<a href="/collection/{collection.slug}" class="py-3 px-3 mr-2 font-medium group transition-all duration-200 ease-in-out">
-							<span class="py-2 bg-left-bottom bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-no-repeat group-hover:bg-[length:100%_1px] transition-all duration-500 ease-out">
-								{collection.name}
-							</span>
-						</a>
+					<a href="/collection/{collection.slug}" class="py-3 px-3 mr-2 font-medium group transition-all duration-200 ease-in-out">
+						<span class="py-2 bg-left-bottom bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-no-repeat group-hover:bg-[length:100%_1px] transition-all duration-500 ease-out">
+							{collection.name}
+						</span>
+					</a>
 					{/each}
 					{#if $userStore}
-						<a href="/account" use:close class="py-2 px-3 mr-2 mt-12 rounded-md font-medium text-lg">Your Profile</a>
-						<form action="/auth?/signOut" method="POST">
-							<button type="submit" class="py-2 px-3 mr-2 rounded-md font-medium text-lg">Sign Out</button>
-						</form>
+					<a href="/account" use:close class="py-2 px-3 mr-2 mt-12 rounded-md font-medium text-lg">Your Profile</a>
+					<form action="/auth?/signOut" method="POST">
+						<button type="submit" class="py-2 px-3 mr-2 rounded-md font-medium text-lg">Sign Out</button>
+					</form>
 					{:else}
-						<a href="/auth" use:close class="py-2 px-3 mr-2 mt-12 rounded-md font-medium text-lg">Sign In</a>
+					<a href="/auth" use:close class="py-2 px-3 mr-2 mt-12 rounded-md font-medium text-lg">Sign In</a>
 					{/if}
 				</div>
 			</div>
 		</div>
-	{/if}
-</div>
+		{/if}
+	</div>
+	

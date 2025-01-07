@@ -14,7 +14,7 @@
 </script>
 <!-- <Hero /> -->
 <div class="2xl:mx-auto max-w-screen-2xl p-2 md:p-4 bg-transparent">
-	<div class="relative grid grid-cols-1 m-0 w-full">
+	<div class="relative grid grid-cols-1 m-0 w-full rounded-md">
 		<div class="dark:hidden absolute inset-x-0 bottom-0 bg-gradient-to-b from-transparent via-transparent to-white h-24 w-full rounded-md"></div>
 		<div class="absolute inset-0 dark:bg-black/30 rounded-md"></div>
 		<header class="absolute px-6">

@@ -1,4 +1,5 @@
 <script lang="ts">
+	//@ts-nocheck
 	import { page } from '$app/state'
 	import { getContextClient, queryStore } from '@urql/svelte'
 	import { useFragment } from '$lib/gql'
@@ -8,7 +9,7 @@
 	import * as m from '$lib/paraglide/messages.js'
 	import CollectionComponent from '$lib/components/Collection.svelte'
 	let { data } = $props()
-
+	import { goto } from '$app/navigation'
 	// this will load the data in prerendering and initial site load
 	let collection: CollectionFragment | null | undefined = $state(useFragment(Collection, data.collection))
 	let products: SearchResultFragment[] = $state(useFragment(SearchResult, data.products) || [])
@@ -30,6 +31,9 @@
 			collections = useFragment(Collection, $collectionsQuery.data.collections.items)
 		}
 	})
+	function showProduct(slug:string){
+		goto(`/product/${slug}`)
+	}
 </script>
 {#if collection}
 <section class="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
@@ -48,16 +52,39 @@
 	<div class="mx-auto max-w-screen-2xl">
 		<h2 id="products-heading" class="sr-only">{m.products_heading()}</h2>
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 gap-y-16 gap-x-6 my-8">
-			{#each products as { slug, productName, productAsset }}
-				<a href="/product/{slug}" class="group">
-					<Image preview={productAsset?.preview} preset="medium" alt={productName} class="mx-auto object-cover h-80 w-80 object-center group-hover:opacity-75 overflow-hidden rounded-lg"/>
-					<div class="flex">
-						<div class="mx-auto">
-							<h3 class="mt-4 text-lg font-bold">{productName}</h3>
-							<!-- <p class="mt-1 text-lg font-medium text-gray-900">{product.price.value || product.price.min}</p> -->
+			{#each products as p}
+				<button onclick={() => showProduct(p.slug)} class="group relative flex flex-col items-center transform transition duration-300 hover:-translate-y-1 hover:shadow-xl rounded-lg">
+					<div class="relative w-80 h-80 overflow-hidden rounded-lg">
+						<Image 
+							preview={p.productAsset?.preview} 
+							preset="medium" 
+							alt={p.productName} 
+							class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+						/>
+						<div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+							<h3 class="text-white text-lg font-bold text-center px-4 mb-4">
+								{p.productName}
+							</h3>
+							<p class="text-white text-lg font-medium mb-4">
+								{p.price?.min ? `${p.price.min / 100}€` : 'not found'}
+							</p>
+							<a
+								href="/product/{p.slug}"
+								class="inline-flex items-center px-6 py-2 border border-white text-white hover:bg-white hover:text-black transition-colors duration-300 rounded-md"
+							>
+								{m.show_product()}
+							</a>
 						</div>
 					</div>
-				</a>
+					<div class="w-full p-4">
+						<h3 class="mt-2 text-lg font-bold transition-colors duration-300 group-hover:text-primary-600">
+							{p.productName}
+						</h3>
+						<p class="mt-1 text-lg font-medium text-gray-900">
+							{p.price?.min ? `${p.price.min / 100}€` : 'not found'}
+						</p>
+					</div>
+				</button>
 			{:else}
 				<p>{m.no_products_found()}</p>
 			{/each}

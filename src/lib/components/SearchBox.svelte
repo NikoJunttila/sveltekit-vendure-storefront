@@ -4,6 +4,7 @@
 	import { useFragment } from '$lib/gql'
 	import { SearchResult, SearchProducts } from '$lib/vendure'
 	import { clickOutside } from '$lib/utils'
+	import * as m from '$lib/paraglide/messages.js'
 	import SearchHit from '$lib/components/SearchHit.svelte'
 	
 	let q: string = ''
@@ -22,7 +23,7 @@
 			<Search class="h-7 w-7 text-gray-700" />
 		</div>
 		<label for="q" class="sr-only">Search</label>
-		<input type="search" placeholder="Search" bind:value={q} class="block w-full rounded-md border border-stone-300 py-3 pl-12 pr-3 leading-5 text-gray-700 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500" />
+		<input type="search" placeholder={m.search()} bind:value={q} class="block w-full rounded-md border border-stone-300 py-3 pl-12 pr-3 leading-5 text-gray-700 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500" />
 	{#if q}
 	<div use:clickOutside on:clickOutside={() => q = ''} class="absolute overflow-auto max-h-[80vh] rounded-b-xl bg-white w-full z-50 border border-gray-200">
 		{#each hits as hit}

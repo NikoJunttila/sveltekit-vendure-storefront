@@ -56,5 +56,16 @@
 	"customer_information": "Asiakas tiedot",
 	"our_collections": "Kokoelmamme",
 	"collections_description": "Tutustu huolellisesti valittuihin korkealaatuisten tuotteiden kokoelmiimme.",
-	"shop_collection": "Selaa kokoelmaa"
+	"shop_collection": "Selaa kokoelmaa",
+	"show_product":"Näytä tuote",
+	"footer_company": "Yritys",
+	"footer_resources": "Resurssit",
+	"footer_support": "Tuki",
+	"footer_subscribe": "Tilaa uutiskirjeemme",
+	"footer_email_placeholder": "Syötä sähköpostiosoitteesi",
+	"footer_subscribe_button": "Tilaa",
+	"footer_terms": "Käyttöehdot",
+	"footer_privacy": "Tietosuojakäytäntö",
+	"footer_phone": "Puhelin",
+	"footer_email": "Sähköposti"
 }

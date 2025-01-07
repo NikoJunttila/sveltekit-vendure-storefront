@@ -63,5 +63,17 @@
 	"customer_information": "Customer Information",
 	"our_collections": "Our Collections",
 	"collections_description": "Explore our carefully curated collections of high-quality products.",
-	"shop_collection": "Shop Collection"
+	"shop_collection": "Shop Collection",
+	"show_product":"View product",
+	
+	"footer_company": "Company",
+	"footer_resources": "Resources",
+	"footer_support": "Support",
+	"footer_subscribe": "Subscribe to our newsletter",
+	"footer_email_placeholder": "Enter your email",
+	"footer_subscribe_button": "Subscribe",
+	"footer_terms": "Terms and Conditions",
+	"footer_privacy": "Privacy Policy",
+	"footer_phone": "Phone",
+	"footer_email": "Email"
 }
