@@ -552,3 +552,11 @@ export const footer_phone = () => `Phone`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const footer_email = () => `Email`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const home = () => `home`

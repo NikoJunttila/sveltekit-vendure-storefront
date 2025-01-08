@@ -29,7 +29,9 @@
 		{#each hits as hit}
 			<SearchHit {hit} on:click={handleClick} />			
 		{:else}
+		<div class="p-4">
 			<p>No results found.</p>
+		</div>
 		{/each}
 	</div>
 	{/if}

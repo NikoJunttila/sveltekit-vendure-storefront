@@ -11,6 +11,11 @@ export const Collection = gql(`
 			name
 			slug
 		}
+		breadcrumbs {
+			id
+			name
+			slug
+		}
 		featuredAsset {
 			id
 			preview

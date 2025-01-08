@@ -552,3 +552,11 @@ export const footer_phone = () => `Puhelin`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const footer_email = () => `Sähköposti`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const home = () => `Etusivu`

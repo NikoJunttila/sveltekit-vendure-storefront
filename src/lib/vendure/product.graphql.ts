@@ -69,6 +69,12 @@ export const ProductDetail = gql(`
 				...Asset
 			}
 		}
+		collections {
+			breadcrumbs {
+			name
+			slug
+			}
+		}
 	}
 `)
 
@@ -90,6 +96,8 @@ export const SearchResult = gql(`
 				max
 			}
 		}
+		facetIds
+		facetValueIds
 		currencyCode
 	}
 `)
@@ -139,6 +147,19 @@ export const GetProduct = gql(`
 	}
 `)
 
+export const FacetValueResult = gql(`
+	fragment FacetValueResult on FacetValueResult{
+		facetValue {
+		    id
+        	name
+        	facet {
+          		id
+          		name
+        	}
+		}
+		count
+	}
+`)
 export const SearchProducts = gql(`
 	query SearchProducts($input: SearchInput!) {
 		search(input: $input) {
@@ -146,6 +167,9 @@ export const SearchProducts = gql(`
 				...SearchResult
 			}
 			totalItems
+			facetValues {
+			...FacetValueResult
+    		}
 		}
 	}
 `)
