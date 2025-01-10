@@ -12,6 +12,8 @@ declare global {
 			// token: string // vendure auth token
 			user: any
 			cart: any
+			ssig : string
+			sid : string
 		}
 		// interface PageData {}
 		// interface Platform {}

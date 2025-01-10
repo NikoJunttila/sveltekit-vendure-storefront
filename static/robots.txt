@@ -2,7 +2,7 @@ User-agent: *
 Disallow: /account
 Disallow: /terms
 Disallow: /privacy
-Disallow: /auth
+Disallow: /account
 Disallow: /api
 Disallow: /checkout
 Disallow: /search

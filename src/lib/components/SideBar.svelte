@@ -54,11 +54,11 @@
 					{/each}
 					{#if $userStore}
 					<a href="/account" use:close class="py-2 px-3 mr-2 mt-12 rounded-md font-medium text-lg">Your Profile</a>
-					<form action="/auth?/signOut" method="POST">
+					<form action="/account?/signOut" method="POST">
 						<button type="submit" class="py-2 px-3 mr-2 rounded-md font-medium text-lg">Sign Out</button>
 					</form>
 					{:else}
-					<a href="/auth" use:close class="py-2 px-3 mr-2 mt-12 rounded-md font-medium text-lg">Sign In</a>
+					<a href="/account" use:close class="py-2 px-3 mr-2 mt-12 rounded-md font-medium text-lg">Sign In</a>
 					{/if}
 				</div>
 			</div>

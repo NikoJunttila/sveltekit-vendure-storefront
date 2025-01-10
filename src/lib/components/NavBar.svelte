@@ -36,6 +36,9 @@
 			<div class="lg:hidden p-2">
 				<SideBar {collections} />
 			</div>
+			<div class="hidden md:block p-2">
+				<Account /> 
+			</div>
 			<div class="p-2">  
 				<ThemeSwitcher />			
 			</div>

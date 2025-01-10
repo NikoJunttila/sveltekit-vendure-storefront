@@ -2,7 +2,7 @@
 	import X from 'lucide-svelte/icons/x'
 	import ShoppingBag from 'lucide-svelte/icons/shopping-bag'
 	import { createDialog } from '@melt-ui/svelte'
-   import { getContextClient } from '@urql/svelte'
+   	import { getContextClient } from '@urql/svelte'
 	import { toast } from 'svelte-sonner'
 	import { fade, fly } from 'svelte/transition'
 	import { useFragment } from '$lib/gql'

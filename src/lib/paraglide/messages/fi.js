@@ -560,3 +560,299 @@ export const footer_email = () => `Sähköposti`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const home = () => `Etusivu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const create_account = () => `Luo käyttäjä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const password = () => `Salasana`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const already_account = () => `On jo käyttäjä?`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const sign_in = () => `Kirjaudu sisään`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const placeholder_first_name = () => `Syötä etunimesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const placeholder_last_name = () => `Syötä sukunimesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const placeholder_email = () => `Syötä sähköpostiosoitteesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const placeholder_password = () => `Valitse salasana`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const verification_email_sent = () => `Vahvistussähköposti lähetetty sähköpostiisi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const generic_error = () => `Virhe rekisteröitymisessä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const unexpected_error = () => `Tapahtui odottamaton virhe. Yritä uudelleen`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const sign_up = () => `Kirjaudu sisään`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const creating_account = () => `Luodaan käyttäjä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_title = () => `Tili`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_sign_in = () => `Kirjaudu sisään`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_sign_up = () => `Rekisteröidy`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const sign_in_instead = () => `Sign in instead`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_create = () => `Luo tili`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_forgot_password = () => `Unohditko salasanan?`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_reset_password = () => `Nollaa salasana`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_email_sent = () => `Jos tili on olemassa, nollauskoodi on lähetetty sähköpostiisi.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_apple_sign_in = () => `Kirjaudu Applella`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_have_account = () => `Onko sinulla jo tili?`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_need_account = () => `Tarvitsetko tilin?`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_or = () => `tai`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_email_label = () => `Sähköposti`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_password_label = () => `Salasana`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_first_name_label = () => `Etunimi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_last_name_label = () => `Sukunimi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_email_placeholder = () => `Syötä sähköpostiosoitteesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_password_placeholder = () => `Syötä salasanasi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_first_name_placeholder = () => `Syötä etunimesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_last_name_placeholder = () => `Syötä sukunimesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const create_account_big = () => `Tervetuloa! Luodaksesi tilin, syötä sähköpostiosoitteesi ja valitse salasana alla.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const account_reset_pass = () => `Enter your email address to receive an email with a link to change your password.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const request_reset = () => `Request Reset Code`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const login_text = () => `Jos sinulla on olemassa oleva tili, syötä sähköpostiosoitteesi ja salasanasi alla.`

@@ -19,7 +19,7 @@
 		<CircleUserRound class="h-9 w-9" />
 	</button>
 {:else}
-	<a href="/auth">
+	<a href="/account">
 		<button type="button" class="align-middle items-center grow-on-hover">
 			<span class="sr-only">Sign In</span>
 			<CircleUserRound class="h-9 w-9" />
@@ -31,7 +31,7 @@
 		<a href="/account">Your Profile</a>
 	</div>
 	<div {...$item} use:item class="item">
-		<a href="/auth/signout">
+		<a href="/account/signout">
 			<button type="button">Sign Out</button>
 		</a>
 	</div>

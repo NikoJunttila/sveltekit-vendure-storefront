@@ -39,7 +39,7 @@
 	const filteredCollections = $derived(
 		collections.filter((collection) => collection.parent?.slug === page.params.slug)
 	);
-	const breadcrumbs = $derived(collection?.breadcrumbs || [])
+	const breadcrumbs = $derived(collection?.breadcrumbs || []);
 	// this will load the data in client side navigation
 
 	const collectionQuery = $derived(
@@ -63,7 +63,7 @@
 		}
 		if ($searchQuery.data?.search.facetValues) {
 			facetValues = useFragment(FacetValueResult, $searchQuery.data.search.facetValues);
-			selectedFilters.clear()
+			selectedFilters.clear();
 		}
 		if ($collectionQuery?.data?.collection) {
 			collection = useFragment(Collection, $collectionQuery.data.collection);
@@ -94,9 +94,7 @@
 	// Selected filter values
 	let selectedFilters = $state(new Set<string>());
 	// Filter products based on selected facets
-	let filteredProducts = $state(
-		useFragment(SearchResult, data.search?.items) || []
-	);
+	let filteredProducts = $state(useFragment(SearchResult, data.search?.items) || []);
 
 	function toggleFilter(facetValueId: string) {
 		if (selectedFilters.has(facetValueId)) {
@@ -105,12 +103,16 @@
 			selectedFilters.add(facetValueId);
 		}
 		// Filter products that contain ALL selected filters
-	/* filteredProducts = products.filter((p) =>
+		/* filteredProducts = products.filter((p) =>
 		Array.from(selectedFilters).every((filterId) => p.facetValueIds.includes(filterId))
 	); */
-	filteredProducts = products.filter(product => selectedFilters.size === 0 ||  product.facetValueIds.some(id => selectedFilters.has(id)))
+		filteredProducts = products.filter(
+			(product) =>
+				selectedFilters.size === 0 || product.facetValueIds.some((id) => selectedFilters.has(id))
+		);
 	}
 </script>
+
 {#if collection}
 	<section class="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
 		<section class="relative mb-8 hidden w-full sm:mb-16 sm:block sm:h-80 lg:h-96">
@@ -129,11 +131,13 @@
 				{#if breadcrumb.slug === '__root_collection__'}
 					<a
 						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
-						href="/">							<span
-						class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+						href="/"
 					>
-					{m.home()}
-					</span></a
+						<span
+							class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+						>
+							{m.home()}
+						</span></a
 					>
 				{:else}
 					<span class="before:mr-2 before:content-['/']"></span>
@@ -162,34 +166,33 @@
 			<!-- Filters Sidebar -->
 			<aside class="hidden lg:block">
 				{#key collection.name}
-					
-				{#each Object.entries(groupedFacets) as [facetName, values]}
-				<div class="border-b border-gray-200 py-6 dark:border-gray-700">
-					<h3 class="text-lg font-medium capitalize text-gray-900 dark:text-white">
-						{facetName}
-					</h3>
-					<div class="mt-4 space-y-4">
-						{#each values as { facetValue, count }}
-						<div class="flex items-center">
-							<input
-							id={facetValue.id}
-							type="checkbox"
-							checked={selectedFilters.has(facetValue.id)}
-										onchange={() => toggleFilter(facetValue.id)}
-										class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
+					{#each Object.entries(groupedFacets) as [facetName, values]}
+						<div class="border-b border-gray-200 py-6 dark:border-gray-700">
+							<h3 class="text-lg font-medium capitalize text-gray-900 dark:text-white">
+								{facetName}
+							</h3>
+							<div class="mt-4 space-y-4">
+								{#each values as { facetValue, count }}
+									<div class="flex items-center">
+										<input
+											id={facetValue.id}
+											type="checkbox"
+											checked={selectedFilters.has(facetValue.id)}
+											onchange={() => toggleFilter(facetValue.id)}
+											class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
 										/>
 										<label
-										for={facetValue.id}
-										class="ml-3 cursor-pointer text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300"
+											for={facetValue.id}
+											class="ml-3 cursor-pointer text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300"
 										>
-										{facetValue.name}
-										<span class="ml-1 text-gray-400">({count})</span>
-									</label>
-								</div>
+											{facetValue.name}
+											<span class="ml-1 text-gray-400">({count})</span>
+										</label>
+									</div>
 								{/each}
 							</div>
 						</div>
-						{/each}
+					{/each}
 				{/key}
 			</aside>
 

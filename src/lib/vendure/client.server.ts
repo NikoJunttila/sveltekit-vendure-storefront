@@ -1,0 +1,10 @@
+import { Client, cacheExchange, fetchExchange } from '@urql/core';
+import { dev } from '$app/environment';
+
+export function createServerClient(fetch: typeof global.fetch) {
+    return new Client({
+        url: dev ? 'http://localhost:3000/shop-api' : 'https://your-prod-url/shop-api',
+        exchanges: [cacheExchange, fetchExchange],
+        fetch,
+    });
+} 
