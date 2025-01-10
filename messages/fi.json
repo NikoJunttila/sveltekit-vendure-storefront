@@ -83,7 +83,7 @@
 	"sign_up":"Kirjaudu sisään",
 	"creating_account":"Luodaan käyttäjä",
 	"account_title": "Tili",
-	"sign_in_instead":"Sign in instead",
+	"sign_in_instead":"Kirjaudu sisään sen sijaan",
 	"account_sign_in": "Kirjaudu sisään",
 	"account_sign_up": "Rekisteröidy",
 	"account_create": "Luo tili",
@@ -103,7 +103,7 @@
 	"account_first_name_placeholder": "Syötä etunimesi",
 	"account_last_name_placeholder": "Syötä sukunimesi",
 	"create_account_big":"Tervetuloa! Luodaksesi tilin, syötä sähköpostiosoitteesi ja valitse salasana alla.",
-	"account_reset_pass":"Enter your email address to receive an email with a link to change your password.",
-	"request_reset":"Request Reset Code",
+	"account_reset_pass":"Kirjoita sähköpostiosoitteesi saadaksesi sähköpostiviestin, jossa on linkki salasanasi vaihtamiseen.",
+	"request_reset":"Pyydä nollauskoodi",
 	"login_text":"Jos sinulla on olemassa oleva tili, syötä sähköpostiosoitteesi ja salasanasi alla."
 }

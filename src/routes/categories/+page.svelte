@@ -7,10 +7,10 @@
 	const collections = page.data.collections
 </script>
 
-<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+<div class="min-h-screen">
 	<div class="mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
 		<header class="text-center" in:fly={{ y: 20, duration: 1000 }}>
-			<h1 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
+			<h1 class="text-3xl font-bold  sm:text-4xl">
 				{m.our_collections()}
 			</h1>
 			<p class="mx-auto mt-4 max-w-md text-gray-500 dark:text-gray-400">

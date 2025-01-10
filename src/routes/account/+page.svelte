@@ -4,33 +4,64 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { signInReq, signUpReq, forgotReq, resetReq } from '$lib/validators';
-    import AuthContainer from '$src/lib/components/AuthContainer.svelte';
+	import AuthContainer from '$src/lib/components/AuthContainer.svelte';
 	import { Field, Control, Label, FieldErrors } from 'formsnap';
 	import AppleButton from '$lib/components/AppleButton.svelte';
-    import * as m from '$lib/paraglide/messages.js';
+	import * as m from '$lib/paraglide/messages.js';
+	import { toast } from 'svelte-sonner';
+	import { getContextClient } from '@urql/svelte';
+	import { GetCustomer } from '$src/lib/vendure/customer.graphql.js';
+	import { GetActiveOrder } from '$src/lib/vendure/order.graphql.js';
+	import { cartStore, userStore } from '$lib/stores'
+	
+	import { SignIn } from '$src/lib/vendure/customer.graphql.js';
 
 	let { data } = $props();
 
 	type userstate = 'signIn' | 'signUp' | 'forgot' | 'reset';
 	let userState: userstate = $state(data.code ? 'reset' : 'signIn');
 
+	let userInfo = $state({
+		email: '',
+		password: ''
+	});
+
 	let processing: boolean = $state(false);
 
-	const handleSignIn = async function () {
-		await invalidateAll();
-		await goto(data.rurl ? data.rurl : '/');
-	};
+	const client = getContextClient();
 
+	async function login() {
+		try {
+			const result = await client
+				.mutation(SignIn, {
+					username: userInfo.email,
+					password: userInfo.password,
+					rememberMe: true
+				})
+				.toPromise();
+			console.log(result);
+			if (result?.data?.login.__typename === 'CurrentUser') {
+				const result2 = await client.query(GetCustomer,{},{requestPolicy: 'network-only'}).toPromise();
+				const result3 = await client.query(GetActiveOrder,{},{requestPolicy: 'network-only'}).toPromise();
+				// Successfully logged in
+				toast.success('Welcome');
+				await invalidateAll();
+				await goto('/');
+			} else {
+				// Login error
+				console.log('error');
+			}
+		} catch (error) {
+			console.error('Sign in error:', error);
+		}
+	}
 	const signInForm = superForm(data.signInForm, {
 		validators: zodClient(signInReq),
 		onSubmit: () => {
-            console.log("sent login request")
 			processing = true;
 		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
-                console.log(result)
-				handleSignIn();
 			} else {
 				processing = false;
 			}
@@ -48,6 +79,7 @@
 			if (result.type === 'success') {
 				// handleSignIn()
 				// verify email
+				toast.success(m.verification_email_sent());
 			} else {
 				processing = false;
 			}
@@ -83,14 +115,14 @@
 		{#if processing}
 			<div class="message">Processing...</div>
 		{:else}
-			<form method="POST" action="/account?/signIn" use:signInEnhance>
-				<h3 class="font-heading mb-4 text-center text-3xl font-semibold text-gray-900">
+			<form onsubmit={login}>
+				<h3 class="font-heading mb-4 text-center text-3xl font-semibold">
 					{m.account_sign_in()}
 				</h3>
 				{#if $signInMessage}
 					<div class="message" class:text-red-600={page.status > 200}>{$signInMessage}</div>
 				{:else}
-					<p class="mb-6 text-lg text-gray-500">
+					<p class="mb-6 text-lg">
 						{m.login_text()}
 					</p>
 				{/if}
@@ -98,7 +130,7 @@
 					<Control>
 						{#snippet children({ props })}
 							<Label>{m.email()}</Label>
-							<input {...props} type="email" bind:value={$signInFormData.email} />
+							<input {...props} type="email" class="input" bind:value={userInfo.email} />
 						{/snippet}
 					</Control>
 					<FieldErrors />
@@ -107,50 +139,50 @@
 					<Control>
 						{#snippet children({ props })}
 							<Label>{m.password()}</Label>
-							<input {...props} type="password" bind:value={$signInFormData.password} />
+							<input {...props} type="password" class="input" bind:value={userInfo.password} />
 						{/snippet}
 					</Control>
 					<FieldErrors />
 				</Field>
 				<button type="submit" class="button">{m.account_sign_in()}</button>
 				<AppleButton />
-				<div class="text-center text-sm font-medium text-gray-900">
+				<div class="text-center text-sm font-medium">
 					<span>{m.account_need_account()}&nbsp;&nbsp;</span>
 					<button
 						type="button"
 						onclick={() => {
 							userState = 'signUp';
 						}}
-						class="text-orange-900 hover:text-orange-700"
+						class=""
 					>
 						{m.sign_up()}
 					</button>
 				</div>
-				<div class="text-center text-sm font-medium text-gray-900">
+				<div class="text-center text-sm font-medium">
 					<button
 						type="button"
 						onclick={() => {
 							userState = 'forgot';
 						}}
-						class="mt-4 hover:text-gray-700"
+						class="mt-4"
 					>
-                        {m.account_forgot_password()}
+						{m.account_forgot_password()}
 					</button>
 				</div>
 			</form>
 		{/if}
 	{:else if userState === 'signUp'}
 		<form method="POST" action="/account?/signUp" use:signUpEnhance>
-			<h3 class="font-heading mb-4 text-center text-3xl font-semibold text-gray-900">
-                {m.account_create()}
+			<h3 class="font-heading mb-4 text-center text-3xl font-semibold">
+				{m.account_create()}
 			</h3>
-			<p class="mb-6 text-lg text-gray-500">
-                {m.create_account_big()}
+			<p class="mb-6 text-lg">
+				{m.create_account_big()}
 			</p>
 			<Field form={signUpForm} name="fname">
 				<Control>
 					{#snippet children({ props })}
-						<Label>{m.email()}</Label>
+						<Label>{m.first_name()}</Label>
 						<input {...props} type="text" bind:value={$signUpFormData.fname} />
 					{/snippet}
 				</Control>
@@ -185,14 +217,14 @@
 			</Field>
 			<button type="submit" class="button">{m.create_account()}</button>
 			<AppleButton />
-			<div class="text-center text-sm font-medium text-gray-900">
+			<div class="text-center text-sm font-medium">
 				<span>{m.already_account()}&nbsp;&nbsp;</span>
 				<button
 					type="button"
 					onclick={() => {
 						userState = 'signIn';
 					}}
-					class="text-orange-900 hover:text-orange-700"
+					class=""
 				>
 					{m.sign_in()}
 				</button>
@@ -200,11 +232,11 @@
 		</form>
 	{:else if userState === 'forgot'}
 		<form method="POST" action="/account?/forgot" use:forgotEnhance>
-			<h3 class="font-heading mb-4 text-center text-3xl font-semibold text-gray-900">
-                {m.account_reset_password}
+			<h3 class="font-heading mb-4 text-center text-3xl font-semibold">
+				{m.account_reset_password}
 			</h3>
-			<p class="mb-6 text-lg text-gray-500">
-                {m.account_reset_pass()}
+			<p class="mb-6 text-lg">
+				{m.account_reset_pass()}
 			</p>
 			<Field form={forgotForm} name="email">
 				<Control>
@@ -216,13 +248,13 @@
 				<FieldErrors />
 			</Field>
 			<button type="submit" class="button">{m.request_reset()}</button>
-			<div class="pt-6 text-center text-sm font-medium text-gray-900">
+			<div class="pt-6 text-center text-sm font-medium">
 				<button
 					type="button"
 					onclick={() => {
 						userState = 'signIn';
 					}}
-					class="text-gray-900 hover:text-orange-700"
+					class=""
 				>
 					&larr;&nbsp; {m.sign_in_instead()}
 				</button>

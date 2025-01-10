@@ -7,7 +7,6 @@ export const prerender = true
 export const load = (async function ({ url, parent}) {
 	const { client } = await parent()
     const code = url.searchParams.get("token") || ""
-    console.log(code)
     let success = ""
     if (code) success = await client.mutation(VerifyCustomerAccount, {token:code}).toPromise().then((result : any) => result.data)
 	return {

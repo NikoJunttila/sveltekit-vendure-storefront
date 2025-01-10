@@ -1,4 +1,5 @@
-import { Client, cacheExchange, fetchExchange } from '@urql/svelte'
+import { Client, cacheExchange, fetchExchange } from '@urql/svelte';
+
 import { dev } from '$app/environment'
 import { PUBLIC_SHOPAPI_DEV_URL, PUBLIC_SHOPAPI_PROD_URL } from '$env/static/public'
 
@@ -8,11 +9,12 @@ export * from './order.graphql'
 export * from './product.graphql'
 
 export const createClient = () => {
-	return new Client({
+	const client = new Client({
 		url: dev ? PUBLIC_SHOPAPI_DEV_URL : PUBLIC_SHOPAPI_PROD_URL,
 		exchanges: [cacheExchange, fetchExchange],
 		fetchOptions: {
-			credentials: 'include'
+			credentials: 'include',
 		}
 	})
+	return client
 }

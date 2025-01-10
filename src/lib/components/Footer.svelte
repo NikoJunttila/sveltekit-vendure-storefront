@@ -37,7 +37,7 @@
 </script>
 
 <footer
-	class="mt-6 w-full bg-gradient-to-b from-gray-50 to-[#f2f2f2] lg:mt-12 dark:from-gray-900 dark:to-gray-800"
+	class="mt-6 w-full bg-gradient-to-b from-primary-700 to-[#1a1414] lg:mt-12 "
 	aria-labelledby="footer-heading"
 >
 	<hr class="hidden opacity-10 dark:block" />

@@ -4,8 +4,7 @@ import { message, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 import { createServerClient } from '$lib/vendure/client.server'
 import { signInReq, signUpReq, forgotReq, resetReq } from '$lib/validators'
-import { SignIn as sign2, SignOut, SignUp, ResetPassword, RequestPasswordReset } from '$src/lib/vendure'
-import { parseAuthCookie, signIn } from '$src/lib/vendure/parseAuthCookie.graphql'
+import { SignOut, SignUp, ResetPassword, RequestPasswordReset } from '$src/lib/vendure'
 
 export const prerender = false;
 
@@ -32,41 +31,6 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 }
 
 export const actions: Actions = {
-	signIn: async ({ request, fetch, locals, cookies }) => {
-		const form = await superValidate(request, zod(signInReq), { id: 'signIn' })
-		if (!form.valid) return message(form, 'Something went wrong', { status: 500}) // this shouldn't happen because of client-side validation
-		
-		try {
-			const { data, headers } = await signIn(form.data.email.toLocaleLowerCase(), form.data.password, true, locals, cookies)
-			console.log(headers)
-			if ('id' in data.login) {
-				// Successfully logged in
-				console.log('Logged in user:', data.login.identifier)
-				return message(form, 'success')
-				// Cookie headers have already been processed by parseAuthCookie
-			} else {
-				// Login error
-				console.error('Login failed:', data.login.message)
-			}
-		} catch (error) {
-			console.error('Sign in error:', error)
-		}
-		//const client = createServerClient(fetch);
-		//const result = await client.mutation(sign2, {username:form.data.email.toLocaleLowerCase(),password:form.data.password,rememberMe:true}).toPromise();
-		/*
-		
-		if (!result) {
-			return message(form, 'The service is unavailable.', { status: 424 })
-		} else if (result && result.data) {
-			console.log(result)
-			return message(form, 'success') // the form will redirect to rurl
-		} else if (result && result.error?.name === 'NOT_VERIFIED_ERROR') {
-			return message(form, 'Please verify your email address before signing in.', { status: 401 })
-		} else {
-			return message(form, 'A user with that email address was not found or the password was not valid.', { status: 401 })
-		}*/
-	},
-
 	signUp: async ({ request, fetch }) => {
 		const form = await superValidate(request, zod(signUpReq), { id: 'signUp' })
 		if (!form.valid) return message(form, 'Something went wrong', { status: 500}) // this shouldn't happen because of client-side validation

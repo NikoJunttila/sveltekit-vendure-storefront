@@ -38,7 +38,7 @@
 	// useful for debugging
 	// $inspect() will be removed automatically in production build
 	$inspect($cartStore)
-	$inspect($userStore)
+	$inspect(`userStore: ${$userStore}`)
 
 	const nakedPaths = ['/checkout', '/sitemap.xml']
 	let naked = $derived(nakedPaths.includes(page.url.pathname))

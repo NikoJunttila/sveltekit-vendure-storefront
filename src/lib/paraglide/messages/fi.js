@@ -695,7 +695,7 @@ export const account_sign_up = () => `Rekisteröidy`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const sign_in_instead = () => `Sign in instead`
+export const sign_in_instead = () => `Kirjaudu sisään sen sijaan`
 
 
 /**
@@ -839,7 +839,7 @@ export const create_account_big = () => `Tervetuloa! Luodaksesi tilin, syötä s
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const account_reset_pass = () => `Enter your email address to receive an email with a link to change your password.`
+export const account_reset_pass = () => `Kirjoita sähköpostiosoitteesi saadaksesi sähköpostiviestin, jossa on linkki salasanasi vaihtamiseen.`
 
 
 /**
@@ -847,7 +847,7 @@ export const account_reset_pass = () => `Enter your email address to receive an 
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const request_reset = () => `Request Reset Code`
+export const request_reset = () => `Pyydä nollauskoodi`
 
 
 /**
