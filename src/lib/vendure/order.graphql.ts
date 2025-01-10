@@ -1,4 +1,4 @@
-import { gql } from '$lib/gql'
+import { gql } from '$lib/gql';
 
 export const Order = gql(`
 	fragment Order on Order {
@@ -33,7 +33,7 @@ export const Order = gql(`
 		}
 		orderPlacedAt
 	}
-`)
+`);
 
 export const ActiveOrder = gql(`
 	fragment ActiveOrder on Order {
@@ -142,7 +142,7 @@ export const ActiveOrder = gql(`
 			trackingCode
 		}
 	}
-`)
+`);
 
 export const ShippingMethodQuote = gql(`
 	fragment ShippingMethodQuote on ShippingMethodQuote {
@@ -154,7 +154,7 @@ export const ShippingMethodQuote = gql(`
 		description
 		metadata
 	}
-`)
+`);
 
 export const GetOrderByCode = gql(`
 	query GetOrderByCode($code: String!) {
@@ -162,7 +162,7 @@ export const GetOrderByCode = gql(`
 			...ActiveOrder
 		}
 	}
-`)
+`);
 
 export const GetActiveOrder = gql(`
 	query GetActiveOrder {
@@ -170,7 +170,7 @@ export const GetActiveOrder = gql(`
 			...ActiveOrder
 		}
 	}
-`)
+`);
 
 export const AddItemToOrder = gql(`
 	mutation AddItemToOrder($variantId: ID!, $quantity: Int!) {
@@ -189,7 +189,7 @@ export const AddItemToOrder = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const RemoveOrderLine = gql(`
 	mutation RemoveOrderLine($orderLineId: ID!) {
@@ -201,7 +201,7 @@ export const RemoveOrderLine = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const AdjustOrderLine = gql(`
 	mutation AdjustOrderLine($orderLineId: ID!, $quantity: Int!) {
@@ -213,7 +213,7 @@ export const AdjustOrderLine = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const RemoveAllOrderLines = gql(`
 	mutation RemoveAllOrderLines {
@@ -221,7 +221,7 @@ export const RemoveAllOrderLines = gql(`
 			...ActiveOrder
 		}
 	}
-`)
+`);
 
 export const AddOrderCouponCode = gql(`
 	mutation AddOrderCouponCode($couponCode: String!) {
@@ -233,7 +233,7 @@ export const AddOrderCouponCode = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const RemoveOrderCouponCode = gql(`
 	mutation RemoveOrderCouponCode($couponCode: String!) {
@@ -241,7 +241,7 @@ export const RemoveOrderCouponCode = gql(`
 			...ActiveOrder
 		}
 	}
-`)
+`);
 
 export const SetOrderCustomer = gql(`
 	mutation SetCustomerForOrder($input: CreateCustomerInput!) {
@@ -252,7 +252,7 @@ export const SetOrderCustomer = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const SetOrderShippingAddress = gql(`
 	mutation SetOrderShippingAddress($input: CreateAddressInput!) {
@@ -263,7 +263,7 @@ export const SetOrderShippingAddress = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const SetOrderBillingAddress = gql(`
 	mutation SetOrderBillingAddress($input: CreateAddressInput!) {
@@ -274,7 +274,7 @@ export const SetOrderBillingAddress = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const GetOrderShippingMethods = gql(`
 	query GetOrderShippingMethods {
@@ -282,7 +282,7 @@ export const GetOrderShippingMethods = gql(`
 			...ShippingMethodQuote
 		}
 	}
-`)
+`);
 
 export const SetOrderShippingMethod = gql(`
 	mutation SetOrderShippingMethod($id: [ID!]!) {
@@ -294,7 +294,7 @@ export const SetOrderShippingMethod = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const GetOrderPaymentMethods = gql(`
 	query GetOrderPaymentMethods {
@@ -305,8 +305,7 @@ export const GetOrderPaymentMethods = gql(`
 			isEligible
 		}
 	}
-`)
-
+`);
 
 export const AddOrderPayment = gql(`
 	mutation AddOrderPayment($input: PaymentInput!) {
@@ -329,7 +328,7 @@ export const AddOrderPayment = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const TransitionOrderToState = gql(`
 	mutation TransitionOrderToState($state: String!) {
@@ -344,5 +343,4 @@ export const TransitionOrderToState = gql(`
 			}
 		}
 	}
-`)
-
+`);

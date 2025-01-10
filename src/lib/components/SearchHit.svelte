@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte'
-	export let hit: any
-	const dispatch = createEventDispatcher()
+	import { createEventDispatcher } from 'svelte';
+	export let hit: any;
+	const dispatch = createEventDispatcher();
 </script>
 
-<button on:click={() => dispatch('click', `${hit.slug}`)} class="overflow-hidden text-left cursor-pointer hover:bg-stone-100 p-4">
+<button
+	on:click={() => dispatch('click', `${hit.slug}`)}
+	class="cursor-pointer overflow-hidden p-4 text-left hover:bg-stone-100"
+>
 	<h3 class="font-bold">{hit.productName}</h3>
-	<p class="text-sm line-clamp-4">{hit.description}</p>
+	<p class="line-clamp-4 text-sm">{hit.description}</p>
 </button>

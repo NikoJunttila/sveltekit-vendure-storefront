@@ -1,4 +1,4 @@
-import { gql } from '$lib/gql'
+import { gql } from '$lib/gql';
 
 export const Collection = gql(`
 	fragment Collection on Collection {
@@ -21,7 +21,7 @@ export const Collection = gql(`
 			preview
 		}
 	}
-`)
+`);
 
 export const GetCollection = gql(`
 	query GetCollection($slug: String!, $skip: Int, $take: Int) {
@@ -42,7 +42,7 @@ export const GetCollection = gql(`
 			totalItems
 		}
 	}
-`)
+`);
 
 export const GetCollections = gql(`
 	query GetCollections($options: CollectionListOptions) {
@@ -53,7 +53,7 @@ export const GetCollections = gql(`
 			totalItems
 		}
 	}
-`)
+`);
 
 export const GetTopLevelCollections = gql(`
 	query GetTopLevelCollections {
@@ -64,4 +64,4 @@ export const GetTopLevelCollections = gql(`
 			totalItems
 		}
 	}
-`)
+`);

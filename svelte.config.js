@@ -1,9 +1,9 @@
-import adapter from '@sveltejs/adapter-node'
+import adapter from '@sveltejs/adapter-node';
 // import adapter from '@sveltejs/adapter-vercel'
 //import adapter from '@sveltejs/adapter-cloudflare'
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
-import { join } from 'path'
-import 'dotenv/config'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { join } from 'path';
+import 'dotenv/config';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -19,7 +19,7 @@ const config = {
 	],
 	kit: {
 		// uncomment for Cloudflare
-/* 		adapter: adapter({
+		/* 		adapter: adapter({
 			routes: {
 				include: ['/*'],
 				exclude: [
@@ -37,7 +37,7 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			'$src/*': 'src/*'
-		},
+		}
 		// csp: {
 		// 	directives: {
 		// 		'script-src': ['self', 'https://laroastingco.com/', 'https://challenges.cloudflare.com/', 'https://js.stripe.com/'],
@@ -47,7 +47,7 @@ const config = {
 		// csrf: {
 		// 	checkOrigin: false,
 		// }
-	},
-}
+	}
+};
 
-export default config
+export default config;

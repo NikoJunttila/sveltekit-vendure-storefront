@@ -1,21 +1,28 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
-	import { getContextClient } from '@urql/svelte'
-	import { type CreateCustomerInput, type CreateAddressInput } from '$lib/gql/graphql';
-	import { SetOrderCustomer, SetOrderBillingAddress, SetOrderShippingAddress } from '$lib/vendure';
+	import { getContextClient } from '@urql/svelte';
+	import { type CreateCustomerInput, type CreateAddressInput, type UpdateCustomerInput, type UpdateAddressInput  } from '$lib/gql/graphql';
+	import { SetOrderCustomer, SetOrderBillingAddress, SetOrderShippingAddress,updateCustomer, updateCustomerAddress,Customer } from '$lib/vendure';
 	import * as m from '$lib/paraglide/messages.js';
-	
+	import { userStore } from '../stores';
+	import { useFragment } from '$src/lib/gql';
+
 	const client = getContextClient();
+	const user = $derived(useFragment(Customer , $userStore));
 
 	interface CheckoutForm {
-		customerForm : CreateCustomerInput;
-		addressForm : CreateAddressInput;
-		errors: {customer:string;address:string};
+		customerForm: CreateCustomerInput;
+		addressForm: CreateAddressInput;
+		disabledFields: {
+			customer: Record<string, boolean>;
+			address: Record<string, boolean>;
+		};
+		errors: { customer: string; address: string };
 	}
 
-	// Convert form data to state runes
-	let form : CheckoutForm = $state({
+	// Initialize form with empty values and disabled states
+	let form: CheckoutForm = $state({
 		customerForm: {
 			emailAddress: '',
 			firstName: '',
@@ -24,11 +31,11 @@
 			title: '',
 			customFields: null
 		} as CreateCustomerInput,
-		
+
 		addressForm: {
 			city: '',
 			company: '',
-			countryCode: '',
+			countryCode: 'FI',
 			customFields: null,
 			defaultBillingAddress: true,
 			defaultShippingAddress: true,
@@ -39,12 +46,115 @@
 			streetLine1: '',
 			streetLine2: ''
 		} as CreateAddressInput,
-		
+
+		disabledFields: {
+			customer: {
+				emailAddress: false,
+				firstName: false,
+				lastName: false,
+				phoneNumber: false
+			},
+			address: {
+				city: false,
+				company: false,
+				countryCode: false,
+				fullName: false,
+				phoneNumber: false,
+				postalCode: false,
+				province: false,
+				streetLine1: false,
+				streetLine2: false
+			}
+		},
+
 		errors: {
 			customer: '',
 			address: ''
 		}
 	});
+	const updateCustomerFunc = async (input: UpdateCustomerInput) => {
+		try {
+			const result = await client.mutation(updateCustomer, { input }).toPromise();
+			if (result.data?.updateCustomer) {
+				return true;
+			} else if (result.error) {
+				console.error('Error updating customer:', result.error);
+				return false;
+			}
+		} catch (error) {
+			console.error('Error updating customer:', error);
+			return false;
+		}
+	};
+
+	const updateAddressFunc = async (input: UpdateAddressInput) => {
+		try {
+			const result = await client.mutation(updateCustomerAddress, { input }).toPromise();
+			if (result.data?.updateCustomerAddress) {
+				return true;
+			} else if (result.error) {
+				console.error('Error updating address:', result.error);
+				return false;
+			}
+		} catch (error) {
+			console.error('Error updating address:', error);
+			return false;
+		}
+	};
+
+	// Function to populate form with user data and set disabled states
+	function populateFormWithUserData() {
+		if (user) {
+			// Populate customer form and set disabled states
+			form.customerForm = {
+				...form.customerForm,
+				emailAddress: user.emailAddress || '',
+				firstName: user.firstName || '',
+				lastName: user.lastName || '',
+				phoneNumber: user.phoneNumber || ''
+			};
+
+			// Set disabled states for customer fields
+			form.disabledFields.customer = {
+				emailAddress: Boolean(user.emailAddress),
+				firstName: Boolean(user.firstName),
+				lastName: Boolean(user.lastName),
+				phoneNumber: Boolean(user.phoneNumber)
+			};
+
+			// Find default shipping address
+			const defaultAddress = user.addresses?.find(addr => addr.defaultShippingAddress);
+			if (defaultAddress) {
+				form.addressForm = {
+					...form.addressForm,
+					city: defaultAddress.city || '',
+					company: defaultAddress.company || '',
+					countryCode: defaultAddress.country.code || 'FI',
+					fullName: defaultAddress.fullName || '',
+					phoneNumber: defaultAddress.phoneNumber || '',
+					postalCode: defaultAddress.postalCode || '',
+					province: defaultAddress.province || '',
+					streetLine1: defaultAddress.streetLine1 || '',
+					streetLine2: defaultAddress.streetLine2 || '',
+					defaultBillingAddress: defaultAddress.defaultBillingAddress,
+					defaultShippingAddress: defaultAddress.defaultShippingAddress
+				};
+
+				// Set disabled states for address fields
+				form.disabledFields.address = {
+					city: Boolean(defaultAddress.city),
+					company: Boolean(defaultAddress.company),
+					countryCode: Boolean(defaultAddress.country.code),
+					fullName: Boolean(defaultAddress.fullName),
+					phoneNumber: Boolean(defaultAddress.phoneNumber),
+					postalCode: Boolean(defaultAddress.postalCode),
+					province: Boolean(defaultAddress.province),
+					streetLine1: Boolean(defaultAddress.streetLine1),
+					streetLine2: Boolean(defaultAddress.streetLine2)
+				};
+			}
+		}
+	}
 
 	// Validation functions
 	function validateEmail(email: string): boolean {
@@ -65,18 +175,16 @@
 	// API functions
 	const setCustomer = async (input: CreateCustomerInput) => {
 		let result = await client.mutation(SetOrderCustomer, { input }).toPromise();
-		console.log("customer", result);
-	}
+		console.log('customer', result);
+	};
 
 	const setShippingAddress = async (input: CreateAddressInput) => {
 		let result = await client.mutation(SetOrderShippingAddress, { input }).toPromise();
-		//console.log(result);
-	}
+	};
 
 	const setBillingAddress = async (input: CreateAddressInput) => {
 		let result = await client.mutation(SetOrderBillingAddress, { input }).toPromise();
-		//console.log(result);
-	}
+	};
 
 	// Debounce function
 	function debounce<F extends (...args: any[]) => any>(fn: F, delay: number) {
@@ -97,22 +205,21 @@
 			form.errors.customer = 'Invalid phone number';
 			return false;
 		}
-		if (!form.customerForm.firstName && !form.customerForm.lastName){
+		if (!form.customerForm.firstName && !form.customerForm.lastName) {
 			form.errors.customer = 'name missing';
-			return false
+			return false;
 		}
-		form.addressForm.fullName = `${form.customerForm.firstName} ${form.customerForm.lastName}`
+		form.addressForm.fullName = `${form.customerForm.firstName} ${form.customerForm.lastName}`;
 		form.errors.customer = '';
-		console.log("FORM VALIDATED")
 		return true;
 	}
 
 	function validateAddressForm(): boolean {
-		if (!form.addressForm.streetLine1){
+		if (!form.addressForm.streetLine1) {
 			form.errors.address = 'streetline missing';
 			return false;
 		}
-		if (!form.addressForm.city){
+		if (!form.addressForm.city) {
 			form.errors.address = 'city missing';
 			return false;
 		}
@@ -125,12 +232,25 @@
 		return true;
 	}
 
-	// Debounced update functions
 	const debouncedCustomerUpdate = debounce(async (field: string, value: string) => {
 		if (!validateCustomerForm()) return;
 
 		try {
-			await setCustomer(form.customerForm);
+			if (user) {
+				// If user exists, update the existing user
+				const updateInput: UpdateCustomerInput = {
+					id: user.id,
+					[field]: value
+				};
+				const success = await updateCustomerFunc(updateInput);
+				if (!success) {
+					form.errors.customer = 'Failed to update customer information';
+				}
+			} else {
+				// If no user exists, create new customer in order
+				await setCustomer(form.customerForm);
+			}
+
 			if (browser) {
 				sessionStorage.setItem('customerForm', JSON.stringify(form.customerForm));
 			}
@@ -142,11 +262,27 @@
 	const debouncedAddressUpdate = debounce(async (field: string, value: string) => {
 		if (!validateAddressForm()) return;
 		try {
-			await Promise.all([
-				setShippingAddress(form.addressForm),
-				setBillingAddress(form.addressForm)
-			]);
-			form.errors.address = '';
+			if (user && user.addresses?.length > 0) {
+				// If user exists and has addresses, update the default address
+				const defaultAddress = user.addresses.find(addr => addr.defaultShippingAddress);
+				if (defaultAddress) {
+					const updateInput: UpdateAddressInput = {
+						id: defaultAddress.id,
+						[field]: value
+					};
+					const success = await updateAddressFunc(updateInput);
+					if (!success) {
+						form.errors.address = 'Failed to update address information';
+					}
+				}
+			} else {
+				// If no user or no addresses, set addresses in order
+				await Promise.all([
+					setShippingAddress(form.addressForm),
+					setBillingAddress(form.addressForm)
+				]);
+			}
+
 			if (browser) {
 				sessionStorage.setItem('addressForm', JSON.stringify(form.addressForm));
 			}
@@ -168,7 +304,11 @@
 
 	// Load saved data on mount
 	onMount(() => {
-		if (browser) {
+		if (user) {
+			// If user exists in store, populate form with user data
+			populateFormWithUserData();
+		} else if (browser) {
+			// If no user in store, try to load from session storage
 			const savedCustomer = sessionStorage.getItem('customerForm');
 			const savedAddress = sessionStorage.getItem('addressForm');
 
@@ -178,11 +318,12 @@
 	});
 </script>
 
+
 <div class="col-span-1 space-y-4 text-black">
 	<!-- Customer Form -->
-	<h1 class="text-xl font-bold mb-4">{m.checkout()}</h1>
-	<div class="bg-white p-4 rounded shadow">
-	<h2 class="text-xl font-bold mb-4">{m.customer_information()}</h2>
+	<h1 class="mb-4 text-xl font-bold">{m.checkout()}</h1>
+	<div class="rounded bg-white p-4 shadow">
+		<h2 class="mb-4 text-xl font-bold">{m.customer_information()}</h2>
 		<div class="space-y-3">
 			<div>
 				<label for="name" class="block text-sm font-medium">{m.first_name()}*</label>
@@ -193,6 +334,7 @@
 					required
 					name="name"
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.customer.firstName}
 				/>
 			</div>
 			<div>
@@ -204,6 +346,7 @@
 					required
 					name="lastName"
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.customer.lastName}
 				/>
 			</div>
 			<div>
@@ -215,6 +358,7 @@
 					required
 					name="emailaddr"
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.customer.emailAddress}
 				/>
 			</div>
 			<div>
@@ -226,17 +370,18 @@
 					required
 					name="phone"
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.customer.phoneNumber}
 				/>
 			</div>
 			{#if form.errors.customer}
-				<p class="text-red-500 text-sm">{form.errors.customer}</p>
+				<p class="text-sm text-red-500">{form.errors.customer}</p>
 			{/if}
 		</div>
 	</div>
 
 	<!-- Address Form -->
-	<div class="bg-white p-4 rounded shadow">
-		<h2 class="text-xl font-bold mb-4">{m.address_information()}</h2>
+	<div class="rounded bg-white p-4 shadow">
+		<h2 class="mb-4 text-xl font-bold">{m.address_information()}</h2>
 		<div class="space-y-3">
 			<div>
 				<label for="company" class="block text-sm font-medium">{m.company()}</label>
@@ -246,6 +391,7 @@
 					oninput={(e) => handleAddressInput('company', e.currentTarget.value)}
 					name="company"
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.address.company}
 				/>
 			</div>
 			<div>
@@ -257,6 +403,7 @@
 					oninput={(e) => handleAddressInput('streetLine1', e.currentTarget.value)}
 					required
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.address.streetLine1}
 				/>
 			</div>
 			<div>
@@ -267,6 +414,7 @@
 					value={form.addressForm.streetLine2}
 					oninput={(e) => handleAddressInput('streetLine2', e.currentTarget.value)}
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.address.streetLine2}
 				/>
 			</div>
 			<div>
@@ -278,6 +426,7 @@
 					oninput={(e) => handleAddressInput('city', e.currentTarget.value)}
 					required
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.address.city}
 				/>
 			</div>
 			<div>
@@ -289,6 +438,7 @@
 					oninput={(e) => handleAddressInput('postalCode', e.currentTarget.value)}
 					required
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.address.postalCode}
 				/>
 			</div>
 			<div>
@@ -299,13 +449,14 @@
 					onchange={(e) => handleAddressInput('countryCode', e.currentTarget.value)}
 					required
 					class="mt-1 block w-full rounded border p-2"
+					disabled={form.disabledFields.address.countryCode}
 				>
 					<option value="FI" selected>Finland</option>
 					<!-- Add more countries as needed -->
 				</select>
 			</div>
 			{#if form.errors.address}
-				<p class="text-red-500 text-sm">{form.errors.address}</p>
+				<p class="text-sm text-red-500">{form.errors.address}</p>
 			{/if}
 		</div>
 	</div>

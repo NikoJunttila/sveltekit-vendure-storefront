@@ -423,7 +423,13 @@
 				emitChange();
 			}
 		};
-		const addEvents = ({ autoPlay, pauseOnHover }: { autoPlay?: number; pauseOnHover?: boolean }) => {
+		const addEvents = ({
+			autoPlay,
+			pauseOnHover
+		}: {
+			autoPlay?: number;
+			pauseOnHover?: boolean;
+		}) => {
 			if (!isMobile) {
 				node.addEventListener('mousedown', handleMouseDown);
 			}
@@ -563,20 +569,20 @@
 				gap.xl ?? gap.default ?? 20
 			}px ${(axis.xl || axis.default) === 'x' ? '' : '0'}`}
 			style:--overflow-xs={axis.xs === 'x'
-				? `${disableNativeScroll.xs ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.xs ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				? `${(disableNativeScroll.xs ?? disableNativeScroll.default) ? 'hidden' : 'auto'} visible`
+				: `visible ${(disableNativeScroll.xs ?? disableNativeScroll.default) ? 'hidden' : 'auto'}`}
 			style:--overflow-sm={axis.sm === 'x'
-				? `${disableNativeScroll.sm ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.sm ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				? `${(disableNativeScroll.sm ?? disableNativeScroll.default) ? 'hidden' : 'auto'} visible`
+				: `visible ${(disableNativeScroll.sm ?? disableNativeScroll.default) ? 'hidden' : 'auto'}`}
 			style:--overflow-md={axis.md === 'x'
-				? `${disableNativeScroll.md ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.md ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				? `${(disableNativeScroll.md ?? disableNativeScroll.default) ? 'hidden' : 'auto'} visible`
+				: `visible ${(disableNativeScroll.md ?? disableNativeScroll.default) ? 'hidden' : 'auto'}`}
 			style:--overflow-lg={axis.lg === 'x'
-				? `${disableNativeScroll.lg ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.lg ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				? `${(disableNativeScroll.lg ?? disableNativeScroll.default) ? 'hidden' : 'auto'} visible`
+				: `visible ${(disableNativeScroll.lg ?? disableNativeScroll.default) ? 'hidden' : 'auto'}`}
 			style:--overflow-xl={axis.xl === 'x'
-				? `${disableNativeScroll.xl ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.xl ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				? `${(disableNativeScroll.xl ?? disableNativeScroll.default) ? 'hidden' : 'auto'} visible`
+				: `visible ${(disableNativeScroll.xl ?? disableNativeScroll.default) ? 'hidden' : 'auto'}`}
 			style:--layout-xs={`${100 / (layout.xs ?? layout.default ?? 1)}%`}
 			style:--layout-sm={`${100 / (layout.sm ?? layout.default ?? 2)}%`}
 			style:--layout-md={`${100 / (layout.md ?? layout.default ?? 2)}%`}
@@ -680,8 +686,8 @@
 			flex-direction: column !important;
 		}
 		:global(
-				[data-carousel-slider][data-axis-xs='y'][data-dragging='false'][data-drag-free='false']
-			) {
+			[data-carousel-slider][data-axis-xs='y'][data-dragging='false'][data-drag-free='false']
+		) {
 			scroll-snap-type: y mandatory;
 		}
 	}
@@ -697,8 +703,8 @@
 			flex-direction: column !important;
 		}
 		:global(
-				[data-carousel-slider][data-axis-sm='y'][data-dragging='false'][data-drag-free='false']
-			) {
+			[data-carousel-slider][data-axis-sm='y'][data-dragging='false'][data-drag-free='false']
+		) {
 			scroll-snap-type: y mandatory;
 		}
 	}
@@ -714,8 +720,8 @@
 			flex-direction: column !important;
 		}
 		:global(
-				[data-carousel-slider][data-axis-md='y'][data-dragging='false'][data-drag-free='false']
-			) {
+			[data-carousel-slider][data-axis-md='y'][data-dragging='false'][data-drag-free='false']
+		) {
 			scroll-snap-type: y mandatory;
 		}
 	}
@@ -732,8 +738,8 @@
 			flex-direction: column !important;
 		}
 		:global(
-				[data-carousel-slider][data-axis-lg='y'][data-dragging='false'][data-drag-free='false']
-			) {
+			[data-carousel-slider][data-axis-lg='y'][data-dragging='false'][data-drag-free='false']
+		) {
 			scroll-snap-type: y mandatory;
 		}
 	}
@@ -749,8 +755,8 @@
 			flex-direction: column !important;
 		}
 		:global(
-				[data-carousel-slider][data-axis-xl='y'][data-dragging='false'][data-drag-free='false']
-			) {
+			[data-carousel-slider][data-axis-xl='y'][data-dragging='false'][data-drag-free='false']
+		) {
 			scroll-snap-type: y mandatory;
 		}
 	}
@@ -772,8 +778,8 @@
 		scroll-behavior: smooth;
 	}
 	:global(
-			[data-carousel-slider][data-dragging='false'][data-drag-free='false'] > [data-carousel-slide]
-		) {
+		[data-carousel-slider][data-dragging='false'][data-drag-free='false'] > [data-carousel-slide]
+	) {
 		scroll-snap-align: start;
 	}
 </style>

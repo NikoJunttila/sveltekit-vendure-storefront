@@ -1,34 +1,42 @@
 <script lang="ts">
-	import { goto } from '$app/navigation'
-	import { page } from '$app/state'
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
 	import * as m from '$lib/paraglide/messages.js';
-	import { 
-		PUBLIC_SITE_NAME, 
+	import {
+		PUBLIC_SITE_NAME,
 		PUBLIC_SITE_URL,
-		PUBLIC_SITE_LOGO, 
+		PUBLIC_SITE_LOGO,
 		PUBLIC_SITE_IMAGE
-	} from '$env/static/public'
+	} from '$env/static/public';
 
-
-	const collections = page.data.collections
+	const collections = page.data.collections;
 </script>
+
 <!-- <Hero /> -->
-<div class="2xl:mx-auto max-w-screen-2xl p-2 md:p-4 bg-transparent">
-	<div class="relative grid grid-cols-1 m-0 w-full rounded-md">
-		<div class="dark:hidden absolute inset-x-0 bottom-0 bg-gradient-to-b from-transparent via-transparent to-white h-24 w-full rounded-md"></div>
-		<div class="absolute inset-0 dark:bg-black/30 rounded-md"></div>
+<div class="max-w-screen-2xl bg-transparent p-2 md:p-4 2xl:mx-auto">
+	<div class="relative m-0 grid w-full grid-cols-1 rounded-md">
+		<div
+			class="absolute inset-x-0 bottom-0 h-24 w-full rounded-md bg-gradient-to-b from-transparent via-transparent to-white dark:hidden"
+		></div>
+		<div class="absolute inset-0 rounded-md dark:bg-black/30"></div>
 		<header class="absolute px-6">
-			<h1 class="text-gray-900 text-3xl md:text-5xl lg:text-7xl max-w-[600px] leading-11 mt-6 mb-3 md:my-6">
+			<h1
+				class="leading-11 mb-3 mt-6 max-w-[600px] text-3xl text-gray-900 md:my-6 md:text-5xl lg:text-7xl"
+			>
 				{m.hero_title()}
 			</h1>
-			<p class="hidden md:block text-gray-900 max-w-[400px] text-lg mx-1 mt-6">
+			<p class="mx-1 mt-6 hidden max-w-[400px] text-lg text-gray-900 md:block">
 				{m.hero_description()}
 			</p>
-			<button type="button" onclick={async () => await goto(`/categories`)} class="inline-block my-4 py-4 px-10 text-lg font-semibold whitespace-nowrap tracking-wide text-white bg-gradient-to-r from-lime-800 to-lime-700 hover:text-gray-900 rounded-lg transition duration-200">
+			<button
+				type="button"
+				onclick={async () => await goto(`/categories`)}
+				class="my-4 inline-block whitespace-nowrap rounded-lg bg-gradient-to-r from-lime-800 to-lime-700 px-10 py-4 text-lg font-semibold tracking-wide text-white transition duration-200 hover:text-gray-900"
+			>
 				{m.shop_now()} →
 			</button>
 		</header>
-		<picture class="m-0 w-full md:h-84 lg:h-96 object-cover overflow-hidden">
+		<picture class="md:h-84 m-0 w-full overflow-hidden object-cover lg:h-96">
 			<img src={collections[0].featuredAsset.preview} alt={collections[0].name} />
 		</picture>
 	</div>

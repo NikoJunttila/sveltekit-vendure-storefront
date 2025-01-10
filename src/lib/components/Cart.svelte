@@ -1,66 +1,83 @@
 <script lang="ts">
-	import X from 'lucide-svelte/icons/x'
-	import ShoppingBag from 'lucide-svelte/icons/shopping-bag'
-	import { createDialog } from '@melt-ui/svelte'
-   	import { getContextClient } from '@urql/svelte'
-	import { toast } from 'svelte-sonner'
-	import { fade, fly } from 'svelte/transition'
-	import { useFragment } from '$lib/gql'
-	import { ActiveOrder, AdjustOrderLine, RemoveOrderLine } from '$lib/vendure'
-	import { cartStore } from '$lib/stores'
-	import { formatCurrency } from '$lib/utils'
-	import Image from '$lib/components/Image.svelte'
-	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public'
-	import * as m from '$lib/paraglide/messages.js'
+	import X from 'lucide-svelte/icons/x';
+	import ShoppingBag from 'lucide-svelte/icons/shopping-bag';
+	import { createDialog } from '@melt-ui/svelte';
+	import { getContextClient } from '@urql/svelte';
+	import { toast } from 'svelte-sonner';
+	import { fade, fly } from 'svelte/transition';
+	import { useFragment } from '$lib/gql';
+	import { ActiveOrder, AdjustOrderLine, RemoveOrderLine } from '$lib/vendure';
+	import { cartStore } from '$lib/stores';
+	import { formatCurrency } from '$lib/utils';
+	import Image from '$lib/components/Image.svelte';
+	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
+	import * as m from '$lib/paraglide/messages.js';
 
-	$: lines = useFragment(ActiveOrder, $cartStore)?.lines || []
-	$: total = useFragment(ActiveOrder, $cartStore)?.subTotal || 0
-	$: count = lines.length
-	
-	const client = getContextClient()
-	let processing = false
-	
+	$: lines = useFragment(ActiveOrder, $cartStore)?.lines || [];
+	$: total = useFragment(ActiveOrder, $cartStore)?.subTotal || 0;
+	$: count = lines.length;
+
+	const client = getContextClient();
+	let processing = false;
+
 	const adjustOrderLine = async (orderLineId: string, e: Event) => {
-		if (processing) return
-		processing = true
-		const target = e.target as HTMLSelectElement
-		const quantity = +target.value
-		const result = await client.mutation(AdjustOrderLine, { orderLineId: orderLineId, quantity: quantity }, { additionalTypenames: ['ActiveOrder'] }).toPromise()
-		if (result.error) toast.error('Error updating cart')
-		else if (result.data) toast.success('Cart updated')
-		processing = false
-	}
+		if (processing) return;
+		processing = true;
+		const target = e.target as HTMLSelectElement;
+		const quantity = +target.value;
+		const result = await client
+			.mutation(
+				AdjustOrderLine,
+				{ orderLineId: orderLineId, quantity: quantity },
+				{ additionalTypenames: ['ActiveOrder'] }
+			)
+			.toPromise();
+		if (result.error) toast.error('Error updating cart');
+		else if (result.data) toast.success('Cart updated');
+		processing = false;
+	};
 
 	const removeOrderLine = async (orderLineId: string) => {
-		if (processing) return
-		processing = true
-		const result = await client.mutation(RemoveOrderLine, { orderLineId: orderLineId }, { additionalTypenames: ['ActiveOrder'] }).toPromise()
-		if (result.error) toast.error('Error removing item from cart')
-		else if (result.data) toast.success('Item removed from cart')
-		processing = false
-	}
+		if (processing) return;
+		processing = true;
+		const result = await client
+			.mutation(
+				RemoveOrderLine,
+				{ orderLineId: orderLineId },
+				{ additionalTypenames: ['ActiveOrder'] }
+			)
+			.toPromise();
+		if (result.error) toast.error('Error removing item from cart');
+		else if (result.data) toast.success('Item removed from cart');
+		processing = false;
+	};
 
-	const { 
+	const {
 		elements: { trigger, portalled, overlay, content, title, close },
-		states: { open, } 
-	} = createDialog( { preventScroll: true } )
+		states: { open }
+	} = createDialog({ preventScroll: true });
 </script>
+
 {#if $open}
-	<button {...$close} use:close class="relative align-middle items-center grow-on-hover">
+	<button {...$close} use:close class="grow-on-hover relative items-center align-middle">
 		<span class="sr-only">{m.shopping_cart()}</span>
 		<X class="h-10 w-10" />
 		{#if count > 0}
-			<span class="z-50 absolute top-3 right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-lime-600 rounded-full">
+			<span
+				class="absolute right-2 top-3 z-50 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-lime-600 px-2 py-1 text-xs font-bold leading-none text-white"
+			>
 				{count}
 			</span>
 		{/if}
 	</button>
 {:else}
-	<button {...$trigger} use:trigger class="relative align-middle items-center grow-on-hover">
+	<button {...$trigger} use:trigger class="grow-on-hover relative items-center align-middle">
 		<span class="sr-only">{m.shopping_cart()}</span>
 		<ShoppingBag class="h-9 w-9" />
 		{#if count > 0}
-			<span class="z-50 absolute top-3 right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-lime-600 rounded-full">
+			<span
+				class="absolute right-2 top-3 z-50 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-lime-600 px-2 py-1 text-xs font-bold leading-none text-white"
+			>
 				{count}
 			</span>
 		{/if}
@@ -68,56 +85,117 @@
 {/if}
 <div use:portalled>
 	{#if $open}
-		<div {...$overlay} use:overlay class="fixed inset-0 z-20 bg-black/50" transition:fade={{ duration: 150 }}></div>
-		<div {...$content} use:content class="overflow-auto fixed right-0 top-0 z-50 w-full h-full pb-0 mb-0 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/2 bg-primary-700  p-[25px] shadow-lg focus:outline-none" transition:fly={{ x: '100%', duration: 300, opacity: 1, }}>
+		<div
+			{...$overlay}
+			use:overlay
+			class="fixed inset-0 z-20 bg-black/50"
+			transition:fade={{ duration: 150 }}
+		></div>
+		<div
+			{...$content}
+			use:content
+			class="fixed right-0 top-0 z-50 mb-0 h-full w-full overflow-auto bg-primary-700 p-[25px] pb-0 shadow-lg focus:outline-none sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/2"
+			transition:fly={{ x: '100%', duration: 300, opacity: 1 }}
+		>
 			<button {...$close} use:close>
 				<span class="sr-only">{m.shopping_cart()}</span>
 				<X class="h-10 w-10" />
 			</button>
 			<div class="px-8 sm:px-12">
-				<h2 {...$title} use:title class="mb-6 text-center text-3xl font-bold tracking-tight sm:text-4xl  text-white">
+				<h2
+					{...$title}
+					use:title
+					class="mb-6 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl"
+				>
 					{m.shopping_cart()}
 				</h2>
-				<ul role="list" class="divide-y divide-gray-200 dark:divide-gray-800 border-t border-gray-200 dark:border-gray-800">
+				<ul
+					role="list"
+					class="divide-y divide-gray-200 border-t border-gray-200 dark:divide-gray-800 dark:border-gray-800"
+				>
 					{#each lines as line}
 						<li class="flex py-6">
-							<a data-sveltekit-reload href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`} >
-								<div class="cursor-pointer flex-shrink-0">
+							<a
+								data-sveltekit-reload
+								href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`}
+							>
+								<div class="flex-shrink-0 cursor-pointer">
 									{#if line.featuredAsset?.preview}
-										<Image preview={line.featuredAsset.preview} alt={line.productVariant.name} preset="thumb" class="h-24 w-auto rounded-md object-cover object-center sm:h-32 sm:w-auto" />
+										<Image
+											preview={line.featuredAsset.preview}
+											alt={line.productVariant.name}
+											preset="thumb"
+											class="h-24 w-auto rounded-md object-cover object-center sm:h-32 sm:w-auto"
+										/>
 									{:else}
-										<img src="/img/noimg.png" alt={line.productVariant.name} class="h-24 w-auto rounded-md object-cover object-center sm:h-32 sm:w-auto">
+										<img
+											src="/img/noimg.png"
+											alt={line.productVariant.name}
+											class="h-24 w-auto rounded-md object-cover object-center sm:h-32 sm:w-auto"
+										/>
 									{/if}
 								</div>
 							</a>
-							<div class="m-2 flex flex-1 flex-col sm:ml-6 ">
+							<div class="m-2 flex flex-1 flex-col sm:ml-6">
 								<div>
 									<div class="flex justify-between">
-										<a data-sveltekit-reload href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`} class="cursor-pointer text-sm">
-											<div class="font-medium hover:text-gray-800">{line.productVariant.product.name}</div>
+										<a
+											data-sveltekit-reload
+											href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`}
+											class="cursor-pointer text-sm"
+										>
+											<div class="font-medium hover:text-gray-800">
+												{line.productVariant.product.name}
+											</div>
 											{#each line.productVariant.options as option}
 												<p class="mt-1 text-sm">{option.group.name}: {option.name}</p>
-											{/each}	
+											{/each}
 										</a>
 										<div>
-											<p class="ml-4 text-sm font-medium">{formatCurrency(line.linePrice, PUBLIC_DEFAULT_CURRENCY)}</p>
-											<p class="ml-4 text-sm text-right">{m.quantity({ count: line.quantity })}</p>
+											<p class="ml-4 text-sm font-medium">
+												{formatCurrency(line.linePrice, PUBLIC_DEFAULT_CURRENCY)}
+											</p>
+											<p class="ml-4 text-right text-sm">{m.quantity({ count: line.quantity })}</p>
 										</div>
 									</div>
 								</div>
 								<div class="mt-4 flex flex-1 items-end justify-between">
-									<select name="quantity" class="text-sm font-medium rounded-lg focus:ring-gray-700 focus:border-none text-black" onchange="{async(e) => adjustOrderLine(line.id, e)}">
-										{#each [1,2,3,4,5,6,7,8,9,10,11,12] as qty}
-											<option value={qty} selected={qty === line.quantity} class="text-sm text-black">{qty}</option>
+									<select
+										name="quantity"
+										class="rounded-lg text-sm font-medium text-black focus:border-none focus:ring-gray-700"
+										onchange={async (e) => adjustOrderLine(line.id, e)}
+									>
+										{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as qty}
+											<option
+												value={qty}
+												selected={qty === line.quantity}
+												class="text-sm text-black">{qty}</option
+											>
 										{/each}
 									</select>
 									<div class="ml-4">
-										<button type="submit" aria-label="delete" onclick={ async () => { removeOrderLine(line.id) }} class="text-sm font-medium text-gray-500 hover:text-gray-400">
+										<button
+											type="submit"
+											aria-label="delete"
+											onclick={async () => {
+												removeOrderLine(line.id);
+											}}
+											class="text-sm font-medium text-gray-500 hover:text-gray-400"
+										>
 											<span class="sr-only">{m.remove()}</span>
-											<svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-												<path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z" clip-rule="evenodd" />
+											<svg
+												class="h-5 w-5"
+												viewBox="0 0 20 20"
+												fill="currentColor"
+												aria-hidden="true"
+											>
+												<path
+													fill-rule="evenodd"
+													d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
+													clip-rule="evenodd"
+												/>
 											</svg>
-										</button>                                        
+										</button>
 									</div>
 								</div>
 							</div>
@@ -128,29 +206,38 @@
 						</div>
 					{/each}
 				</ul>
-				<section aria-labelledby="summary-heading" class="border-t border-gray-200 dark:border-gray-800  bg-primary-400 text-black rounded sticky bottom-0 py-6">
+				<section
+					aria-labelledby="summary-heading"
+					class="sticky bottom-0 rounded border-t border-gray-200 bg-primary-400 py-6 text-black dark:border-gray-800"
+				>
 					{#if lines.length > 0}
-					<h2 id="summary-heading" class="sr-only">Order summary</h2>
-					<div>
-						<dl class="space-y-4">
-							<div class="flex items-center justify-between">
-								<dt class="ml-2 text-base font-medium">{m.subtotal()}</dt>
-								<dd class="ml-4 mr-2 text-base font-medium">{formatCurrency(total, PUBLIC_DEFAULT_CURRENCY)}</dd>
-							</div>
-						</dl>
-						<p class="ml-2 mt-1 text-sm">{m.shipping_taxes_checkout()}</p>
-					</div>
-					<form action="/checkout">
-						<button use:close type="submit" class="my-4 duration-300 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium  hover:bg-lime-700">
-							{m.checkout()}
-						</button>
-					</form>
+						<h2 id="summary-heading" class="sr-only">Order summary</h2>
+						<div>
+							<dl class="space-y-4">
+								<div class="flex items-center justify-between">
+									<dt class="ml-2 text-base font-medium">{m.subtotal()}</dt>
+									<dd class="ml-4 mr-2 text-base font-medium">
+										{formatCurrency(total, PUBLIC_DEFAULT_CURRENCY)}
+									</dd>
+								</div>
+							</dl>
+							<p class="ml-2 mt-1 text-sm">{m.shipping_taxes_checkout()}</p>
+						</div>
+						<form action="/checkout">
+							<button
+								use:close
+								type="submit"
+								class="my-4 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium duration-300 hover:bg-lime-700"
+							>
+								{m.checkout()}
+							</button>
+						</form>
 					{/if}
 					<button {...$close} use:close class="w-full text-center font-medium">
 						&larr; {m.continue_shopping()}
 					</button>
 				</section>
-			</div>         
+			</div>
 		</div>
 	{/if}
 </div>

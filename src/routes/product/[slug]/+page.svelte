@@ -16,7 +16,6 @@
 	import Highlights from '$lib/components/Highlights.svelte';
 	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_ORGANIZATION } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages.js';
-	
 
 	let { data } = $props();
 	const client = getContextClient();
@@ -151,11 +150,13 @@
 					{#if breadcrumb.slug === '__root_collection__'}
 						<a
 							class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
-							href="/">							<span
-							class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+							href="/"
 						>
-							{m.home()}
-						</span></a
+							<span
+								class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+							>
+								{m.home()}
+							</span></a
 						>
 					{:else}
 						<span class="before:mr-2 before:content-['/']"></span>

@@ -26,10 +26,10 @@
 	});
 
 	onMount(() => {
-		if($userStore){
-			goto("/user")
+		if ($userStore) {
+			goto('/user');
 		}
-	})
+	});
 
 	let processing: boolean = $state(false);
 
@@ -46,8 +46,12 @@
 				.toPromise();
 			console.log(result);
 			if (result?.data?.login.__typename === 'CurrentUser') {
-				const result2 = await client.query(GetCustomer,{},{requestPolicy: 'network-only'}).toPromise();
-				const result3 = await client.query(GetActiveOrder,{},{requestPolicy: 'network-only'}).toPromise();
+				const result2 = await client
+					.query(GetCustomer, {}, { requestPolicy: 'network-only' })
+					.toPromise();
+				const result3 = await client
+					.query(GetActiveOrder, {}, { requestPolicy: 'network-only' })
+					.toPromise();
 				// Successfully logged in
 				toast.success('Welcome');
 				await invalidateAll();

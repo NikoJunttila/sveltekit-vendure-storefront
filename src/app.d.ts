@@ -10,19 +10,19 @@ declare global {
 			// sid: string // session id
 			// ssig: string // session signature
 			// token: string // vendure auth token
-			user: any
-			cart: any
-			ssig : string
-			sid : string
+			user: any;
+			cart: any;
+			ssig: string;
+			sid: string;
 		}
 		// interface PageData {}
 		// interface Platform {}
 	}
 	declare namespace svelteHTML {
 		interface HTMLAttributes<T> {
-			'on:clickOutside'?: CompositionEventHandler<T>
+			'on:clickOutside'?: CompositionEventHandler<T>;
 		}
 	}
 }
 
-export {}
+export {};

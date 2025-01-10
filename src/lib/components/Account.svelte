@@ -1,26 +1,33 @@
 <script lang="ts">
-	import CircleUserRound from 'lucide-svelte/icons/circle-user-round'
-	import { createDropdownMenu } from '@melt-ui/svelte'
-	import { userStore } from '$lib/stores'
+	import CircleUserRound from 'lucide-svelte/icons/circle-user-round';
+	import { createDropdownMenu } from '@melt-ui/svelte';
+	import { userStore } from '$lib/stores';
 
-	$: me = $userStore
+	$: me = $userStore;
 
-	const { 
+	const {
 		elements: { trigger, menu, item }
-	} = createDropdownMenu({ 
+	} = createDropdownMenu({
 		positioning: { placement: 'bottom-end' },
 		arrowSize: 0,
-		preventScroll: false,
-	})
+		preventScroll: false
+	});
 </script>
+
 {#if me}
-	<button type="button" {...$trigger} use:trigger aria-label="Open account menu" class="align-middle items-center grow-on-hover">
+	<button
+		type="button"
+		{...$trigger}
+		use:trigger
+		aria-label="Open account menu"
+		class="grow-on-hover items-center align-middle"
+	>
 		<span class="sr-only">View account</span>
 		<CircleUserRound class="h-9 w-9" />
 	</button>
 {:else}
 	<a href="/account">
-		<button type="button" class="align-middle items-center grow-on-hover">
+		<button type="button" class="grow-on-hover items-center align-middle">
 			<span class="sr-only">Sign In</span>
 			<CircleUserRound class="h-9 w-9" />
 		</button>
@@ -36,6 +43,7 @@
 		</a>
 	</div>
 </div>
+
 <style lang="postcss">
 	.menu {
 		@apply z-10 flex flex-col shadow-lg;

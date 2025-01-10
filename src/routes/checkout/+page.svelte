@@ -124,56 +124,53 @@
 
 	const setOrderState = async (state: string) => {
 		let result = await client.mutation(TransitionOrderToState, { state }).toPromise();
-		console.log(result)
+		console.log(result);
 	};
 
-
-
-
-	async function sendPayment(){
-		disabled = true
-			try {
-				// ensure the method set is what is showing on this page
-				// protects against method being changed on another page
-				// the final shipping method should be the one on the page submitted
-				await setShippingOption(selectedShippingOption);
-			} catch (e) {
-				console.log(e);
-			}
-			try {
-				await setOrderState('ArrangingPayment');
-			} catch (e) {
-				console.log(e);
-			}
-			try {
-				const payload = 'xdd'; //
-				console.log(payload);
-				let result = await client
-					.mutation(AddOrderPayment, { input: { method: 'standard-payment', metadata: payload } })
-					.toPromise()
-					.then((result) => result?.data?.addPaymentToOrder);
-				console.log(result);
-				switch (result?.__typename) {
-					case 'Order':
-						// Adding payment succeeded!
-						window.location.href = `/checkout/success/${order?.code}`;
-						break;
-					case 'OrderStateTransitionError':
-					case 'OrderPaymentStateError':
-					case 'PaymentDeclinedError':
-					case 'PaymentFailedError':
-					// Display an error to the customer
-					// dropin.clearSelectedPaymentMethod()
-					case 'NoActiveOrderError':
-						console.log('Active order not found');
-				}
-			} catch (e) {
-				await setOrderState('AddingItems');
-				errorMessage = 'Something went wrong when connecting to our payment provider.';
-				console.log(e);
-			}
-			disabled = false;
+	async function sendPayment() {
+		disabled = true;
+		try {
+			// ensure the method set is what is showing on this page
+			// protects against method being changed on another page
+			// the final shipping method should be the one on the page submitted
+			await setShippingOption(selectedShippingOption);
+		} catch (e) {
+			console.log(e);
 		}
+		try {
+			await setOrderState('ArrangingPayment');
+		} catch (e) {
+			console.log(e);
+		}
+		try {
+			const payload = 'xdd'; //
+			console.log(payload);
+			let result = await client
+				.mutation(AddOrderPayment, { input: { method: 'standard-payment', metadata: payload } })
+				.toPromise()
+				.then((result) => result?.data?.addPaymentToOrder);
+			console.log(result);
+			switch (result?.__typename) {
+				case 'Order':
+					// Adding payment succeeded!
+					window.location.href = `/checkout/success/${order?.code}`;
+					break;
+				case 'OrderStateTransitionError':
+				case 'OrderPaymentStateError':
+				case 'PaymentDeclinedError':
+				case 'PaymentFailedError':
+				// Display an error to the customer
+				// dropin.clearSelectedPaymentMethod()
+				case 'NoActiveOrderError':
+					console.log('Active order not found');
+			}
+		} catch (e) {
+			await setOrderState('AddingItems');
+			errorMessage = 'Something went wrong when connecting to our payment provider.';
+			console.log(e);
+		}
+		disabled = false;
+	}
 
 	onMount(async () => {
 		if (browser) {
@@ -185,7 +182,6 @@
 
 <noscript>
 	<p>Please enable javascript to complete checkout.</p>
-
 
 	<p>
 		We use a third party (<a href="https://braintree.com">Braintree</a>) to process credit card
@@ -235,7 +231,6 @@
 		</div>
 		<CheckoutForm></CheckoutForm>
 		<form>
-			
 			<div
 				class="mx-auto grid max-w-screen-2xl grid-cols-1 gap-y-6 p-4 sm:gap-x-4 md:grid-cols-2 lg:grid-cols-3"
 			>
@@ -244,30 +239,41 @@
 						<ul role="list" class="flex-auto">
 							{#if order?.lines}
 								{#each order.lines as line}
-								<li class="flex space-x-6 py-6 border-b border-gray-200">
-									<Image preview={line.featuredAsset?.preview} alt={line.productVariant.name} preset="thumb" class="h-28 w-auto flex-none rounded-md bg-gray-200 object-cover object-center" />
-									<div class="flex flex-col justify-between space-y-4 my-auto">
-										<div class="space-y-1 text-sm font-medium">
-											<h3 class="text-gray-900">{line.productVariant.name}</h3>
-											<p class="text-gray-900">facets</p>
-											<p class="text-gray-500">Price: {formatCurrency(line.unitPrice, PUBLIC_DEFAULT_CURRENCY)}</p>
-											<div class="flex items-center space-x-2">
-												<p class="text-gray-500">{m.quantity({ count: line.quantity })}</p>
-												<select 
-													name="quantity" 
-													class="text-sm font-medium rounded-lg focus:ring-gray-700 focus:border-none text-black" 
-													onchange="{async(e) => adjustOrderLine(line.id, e)}"
-												>
-													{#each Array.from({length: 20}, (_, i) => i + 1) as qty}
-														<option value={qty} selected={qty === line.quantity} class="text-sm text-black">
-															{qty}
-														</option>
-													{/each}
-												</select>
+									<li class="flex space-x-6 border-b border-gray-200 py-6">
+										<Image
+											preview={line.featuredAsset?.preview}
+											alt={line.productVariant.name}
+											preset="thumb"
+											class="h-28 w-auto flex-none rounded-md bg-gray-200 object-cover object-center"
+										/>
+										<div class="my-auto flex flex-col justify-between space-y-4">
+											<div class="space-y-1 text-sm font-medium">
+												<h3 class="text-gray-900">{line.productVariant.name}</h3>
+												<p class="text-gray-900">facets</p>
+												<p class="text-gray-500">
+													Price: {formatCurrency(line.unitPrice, PUBLIC_DEFAULT_CURRENCY)}
+												</p>
+												<div class="flex items-center space-x-2">
+													<p class="text-gray-500">{m.quantity({ count: line.quantity })}</p>
+													<select
+														name="quantity"
+														class="rounded-lg text-sm font-medium text-black focus:border-none focus:ring-gray-700"
+														onchange={async (e) => adjustOrderLine(line.id, e)}
+													>
+														{#each Array.from({ length: 20 }, (_, i) => i + 1) as qty}
+															<option
+																value={qty}
+																selected={qty === line.quantity}
+																class="text-sm text-black"
+															>
+																{qty}
+															</option>
+														{/each}
+													</select>
+												</div>
 											</div>
 										</div>
-									</div>
-								</li>
+									</li>
 								{/each}
 							{/if}
 						</ul>

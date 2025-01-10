@@ -11,7 +11,7 @@ export default defineConfig({
 		})
 	],
 	optimizeDeps: {
-		exclude: ['@urql/svelte'],
+		exclude: ['@urql/svelte']
 	},
-	assetsInclude: ['**/*.hbs'],
+	assetsInclude: ['**/*.hbs']
 });

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { cartStore } from '$lib/stores'
-	import { useFragment } from '$lib/gql'
-	import { ActiveOrder } from '$lib/vendure'
-	import { formatCurrency } from '$lib/utils'
-	import Image from '$lib/components/Image.svelte'
-	import * as m from '$lib/paraglide/messages.js'
+	import { cartStore } from '$lib/stores';
+	import { useFragment } from '$lib/gql';
+	import { ActiveOrder } from '$lib/vendure';
+	import { formatCurrency } from '$lib/utils';
+	import Image from '$lib/components/Image.svelte';
+	import * as m from '$lib/paraglide/messages.js';
 
 	interface Props {
 		currency: string;
@@ -12,32 +12,36 @@
 
 	let { currency }: Props = $props();
 
-	let order = $derived(useFragment(ActiveOrder, $cartStore))
-	let lines = $derived(order?.lines || [])
-
+	let order = $derived(useFragment(ActiveOrder, $cartStore));
+	let lines = $derived(order?.lines || []);
 </script>
+
 {#if order}
-<section class="flex-col w-fullp-6 overflow-auto">
-	<h2 id="summary-heading" class="sr-only">{m.shopping_cart()}</h2>
-	<div class="mx-auto max-w-lg">
+	<section class="w-fullp-6 flex-col overflow-auto">
+		<h2 id="summary-heading" class="sr-only">{m.shopping_cart()}</h2>
+		<div class="mx-auto max-w-lg">
 			<ul role="list" class="flex-auto">
 				{#each lines as line}
-				<li class="flex space-x-6 py-6 border-b border-gray-200">
-					<Image preview={line.featuredAsset?.preview} alt={line.productVariant.name} preset="thumb" class="h-28 w-auto flex-none rounded-md bg-gray-200 object-cover object-center" />
-					<div class="flex flex-col justify-between space-y-4 my-auto">
-						<div class="space-y-1 text-sm font-medium">
-							<h3 class="text-gray-900">{line.productVariant.name}</h3>
-							<p class="text-gray-900">facets</p>
-							<p class="text-gray-500">Price: {formatCurrency(line.unitPrice, currency)}</p>
-							<p class="text-gray-500">Quantity: {line.quantity}</p>
+					<li class="flex space-x-6 border-b border-gray-200 py-6">
+						<Image
+							preview={line.featuredAsset?.preview}
+							alt={line.productVariant.name}
+							preset="thumb"
+							class="h-28 w-auto flex-none rounded-md bg-gray-200 object-cover object-center"
+						/>
+						<div class="my-auto flex flex-col justify-between space-y-4">
+							<div class="space-y-1 text-sm font-medium">
+								<h3 class="text-gray-900">{line.productVariant.name}</h3>
+								<p class="text-gray-900">facets</p>
+								<p class="text-gray-500">Price: {formatCurrency(line.unitPrice, currency)}</p>
+								<p class="text-gray-500">Quantity: {line.quantity}</p>
+							</div>
 						</div>
-					</div>
-				</li>
+					</li>
 				{/each}
 			</ul>
-			
 
-			<dl class="py-6 space-y-6 text-sm font-medium text-gray-500">
+			<dl class="space-y-6 py-6 text-sm font-medium text-gray-500">
 				<div class="flex justify-between">
 					<dt>{m.subtotal()}</dt>
 					<dd class="text-gray-900">{formatCurrency(order.subTotal, currency)}</dd>
@@ -47,7 +51,10 @@
 						<div class="flex justify-between">
 							<dt class="flex">
 								{m.discount()}
-								<span class="ml-2 rounded-full bg-gray-200 px-2 py-0.5 text-xs tracking-wide text-gray-600">{discount.description}</span>
+								<span
+									class="ml-2 rounded-full bg-gray-200 px-2 py-0.5 text-xs tracking-wide text-gray-600"
+									>{discount.description}</span
+								>
 							</dt>
 							<dd class="text-gray-900">{formatCurrency(discount.amountWithTax, currency)}</dd>
 						</div>
@@ -72,11 +79,13 @@
 					{/each}
 				{/if}
 			</dl>
-			
-			<p class="py-6 flex items-center justify-between border-t border-gray-200 text-sm font-medium text-gray-900">
+
+			<p
+				class="flex items-center justify-between border-t border-gray-200 py-6 text-sm font-medium text-gray-900"
+			>
 				<span class="text-base">{m.total()}</span>
 				<span class="text-base">{formatCurrency(order.totalWithTax, currency)}</span>
 			</p>
-	</div>
-</section>
+		</div>
+	</section>
 {/if}

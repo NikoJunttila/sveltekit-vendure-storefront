@@ -1,19 +1,19 @@
 <script lang="ts">
-/**
- * 
- * This is adapted from svead (https://github.com/spences10/svead)
- * by Scott Spence, which was inspired by Rodney Lab (https://rodneylab.com/)
- * and Kazuma Oe (oekazuma) (https://github.com/oekazuma/svelte-meta-tags)
- * 
- **/
- 	import { 
+	/**
+	 *
+	 * This is adapted from svead (https://github.com/spences10/svead)
+	 * by Scott Spence, which was inspired by Rodney Lab (https://rodneylab.com/)
+	 * and Kazuma Oe (oekazuma) (https://github.com/oekazuma/svelte-meta-tags)
+	 *
+	 **/
+	import {
 		PUBLIC_SITE_NAME,
-		PUBLIC_SITE_SHORT_NAME, 
-		PUBLIC_SITE_DESCRIPTION, 
-		PUBLIC_SITE_URL, 
+		PUBLIC_SITE_SHORT_NAME,
+		PUBLIC_SITE_DESCRIPTION,
+		PUBLIC_SITE_URL,
 		PUBLIC_SITE_IMAGE
-	} from '$env/static/public'
-	import { page } from '$app/state'
+	} from '$env/static/public';
+	import { page } from '$app/state';
 
 	interface MetaConfig {
 		/**
@@ -26,12 +26,12 @@
 
 		/**
 		 * The description of the web page.
-		 * Used in the description meta tag, og:description, and 
+		 * Used in the description meta tag, og:description, and
 		 * twitter:description properties.
-		 * 
+		 *
 		 * Best practices suggest keeping the description between 50-160 characters.
 		 * Search engines may truncate descriptions longer than 155-160 characters.
-		 * 
+		 *
 		 * Note: The Head component does not enforce these limits,
 		 * it's up to the developer to ensure appropriate length.
 		 *
@@ -114,11 +114,7 @@
 		 * @type {'summary' | 'summary_large_image' | 'app' | 'player'}
 		 * @default 'summary_large_image'
 		 */
-		twitter_card_type?:
-			| 'summary'
-			| 'summary_large_image'
-			| 'app'
-			| 'player';
+		twitter_card_type?: 'summary' | 'summary_large_image' | 'app' | 'player';
 
 		/**
 		 * Alternative text for the Open Graph image.
@@ -135,15 +131,15 @@
 
 	let { config = $bindable({}) }: Props = $props();
 
-	if (config.title === undefined) config.title = PUBLIC_SITE_NAME
-	if (config.description === undefined) config.description = PUBLIC_SITE_DESCRIPTION
-	if (!config.url) config.url = page.url.href
-	if (!config.website) config.website = PUBLIC_SITE_URL
-	if (!config.language) config.language = 'en'
-	if (!config.open_graph_image) config.open_graph_image = PUBLIC_SITE_IMAGE
-	if (!config.site_name) config.site_name = PUBLIC_SITE_SHORT_NAME
+	if (config.title === undefined) config.title = PUBLIC_SITE_NAME;
+	if (config.description === undefined) config.description = PUBLIC_SITE_DESCRIPTION;
+	if (!config.url) config.url = page.url.href;
+	if (!config.website) config.website = PUBLIC_SITE_URL;
+	if (!config.language) config.language = 'en';
+	if (!config.open_graph_image) config.open_graph_image = PUBLIC_SITE_IMAGE;
+	if (!config.site_name) config.site_name = PUBLIC_SITE_SHORT_NAME;
 
-	if (page.route.id !== '/') config.title += ' | ' + PUBLIC_SITE_SHORT_NAME
+	if (page.route.id !== '/') config.title += ' | ' + PUBLIC_SITE_SHORT_NAME;
 </script>
 
 <svelte:head>
@@ -172,7 +168,7 @@
 	{/if}
 
 	<!-- Twitter Meta Tags -->
-	<meta name="twitter:card" content={config.twitter_card_type || "summary_large_image"} />
+	<meta name="twitter:card" content={config.twitter_card_type || 'summary_large_image'} />
 	<meta name="twitter:title" content={config.title} />
 	<meta name="twitter:description" content={config.description} />
 	{#if config.open_graph_image}

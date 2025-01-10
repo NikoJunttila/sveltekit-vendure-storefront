@@ -37,7 +37,7 @@
 </script>
 
 <footer
-	class="mt-6 w-full bg-gradient-to-b from-primary-700 to-[#1a1414] lg:mt-12 "
+	class="mt-6 w-full bg-gradient-to-b from-primary-700 to-[#1a1414] lg:mt-12"
 	aria-labelledby="footer-heading"
 >
 	<hr class="hidden opacity-10 dark:block" />
@@ -66,20 +66,20 @@
 							</address>
 						</div>
 						<div
-							class="from-primary-500 to-primary-600 h-1 w-20 rounded-full bg-gradient-to-r"
+							class="h-1 w-20 rounded-full bg-gradient-to-r from-primary-500 to-primary-600"
 						></div>
 						<div class="text-gray-600 dark:text-gray-300">
 							<p>
 								<span class="font-semibold">{m.footer_phone()}:</span>
-								<a href="tel:+16505551234" class="hover:text-primary-600 transition-colors"
-										>1-650-555-1234</a
-									>
+								<a href="tel:+16505551234" class="transition-colors hover:text-primary-600"
+									>1-650-555-1234</a
+								>
 							</p>
 							<p>
 								<span class="font-semibold">{m.footer_email()}:</span>
 								<a
 									href="mailto:support@example.com"
-									class="hover:text-primary-600 transition-colors">support@example.com</a
+									class="transition-colors hover:text-primary-600">support@example.com</a
 								>
 							</p>
 						</div>
@@ -88,7 +88,7 @@
 					<div class="flex justify-center space-x-4 md:justify-start">
 						<a
 							href={socials[0].url}
-							class="hover:text-primary-600 transform text-gray-500 transition-all duration-300 hover:-translate-y-1"
+							class="transform text-gray-500 transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label={socials[0].label}
@@ -97,7 +97,7 @@
 						</a>
 						<a
 							href={socials[1].url}
-							class="hover:text-primary-600 transform text-gray-500 transition-all duration-300 hover:-translate-y-1"
+							class="transform text-gray-500 transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label={socials[1].label}
@@ -106,7 +106,7 @@
 						</a>
 						<a
 							href={socials[2].url}
-							class="hover:text-primary-600 transform text-gray-500 transition-all duration-300 hover:-translate-y-1"
+							class="transform text-gray-500 transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label={socials[2].label}
@@ -189,11 +189,11 @@
 						<input
 							type="email"
 							placeholder={m.footer_email_placeholder()}
-							class="focus:ring-primary-500 flex-1 rounded-md border border-gray-300 bg-white px-4 py-2 outline-none transition-all duration-300 focus:border-transparent focus:ring-2 dark:border-gray-600 dark:bg-gray-700"
+							class="flex-1 rounded-md border border-gray-300 bg-white px-4 py-2 outline-none transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
 						/>
 						<button
 							type="submit"
-							class="bg-primary-600 hover:bg-primary-700 transform rounded-md px-6 py-2 text-white transition-all duration-300 hover:-translate-y-0.5"
+							class="transform rounded-md bg-primary-600 px-6 py-2 text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-700"
 						>
 							{m.footer_subscribe_button()}
 						</button>
@@ -213,11 +213,11 @@
 					<LanguageSwitch />
 				</div>
 				<div class="flex gap-4 text-gray-600 dark:text-gray-300">
-					<a href="/" class="hover:text-primary-600 transition-colors duration-300"
+					<a href="/" class="transition-colors duration-300 hover:text-primary-600"
 						>{m.footer_terms()}</a
 					>
 					<span>•</span>
-					<a href="/" class="hover:text-primary-600 transition-colors duration-300"
+					<a href="/" class="transition-colors duration-300 hover:text-primary-600"
 						>{m.footer_privacy()}</a
 					>
 				</div>

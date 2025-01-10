@@ -1,14 +1,13 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"hello_world": "Hello, {name} from en!",
-	"hero_title":"The Best Stuff.",
-	"hero_description":"We sell the best stuff anywhere.  Everyone loves it.  The best cameras.  The best plants.  The best sofas.  We don't actually ship anything.  This is an example site.  Satisfaction guaranteed.",
-	"shop_now":"Shop now",
-	
+	"hero_title": "The Best Stuff.",
+	"hero_description": "We sell the best stuff anywhere.  Everyone loves it.  The best cameras.  The best plants.  The best sofas.  We don't actually ship anything.  This is an example site.  Satisfaction guaranteed.",
+	"shop_now": "Shop now",
+
 	"no_products_found": "No products found",
 	"products_heading": "Products",
-	
-	
+
 	"checkout": "Checkout",
 	"safe_checkout": "SAFE AND SECURE CHECKOUT",
 	"ssl_encryption": "128-bit SSL encryption",
@@ -21,8 +20,7 @@
 	"total": "Total",
 	"place_order": "Place order",
 	"cart_empty": "Your cart is empty.",
-	
-	
+
 	"add_to_cart": "Add to Cart",
 	"select_variant": "Select a Variant",
 	"price": "Price",
@@ -31,7 +29,6 @@
 	"item_added": "Item added to cart",
 	"error_adding_item": "Error adding item to cart",
 	"insufficient_stock": "Insufficient stock",
-	
 
 	"search": "Search",
 	"search_placeholder": "Enter a search term.",
@@ -64,8 +61,8 @@
 	"our_collections": "Our Collections",
 	"collections_description": "Explore our carefully curated collections of high-quality products.",
 	"shop_collection": "Shop Collection",
-	"show_product":"View product",
-	
+	"show_product": "View product",
+
 	"footer_company": "Company",
 	"footer_resources": "Resources",
 	"footer_support": "Support",
@@ -76,24 +73,24 @@
 	"footer_privacy": "Privacy Policy",
 	"footer_phone": "Phone",
 	"footer_email": "Email",
-	"home":"home",
-	"create_account":"Create your account",
-	"password":"Password",
-	"already_account":"Already have an account?",
+	"home": "home",
+	"create_account": "Create your account",
+	"password": "Password",
+	"already_account": "Already have an account?",
 	"sign_in": "Sign in",
-    "placeholder_first_name": "Enter your first name",
-    "placeholder_last_name": "Enter your last name",
-    "placeholder_email": "Enter your email address",
-    "placeholder_password": "Choose a password",
-    "verification_email_sent": "Verification email sent to your email address",
-    "generic_error": "An error occurred during signup",
-    "unexpected_error": "An unexpected error occurred. Please try again",
-	"sign_up":"Sign up",
-	"creating_account":"Creating account",
+	"placeholder_first_name": "Enter your first name",
+	"placeholder_last_name": "Enter your last name",
+	"placeholder_email": "Enter your email address",
+	"placeholder_password": "Choose a password",
+	"verification_email_sent": "Verification email sent to your email address",
+	"generic_error": "An error occurred during signup",
+	"unexpected_error": "An unexpected error occurred. Please try again",
+	"sign_up": "Sign up",
+	"creating_account": "Creating account",
 	"account_title": "Account",
 	"account_sign_in": "Sign In",
 	"account_sign_up": "Sign Up",
-	"sign_in_instead":"Sign in instead",
+	"sign_in_instead": "Sign in instead",
 	"account_create": "Create Account",
 	"account_forgot_password": "Forgot Password?",
 	"account_reset_password": "Reset Password",
@@ -110,8 +107,8 @@
 	"account_password_placeholder": "Enter your password",
 	"account_first_name_placeholder": "Enter your first name",
 	"account_last_name_placeholder": "Enter your last name",
-	"create_account_big":"Welcome! To create an account, please enter your email and choose a password below.",
-	"account_reset_pass":"Enter your email address to receive an email with a link to change your password.",
-	"request_reset":"Request Reset Code",
-	"login_text":"If you have an existing account, enter your email and password below."
+	"create_account_big": "Welcome! To create an account, please enter your email and choose a password below.",
+	"account_reset_pass": "Enter your email address to receive an email with a link to change your password.",
+	"request_reset": "Request Reset Code",
+	"login_text": "If you have an existing account, enter your email and password below."
 }

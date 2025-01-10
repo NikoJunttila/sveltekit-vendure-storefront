@@ -22,8 +22,8 @@
 	const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
 </script>
 
-<div class="card w-full min-h-full text-primary-content" style:background={randomGradient}>
-	<div class="card-body md:py-16 items-center justify-center">
+<div class="card text-primary-content min-h-full w-full" style:background={randomGradient}>
+	<div class="card-body items-center justify-center md:py-16">
 		<h2 class="card-title text-2xl">
 			{title}
 		</h2>

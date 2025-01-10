@@ -35,34 +35,39 @@ select:focus {
 }
 
 /* FORMS */
-[data-label], [data-label="gpac"], .label {
-	@apply block m-1 mt-4 text-gray-600 font-semibold;
+[data-label],
+[data-label='gpac'],
+.label {
+	@apply m-1 mt-4 block font-semibold text-gray-600;
 }
-[data-text-input], [data-text-input="gpac"], .input {
-	@apply w-full block py-3 px-4 text-gray-900 placeholder-gray-400 border border-gray-300 focus:border-gray-300 rounded-md;
+[data-text-input],
+[data-text-input='gpac'],
+.input {
+	@apply block w-full rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-gray-300;
 }
-[data-invalid], .validation {
-	@apply block my-2 text-sm text-red-600;
+[data-invalid],
+.validation {
+	@apply my-2 block text-sm text-red-600;
 }
 .button {
-	@apply inline-block w-full my-4 py-3 px-5 text-sm font-semibold text-white bg-orange-900 hover:bg-gray-900 rounded-md transition duration-200
+	@apply my-4 inline-block w-full rounded-md bg-orange-900 px-5 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-gray-900;
 }
 .checkbox {
-	@apply mr-2 h-5 w-5 rounded-md text-violet-500 border border-gray-200 focus:border focus:border-gray-200 focus:ring-0 checked:border-2 checked:border-violet-500 checked:ring-0;
+	@apply mr-2 h-5 w-5 rounded-md border border-gray-200 text-violet-500 checked:border-2 checked:border-violet-500 checked:ring-0 focus:border focus:border-gray-200 focus:ring-0;
 }
 .message {
-	@apply block my-8 text-lg font-semibold text-gray-600;
+	@apply my-8 block text-lg font-semibold text-gray-600;
 }
 
 [data-faq-description] p {
 	@apply py-1 text-lg;
 }
 [data-faq-description] ul {
-	@apply list-disc list-outside ml-10 text-lg;
+	@apply ml-10 list-outside list-disc text-lg;
 }
 [data-faq-description] h4 {
-	@apply mt-4 mb-2 text-2xl font-semibold;
+	@apply mb-2 mt-4 text-2xl font-semibold;
 }
 [data-faq-description] h5 {
-	@apply mt-4 mb-2 text-xl font-semibold;
+	@apply mb-2 mt-4 text-xl font-semibold;
 }

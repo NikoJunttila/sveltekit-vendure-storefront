@@ -1,4 +1,4 @@
-import { gql } from '$lib/gql'
+import { gql } from '$lib/gql';
 
 export const Customer = gql(`
 	fragment Customer on Customer {
@@ -32,7 +32,7 @@ export const Customer = gql(`
       		}
     	}
 	}
-`)
+`);
 
 export const Address = gql(`
 	fragment Address on Address {
@@ -52,7 +52,7 @@ export const Address = gql(`
 		defaultShippingAddress
 		defaultBillingAddress
 	}
-`)
+`);
 
 export const GetCustomer = gql(`
 	query GetCustomer {
@@ -60,6 +60,46 @@ export const GetCustomer = gql(`
 			...Customer
 		}
 	}
+`);
+
+export const updateCustomer = gql(`
+	mutation updateCustomer($input: UpdateCustomerInput!){
+  		updateCustomer(input:$input){
+    	__typename
+		id
+		firstName
+		lastName
+		emailAddress
+		phoneNumber
+ 		orders {
+      		totalItems
+      		items {
+        		state
+        		totalWithTax
+        		id
+        		code
+        		orderPlacedAt
+        		lines {
+          			id
+					quantity
+          			productVariant {
+            			id
+            			sku
+            			name
+						priceWithTax
+          			}
+        		}
+      		}
+    	}
+  }}
+`);
+
+export const updateCustomerAddress = gql(`
+	mutation updateCustomerAddress($input: UpdateAddressInput!){
+		updateCustomerAddress(input:$input){
+		...Address
+		}
+	}	
 `)
 
 export const SignIn = gql(`
@@ -74,7 +114,7 @@ export const SignIn = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const SignOut = gql(`
 	mutation LogOut {
@@ -82,7 +122,7 @@ export const SignOut = gql(`
 			success
 		}
 	}
-`)
+`);
 
 export const SignUp = gql(`
 	mutation Register($input: RegisterCustomerInput!) {
@@ -96,7 +136,7 @@ export const SignUp = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const VerifyCustomerAccount = gql(`
 	mutation VerifyCustomerAccount($token: String!) {
@@ -111,7 +151,7 @@ export const VerifyCustomerAccount = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const RequestPasswordReset = gql(`
 	mutation RequestPasswordReset($emailAddress: String!) {
@@ -125,7 +165,7 @@ export const RequestPasswordReset = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const ResetPassword = gql(`
 	mutation ResetPassword($token: String! $password: String!) {
@@ -140,7 +180,7 @@ export const ResetPassword = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const GetCustomerOrders = gql(`
 	query GetCustomerOrders {
@@ -153,7 +193,7 @@ export const GetCustomerOrders = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const GetCustomerAddresses = gql(`
 	query GetCustomerAddresses {
@@ -163,7 +203,7 @@ export const GetCustomerAddresses = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const CreateCustomerAddress = gql(`
 	mutation CreateCustomerAddress($input: CreateAddressInput!) {
@@ -186,4 +226,4 @@ export const CreateCustomerAddress = gql(`
 			defaultBillingAddress
 		}
 	}
-`)
+`);

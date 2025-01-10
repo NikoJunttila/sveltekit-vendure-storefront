@@ -1,63 +1,67 @@
 <script lang="ts">
 	import '../app.css';
-	import { queryStore, setContextClient } from '@urql/svelte'
-	import { onMount } from 'svelte'
-	import { page } from '$app/state'
-	import { browser } from '$app/environment'
-	import { GetActiveOrder, GetCustomer } from '$lib/vendure'
-	import { cartStore, userStore, themeStore } from '$lib/stores'
+	import { queryStore, setContextClient } from '@urql/svelte';
+	import { onMount } from 'svelte';
+	import { page } from '$app/state';
+	import { browser } from '$app/environment';
+	import { GetActiveOrder, GetCustomer } from '$lib/vendure';
+	import { cartStore, userStore, themeStore } from '$lib/stores';
 	import { i18n } from '$lib/i18n';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Theme from '$src/lib/components/Theme.svelte';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
-	import { Toaster } from 'svelte-sonner'
+	import { Toaster } from 'svelte-sonner';
 
-
-	let { data, children } = $props()
-	const collections = data.collections
-	const client = data.client
-	setContextClient(client)
-	const cartQuery = queryStore({ 
-		client, 
-		query: GetActiveOrder, 
-		pause: true, 
-		requestPolicy: 'network-only', 
-		context: { additionalTypenames: ['ActiveOrder'] } 
-	})
-	const userQuery = queryStore({ 
-		client, 
-		query: GetCustomer, 
-		pause: true, 
-		requestPolicy: 'network-only', 
-		context: { additionalTypenames: ['ActiveCustomer'] } 
-	})
-	$effect(() => { if ($cartQuery.data?.activeOrder) cartStore.set($cartQuery.data.activeOrder) })
-	$effect(() => { if ($userQuery.data?.activeCustomer) userStore.set($userQuery.data.activeCustomer) })
+	let { data, children } = $props();
+	const collections = data.collections;
+	const client = data.client;
+	setContextClient(client);
+	const cartQuery = queryStore({
+		client,
+		query: GetActiveOrder,
+		pause: true,
+		requestPolicy: 'network-only',
+		context: { additionalTypenames: ['ActiveOrder'] }
+	});
+	const userQuery = queryStore({
+		client,
+		query: GetCustomer,
+		pause: true,
+		requestPolicy: 'network-only',
+		context: { additionalTypenames: ['ActiveCustomer'] }
+	});
+	$effect(() => {
+		if ($cartQuery.data?.activeOrder) cartStore.set($cartQuery.data.activeOrder);
+	});
+	$effect(() => {
+		if ($userQuery.data?.activeCustomer) userStore.set($userQuery.data.activeCustomer);
+	});
 
 	// useful for debugging
 	// $inspect() will be removed automatically in production build
-	$inspect($cartStore)
-	$inspect(`userStore: ${$userStore}`)
+	$inspect($cartStore);
+	$inspect(`userStore: ${$userStore}`);
 
-	const nakedPaths = ['/checkout', '/sitemap.xml']
-	let naked = $derived(nakedPaths.includes(page.url.pathname))
+	const nakedPaths = ['/checkout', '/sitemap.xml'];
+	let naked = $derived(nakedPaths.includes(page.url.pathname));
 
 	onMount(async () => {
 		if (browser) {
-			cartQuery.resume()
-			userQuery.resume()
+			cartQuery.resume();
+			userQuery.resume();
 		}
-	})
+	});
 </script>
+
 <ParaglideJS {i18n}>
-{#if naked}
-	{@render children?.()}
-{:else}
-	<Theme />
-	<Toaster theme={$themeStore.theme} position="top-center" />
-	<NavBar {collections} />
-	<div class="relative">{@render children?.()}</div>
-	<Footer />
-{/if}
+	{#if naked}
+		{@render children?.()}
+	{:else}
+		<Theme />
+		<Toaster theme={$themeStore.theme} position="top-center" />
+		<NavBar {collections} />
+		<div class="relative">{@render children?.()}</div>
+		<Footer />
+	{/if}
 </ParaglideJS>

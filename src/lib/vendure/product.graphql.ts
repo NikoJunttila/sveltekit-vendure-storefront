@@ -1,4 +1,4 @@
-import { gql } from '$lib/gql'
+import { gql } from '$lib/gql';
 
 export const Product = gql(`
 	fragment Product on Product {
@@ -16,7 +16,7 @@ export const Product = gql(`
 			stockLevel
 		}
 	}
-`)
+`);
 
 export const ProductDetail = gql(`
 	fragment ProductDetail on Product {
@@ -76,7 +76,7 @@ export const ProductDetail = gql(`
 			}
 		}
 	}
-`)
+`);
 
 export const SearchResult = gql(`
 	fragment SearchResult on SearchResult {
@@ -100,7 +100,7 @@ export const SearchResult = gql(`
 		facetValueIds
 		currencyCode
 	}
-`)
+`);
 
 export const Asset = gql(`
 	fragment Asset on Asset {
@@ -126,7 +126,7 @@ export const Asset = gql(`
 			updatedAt
 		}
 	}
-`)
+`);
 
 export const GetProducts = gql(`
 	query GetProducts($options: ProductListOptions) {
@@ -137,7 +137,7 @@ export const GetProducts = gql(`
 			totalItems
 		}
 	}
-`)
+`);
 
 export const GetProduct = gql(`
 	query GetProduct($slug: String!) {
@@ -145,7 +145,7 @@ export const GetProduct = gql(`
 			...ProductDetail
 		}
 	}
-`)
+`);
 
 export const FacetValueResult = gql(`
 	fragment FacetValueResult on FacetValueResult{
@@ -159,7 +159,7 @@ export const FacetValueResult = gql(`
 		}
 		count
 	}
-`)
+`);
 export const SearchProducts = gql(`
 	query SearchProducts($input: SearchInput!) {
 		search(input: $input) {
@@ -172,4 +172,4 @@ export const SearchProducts = gql(`
     		}
 		}
 	}
-`)
+`);

@@ -1,41 +1,35 @@
 <script lang="ts" module>
-	type T = Record<string, unknown>
+	type T = Record<string, unknown>;
 </script>
 
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { type SuperForm, type FormPathLeaves, formFieldProxy } from 'sveltekit-superforms'
+	import { type SuperForm, type FormPathLeaves, formFieldProxy } from 'sveltekit-superforms';
 
 	interface Props {
-		form: SuperForm<T>
-		field: FormPathLeaves<T>
-		label?: string
-		dataAttribute?: string
-		[key: string]: any
+		form: SuperForm<T>;
+		field: FormPathLeaves<T>;
+		label?: string;
+		dataAttribute?: string;
+		[key: string]: any;
 	}
 
-	let {
-		form,
-		field = $bindable(),
-		label = '',
-		dataAttribute = 'true',
-		...rest
-	}: Props = $props()
+	let { form, field = $bindable(), label = '', dataAttribute = 'true', ...rest }: Props = $props();
 
-	const { value, errors, constraints } = formFieldProxy(form, field)
+	const { value, errors, constraints } = formFieldProxy(form, field);
 </script>
 
-<input 
-	type="checkbox" 
-	name={field} 
-	id={field} 
-	bind:checked={field} 
+<input
+	type="checkbox"
+	name={field}
+	id={field}
+	bind:checked={field}
 	{...$constraints}
-	{...rest} 
+	{...rest}
 	data-checkbox-input={dataAttribute}
 	aria-describedby={$errors ? `${field}-error` : undefined}
 	aria-invalid={$errors ? 'true' : undefined}
-	aria-required={$constraints?.required ? "true" : undefined}
-/> 
+	aria-required={$constraints?.required ? 'true' : undefined}
+/>
 {#if label}
 	<label for={field} data-label={dataAttribute}> {label}</label>
 {/if}
