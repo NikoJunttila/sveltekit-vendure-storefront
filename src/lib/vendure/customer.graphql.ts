@@ -7,6 +7,30 @@ export const Customer = gql(`
 		firstName
 		lastName
 		emailAddress
+		phoneNumber
+		addresses {
+		...Address
+		}
+ 		orders {
+      		totalItems
+      		items {
+        		state
+        		totalWithTax
+        		id
+        		code
+        		orderPlacedAt
+        		lines {
+          			id
+					quantity
+          			productVariant {
+            			id
+            			sku
+            			name
+						priceWithTax
+          			}
+        		}
+      		}
+    	}
 	}
 `)
 

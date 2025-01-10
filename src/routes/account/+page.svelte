@@ -12,10 +12,9 @@
 	import { getContextClient } from '@urql/svelte';
 	import { GetCustomer } from '$src/lib/vendure/customer.graphql.js';
 	import { GetActiveOrder } from '$src/lib/vendure/order.graphql.js';
-	import { cartStore, userStore } from '$lib/stores'
-	
+	import { onMount } from 'svelte';
 	import { SignIn } from '$src/lib/vendure/customer.graphql.js';
-
+	import { userStore } from '$src/lib/stores';
 	let { data } = $props();
 
 	type userstate = 'signIn' | 'signUp' | 'forgot' | 'reset';
@@ -25,6 +24,12 @@
 		email: '',
 		password: ''
 	});
+
+	onMount(() => {
+		if($userStore){
+			goto("/user")
+		}
+	})
 
 	let processing: boolean = $state(false);
 

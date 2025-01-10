@@ -69,13 +69,13 @@
 <div use:portalled>
 	{#if $open}
 		<div {...$overlay} use:overlay class="fixed inset-0 z-20 bg-black/50" transition:fade={{ duration: 150 }}></div>
-		<div {...$content} use:content class="overflow-auto fixed right-0 top-0 z-50 w-full h-full pb-0 mb-0 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/2 bg-white dark:bg-black p-[25px] shadow-lg focus:outline-none" transition:fly={{ x: '100%', duration: 300, opacity: 1, }}>
+		<div {...$content} use:content class="overflow-auto fixed right-0 top-0 z-50 w-full h-full pb-0 mb-0 sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/2 bg-primary-700  p-[25px] shadow-lg focus:outline-none" transition:fly={{ x: '100%', duration: 300, opacity: 1, }}>
 			<button {...$close} use:close>
 				<span class="sr-only">{m.shopping_cart()}</span>
 				<X class="h-10 w-10" />
 			</button>
 			<div class="px-8 sm:px-12">
-				<h2 {...$title} use:title class="mb-6 text-center text-3xl font-bold tracking-tight sm:text-4xl text-white">
+				<h2 {...$title} use:title class="mb-6 text-center text-3xl font-bold tracking-tight sm:text-4xl  text-white">
 					{m.shopping_cart()}
 				</h2>
 				<ul role="list" class="divide-y divide-gray-200 dark:divide-gray-800 border-t border-gray-200 dark:border-gray-800">
@@ -90,7 +90,7 @@
 									{/if}
 								</div>
 							</a>
-							<div class="m-2 flex flex-1 flex-col sm:ml-6 text-white">
+							<div class="m-2 flex flex-1 flex-col sm:ml-6 ">
 								<div>
 									<div class="flex justify-between">
 										<a data-sveltekit-reload href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`} class="cursor-pointer text-sm">
@@ -128,7 +128,7 @@
 						</div>
 					{/each}
 				</ul>
-				<section aria-labelledby="summary-heading" class="border-t border-gray-200 dark:border-gray-800  bg-white dark:bg-black sticky bottom-0 py-6">
+				<section aria-labelledby="summary-heading" class="border-t border-gray-200 dark:border-gray-800  bg-primary-400 text-black rounded sticky bottom-0 py-6">
 					{#if lines.length > 0}
 					<h2 id="summary-heading" class="sr-only">Order summary</h2>
 					<div>
@@ -141,12 +141,12 @@
 						<p class="ml-2 mt-1 text-sm">{m.shipping_taxes_checkout()}</p>
 					</div>
 					<form action="/checkout">
-						<button use:close type="submit" class="my-4 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white hover:bg-lime-700">
+						<button use:close type="submit" class="my-4 duration-300 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium  hover:bg-lime-700">
 							{m.checkout()}
 						</button>
 					</form>
 					{/if}
-					<button {...$close} use:close class="w-full text-center font-medium text-gray-800 hover:text-gray-500 dark:text-gray-200 dark:hover:text-gray-500">
+					<button {...$close} use:close class="w-full text-center font-medium">
 						&larr; {m.continue_shopping()}
 					</button>
 				</section>

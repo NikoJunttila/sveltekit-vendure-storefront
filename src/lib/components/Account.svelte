@@ -28,7 +28,7 @@
 {/if}
 <div {...$menu} use:menu class="menu">
 	<div {...$item} use:item class="item">
-		<a href="/account">Your Profile</a>
+		<a href="/user">Your Profile</a>
 	</div>
 	<div {...$item} use:item class="item">
 		<a href="/account/signout">
