@@ -1,4 +1,5 @@
 <script lang="ts">
+	//@ts-nocheck
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { getContextClient } from '@urql/svelte';
@@ -239,7 +240,6 @@
 			if (user) {
 				// If user exists, update the existing user
 				const updateInput: UpdateCustomerInput = {
-					id: user.id,
 					[field]: value
 				};
 				const success = await updateCustomerFunc(updateInput);
@@ -303,7 +303,7 @@
 	}
 
 	// Load saved data on mount
-	onMount(() => {
+	onMount(async () => {
 		if (user) {
 			// If user exists in store, populate form with user data
 			populateFormWithUserData();
@@ -312,8 +312,17 @@
 			const savedCustomer = sessionStorage.getItem('customerForm');
 			const savedAddress = sessionStorage.getItem('addressForm');
 
-			if (savedCustomer) form.customerForm = JSON.parse(savedCustomer);
-			if (savedAddress) form.addressForm = JSON.parse(savedAddress);
+			if (savedCustomer){
+				form.customerForm = JSON.parse(savedCustomer);
+				await setCustomer(form.customerForm);
+			} 
+			if (savedAddress){
+				form.addressForm = JSON.parse(savedAddress);
+				await Promise.all([
+					setShippingAddress(form.addressForm),
+					setBillingAddress(form.addressForm)
+				]);
+			}
 		}
 	});
 </script>
@@ -321,7 +330,6 @@
 
 <div class="col-span-1 space-y-4 text-black">
 	<!-- Customer Form -->
-	<h1 class="mb-4 text-xl font-bold">{m.checkout()}</h1>
 	<div class="rounded bg-white p-4 shadow">
 		<h2 class="mb-4 text-xl font-bold">{m.customer_information()}</h2>
 		<div class="space-y-3">
@@ -391,7 +399,6 @@
 					oninput={(e) => handleAddressInput('company', e.currentTarget.value)}
 					name="company"
 					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.address.company}
 				/>
 			</div>
 			<div>
@@ -403,7 +410,6 @@
 					oninput={(e) => handleAddressInput('streetLine1', e.currentTarget.value)}
 					required
 					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.address.streetLine1}
 				/>
 			</div>
 			<div>
@@ -414,7 +420,6 @@
 					value={form.addressForm.streetLine2}
 					oninput={(e) => handleAddressInput('streetLine2', e.currentTarget.value)}
 					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.address.streetLine2}
 				/>
 			</div>
 			<div>
@@ -426,7 +431,6 @@
 					oninput={(e) => handleAddressInput('city', e.currentTarget.value)}
 					required
 					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.address.city}
 				/>
 			</div>
 			<div>
@@ -438,7 +442,6 @@
 					oninput={(e) => handleAddressInput('postalCode', e.currentTarget.value)}
 					required
 					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.address.postalCode}
 				/>
 			</div>
 			<div>
@@ -449,7 +452,6 @@
 					onchange={(e) => handleAddressInput('countryCode', e.currentTarget.value)}
 					required
 					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.address.countryCode}
 				>
 					<option value="FI" selected>Finland</option>
 					<!-- Add more countries as needed -->

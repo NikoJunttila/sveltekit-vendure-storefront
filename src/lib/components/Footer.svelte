@@ -8,25 +8,25 @@
 	import Facebook from './icons/facebook.svelte';
 	import Twitter from './icons/twitter.svelte';
 	import YouTube from './icons/you-tube.svelte';
-
+	
 	// Show animations after component mounts
 	onMount(() => {
 		visible = true;
 	});
 	const resources = [
-		{ url: '/', name: 'first' },
-		{ url: '/', name: 'first' },
-		{ url: '/', name: 'first' }
+		{ url: '/blog', name: m.footer_blog() },
+		{ url: '/guides', name: m.footer_guides() },
+		{ url: '/newsletter', name: m.footer_newsletter() }
 	];
 	const company = [
-		{ url: '/', name: 'first' },
-		{ url: '/', name: 'first' },
-		{ url: '/', name: 'first' }
+		{ url: '/about', name: m.footer_about() },
+		{ url: '/careers', name: m.footer_careers() },
+		{ url: '/contact', name: m.footer_contact() }
 	];
 	const support = [
-		{ url: '/', name: 'first' },
-		{ url: '/', name: 'first' },
-		{ url: '/', name: 'first' }
+		{ url: '/faq', name: m.footer_faq() },
+		{ url: '/shipping', name: m.footer_shipping() },
+		{ url: '/returns', name: m.footer_returns() }
 	];
 	const socials = [
 		{ icon: Facebook, url: 'https://facebook.com', label: 'Facebook' },

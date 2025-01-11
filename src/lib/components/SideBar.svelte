@@ -6,7 +6,25 @@
 	import { fade, fly } from 'svelte/transition';
 	import { type FragmentType, useFragment } from '$lib/gql';
 	import { Collection } from '$lib/vendure';
-	import { userStore } from '$lib/stores';
+	import { userStore, cartStore } from '$lib/stores';
+	import * as m from '$lib/paraglide/messages';
+	import { toast } from 'svelte-sonner';
+	import { getContextClient } from '@urql/svelte';
+	import { goto } from '$app/navigation';
+	import { SignOut } from '$lib/vendure';
+	
+	const client = getContextClient();
+	const handleSignOut = async () => {
+		const result = await client.mutation(SignOut, {}).toPromise();
+		console.log(result);
+		if (result?.data?.logout?.success) {
+			cartStore.set(null);
+			userStore.set(null);
+		}
+		toast.success("Logged out")
+		goto("/")
+	};
+
 	let {
 		collections
 	}: {
@@ -53,11 +71,11 @@
 		>
 			<div class="items-middle mb-6 flex">
 				<div class="mr-auto mt-3">
-					<a href="/" aria-label="Home">
+					<a href="/" aria-label={m.home()}>
 						<img class="block h-11 w-auto" src="/logo.png" alt="SnoreRx Logo" />
 					</a>
 				</div>
-				<button {...$close} use:close aria-label="Close">
+				<button {...$close} use:close aria-label={m.cancel()}>
 					<X class="h-9 w-9" />
 				</button>
 			</div>
@@ -81,19 +99,23 @@
 							href="/user"
 							use:close
 							class="mr-2 mt-12 rounded-md px-3 py-2 text-lg font-medium"
-							aria-label="View your profile"
+							aria-label={m.view_account()}
 						>
-							Your Profile
+							{m.your_profile()}
 						</a>
-						<form action="/account?/signOut" method="POST">
-							<button type="submit" class="mr-2 rounded-md px-3 py-2 text-lg font-medium"
-								>Sign Out</button
-							>
+						<form>
+							<button type="button" onclick={handleSignOut} class="mr-2 rounded-md px-3 py-2 text-lg font-medium">
+								{m.sign_out()}
+							</button>
 						</form>
 					{:else}
-						<a href="/account" use:close class="mr-2 mt-12 rounded-md px-3 py-2 text-lg font-medium"
-							>Sign In</a
+						<a 
+							href="/account" 
+							use:close 
+							class="mr-2 mt-12 rounded-md px-3 py-2 text-lg font-medium"
 						>
+							{m.sign_in()}
+						</a>
 					{/if}
 				</div>
 			</div>

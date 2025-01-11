@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type FragmentType, useFragment } from '$lib/gql';
+	import { useFragment } from '$lib/gql';
 	import { Collection } from '$lib/vendure';
 	import Cart from '$lib/components/Cart.svelte';
 	import Account from '$lib/components/Account.svelte';

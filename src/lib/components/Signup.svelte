@@ -2,7 +2,6 @@
 	import { getContextClient } from '@urql/svelte';
 	import { SignUp } from '$lib/vendure';
 	import { toast } from 'svelte-sonner';
-	import { goto } from '$app/navigation';
 	import * as m from '$lib/paraglide/messages.js';
 
 	const client = getContextClient();
@@ -35,7 +34,6 @@
 
 			if (result.data?.registerCustomerAccount.__typename === 'Success') {
 				toast.success(m.verification_email_sent());
-				goto('/login?verified=true');
 			} else {
 				toast.error(m.generic_error());
 				//@ts-ignore
@@ -145,23 +143,10 @@
 						disabled={stuff.loading}
 						class="flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
 					>
-						{stuff.loading ? m.creating_account() : m.sign_up()}
+						{stuff.loading ? m.creating_account() : m.create_account()}
 					</button>
 				</div>
 			</form>
-
-			<div class="mt-6">
-				<div class="relative">
-					<div class="relative flex justify-center text-sm">
-						<span class="px-2 text-gray-500 dark:text-gray-400">
-							{m.already_account()}
-							<a href="/login" class="font-medium text-primary-600 hover:text-primary-500">
-								{m.sign_in()}
-							</a>
-						</span>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>

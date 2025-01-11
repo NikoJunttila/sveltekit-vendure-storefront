@@ -1,9 +1,26 @@
 <script lang="ts">
 	import CircleUserRound from 'lucide-svelte/icons/circle-user-round';
 	import { createDropdownMenu } from '@melt-ui/svelte';
-	import { userStore } from '$lib/stores';
+	import { userStore, cartStore } from '$lib/stores';
+	import * as m from '$lib/paraglide/messages.js';
 
-	$: me = $userStore;
+	import { getContextClient } from '@urql/svelte';
+	import { goto } from '$app/navigation';
+	import { SignOut } from '$lib/vendure';
+	
+	const client = getContextClient();
+	
+	const handleSignOut = async () => {
+		const result = await client.mutation(SignOut, {}).toPromise();
+		console.log(result);
+		if (result?.data?.logout?.success) {
+			cartStore.set(null);
+			userStore.set(null);
+		}
+		goto("/")
+	};
+
+	const me = $derived($userStore);
 
 	const {
 		elements: { trigger, menu, item }
@@ -19,28 +36,26 @@
 		type="button"
 		{...$trigger}
 		use:trigger
-		aria-label="Open account menu"
+		aria-label={m.account_menu()}
 		class="grow-on-hover items-center align-middle"
 	>
-		<span class="sr-only">View account</span>
+		<span class="sr-only">{m.view_account()}</span>
 		<CircleUserRound class="h-9 w-9" />
 	</button>
 {:else}
 	<a href="/account">
 		<button type="button" class="grow-on-hover items-center align-middle">
-			<span class="sr-only">Sign In</span>
+			<span class="sr-only">{m.account_sign_in()}</span>
 			<CircleUserRound class="h-9 w-9" />
 		</button>
 	</a>
 {/if}
 <div {...$menu} use:menu class="menu">
 	<div {...$item} use:item class="item">
-		<a href="/user">Your Profile</a>
+		<a href="/user">{m.your_profile()}</a>
 	</div>
 	<div {...$item} use:item class="item">
-		<a href="/account/signout">
-			<button type="button">Sign Out</button>
-		</a>
+			<button type="button" onclick={handleSignOut}>{m.sign_out()}</button>
 	</div>
 </div>
 

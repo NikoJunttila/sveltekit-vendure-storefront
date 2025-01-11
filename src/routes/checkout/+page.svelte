@@ -3,22 +3,12 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { type FragmentType, useFragment } from '$lib/gql';
-	import type { CreateCustomerInput, CreateAddressInput } from '$lib/gql/graphql';
-	import { cartStore, userStore } from '$lib/stores';
+	import { cartStore} from '$lib/stores';
 	import {
 		ActiveOrder,
-		AddOrderCouponCode,
 		AddOrderPayment,
-		Address,
 		AdjustOrderLine,
-		CreateCustomerAddress,
-		Customer,
-		GetCustomerAddresses,
-		SetOrderCustomer,
 		GetOrderShippingMethods,
-		RemoveOrderCouponCode,
-		SetOrderBillingAddress,
-		SetOrderShippingAddress,
 		SetOrderShippingMethod,
 		ShippingMethodQuote,
 		TransitionOrderToState
@@ -29,25 +19,24 @@
 	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_SITE_NAME } from '$env/static/public';
 	import CheckoutForm from '$lib/components/CheckoutForm.svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import { toast } from 'svelte-sonner';
 
 	let { data } = $props();
 
 	let disabled: boolean = $state(false);
 	let paymentEmpty: boolean = true;
-	let errorMessage: string = '';
-
+	let errorMessage: string = $state('');
 	let loaded: boolean = $state(false);
-	let success: boolean = false;
+
 
 	const client = getContextClient();
 
 	let order = $derived(useFragment(ActiveOrder, $cartStore));
-	let lines = $derived(order?.lines || []);
-	let customer = $derived(useFragment(Customer, $userStore));
 	let shippingOptions: FragmentType<typeof ShippingMethodQuote>[] = $state([]);
 	let selectedShippingOption: string = $state('');
+	let discountFormOpen = $state(false);
 
-	let discountFormOpen = false;
+
 	const toggleDiscountForm = () => {
 		let discountForm = document.getElementById('discount-form') as HTMLElement;
 		if (discountFormOpen) {
@@ -64,25 +53,6 @@
 		const quantity = parseInt(select.value);
 		let result = await client.mutation(AdjustOrderLine, { orderLineId, quantity }).toPromise();
 		console.log(result);
-	};
-
-	const handlePlaceChanged = async (e: CustomEvent) => {
-		console.log(e.detail);
-	};
-
-	const setCustomer = async (input: CreateCustomerInput) => {
-		let result = await client.mutation(SetOrderCustomer, { input }).toPromise();
-		// console.log(result)
-	};
-
-	const setShippingAddress = async (input: CreateAddressInput) => {
-		let result = await client.mutation(SetOrderShippingAddress, { input }).toPromise();
-		// console.log(result)
-	};
-
-	const setBillingAddress = async (input: CreateAddressInput) => {
-		let result = await client.mutation(SetOrderBillingAddress, { input }).toPromise();
-		// console.log(result)
 	};
 
 	const getShippingOptions = async () => {
@@ -124,10 +94,20 @@
 
 	const setOrderState = async (state: string) => {
 		let result = await client.mutation(TransitionOrderToState, { state }).toPromise();
-		console.log(result);
+		switch (result.data?.transitionOrderToState?.__typename) {
+				case 'Order':
+					// Adding payment succeeded!
+					window.location.href = `/checkout/success/${order?.code}`;
+					break;
+				case 'OrderStateTransitionError':
+					errorMessage = result.data.transitionOrderToState.transitionError;
+					toast.error(`${result.data.transitionOrderToState.transitionError}}`)
+					throw new Error(result.data.transitionOrderToState.transitionError)
+			}
 	};
 
 	async function sendPayment() {
+		errorMessage = ""
 		disabled = true;
 		try {
 			// ensure the method set is what is showing on this page
@@ -141,10 +121,12 @@
 			await setOrderState('ArrangingPayment');
 		} catch (e) {
 			console.log(e);
+			disabled = false;
+			return
 		}
 		try {
 			const payload = 'xdd'; //
-			console.log(payload);
+			//console.log(payload);
 			let result = await client
 				.mutation(AddOrderPayment, { input: { method: 'standard-payment', metadata: payload } })
 				.toPromise()
@@ -183,11 +165,6 @@
 <noscript>
 	<p>Please enable javascript to complete checkout.</p>
 
-	<p>
-		We use a third party (<a href="https://braintree.com">Braintree</a>) to process credit card
-		payments for enhanced security. Making payments on this site using Braintree requires
-		javascript.
-	</p>
 </noscript>
 <Meta
 	config={{
@@ -280,13 +257,6 @@
 					</section>
 
 					<section id="shipping-method" class="border-x border-b border-gray-300 px-4 py-6 pt-4">
-						<!-- <select bind:value={selectedShippingOption} required class="block w-full rounded-md border-gray-300 focus:border-gray-300 text-gray-600 py-3">
-						{#each shippingOptions as shippingOption}
-						<option value={shippingOption.id}>{shippingOption.name} {formatCurrency(shippingOption.price, PUBLIC_DEFAULT_CURRENCY)}</option>
-						{:else}
-						No shipping options available
-						{/each}
-					</select> -->
 						<div role="radiogroup">
 							<p class="label">{m.delivery_methods()}</p>
 							{#each useFragment(ShippingMethodQuote, shippingOptions) as shippingOption}
@@ -397,40 +367,8 @@
 
 				<div class="col-span-1 hidden md:block lg:hidden"></div>
 				<div class="col-span-1">
-					<div class="w-full rounded-md border border-gray-300">
-						<div
-							class="flex h-14 w-full justify-between rounded-t-md border-b border-gray-300 bg-white px-6 py-4"
-						></div>
-						<div class="grid grid-cols-2 gap-x-6 gap-y-3 rounded-b-md bg-[#f9f9f9] p-6 pt-0">
-							<div class="col-span-2 mt-3">
-								<label for="card-number" class="label"
-									>Card Number <span class="text-[#ff0000]">*</span></label
-								>
-								<div
-									class="my-1 h-14 rounded-md border border-gray-300 bg-white p-2"
-									id="card-number"
-								></div>
-							</div>
-							<div class="col-span-1">
-								<label for="expiration-date" class="label whitespace-nowrap"
-									>Expiration Date <span class="text-[#ff0000]">*</span></label
-								>
-								<div
-									class="my-1 h-12 rounded-md border border-gray-300 bg-white p-2"
-									id="expiration-date"
-								></div>
-							</div>
-							<div class="col-span-1">
-								<label for="cvv" class="label">CVV <span class="text-[#ff0000]">*</span></label>
-								<div
-									class="my-1 h-12 rounded-md border border-gray-300 bg-white p-2"
-									id="cvv"
-								></div>
-							</div>
-							<div class="col-span-2" id="checkout-message"></div>
-						</div>
-					</div>
 					<div class="col-span-2 my-6">
+						<h1 class="text-red-800">{errorMessage}</h1>
 						<button
 							type="submit"
 							class="inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-[#c7b598] to-[#dac8a6] px-10 py-4 text-lg font-semibold tracking-wide text-white transition duration-200 hover:text-gray-900"
