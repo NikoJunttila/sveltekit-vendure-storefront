@@ -41,9 +41,9 @@
 			<div class="absolute inset-0 flex flex-col items-start justify-end p-6">
 				<h3 class="text-xl font-medium text-white">{collection.name}</h3>
 
-				<p class="mt-1.5 max-w-[40ch] text-xs text-white text-opacity-90">
+			<!-- 	<p class="mt-1.5 max-w-[40ch] text-xs text-white text-opacity-90">
 					{collection.description}
-				</p>
+				</p> -->
 
 				<span
 					class="mt-3 inline-block rounded-lg bg-gradient-to-r from-lime-800 to-lime-700 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white transition-colors duration-300 hover:bg-lime-700"

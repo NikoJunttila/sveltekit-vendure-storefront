@@ -7,6 +7,7 @@ export * from './collection.graphql';
 export * from './customer.graphql';
 export * from './order.graphql';
 export * from './product.graphql';
+export * from './channel.graphql';
 
 export const createClient = () => {
 	const client = new Client({

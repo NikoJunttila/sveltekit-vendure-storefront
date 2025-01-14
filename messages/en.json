@@ -146,5 +146,11 @@
 	"verification_failed":"Verification Failed",
 	"unexpected_type":"Unexpected response type",
 	"verifying_account":"Verifying account...",
-	"redirect":"Account verified. Redirecting..."
+	"redirect":"Account verified. Redirecting...",
+	"apply":"Apply",
+	"clear_all":"Clear All",
+	"filters":"Filters",
+	"proceed_to_payment":"Proceed to Payment",
+	"cart_items":"Cart Items",
+	"checkout_description":"Checkout"
 }

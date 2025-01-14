@@ -327,139 +327,150 @@
 	});
 </script>
 
-
-<div class="col-span-1 space-y-4 text-black">
+<div class="col-span-1 space-y-6">
 	<!-- Customer Form -->
-	<div class="rounded bg-white p-4 shadow">
-		<h2 class="mb-4 text-xl font-bold">{m.customer_information()}</h2>
-		<div class="space-y-3">
-			<div>
-				<label for="name" class="block text-sm font-medium">{m.first_name()}*</label>
-				<input
-					type="text"
-					value={form.customerForm.firstName}
-					oninput={(e) => handleCustomerInput('firstName', e.currentTarget.value)}
-					required
-					name="name"
-					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.customer.firstName}
-				/>
+	<div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
+		<div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
+			<h2 class="text-xl font-semibold text-gray-900">{m.customer_information()}</h2>
+		</div>
+		<div class="p-6">
+			<div class="space-y-4">
+				<div class="grid gap-4 sm:grid-cols-2">
+					<div>
+						<label for="name" class="block text-sm font-medium text-gray-700">{m.first_name()}*</label>
+						<input
+							type="text"
+							value={form.customerForm.firstName}
+							oninput={(e) => handleCustomerInput('firstName', e.currentTarget.value)}
+							required
+							name="name"
+							class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500 sm:text-sm"
+							disabled={form.disabledFields.customer.firstName}
+						/>
+					</div>
+					<div>
+						<label for="lastName" class="block text-sm font-medium text-gray-700">{m.last_name()}*</label>
+						<input
+							type="text"
+							value={form.customerForm.lastName}
+							oninput={(e) => handleCustomerInput('lastName', e.currentTarget.value)}
+							required
+							name="lastName"
+							class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500 sm:text-sm"
+							disabled={form.disabledFields.customer.lastName}
+						/>
+					</div>
+				</div>
+				<div>
+					<label for="emailaddr" class="block text-sm font-medium text-gray-700">{m.email()}*</label>
+					<input
+						type="email"
+						value={form.customerForm.emailAddress}
+						oninput={(e) => handleCustomerInput('emailAddress', e.currentTarget.value)}
+						required
+						name="emailaddr"
+						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500 sm:text-sm"
+						disabled={form.disabledFields.customer.emailAddress}
+					/>
+				</div>
+				<div>
+					<label for="phone" class="block text-sm font-medium text-gray-700">{m.phone()}*</label>
+					<input
+						type="tel"
+						value={form.customerForm.phoneNumber}
+						oninput={(e) => handleCustomerInput('phoneNumber', e.currentTarget.value)}
+						required
+						name="phone"
+						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500 sm:text-sm"
+						disabled={form.disabledFields.customer.phoneNumber}
+					/>
+				</div>
+				{#if form.errors.customer}
+					<p class="mt-2 text-sm text-red-600">{form.errors.customer}</p>
+				{/if}
 			</div>
-			<div>
-				<label for="lastName" class="block text-sm font-medium">{m.last_name()}*</label>
-				<input
-					type="text"
-					value={form.customerForm.lastName}
-					oninput={(e) => handleCustomerInput('lastName', e.currentTarget.value)}
-					required
-					name="lastName"
-					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.customer.lastName}
-				/>
-			</div>
-			<div>
-				<label for="emailaddr" class="block text-sm font-medium">{m.email()}*</label>
-				<input
-					type="email"
-					value={form.customerForm.emailAddress}
-					oninput={(e) => handleCustomerInput('emailAddress', e.currentTarget.value)}
-					required
-					name="emailaddr"
-					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.customer.emailAddress}
-				/>
-			</div>
-			<div>
-				<label for="phone" class="block text-sm font-medium">{m.phone()}*</label>
-				<input
-					type="tel"
-					value={form.customerForm.phoneNumber}
-					oninput={(e) => handleCustomerInput('phoneNumber', e.currentTarget.value)}
-					required
-					name="phone"
-					class="mt-1 block w-full rounded border p-2"
-					disabled={form.disabledFields.customer.phoneNumber}
-				/>
-			</div>
-			{#if form.errors.customer}
-				<p class="text-sm text-red-500">{form.errors.customer}</p>
-			{/if}
 		</div>
 	</div>
 
 	<!-- Address Form -->
-	<div class="rounded bg-white p-4 shadow">
-		<h2 class="mb-4 text-xl font-bold">{m.address_information()}</h2>
-		<div class="space-y-3">
-			<div>
-				<label for="company" class="block text-sm font-medium">{m.company()}</label>
-				<input
-					type="text"
-					value={form.addressForm.company}
-					oninput={(e) => handleAddressInput('company', e.currentTarget.value)}
-					name="company"
-					class="mt-1 block w-full rounded border p-2"
-				/>
+	<div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
+		<div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
+			<h2 class="text-xl font-semibold text-gray-900">{m.address_information()}</h2>
+		</div>
+		<div class="p-6">
+			<div class="space-y-4">
+				<div>
+					<label for="company" class="block text-sm font-medium text-gray-700">{m.company()}</label>
+					<input
+						type="text"
+						value={form.addressForm.company}
+						oninput={(e) => handleAddressInput('company', e.currentTarget.value)}
+						name="company"
+						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+					/>
+				</div>
+				<div>
+					<label for="street1" class="block text-sm font-medium text-gray-700">{m.street_line_1()}*</label>
+					<input
+						name="street1"
+						type="text"
+						value={form.addressForm.streetLine1}
+						oninput={(e) => handleAddressInput('streetLine1', e.currentTarget.value)}
+						required
+						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+					/>
+				</div>
+				<div>
+					<label for="street2" class="block text-sm font-medium text-gray-700">{m.street_line_2()}</label>
+					<input
+						type="text"
+						name="street2"
+						value={form.addressForm.streetLine2}
+						oninput={(e) => handleAddressInput('streetLine2', e.currentTarget.value)}
+						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+					/>
+				</div>
+				<div class="grid gap-4 sm:grid-cols-2">
+					<div>
+						<label for="city" class="block text-sm font-medium text-gray-700">{m.city()}*</label>
+						<input
+							name="city"
+							type="text"
+							value={form.addressForm.city}
+							oninput={(e) => handleAddressInput('city', e.currentTarget.value)}
+							required
+							class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+						/>
+					</div>
+					<div>
+						<label for="postal" class="block text-sm font-medium text-gray-700">{m.postal_code()}*</label>
+						<input
+							name="postal"
+							type="text"
+							value={form.addressForm.postalCode}
+							oninput={(e) => handleAddressInput('postalCode', e.currentTarget.value)}
+							required
+							class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+						/>
+					</div>
+				</div>
+				<div>
+					<label for="country" class="block text-sm font-medium text-gray-700">{m.country()}*</label>
+					<select
+						name="country"
+						value={form.addressForm.countryCode}
+						onchange={(e) => handleAddressInput('countryCode', e.currentTarget.value)}
+						required
+						class="mt-1 block w-full rounded-md border-gray-300 bg-white py-2 pl-3 pr-10 text-base shadow-sm transition duration-150 focus:border-lime-500 focus:outline-none focus:ring-lime-500 sm:text-sm"
+					>
+						<option value="FI" selected>{m.finland()}</option>
+						<!-- Add more countries as needed -->
+					</select>
+				</div>
+				{#if form.errors.address}
+					<p class="mt-2 text-sm text-red-600">{form.errors.address}</p>
+				{/if}
 			</div>
-			<div>
-				<label for="street1" class="block text-sm font-medium">{m.street_line_1()}*</label>
-				<input
-					name="street1"
-					type="text"
-					value={form.addressForm.streetLine1}
-					oninput={(e) => handleAddressInput('streetLine1', e.currentTarget.value)}
-					required
-					class="mt-1 block w-full rounded border p-2"
-				/>
-			</div>
-			<div>
-				<label for="street2" class="block text-sm font-medium">{m.street_line_2()}</label>
-				<input
-					type="text"
-					name="street2"
-					value={form.addressForm.streetLine2}
-					oninput={(e) => handleAddressInput('streetLine2', e.currentTarget.value)}
-					class="mt-1 block w-full rounded border p-2"
-				/>
-			</div>
-			<div>
-				<label for="city" class="block text-sm font-medium">{m.city()}*</label>
-				<input
-					name="city"
-					type="text"
-					value={form.addressForm.city}
-					oninput={(e) => handleAddressInput('city', e.currentTarget.value)}
-					required
-					class="mt-1 block w-full rounded border p-2"
-				/>
-			</div>
-			<div>
-				<label for="postal" class="block text-sm font-medium">{m.postal_code()}*</label>
-				<input
-					name="postal"
-					type="text"
-					value={form.addressForm.postalCode}
-					oninput={(e) => handleAddressInput('postalCode', e.currentTarget.value)}
-					required
-					class="mt-1 block w-full rounded border p-2"
-				/>
-			</div>
-			<div>
-				<label for="country" class="block text-sm font-medium">{m.country()}*</label>
-				<select
-					name="country"
-					value={form.addressForm.countryCode}
-					onchange={(e) => handleAddressInput('countryCode', e.currentTarget.value)}
-					required
-					class="mt-1 block w-full rounded border p-2"
-				>
-					<option value="FI" selected>Finland</option>
-					<!-- Add more countries as needed -->
-				</select>
-			</div>
-			{#if form.errors.address}
-				<p class="text-sm text-red-500">{form.errors.address}</p>
-			{/if}
 		</div>
 	</div>
 </div>

@@ -13,12 +13,12 @@
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages.js';
 
-	$: lines = useFragment(ActiveOrder, $cartStore)?.lines || [];
-	$: total = useFragment(ActiveOrder, $cartStore)?.subTotal || 0;
-	$: count = lines.length;
+	const lines = $derived(useFragment(ActiveOrder, $cartStore)?.lines || []);
+	const total = $derived(useFragment(ActiveOrder, $cartStore)?.subTotal || 0);
+	const count = $derived(lines.length);
 
 	const client = getContextClient();
-	let processing = false;
+	let processing = $state(false);
 
 	const adjustOrderLine = async (orderLineId: string, e: Event) => {
 		if (processing) return;
@@ -94,95 +94,96 @@
 		<div
 			{...$content}
 			use:content
-			class="fixed right-0 top-0 z-50 mb-0 h-full w-full overflow-auto bg-primary-700 p-[25px] pb-0 shadow-lg focus:outline-none sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/2"
+			class="fixed right-0 top-0 z-50 mb-0 h-full w-full overflow-auto bg-gradient-to-br from-primary-700 to-primary-800 p-[25px] pb-0 shadow-xl focus:outline-none sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/2"
 			transition:fly={{ x: '100%', duration: 300, opacity: 1 }}
 		>
-			<button {...$close} use:close>
+			<button {...$close} use:close class="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-all hover:bg-white/20">
 				<span class="sr-only">{m.shopping_cart()}</span>
-				<X class="h-10 w-10" />
+				<X class="h-6 w-6" />
 			</button>
-			<div class="px-8 sm:px-12">
+			<div class="px-4 sm:px-8">
 				<h2
 					{...$title}
 					use:title
-					class="mb-6 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl"
+					class="mb-8 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl"
 				>
 					{m.shopping_cart()}
 				</h2>
 				<ul
 					role="list"
-					class="divide-y divide-gray-200 border-t border-gray-200 dark:divide-gray-800 dark:border-gray-800"
+					class="divide-y divide-white/10 border-t border-b border-white/10"
 				>
 					{#each lines as line}
-						<li class="flex py-6">
-							<a
-								data-sveltekit-reload
-								href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`}
-							>
-								<div class="flex-shrink-0 cursor-pointer">
-									{#if line.featuredAsset?.preview}
-										<Image
-											preview={line.featuredAsset.preview}
-											alt={line.productVariant.name}
-											preset="thumb"
-											class="h-24 w-auto rounded-md object-cover object-center sm:h-32 sm:w-auto"
-										/>
-									{:else}
-										<img
-											src="/img/noimg.png"
-											alt={line.productVariant.name}
-											class="h-24 w-auto rounded-md object-cover object-center sm:h-32 sm:w-auto"
-										/>
-									{/if}
-								</div>
-							</a>
-							<div class="m-2 flex flex-1 flex-col sm:ml-6">
-								<div>
-									<div class="flex justify-between">
-										<a
-											data-sveltekit-reload
-											href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`}
-											class="cursor-pointer text-sm"
-										>
-											<div class="font-medium hover:text-gray-800">
-												{line.productVariant.product.name}
-											</div>
-											{#each line.productVariant.options as option}
-												<p class="mt-1 text-sm">{option.group.name}: {option.name}</p>
-											{/each}
-										</a>
-										<div>
-											<p class="ml-4 text-sm font-medium">
+						<li class="py-8">
+							<div class="flex flex-col sm:flex-row sm:items-center">
+								<a
+									data-sveltekit-reload
+									href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`}
+									class="flex-shrink-0"
+								>
+									<div class="cursor-pointer">
+										{#if line.featuredAsset?.preview}
+											<Image
+												preview={line.featuredAsset.preview}
+												alt={line.productVariant.name}
+												preset="thumb"
+												class="h-32 w-32 rounded-lg object-cover object-center shadow-lg transition-transform duration-300 hover:scale-105 sm:h-40 sm:w-40"
+											/>
+										{:else}
+											<img
+												src="/img/noimg.png"
+												alt={line.productVariant.name}
+												class="h-32 w-32 rounded-lg object-cover object-center shadow-lg transition-transform duration-300 hover:scale-105 sm:h-40 sm:w-40"
+											/>
+										{/if}
+									</div>
+								</a>
+								<div class="mt-4 flex flex-1 flex-col sm:mt-0 sm:ml-6">
+									<div class="flex flex-col justify-between sm:flex-row">
+										<div class="flex-1">
+											<a
+												data-sveltekit-reload
+												href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`}
+												class="cursor-pointer"
+											>
+												<h3 class="text-lg font-medium text-white hover:text-lime-300">
+													{line.productVariant.product.name}
+												</h3>
+												{#each line.productVariant.options as option}
+													<p class="mt-1 text-sm text-gray-300">{option.group.name}: {option.name}</p>
+												{/each}
+											</a>
+										</div>
+										<div class="mt-4 flex flex-col items-end sm:mt-0">
+											<p class="text-lg font-medium text-white">
 												{formatCurrency(line.linePrice, PUBLIC_DEFAULT_CURRENCY)}
 											</p>
-											<p class="ml-4 text-right text-sm">{m.quantity({ count: line.quantity })}</p>
+											<p class="mt-1 text-sm text-gray-300">{m.quantity({ count: line.quantity })}</p>
 										</div>
 									</div>
-								</div>
-								<div class="mt-4 flex flex-1 items-end justify-between">
-									<select
-										name="quantity"
-										class="rounded-lg text-sm font-medium text-black focus:border-none focus:ring-gray-700"
-										onchange={async (e) => adjustOrderLine(line.id, e)}
-									>
-										{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as qty}
-											<option
-												value={qty}
-												selected={qty === line.quantity}
-												class="text-sm text-black">{qty}</option
-											>
-										{/each}
-									</select>
-									<div class="ml-4">
+									<div class="mt-6 flex items-center justify-between">
+										<select
+											name="quantity"
+											class="rounded-lg border-none bg-white/10 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20 focus:border-none focus:ring-2 focus:ring-lime-500"
+											onchange={async (e) => adjustOrderLine(line.id, e)}
+										>
+											{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as qty}
+												<option
+													value={qty}
+													selected={qty === line.quantity}
+													class="bg-primary-700 text-white">{qty}</option
+												>
+											{/each}
+										</select>
 										<button
 											type="submit"
 											aria-label="delete"
 											onclick={async () => {
 												removeOrderLine(line.id);
 											}}
-											class="text-sm font-medium text-gray-500 hover:text-gray-400"
+											class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
 										>
-											<span class="sr-only">{m.remove()}</span>
+											<span>{m.remove()}</span>
 											<svg
 												class="h-5 w-5"
 												viewBox="0 0 20 20"
@@ -201,39 +202,39 @@
 							</div>
 						</li>
 					{:else}
-						<div class="my-6">
-							<p class="text-white">{m.cart_empty()}</p>
+						<div class="py-12 text-center">
+							<p class="text-lg text-white/80">{m.cart_empty()}</p>
 						</div>
 					{/each}
 				</ul>
 				<section
 					aria-labelledby="summary-heading"
-					class="sticky bottom-0 rounded border-t border-gray-200 bg-primary-400 py-6 text-black dark:border-gray-800"
+					class="sticky bottom-0 mt-8 rounded-t-xl border-t border-white/10 bg-gradient-to-b from-primary-800/95 to-primary-800 px-6 py-6 backdrop-blur-lg"
 				>
 					{#if lines.length > 0}
 						<h2 id="summary-heading" class="sr-only">Order summary</h2>
 						<div>
 							<dl class="space-y-4">
 								<div class="flex items-center justify-between">
-									<dt class="ml-2 text-base font-medium">{m.subtotal()}</dt>
-									<dd class="ml-4 mr-2 text-base font-medium">
+									<dt class="text-lg font-medium text-white">{m.subtotal()}</dt>
+									<dd class="text-lg font-medium text-white">
 										{formatCurrency(total, PUBLIC_DEFAULT_CURRENCY)}
 									</dd>
 								</div>
 							</dl>
-							<p class="ml-2 mt-1 text-sm">{m.shipping_taxes_checkout()}</p>
+							<p class="mt-2 text-sm text-gray-300">{m.shipping_taxes_checkout()}</p>
 						</div>
-						<form action="/checkout">
+						<form action="/checkout" class="mt-6">
 							<button
 								use:close
 								type="submit"
-								class="my-4 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium duration-300 hover:bg-lime-700"
+								class="w-full rounded-lg bg-lime-500 px-5 py-3.5 text-base font-medium text-white shadow-lg transition-all duration-300 hover:bg-lime-600 hover:shadow-lime-500/25 focus:ring-2 focus:ring-lime-500 focus:ring-offset-2"
 							>
 								{m.checkout()}
 							</button>
 						</form>
 					{/if}
-					<button {...$close} use:close class="w-full text-center font-medium">
+					<button {...$close} use:close class="mt-4 w-full text-center font-medium text-white/80 transition-colors hover:text-white">
 						&larr; {m.continue_shopping()}
 					</button>
 				</section>

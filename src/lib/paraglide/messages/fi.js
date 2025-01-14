@@ -1144,3 +1144,51 @@ export const verifying_account = () => `Vahvistetaan tiliä...`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const redirect = () => `Tili vahvistettu. Uudelleenohjataan...`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const apply = () => `Lisää`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const clear_all = () => `Tyhjennä valinta`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const filters = () => `Suodattimet`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const proceed_to_payment = () => `Jatka maksamaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const cart_items = () => `Tilauksen tuotteet`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const checkout_description = () => `Verkkokaupan tilaus`

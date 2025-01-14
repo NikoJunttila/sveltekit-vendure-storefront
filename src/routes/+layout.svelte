@@ -5,7 +5,7 @@
 	import { page } from '$app/state';
 	import { browser } from '$app/environment';
 	import { GetActiveOrder, GetCustomer } from '$lib/vendure';
-	import { cartStore, userStore, themeStore } from '$lib/stores';
+	import { cartStore, userStore, themeStore, channelStore } from '$lib/stores';
 	import { i18n } from '$lib/i18n';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
@@ -41,7 +41,7 @@
 	// useful for debugging
 	// $inspect() will be removed automatically in production build
 	$inspect($cartStore);
-	$inspect(`userStore: ${$userStore}`);
+	$inspect($userStore);
 
 	const nakedPaths = ['/checkout', '/sitemap.xml'];
 	let naked = $derived(nakedPaths.includes(page.url.pathname));
@@ -50,6 +50,10 @@
 		if (browser) {
 			cartQuery.resume();
 			userQuery.resume();
+			if(data.channel){
+				//@ts-ignore
+				channelStore.set(data.channel);
+			}
 		}
 	});
 </script>

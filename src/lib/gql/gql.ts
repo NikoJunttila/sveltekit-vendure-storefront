@@ -14,6 +14,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
+    "\nquery ActiveChannel {\n  activeChannel {\n    id\n    code\n    defaultLanguageCode\n    availableLanguageCodes\n    availableCurrencyCodes\n    defaultCurrencyCode\n    seller{\n      name\n    }\n  }\n}    \n": types.ActiveChannelDocument,
     "\n\tfragment Collection on Collection {\n\t\tid\n\t\tname\n\t\tslug\n\t\tdescription\n\t\tparent {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t}\n\t\tbreadcrumbs {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t}\n\t\tfeaturedAsset {\n\t\t\tid\n\t\t\tpreview\n\t\t}\n\t}\n": types.CollectionFragmentDoc,
     "\n\tquery GetCollection($slug: String!, $skip: Int, $take: Int) {\n\t\tcollection(slug: $slug) {\n\t\t\t...Collection\n\t\t}\n\t\tsearch(\n\t\t\tinput: {\n\t\t\t\tcollectionSlug: $slug,\n\t\t\t\tgroupByProduct: true,\n\t\t\t\tskip: $skip,\n\t\t\t\ttake: $take \n\t\t\t}\n\t\t) {\n\t\t\titems {\n\t\t\t\t...SearchResult\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n": types.GetCollectionDocument,
     "\n\tquery GetCollections($options: CollectionListOptions) {\n\t\tcollections(options: $options) {\n\t\t\titems {\n\t\t\t\t...Collection\n\t\t\t}\n\t\t\ttotalItems\n\t\t}\n\t}\n": types.GetCollectionsDocument,
@@ -75,6 +76,10 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nquery ActiveChannel {\n  activeChannel {\n    id\n    code\n    defaultLanguageCode\n    availableLanguageCodes\n    availableCurrencyCodes\n    defaultCurrencyCode\n    seller{\n      name\n    }\n  }\n}    \n"): (typeof documents)["\nquery ActiveChannel {\n  activeChannel {\n    id\n    code\n    defaultLanguageCode\n    availableLanguageCodes\n    availableCurrencyCodes\n    defaultCurrencyCode\n    seller{\n      name\n    }\n  }\n}    \n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

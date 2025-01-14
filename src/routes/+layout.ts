@@ -1,4 +1,4 @@
-import { createClient, GetTopLevelCollections } from '$lib/vendure';
+import { createClient, GetTopLevelCollections, ActiveChannel } from '$lib/vendure';
 
 const client = createClient();
 
@@ -10,6 +10,7 @@ export async function load() {
 		collections: await client
 			.query(GetTopLevelCollections, {})
 			.toPromise()
-			.then((result) => result?.data?.collections?.items)
+			.then((result) => result?.data?.collections?.items),
+		channel: await client.query(ActiveChannel, {}).toPromise().then((result) => result?.data?.activeChannel),
 	};
 }

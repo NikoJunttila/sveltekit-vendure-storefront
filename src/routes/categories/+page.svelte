@@ -3,10 +3,15 @@
 	import { fly } from 'svelte/transition';
 	import * as m from '$lib/paraglide/messages.js';
 	import Collection from '$lib/components/Collection.svelte';
-
+	import Meta from '$src/lib/components/Meta.svelte';
 	const collections = page.data.collections;
 </script>
-
+<Meta
+config={{
+	title: m.shop_collection(),
+	description: m.collections_description(),
+}}
+/>
 <div class="min-h-screen">
 	<div class="mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
 		<header class="text-center" in:fly={{ y: 20, duration: 1000 }}>

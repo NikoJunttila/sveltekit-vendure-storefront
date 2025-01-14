@@ -1,8 +1,10 @@
 import { type Writable, writable } from 'svelte/store';
 import type { FragmentType } from '$lib/gql';
-import { ActiveOrder, Customer } from '$lib/vendure';
+import { ActiveOrder, Customer, ActiveChannel } from '$lib/vendure';
 
 export const cookiesDisabledStore: Writable<boolean> = writable(false);
+
+export const channelStore: Writable<FragmentType<typeof ActiveChannel> | null> = writable();
 
 export const cartStore: Writable<FragmentType<typeof ActiveOrder> | null> = writable();
 

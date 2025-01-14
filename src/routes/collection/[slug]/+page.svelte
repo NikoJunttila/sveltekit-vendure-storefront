@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { getContextClient, queryStore } from '@urql/svelte';
+	import Meta from '$src/lib/components/Meta.svelte';
 	import { useFragment } from '$lib/gql';
 	import {
 		type CollectionFragment,
@@ -93,8 +94,11 @@
 
 	// Selected filter values
 	let selectedFilters = $state(new Set<string>());
+	let filterSize = $state(0)
 	// Filter products based on selected facets
 	let filteredProducts = $state(useFragment(SearchResult, data.search?.items) || []);
+	// Mobile filter dialog state
+	let isMobileFilterOpen = $state(false);
 
 	function toggleFilter(facetValueId: string) {
 		if (selectedFilters.has(facetValueId)) {
@@ -110,9 +114,16 @@
 			(product) =>
 				selectedFilters.size === 0 || product.facetValueIds.some((id) => selectedFilters.has(id))
 		);
+		filterSize = selectedFilters.size
 	}
-</script>
 
+</script>
+<Meta
+config={{
+	title: collection?.name,
+	description: collection?.description,
+}}
+/>
 {#if collection}
 	<section class="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
 		<section class="relative mb-8 hidden w-full sm:mb-16 sm:block sm:h-80 lg:h-96">
@@ -167,8 +178,9 @@
 			<aside class="hidden lg:block">
 				{#key collection.name}
 					{#each Object.entries(groupedFacets) as [facetName, values]}
-						<div class="border-b border-gray-200 py-6 dark:border-gray-700">
-							<h3 class="text-lg font-medium capitalize text-gray-900 dark:text-white">
+					{#if values[0].count !== products.length}
+						<div class="border-b border-gray-200 py-6 ">
+							<h3 class="text-lg font-medium capitalize text-primary-600">
 								{facetName}
 							</h3>
 							<div class="mt-4 space-y-4">
@@ -179,11 +191,11 @@
 											type="checkbox"
 											checked={selectedFilters.has(facetValue.id)}
 											onchange={() => toggleFilter(facetValue.id)}
-											class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
+											class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 "
 										/>
 										<label
 											for={facetValue.id}
-											class="ml-3 cursor-pointer text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300"
+											class="ml-3 cursor-pointer text-sm text-gray-600 transition-colors hover:text-primary-600 "
 										>
 											{facetValue.name}
 											<span class="ml-1 text-gray-400">({count})</span>
@@ -192,6 +204,7 @@
 								{/each}
 							</div>
 						</div>
+						{/if}
 					{/each}
 				{/key}
 			</aside>
@@ -201,6 +214,7 @@
 				<button
 					type="button"
 					class="flex items-center gap-2 text-gray-700 transition-colors hover:text-primary-600 dark:text-gray-300"
+					onclick={() => isMobileFilterOpen = true}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -214,9 +228,84 @@
 							clip-rule="evenodd"
 						/>
 					</svg>
-					Filters ({selectedFilters.size})
+					{m.filters()} ({filterSize})
 				</button>
 			</div>
+
+			<!-- Mobile Filter Dialog -->
+			{#if isMobileFilterOpen}
+				<div class="fixed inset-0 z-50 overflow-y-auto lg:hidden" role="dialog" aria-modal="true">
+					<button class="fixed inset-0 bg-black bg-opacity-25" onclick={() => isMobileFilterOpen = false} aria-label="close"></button>
+					<div class="relative flex h-full w-full flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
+						<div class="flex items-center justify-between px-4">
+							<h2 class="text-lg font-medium text-gray-900">{m.filters()}</h2>
+							<button
+								type="button"
+								class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50"
+								onclick={() => isMobileFilterOpen = false}
+							>
+								<span class="sr-only">Close menu</span>
+								<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+								</svg>
+							</button>
+						</div>
+
+						<!-- Filters -->
+						<div class="mt-4 border-t border-gray-200">
+							{#key collection.name}
+								{#each Object.entries(groupedFacets) as [facetName, values]}
+								{#if values[0].count !== products.length}
+									<div class="border-t border-gray-200 px-4 py-6">
+										<h3 class="text-lg font-medium capitalize text-primary-600">
+											{facetName}
+										</h3>
+										<div class="mt-4 space-y-4">
+											{#each values as { facetValue, count }}
+												<div class="flex items-center">
+													<input
+														id={`mobile-${facetValue.id}`}
+														type="checkbox"
+														checked={selectedFilters.has(facetValue.id)}
+														onchange={() => toggleFilter(facetValue.id)}
+														class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+													/>
+													<label
+														for={`mobile-${facetValue.id}`}
+														class="ml-3 cursor-pointer text-sm text-gray-600 transition-colors hover:text-primary-600"
+													>
+														{facetValue.name}
+														<span class="ml-1 text-gray-400">({count})</span>
+													</label>
+												</div>
+											{/each}
+										</div>
+									</div>
+									{/if}
+								{/each}
+							{/key}
+						</div>
+
+						<!-- Apply filters button -->
+						<div class="sticky bottom-0 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-4">
+							<button
+								type="button"
+								class="text-sm text-gray-500"
+								onclick={() => { selectedFilters.clear(); filteredProducts = products; }}
+							>
+								{m.clear_all()}
+							</button>
+							<button
+								type="button"
+								class="ml-3 inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+								onclick={() => isMobileFilterOpen = false}
+							>
+								{m.apply()}
+							</button>
+						</div>
+					</div>
+				</div>
+			{/if}
 
 			<!-- Product Grid -->
 			<div class="lg:col-span-3">

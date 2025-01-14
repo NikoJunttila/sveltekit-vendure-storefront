@@ -141,5 +141,11 @@
 	"verification_failed": "Vahvistus epäonnistui",
 	"unexpected_type": "Odottamaton vastaustyyppi",
 	"verifying_account": "Vahvistetaan tiliä...",
-	"redirect": "Tili vahvistettu. Uudelleenohjataan..."
+	"redirect": "Tili vahvistettu. Uudelleenohjataan...",
+	"apply":"Lisää",
+	"clear_all":"Tyhjennä valinta",
+	"filters":"Suodattimet",
+	"proceed_to_payment":"Jatka maksamaan",
+	"cart_items":"Tilauksen tuotteet",
+	"checkout_description":"Verkkokaupan tilaus"
 }
