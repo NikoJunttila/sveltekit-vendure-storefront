@@ -22,3 +22,8 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# generatedLocales
+./src/lib/paraglide/messages/*
+./src/lib/paraglide/messages.js
+
+
