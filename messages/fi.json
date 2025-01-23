@@ -147,5 +147,8 @@
 	"filters":"Suodattimet",
 	"proceed_to_payment":"Jatka maksamaan",
 	"cart_items":"Tilauksen tuotteet",
-	"checkout_description":"Verkkokaupan tilaus"
+	"checkout_description":"Verkkokaupan tilaus",
+	"stripe_handles":"Stripe käsittelee maksut turvallisesti",
+	"complete_order":"Suorita tilauksesi loppuun",
+	"processing":"Käsitellään"
 }

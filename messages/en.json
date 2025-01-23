@@ -152,5 +152,8 @@
 	"filters":"Filters",
 	"proceed_to_payment":"Proceed to Payment",
 	"cart_items":"Cart Items",
-	"checkout_description":"Checkout"
+	"checkout_description":"Checkout",
+	"stripe_handles":"Payments processed securely by Stripe",
+	"complete_order":"Complete Your Order",
+	"processing":"Processing"
 }

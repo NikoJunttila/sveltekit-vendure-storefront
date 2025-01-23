@@ -21,6 +21,7 @@
 	import CollectionComponent from '$lib/components/Collection.svelte';
 	let { data } = $props();
 	import { goto } from '$app/navigation';
+	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
 
 	// this will load the data in prerendering and initial site load
 	let collection: CollectionFragment | null | undefined = $state(
@@ -138,32 +139,7 @@ config={{
 			</div>
 		</section>
 		<div class="mb-2">
-			{#each breadcrumbs as breadcrumb}
-				{#if breadcrumb.slug === '__root_collection__'}
-					<a
-						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
-						href="/"
-					>
-						<span
-							class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
-						>
-							{m.home()}
-						</span></a
-					>
-				{:else}
-					<span class="before:mr-2 before:content-['/']"></span>
-					<a
-						href={`/collection/${breadcrumb.slug}`}
-						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
-					>
-						<span
-							class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
-						>
-							{breadcrumb.name}
-						</span>
-					</a>
-				{/if}
-			{/each}
+			<BreadcrumbsComponent {breadcrumbs} />
 		</div>
 		<!-- Collections Grid -->
 		<div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -213,7 +189,7 @@ config={{
 			<div class="mb-6 lg:hidden">
 				<button
 					type="button"
-					class="flex items-center gap-2 text-gray-700 transition-colors hover:text-primary-600 dark:text-gray-300"
+					class="flex items-center gap-2 text-gray-700 transition-colors hover:text-primary-600 "
 					onclick={() => isMobileFilterOpen = true}
 				>
 					<svg
@@ -355,7 +331,7 @@ config={{
 							</div>
 						</button>
 					{:else}
-						<p class="col-span-full text-center text-gray-500 dark:text-gray-400">
+						<p class="col-span-full text-center text-gray-500 0">
 							{m.no_products_found()}
 						</p>
 					{/each}

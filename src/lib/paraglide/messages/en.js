@@ -1192,3 +1192,27 @@ export const cart_items = () => `Cart Items`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const checkout_description = () => `Checkout`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const stripe_handles = () => `Payments processed securely by Stripe`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const complete_order = () => `Complete Your Order`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const processing = () => `Processing`

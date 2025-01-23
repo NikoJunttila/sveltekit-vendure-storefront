@@ -16,9 +16,9 @@
 <div class="max-w-screen-2xl bg-transparent p-2 md:p-4 2xl:mx-auto">
 	<div class="relative m-0 grid w-full grid-cols-1 rounded-md">
 		<div
-			class="absolute inset-x-0 bottom-0 h-24 w-full rounded-md bg-gradient-to-b from-transparent via-transparent to-white dark:hidden"
+			class="absolute inset-x-0 bottom-0 h-24 w-full rounded-md bg-gradient-to-b from-transparent via-transparent to-white"
 		></div>
-		<div class="absolute inset-0 rounded-md dark:bg-black/30"></div>
+		<div class="absolute inset-0 rounded-md "></div>
 		<header class="absolute px-6">
 			<h1
 				class="leading-11 mb-3 mt-6 max-w-[600px] text-3xl text-gray-900 md:my-6 md:text-5xl lg:text-7xl"

@@ -66,7 +66,7 @@
 		<div
 			{...$content}
 			use:content
-			class="fixed left-0 top-0 z-50 h-screen w-full overflow-auto bg-black p-[20px] text-white shadow-lg focus:outline-none"
+			class="fixed left-0 top-0 z-50 h-screen w-full overflow-auto bg-primary-700 p-[20px] text-white shadow-lg focus:outline-none"
 			transition:fly={{ x: '-100%', duration: 300, opacity: 1 }}
 		>
 			<div class="items-middle mb-6 flex">

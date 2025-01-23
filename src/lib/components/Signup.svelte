@@ -49,18 +49,18 @@
 
 <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
 	<div class="sm:mx-auto sm:w-full sm:max-w-md">
-		<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100">
+		<h2 class="mt-6 text-center text-3xl font-extrabold  ">
 			{m.create_account()}
 		</h2>
 	</div>
 
 	<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-		<div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10 dark:bg-gray-800">
+		<div class="px-4 py-8 shadow sm:rounded-lg sm:px-10 border ">
 			<form class="space-y-6" onsubmit={signUp}>
 				{#if stuff.error}
-					<div class="rounded-md bg-red-50 p-4 dark:bg-red-900/50">
+					<div class="rounded-md bg-red-50 p-4 ">
 						<div class="flex">
-							<div class="text-sm text-red-700 dark:text-red-200">
+							<div class="text-sm text-red-700 ">
 								{stuff.error}
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 				{/if}
 
 				<div>
-					<label for="firstName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+					<label for="firstName" class="block text-sm font-medium  ">
 						{m.first_name()}
 					</label>
 					<div class="mt-1">
@@ -79,13 +79,13 @@
 							required
 							placeholder={m.placeholder_first_name()}
 							bind:value={stuff.firstName}
-							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm "
 						/>
 					</div>
 				</div>
 
 				<div>
-					<label for="lastName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+					<label for="lastName" class="block text-sm font-medium  ">
 						{m.last_name()}
 					</label>
 					<div class="mt-1">
@@ -96,13 +96,13 @@
 							required
 							placeholder={m.placeholder_last_name()}
 							bind:value={stuff.lastName}
-							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm "
 						/>
 					</div>
 				</div>
 
 				<div>
-					<label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+					<label for="email" class="block text-sm font-medium  ">
 						{m.email()}
 					</label>
 					<div class="mt-1">
@@ -114,13 +114,13 @@
 							required
 							placeholder={m.placeholder_email()}
 							bind:value={stuff.email}
-							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm "
 						/>
 					</div>
 				</div>
 
 				<div>
-					<label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+					<label for="password" class="block text-sm font-medium  ">
 						{m.password()}
 					</label>
 					<div class="mt-1">
@@ -132,7 +132,7 @@
 							required
 							placeholder={m.placeholder_password()}
 							bind:value={stuff.password}
-							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm "
 						/>
 					</div>
 				</div>
@@ -141,7 +141,7 @@
 					<button
 						type="submit"
 						disabled={stuff.loading}
-						class="flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+						class="button disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{stuff.loading ? m.creating_account() : m.create_account()}
 					</button>

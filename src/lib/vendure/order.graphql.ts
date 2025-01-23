@@ -344,3 +344,9 @@ export const TransitionOrderToState = gql(`
 		}
 	}
 `);
+
+export const StripePaymentIntent = gql(`
+  mutation createStripePaymentIntent {
+    createStripePaymentIntent
+  }
+`);

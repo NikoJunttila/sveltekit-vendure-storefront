@@ -6,7 +6,7 @@
 	import { type CreateCustomerInput, type CreateAddressInput, type UpdateCustomerInput, type UpdateAddressInput  } from '$lib/gql/graphql';
 	import { SetOrderCustomer, SetOrderBillingAddress, SetOrderShippingAddress,updateCustomer, updateCustomerAddress,Customer } from '$lib/vendure';
 	import * as m from '$lib/paraglide/messages.js';
-	import { userStore } from '../stores';
+	import { userStore } from '../../stores';
 	import { useFragment } from '$src/lib/gql';
 
 	const client = getContextClient();
@@ -327,15 +327,15 @@
 	});
 </script>
 
-<div class="col-span-1 space-y-6">
+<div class="grid gap-4 md:grid-cols-2">
 	<!-- Customer Form -->
 	<div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
-		<div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
-			<h2 class="text-xl font-semibold text-gray-900">{m.customer_information()}</h2>
+		<div class="border-b border-gray-200 bg-gray-50 px-4 py-3">
+			<h2 class="text-lg font-semibold text-gray-900">{m.customer_information()}</h2>
 		</div>
-		<div class="p-6">
-			<div class="space-y-4">
-				<div class="grid gap-4 sm:grid-cols-2">
+		<div class="p-4">
+			<div class="space-y-3">
+				<div class="grid gap-3 sm:grid-cols-2">
 					<div>
 						<label for="name" class="block text-sm font-medium text-gray-700">{m.first_name()}*</label>
 						<input
@@ -344,7 +344,7 @@
 							oninput={(e) => handleCustomerInput('firstName', e.currentTarget.value)}
 							required
 							name="name"
-							class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500 sm:text-sm"
+							class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500"
 							disabled={form.disabledFields.customer.firstName}
 						/>
 					</div>
@@ -356,7 +356,7 @@
 							oninput={(e) => handleCustomerInput('lastName', e.currentTarget.value)}
 							required
 							name="lastName"
-							class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500 sm:text-sm"
+							class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500"
 							disabled={form.disabledFields.customer.lastName}
 						/>
 					</div>
@@ -369,7 +369,7 @@
 						oninput={(e) => handleCustomerInput('emailAddress', e.currentTarget.value)}
 						required
 						name="emailaddr"
-						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500 sm:text-sm"
+						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500"
 						disabled={form.disabledFields.customer.emailAddress}
 					/>
 				</div>
@@ -381,12 +381,12 @@
 						oninput={(e) => handleCustomerInput('phoneNumber', e.currentTarget.value)}
 						required
 						name="phone"
-						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500 sm:text-sm"
+						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500"
 						disabled={form.disabledFields.customer.phoneNumber}
 					/>
 				</div>
 				{#if form.errors.customer}
-					<p class="mt-2 text-sm text-red-600">{form.errors.customer}</p>
+					<p class="mt-1 text-sm text-red-600">{form.errors.customer}</p>
 				{/if}
 			</div>
 		</div>
@@ -394,11 +394,11 @@
 
 	<!-- Address Form -->
 	<div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
-		<div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
-			<h2 class="text-xl font-semibold text-gray-900">{m.address_information()}</h2>
+		<div class="border-b border-gray-200 bg-gray-50 px-4 py-3">
+			<h2 class="text-lg font-semibold text-gray-900">{m.address_information()}</h2>
 		</div>
-		<div class="p-6">
-			<div class="space-y-4">
+		<div class="p-4">
+			<div class="space-y-3">
 				<div>
 					<label for="company" class="block text-sm font-medium text-gray-700">{m.company()}</label>
 					<input
@@ -406,7 +406,7 @@
 						value={form.addressForm.company}
 						oninput={(e) => handleAddressInput('company', e.currentTarget.value)}
 						name="company"
-						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
 					/>
 				</div>
 				<div>
@@ -417,7 +417,7 @@
 						value={form.addressForm.streetLine1}
 						oninput={(e) => handleAddressInput('streetLine1', e.currentTarget.value)}
 						required
-						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
 					/>
 				</div>
 				<div>
@@ -427,10 +427,10 @@
 						name="street2"
 						value={form.addressForm.streetLine2}
 						oninput={(e) => handleAddressInput('streetLine2', e.currentTarget.value)}
-						class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
 					/>
 				</div>
-				<div class="grid gap-4 sm:grid-cols-2">
+				<div class="grid gap-3 sm:grid-cols-2">
 					<div>
 						<label for="city" class="block text-sm font-medium text-gray-700">{m.city()}*</label>
 						<input
@@ -439,7 +439,7 @@
 							value={form.addressForm.city}
 							oninput={(e) => handleAddressInput('city', e.currentTarget.value)}
 							required
-							class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+							class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
 						/>
 					</div>
 					<div>
@@ -450,7 +450,7 @@
 							value={form.addressForm.postalCode}
 							oninput={(e) => handleAddressInput('postalCode', e.currentTarget.value)}
 							required
-							class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+							class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
 						/>
 					</div>
 				</div>
@@ -461,14 +461,13 @@
 						value={form.addressForm.countryCode}
 						onchange={(e) => handleAddressInput('countryCode', e.currentTarget.value)}
 						required
-						class="mt-1 block w-full rounded-md border-gray-300 bg-white py-2 pl-3 pr-10 text-base shadow-sm transition duration-150 focus:border-lime-500 focus:outline-none focus:ring-lime-500 sm:text-sm"
+						class="mt-1 block w-full rounded-md border-gray-300 bg-white py-2 pl-3 pr-10 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:outline-none focus:ring-lime-500"
 					>
 						<option value="FI" selected>{m.finland()}</option>
-						<!-- Add more countries as needed -->
 					</select>
 				</div>
 				{#if form.errors.address}
-					<p class="mt-2 text-sm text-red-600">{form.errors.address}</p>
+					<p class="mt-1 text-sm text-red-600">{form.errors.address}</p>
 				{/if}
 			</div>
 		</div>

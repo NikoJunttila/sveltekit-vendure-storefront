@@ -16,6 +16,7 @@
 	import Highlights from '$lib/components/Highlights.svelte';
 	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_ORGANIZATION } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages.js';
+	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
 
 	let { data } = $props();
 	const client = getContextClient();
@@ -120,7 +121,7 @@
 				availability: 'https://schema.org/InStock',
 				price: product.variants[0].price,
 				priceValidUntil: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toLocaleDateString(
-					'fr-CA',
+					'fi-FI',
 					{ year: 'numeric', month: '2-digit', day: '2-digit' }
 				),
 				hasMerchantReturnPolicy: {
@@ -146,32 +147,7 @@
 	>
 		<div class="lg:max-w-lg">
 			<div class="mb-2">
-				{#each breadcrumbs as breadcrumb}
-					{#if breadcrumb.slug === '__root_collection__'}
-						<a
-							class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
-							href="/"
-						>
-							<span
-								class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
-							>
-								{m.home()}
-							</span></a
-						>
-					{:else}
-						<span class="before:mr-2 before:content-['/']"></span>
-						<a
-							href={`/collection/${breadcrumb.slug}`}
-							class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
-						>
-							<span
-								class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
-							>
-								{breadcrumb.name}
-							</span>
-						</a>
-					{/if}
-				{/each}
+				<BreadcrumbsComponent {breadcrumbs} />
 			</div>
 			<h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{product.name}</h1>
 			<h2 id="information-heading" class="sr-only">Product information</h2>

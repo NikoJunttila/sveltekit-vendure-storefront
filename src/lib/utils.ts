@@ -1,4 +1,3 @@
-import { channelStore } from "./stores";
 export const clickOutside = (node: HTMLElement) => {
 	const handleClick = (event: MouseEvent) => {
 		if (node && !node.contains(event.target as Node) && !event.defaultPrevented) {

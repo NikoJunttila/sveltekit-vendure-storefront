@@ -1192,3 +1192,27 @@ export const cart_items = () => `Tilauksen tuotteet`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const checkout_description = () => `Verkkokaupan tilaus`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const stripe_handles = () => `Stripe käsittelee maksut turvallisesti`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const complete_order = () => `Suorita tilauksesi loppuun`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const processing = () => `Käsitellään`

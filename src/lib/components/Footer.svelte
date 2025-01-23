@@ -40,7 +40,7 @@
 	class="mt-6 w-full bg-gradient-to-b from-primary-700 to-[#1a1414] lg:mt-12"
 	aria-labelledby="footer-heading"
 >
-	<hr class="hidden opacity-10 dark:block" />
+	<hr class="hidden opacity-10" />
 	<h2 id="footer-heading" class="sr-only">Footer</h2>
 
 	<div class="mx-auto max-w-screen-2xl px-4 pt-16 sm:px-6 sm:pt-24 lg:px-8 lg:pt-32">
@@ -58,8 +58,8 @@
 							alt="Louisiana Roasting Company"
 						/>
 						<div class="space-y-2 text-center text-lg md:text-left">
-							<p class="font-bold text-gray-900 dark:text-white">Louisiana Roasting Company</p>
-							<address class="not-italic text-gray-600 dark:text-gray-300">
+							<p class="font-bold text-gray-200 ">Louisiana Roasting Company</p>
+							<address class="not-italic text-gray-300">
 								1618 Marshall Street<br />
 								Shreveport, LA 71101<br />
 								United States
@@ -68,7 +68,7 @@
 						<div
 							class="h-1 w-20 rounded-full bg-gradient-to-r from-primary-500 to-primary-600"
 						></div>
-						<div class="text-gray-600 dark:text-gray-300">
+						<div class="text-gray-300 ">
 							<p>
 								<span class="font-semibold">{m.footer_phone()}:</span>
 								<a href="tel:+16505551234" class="transition-colors hover:text-primary-600"
@@ -85,10 +85,10 @@
 						</div>
 					</div>
 					<!-- Social Media Links -->
-					<div class="flex justify-center space-x-4 md:justify-start">
+					<div class="flex text-gray-300 justify-center space-x-4 md:justify-start">
 						<a
 							href={socials[0].url}
-							class="transform text-gray-500 transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
+							class="transform transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label={socials[0].label}
@@ -97,7 +97,7 @@
 						</a>
 						<a
 							href={socials[1].url}
-							class="transform text-gray-500 transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
+							class="transform  transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label={socials[1].label}
@@ -106,7 +106,7 @@
 						</a>
 						<a
 							href={socials[2].url}
-							class="transform text-gray-500 transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
+							class="transform  transition-all duration-300 hover:-translate-y-1 hover:text-primary-600"
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label={socials[2].label}
@@ -118,7 +118,7 @@
 
 				<!-- Navigation Links -->
 				<div>
-					<h3 class="text-center text-lg font-semibold text-gray-900 md:text-left dark:text-white">
+					<h3 class="text-center text-lg font-semibold text-white md:text-left">
 						{m.footer_company()}
 					</h3>
 					<div class="mt-4 flex flex-col space-y-3 text-white">
@@ -137,7 +137,7 @@
 					</div>
 				</div>
 				<div>
-					<h3 class="text-center text-lg font-semibold text-gray-900 md:text-left dark:text-white">
+					<h3 class="text-center text-lg font-semibold text-white md:text-left ">
 						{m.footer_resources()}
 					</h3>
 					<div class="mt-4 flex flex-col space-y-3 text-white">
@@ -156,7 +156,7 @@
 					</div>
 				</div>
 				<div>
-					<h3 class="text-center text-lg font-semibold text-gray-900 md:text-left dark:text-white">
+					<h3 class="text-center text-lg font-semibold text-white md:text-left">
 						{m.footer_support()}
 					</h3>
 					<div class="mt-4 flex flex-col space-y-3 text-white">
@@ -178,18 +178,18 @@
 
 			<!-- Newsletter Section -->
 			<div
-				class="mt-12 border-t border-gray-200 pt-8 dark:border-gray-700"
+				class="mt-12 border-t border-gray-200 pt-8 "
 				in:fly={{ y: 30, duration: 400, delay: 800 }}
 			>
 				<div class="mx-auto max-w-md text-center">
-					<h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+					<h3 class="mb-4 text-lg font-semibold text-gray-200 ">
 						{m.footer_subscribe()}
 					</h3>
 					<form class="flex gap-2">
 						<input
 							type="email"
 							placeholder={m.footer_email_placeholder()}
-							class="flex-1 rounded-md border border-gray-300 bg-white px-4 py-2 outline-none transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
+							class="flex-1 rounded-md border border-gray-300 bg-white px-4 py-2 outline-none transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-primary-500"
 						/>
 						<button
 							type="submit"
@@ -203,16 +203,16 @@
 
 			<!-- Bottom Bar -->
 			<div
-				class="mt-12 flex w-full flex-col items-center justify-between gap-4 border-t border-gray-200 py-6 sm:flex-row dark:border-gray-700"
+				class="mt-12 flex w-full flex-col items-center justify-between gap-4 border-t border-gray-200 py-6 sm:flex-row"
 				in:fly={{ y: 20, duration: 400, delay: 1000 }}
 			>
 				<div class="flex items-center gap-4">
-					<p class="text-gray-600 dark:text-gray-300">
+					<p class="text-gray-400 ">
 						&copy; {year} Louisiana Roasting Company, LLC
 					</p>
 					<LanguageSwitch />
 				</div>
-				<div class="flex gap-4 text-gray-600 dark:text-gray-300">
+				<div class="flex gap-4 text-gray-300 ">
 					<a href="/" class="transition-colors duration-300 hover:text-primary-600"
 						>{m.footer_terms()}</a
 					>

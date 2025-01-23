@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { useFragment } from '$lib/gql';
 	import { Collection } from '$lib/vendure';
+	import Menu from "lucide-svelte/icons/menu";
 	import Cart from '$lib/components/Cart.svelte';
 	import Account from '$lib/components/Account.svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
@@ -8,7 +9,21 @@
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 	import LanguageSwitch from './LanguageSwitch.svelte';
 	let { collections = [] } = $props();
-	// export let collections: FragmentType<typeof Collection>[] = []
+	
+	let isDropdownOpen = $state(false);
+	const maxVisibleCollections = 2;
+	
+	const processedCollections = $derived(useFragment(Collection, collections));
+	const visibleCollections = $derived(processedCollections.slice(0, maxVisibleCollections));
+	const moreCollections = $derived(processedCollections.slice(maxVisibleCollections));
+	
+	function openDropdown() {
+		isDropdownOpen = true;
+	}
+	
+	function closeDropdown() {
+		isDropdownOpen = false;
+	}
 </script>
 
 <nav class="top-0 z-50 max-w-screen-2xl px-2 md:px-4 2xl:mx-auto">
@@ -19,20 +34,54 @@
 				<img class="hidden h-14 w-auto md:block" src="/logo.png" alt="Company Name" />
 			</a>
 			<div class="mr-auto hidden lg:ml-6 lg:block">
-				{#each useFragment(Collection, collections) as collection}
-					<a
-						href="/collection/{collection.slug}"
-						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
-					>
-						<span
-							class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+				<div class="flex items-center">
+					{#each visibleCollections as collection}
+						<a
+							href="/collection/{collection.slug}"
+							class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
 						>
-							{collection.name}
-						</span>
-					</a>
-				{:else}
-					Error: No collections found
-				{/each}
+							<span
+								class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+							>
+								{collection.name}
+							</span>
+						</a>
+					{/each}
+					
+					{#if moreCollections.length > 0}
+						<div class="relative">
+							<!-- svelte-ignore a11y_mouse_events_have_key_events -->
+							<button
+								onclick={openDropdown}
+								onmouseover={openDropdown}
+								class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
+							>
+								<span
+									class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+								>
+									<Menu />
+								</span>
+							</button>
+							
+							{#if isDropdownOpen}
+								<!-- svelte-ignore a11y_no_static_element_interactions -->
+								<div
+									class="absolute left-0 z-50 mt-2 w-48 bg-primary-700 overflow-hidden rounded-md shadow-lg"
+									onmouseleave={closeDropdown}
+								>
+									{#each moreCollections as collection}
+										<a
+											href="/collection/{collection.slug}"
+											class="block px-4 py-2 text-sm hover:bg-primary-600"
+										>
+											{collection.name}
+										</a>
+									{/each}
+								</div>
+							{/if}
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 		<div class="ml-4 flex flex-grow items-center justify-between align-middle">
