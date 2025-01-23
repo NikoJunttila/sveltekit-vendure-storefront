@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContextClient } from '@urql/svelte';
 	import { SignUp } from '$lib/vendure';
-	import { toast } from 'svelte-sonner';
+	import { toast } from '$lib/toast.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 
 	const client = getContextClient();

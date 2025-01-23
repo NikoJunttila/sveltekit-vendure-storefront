@@ -3,7 +3,7 @@
 	import ShoppingBag from 'lucide-svelte/icons/shopping-bag';
 	import { createDialog } from '@melt-ui/svelte';
 	import { getContextClient } from '@urql/svelte';
-	import { toast } from 'svelte-sonner';
+	import {toast} from "$lib/toast.svelte"
 	import { fade, fly } from 'svelte/transition';
 	import { useFragment } from '$lib/gql';
 	import { ActiveOrder, AdjustOrderLine, RemoveOrderLine } from '$lib/vendure';
@@ -13,9 +13,10 @@
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages.js';
 
-	const lines = $derived(useFragment(ActiveOrder, $cartStore)?.lines || []);
-	const total = $derived(useFragment(ActiveOrder, $cartStore)?.subTotal || 0);
-	const count = $derived(lines.length);
+	let order = $derived(useFragment(ActiveOrder, $cartStore));
+	let lines = $derived(order?.lines || []);
+	const total = $derived(order?.subTotal || 0);
+	const count = $derived(order?.totalQuantity || 0);
 
 	const client = getContextClient();
 	let processing = $state(false);
@@ -32,8 +33,7 @@
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
 			.toPromise();
-		if (result.error) toast.error('Error updating cart');
-		else if (result.data) toast.success('Cart updated');
+		if (result.error) toast.error(m.unexpected_error());
 		processing = false;
 	};
 
@@ -47,8 +47,8 @@
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
 			.toPromise();
-		if (result.error) toast.error('Error removing item from cart');
-		else if (result.data) toast.success('Item removed from cart');
+		if (result.error) toast.error(m.unexpected_error());
+		else if (result.data) toast.success(m.item_removed());
 		processing = false;
 	};
 
@@ -57,7 +57,6 @@
 		states: { open }
 	} = createDialog({ preventScroll: true });
 </script>
-
 {#if $open}
 	<button {...$close} use:close class="grow-on-hover relative items-center align-middle">
 		<span class="sr-only">{m.shopping_cart()}</span>
@@ -75,11 +74,14 @@
 		<span class="sr-only">{m.shopping_cart()}</span>
 		<ShoppingBag class="h-9 w-9" />
 		{#if count > 0}
-			<span
-				class="absolute right-2 top-3 z-50 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-lime-600 px-2 py-1 text-xs font-bold leading-none text-white"
-			>
-				{count}
-			</span>
+		{#key count}	
+		<span
+		in:fly={{y:-200}}
+		class="absolute right-2 top-3 z-50 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-lime-600 px-2 py-1 text-xs font-bold leading-none text-white"
+		>
+		{count}
+	</span>
+	{/key}
 		{/if}
 	</button>
 {/if}

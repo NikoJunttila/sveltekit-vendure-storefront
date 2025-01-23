@@ -223,6 +223,14 @@ export const insufficient_stock = () => `Insufficient stock`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const item_removed = () => `Item removed`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const search = () => `Search`
 
 
@@ -1216,3 +1224,499 @@ export const complete_order = () => `Complete Your Order`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const processing = () => `Processing`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_products = () => `Products`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_toggle_collections = () => `Toggle collections`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_all_products = () => `All products`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_about_us = () => `About Us`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_guide = () => `Guide`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_contact_us = () => `Contact Us`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_about_us_label = () => `About us`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_guide_label = () => `Guide`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_contact_us_label = () => `Contact us`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_view_all_products = () => `View all products`
+
+
+/**
+ * @param {{ collectionName: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_view_collection = (params) => `View ${params.collectionName} collection`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_open = () => `Open menu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_close = () => `Close menu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contact = () => `Contact information`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const privacyTitle = () => `Privacy Policy`
+
+
+/**
+ * @param {{ date: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const effectiveDate = (params) => `Effective Date: ${params.date}`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const introduction = () => `We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our services.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const informationCollectionHeading = () => `1. Information We Collect`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const informationCollectionContent = () => `We may collect personal identification information including but not limited to name, email address, and usage data when you interact with our services.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const dataUsageHeading = () => `2. How We Use Your Data`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const dataUsageContent = () => `We use the collected information to provide and improve our services, communicate with you, and ensure the security of our platform.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const dataProtectionHeading = () => `3. Data Protection`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const dataProtectionContent = () => `We implement appropriate technical and organizational measures to protect your personal data against unauthorized access and data breaches.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const userRightsHeading = () => `4. Your Rights`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const userRightsContent = () => `You have the right to access, correct, or delete your personal data. Contact us to exercise these rights.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const changesHeading = () => `5. Policy Changes`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const changesContent = () => `We may update this policy periodically. Significant changes will be communicated through our website or email.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactUs = () => `If you have any questions about this Privacy Policy, please contact us at privacy@example.com.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderTitle = () => `Order & Delivery Terms`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderIntroduction = () => `These terms outline our ordering process, delivery procedures, and return policies. Please read carefully before making a purchase.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderProcessHeading = () => `1. Order Process`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderProcessContent = () => `Orders can be placed through our website 24/7. You'll receive an order confirmation via email immediately after successful payment.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const paymentMethodsHeading = () => `2. Payment Methods`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const paymentMethodsContent = () => `We accept credit cards, PayPal, and mobile payments. All transactions are securely processed through encrypted channels.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const deliveryOptionsHeading = () => `3. Delivery Options`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const deliveryOptionsContent = () => `Standard delivery takes 3-5 business days. Express shipping available for additional fee. Digital products delivered immediately via email.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const returnsHeading = () => `4. Returns & Exchanges`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const returnsContent = () => `Unopened items can be returned within 14 days of delivery. Contact us for return authorization. Digital products are non-refundable.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const liabilityHeading = () => `5. Liability`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const liabilityContent = () => `We are not responsible for delays caused by carriers or customs. Damaged items must be reported within 48 hours of delivery.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderContact = () => `For order-related inquiries, contact us at orders@example.com.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactTitle = () => `Contact Us`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactIntroduction = () => `Get in touch with us through any of the following methods. We're here to help!`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactDetails = () => `Contact Details`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactEmail = () => `hello@example.com`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactPhone = () => `+358 12 345 6789`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactAddress = () => `123 Business Street, Helsinki, Finland`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const businessHours = () => `Business Hours`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hoursWeekdays = () => `Mon-Fri: 9:00 AM - 5:00 PM`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hoursWeekends = () => `Sat-Sun: Closed`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hoursHolidays = () => `Public Holidays: Closed`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactFormHeading = () => `Send Us a Message`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const nameLabel = () => `Your Name`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const namePlaceholder = () => `John Doe`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const emailLabel = () => `Your Email`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const emailPlaceholder = () => `john@example.com`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const messageLabel = () => `Message`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const messagePlaceholder = () => `Type your message here...`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const submitButton = () => `Send Message`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactSuccessMessage = () => `Thank you for your message! We'll respond within 24 hours.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const locationHeading = () => `Our Location`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const mapPlaceholder = () => `Map placeholder - integrate your map service here`

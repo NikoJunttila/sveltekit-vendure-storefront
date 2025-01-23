@@ -83,6 +83,7 @@ export const SearchResult = gql(`
 		productName
 		slug
 		description
+		productId
 		productAsset {
 			id
 			preview
@@ -132,7 +133,7 @@ export const GetProducts = gql(`
 	query GetProducts($options: ProductListOptions) {
 		products(options: $options) {
 			items {
-				...Product	
+				...ProductDetail
 			}
 			totalItems
 		}

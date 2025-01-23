@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { getContextClient, queryStore } from '@urql/svelte';
 	import { queryParameters } from 'sveltekit-search-params';
-	import { toast } from 'svelte-sonner';
+	import { toast } from '$lib/toast.svelte';
 	import xss from 'xss';
 	import { formatCurrency } from '$lib/utils';
 	import { useFragment } from '$lib/gql';

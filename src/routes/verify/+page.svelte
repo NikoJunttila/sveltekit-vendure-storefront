@@ -3,7 +3,7 @@
 	import { getContextClient } from '@urql/svelte';
 	import { onMount } from 'svelte';
 	import { goto, invalidateAll } from '$app/navigation';
-	import { toast } from 'svelte-sonner';
+	import { toast } from '$lib/toast.svelte';
 	import { GetCustomer } from '$src/lib/vendure/customer.graphql.js';
 	import { GetActiveOrder } from '$src/lib/vendure/order.graphql.js';
 	import * as m from '$lib/paraglide/messages.js';

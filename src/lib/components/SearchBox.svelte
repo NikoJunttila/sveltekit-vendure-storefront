@@ -47,7 +47,7 @@
 				<SearchHit {hit} on:click={handleClick} />
 			{:else}
 				<div class="p-4">
-					<p>No results found.</p>
+					<p>{m.no_results()}</p>
 				</div>
 			{/each}
 		</div>

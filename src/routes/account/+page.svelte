@@ -2,7 +2,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import AuthContainer from '$src/lib/components/AuthContainer.svelte';
 	import * as m from '$lib/paraglide/messages.js';
-	import { toast } from 'svelte-sonner';
+	import { toast } from '$lib/toast.svelte';
 	import { getContextClient } from '@urql/svelte';
 	import { GetCustomer } from '$src/lib/vendure/customer.graphql.js';
 	import { GetActiveOrder } from '$src/lib/vendure/order.graphql.js';

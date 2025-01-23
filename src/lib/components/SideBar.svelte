@@ -8,11 +8,13 @@
 	import { Collection } from '$lib/vendure';
 	import { userStore, cartStore } from '$lib/stores';
 	import * as m from '$lib/paraglide/messages';
-	import { toast } from 'svelte-sonner';
+	import { toast } from '$lib/toast.svelte';
 	import { getContextClient } from '@urql/svelte';
 	import { goto } from '$app/navigation';
 	import { SignOut } from '$lib/vendure';
-	
+	import { MoveRight, Plus, Minus } from 'lucide-svelte';
+
+
 	const client = getContextClient();
 	const handleSignOut = async () => {
 		const result = await client.mutation(SignOut, {}).toPromise();
@@ -21,8 +23,8 @@
 			cartStore.set(null);
 			userStore.set(null);
 		}
-		toast.success("Logged out")
-		goto("/")
+		toast.success('Logged out');
+		goto('/');
 	};
 
 	let {
@@ -39,10 +41,12 @@
 	onNavigate(() => {
 		open.set(false);
 	});
+
+	let showCollections = $state(false);
 </script>
 
 {#if $open}
-	<button {...$close} class="grow-on-hover items-center align-middle" use:close aria-label="close">
+	<button {...$close} class="grow-on-hover items-center align-middle" use:close aria-label={m.menu_close()}>
 		<X class="h-9 w-9" />
 	</button>
 {:else}
@@ -50,7 +54,7 @@
 		class="grow-on-hover items-center align-middle"
 		{...$trigger}
 		use:trigger
-		aria-label="open"
+		aria-label={m.menu_open()}
 	>
 		<Menu class="h-9 w-9" />
 	</button>
@@ -66,7 +70,7 @@
 		<div
 			{...$content}
 			use:content
-			class="fixed left-0 top-0 z-50 h-screen w-full overflow-auto bg-primary-700 p-[20px] text-white shadow-lg focus:outline-none"
+			class="fixed left-0 top-0 z-50 h-screen w-[80%] overflow-auto bg-primary-700 p-[20px] text-white shadow-lg focus:outline-none sm:w-[70%]"
 			transition:fly={{ x: '-100%', duration: 300, opacity: 1 }}
 		>
 			<div class="items-middle mb-6 flex">
@@ -79,21 +83,99 @@
 					<X class="h-9 w-9" />
 				</button>
 			</div>
-			<div class="my-8 flex flex-col space-y-12 pb-6">
-				<div class="flex flex-col">
-					{#each useFragment(Collection, collections) as collection}
-						<a
-							href="/collection/{collection.slug}"
-							class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
-							aria-label="View {collection.name} collection"
-						>
-							<span
-								class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+			<div class="h-100% my-8 flex flex-col space-y-12 pb-6 font-bold text-xl">
+				<!-- Products section -->
+				<div class="">
+					<button
+						transition:fade={{ duration: 300, delay: 200 }}
+						onclick={() => (showCollections = !showCollections)}
+						class="group mr-2 px-3 py-3 w-full font-medium transition-all duration-200 ease-in-out flex"
+						aria-label={m.menu_toggle_collections()}
+					>
+					{m.menu_products()}
+						<span class="ml-auto relative">
+						{#if showCollections}
+						<div class="absolute right-1 top-1" in:fly={{ y:-50, duration: 200, delay:200}}>
+							<Minus />
+						</div>
+						{:else}
+						<div class="absolute right-1 top-1" out:fly={{ y:50, duration: 200}}>
+							<Plus />
+						</div>
+						{/if}
+						</span>
+					</button>
+						{#if showCollections}
+							<ul class="flex flex-col gap-1 items-center" in:fade={{ duration: 200 }}>
+								<a
+								href="/all/1"
+								class="text-center h-full flex bg-primary-600 hover:bg-primary-500 rounded-md w-[90%] p-4 duration-300"
+								aria-label={m.menu_view_all_products()}
 							>
-								{collection.name}
-							</span>
-						</a>
-					{/each}
+									{m.menu_all_products()}
+									<span class="ml-auto"><MoveRight></MoveRight></span>
+							</a>
+								{#each useFragment(Collection, collections) as collection}
+										<a
+											href="/collection/{collection.slug}"
+											class="text-center h-full flex bg-primary-600 hover:bg-primary-500 rounded-md w-[90%] p-4 duration-300"
+											aria-label={m.menu_view_collection({ collectionName: collection.name })}
+										>
+												{collection.name}
+												<span class="ml-auto"><MoveRight></MoveRight></span>
+										</a>
+								{/each}
+							</ul>
+						{/if}
+				</div>
+
+				<!-- Information about us section -->
+				<div transition:fade={{ duration: 300, delay: 400 }}>
+					<a
+						href="/about"
+						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
+						aria-label={m.menu_about_us_label()}
+					>
+						<span
+							class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+						>
+							{m.menu_about_us()}
+						</span>
+					</a>
+				</div>
+
+				<!-- Guide section -->
+				<div transition:fade={{ duration: 300, delay: 500 }}>
+					<a
+						href="/guide"
+						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
+						aria-label={m.menu_guide_label()}
+					>
+						<span
+							class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+						>
+							{m.menu_guide()}
+						</span>
+					</a>
+				</div>
+
+				<!-- Contact us section -->
+				<div transition:fade={{ duration: 300, delay: 600 }}>
+					<a
+						href="/contact"
+						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
+						aria-label={m.menu_contact_us_label()}
+					>
+						<span
+							class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_1px]"
+						>
+							{m.menu_contact_us()}
+						</span>
+					</a>
+				</div>
+
+				<!-- IGNORE BELOW -->
+				<div class="mt-auto">
 					{#if $userStore}
 						<a
 							href="/user"
@@ -104,14 +186,18 @@
 							{m.your_profile()}
 						</a>
 						<form>
-							<button type="button" onclick={handleSignOut} class="mr-2 rounded-md px-3 py-2 text-lg font-medium">
+							<button
+								type="button"
+								onclick={handleSignOut}
+								class="mr-2 rounded-md px-3 py-2 text-lg font-medium"
+							>
 								{m.sign_out()}
 							</button>
 						</form>
 					{:else}
-						<a 
-							href="/account" 
-							use:close 
+						<a
+							href="/account"
+							use:close
 							class="mr-2 mt-12 rounded-md px-3 py-2 text-lg font-medium"
 						>
 							{m.sign_in()}

@@ -223,6 +223,14 @@ export const insufficient_stock = () => `Tuote loppu varastosta`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const item_removed = () => `Tuote poistettu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const search = () => `Haku`
 
 
@@ -1216,3 +1224,499 @@ export const complete_order = () => `Suorita tilauksesi loppuun`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const processing = () => `Käsitellään`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_products = () => `Tuotteet`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_toggle_collections = () => `Vaihda kokoelmat`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_all_products = () => `Kaikki tuotteet`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_about_us = () => `Meistä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_guide = () => `Opas`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_contact_us = () => `Ota yhteyttä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_about_us_label = () => `Meistä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_guide_label = () => `Opas`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_contact_us_label = () => `Ota yhteyttä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_view_all_products = () => `Näytä kaikki tuotteet`
+
+
+/**
+ * @param {{ collectionName: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_view_collection = (params) => `Näytä ${params.collectionName} -kokoelma`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_open = () => `Avaa valikko`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const menu_close = () => `Sulje valikko`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contact = () => `Yhteystiedot`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const privacyTitle = () => `Tietosuojakäytäntö`
+
+
+/**
+ * @param {{ date: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const effectiveDate = (params) => `Voimaantulopäivä: ${params.date}`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const introduction = () => `Sitoudumme suojelemaan henkilökohtaisia tietojasi ja oikeuttasi yksityisyyteen. Tämä tietosuojakäytäntö selittää, miten keräämme, käytämme ja suojelemme tietojasi palveluidemme käytön yhteydessä.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const informationCollectionHeading = () => `1. Keräämämme tiedot`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const informationCollectionContent = () => `Saatamme kerätä henkilökohtaisia tunnistetietoja, kuten nimeä, sähköpostiosoitetta ja käyttötietoja, kun käytät palvelujamme.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const dataUsageHeading = () => `2. Tietojen käyttötarkoitus`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const dataUsageContent = () => `Käytämme kerättyjä tietoja palveluidemme tarjoamiseen ja parantamiseen, kommunikointiin kanssasi sekä alustamme turvallisuuden varmistamiseen.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const dataProtectionHeading = () => `3. Tietojen suojaus`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const dataProtectionContent = () => `Toteutamme asianmukaiset tekniset ja organisatoriset toimenpiteet henkilötietojesi suojaamiseksi luvattomalta käytöltä ja tietovuodoilta.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const userRightsHeading = () => `4. Käyttäjän oikeudet`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const userRightsContent = () => `Sinulla on oikeus tarkastaa, korjata ja poistaa henkilötietojasi. Ota yhteyttä käyttääksesi näitä oikeuksia.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const changesHeading = () => `5. Käytännön muutokset`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const changesContent = () => `Päivitämme tätä käytäntöä ajoittain. Merkittävät muutokset ilmoitetaan verkkosivustollamme tai sähköpostitse.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactUs = () => `Jos sinulla on kysyttävää tietosuojakäytännöstä, ota yhteyttä sähköpostitse osoitteeseen privacy@example.com.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderTitle = () => `Tilaus- ja toimitusehdot`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderIntroduction = () => `Nämä ehdot kuvaavat tilausprosessiamme, toimitusmenettelyitämme ja palautuskäytäntöjämme. Lue huolellisesti ennen ostosta.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderProcessHeading = () => `1. Tilausprosessi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderProcessContent = () => `Tilaukset voidaan tehdä verkkosivustoltamme ympäri vuorokauden. Saat tilausvahvistuksen sähköpostitse välittömästi onnistuneen maksun jälkeen.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const paymentMethodsHeading = () => `2. Maksutavat`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const paymentMethodsContent = () => `Hyväksymme luottokortit, PayPalin ja mobiilimaksut. Kaikki tapahtumat käsitellään turvallisesti salatun yhteyden kautta.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const deliveryOptionsHeading = () => `3. Toimitustavat`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const deliveryOptionsContent = () => `Normaali toimitusaika on 3-5 arkipäivää. Pikatoimitus saatavilla lisämaksusta. Digitaaliset tuotteet toimitetaan välittömästi sähköpostitse.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const returnsHeading = () => `4. Palautukset ja vaihdot`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const returnsContent = () => `Avattomia tuotteita voidaan palauttaa 14 päivän kuluessa toimituksesta. Ota yhteyttä palautusluvan saamiseksi. Digitaalisia tuotteita ei palauteta.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const liabilityHeading = () => `5. Vastuu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const liabilityContent = () => `Emme vastaa kuljetusyhtiön tai tullin aiheuttamista viivästyksistä. Vaurioituneet tuotteet on ilmoitettava 48 tunnin kuluessa toimituksesta.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const orderContact = () => `Tilaukseen liittyvissä kysymyksissä ota yhteyttä sähköpostitse osoitteeseen orders@example.com.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactTitle = () => `Yhteystiedot`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactIntroduction = () => `Ota meihin yhteyttä alla olevien yhteystietojen kautta. Autamme mielellämme!`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactDetails = () => `Yhteystiedot`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactEmail = () => `hello@esimerkki.com`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactPhone = () => `+358 222 222 222`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactAddress = () => `Liiketoimintakatu 123, Helsinki, Suomi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const businessHours = () => `Aukioloajat`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hoursWeekdays = () => `Ma-Pe: 9:00 - 17:00`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hoursWeekends = () => `La-Su: Suljettu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hoursHolidays = () => `Pyhäpäivät: Suljettu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactFormHeading = () => `Lähetä viesti`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const nameLabel = () => `Nimesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const namePlaceholder = () => `Matti Meikäläinen`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const emailLabel = () => `Sähköpostiosoitteesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const emailPlaceholder = () => `matti@example.com`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const messageLabel = () => `Viesti`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const messagePlaceholder = () => `Kirjoita viestisi tähän...`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const submitButton = () => `Lähetä viesti`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const contactSuccessMessage = () => `Kiitos viestistä! Vastaamme viestiisi 24 tunnin kuluessa.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const locationHeading = () => `Sijaintimme`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const mapPlaceholder = () => `Kartan paikkamerkki - integroi karttapalvelu tähän`

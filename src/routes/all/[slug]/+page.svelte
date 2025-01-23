@@ -4,59 +4,43 @@
 	import Meta from '$src/lib/components/Meta.svelte';
 	import { useFragment } from '$lib/gql';
 	import {
-		type CollectionFragment,
 		type SearchResultFragment,
-		type FacetValueResultFragment
+		type FacetValueResultFragment,
+		type SearchInput
 	} from '$lib/gql/graphql';
-	import {
-		Collection,
-		GetCollection,
-		SearchResult,
-		GetCollections,
-		FacetValueResult,
-		SearchProducts
-	} from '$lib/vendure';
-	import CollectionComponent from '$lib/components/Collection.svelte';
+	import { SearchResult, FacetValueResult, SearchProducts } from '$lib/vendure';
 	let { data } = $props();
 	import { goto } from '$app/navigation';
-	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
-	import ProductGrid from '$src/lib/components/ProductGrid.svelte';
-	import Filters from '$src/lib/components/Filters.svelte';
-	import Banner from '$src/lib/components/Banner.svelte';
+	import ProductGrid from '$lib/components/ProductGrid.svelte';
+	import Filters from '$lib/components/Filters.svelte';
+	import Banner from '$lib/components/Banner.svelte';
+	import Paginations from '$src/lib/components/Paginations.svelte';
 
-	// this will load the data in prerendering and initial site load
-	let collection: CollectionFragment | null | undefined = $state(
-		useFragment(Collection, data.collection)
-	);
 	let products: SearchResultFragment[] = $state(
 		useFragment(SearchResult, data.search?.items) || []
 	);
 	let facetValues: FacetValueResultFragment[] = $state(
 		useFragment(FacetValueResult, data.search?.facetValues) || []
 	);
-	let collections: CollectionFragment[] = $state(useFragment(Collection, data.collections) || []);
+	const total = $derived(data.search?.totalItems || 0)
 
-	const collectionsQuery = $derived(
-		queryStore({ client: getContextClient(), query: GetCollections, variables: {} })
-	);
-	const filteredCollections = $derived(
-		collections.filter((collection) => collection.parent?.slug === page.params.slug)
-	);
-	const breadcrumbs = $derived(collection?.breadcrumbs || []);
 	// this will load the data in client side navigation
+	const currentPage = $derived(Number(page.params.slug))
+	const skip = $derived(currentPage * 20 - 20 || 0)
+	const take = 20
+	const input: SearchInput = $derived({
+		term: '',
+		groupByProduct: true,
+		//facetValueIds: $filtersStore,
+		take,
+		skip: skip
+	});
 
-	const collectionQuery = $derived(
-		queryStore({
-			client: getContextClient(),
-			query: GetCollection,
-			variables: { slug: page.params.slug }
-		})
-	);
 	const searchQuery = $derived(
 		queryStore({
 			client: getContextClient(),
 			query: SearchProducts,
-			variables: { input: { collectionSlug: page.params.slug, groupByProduct: true } }
+			variables: { input }
 		})
 	);
 	$effect(() => {
@@ -67,12 +51,6 @@
 		if ($searchQuery.data?.search.facetValues) {
 			facetValues = useFragment(FacetValueResult, $searchQuery.data.search.facetValues);
 			selectedFilters.clear();
-		}
-		if ($collectionQuery?.data?.collection) {
-			collection = useFragment(Collection, $collectionQuery.data.collection);
-		}
-		if ($collectionsQuery?.data?.collections?.items) {
-			collections = useFragment(Collection, $collectionsQuery.data.collections.items);
 		}
 	});
 
@@ -118,28 +96,23 @@
 		);
 		filterSize = selectedFilters.size;
 	}
+	function navigate(page: number) {
+		goto(`/all/${page}`)
+	}
 </script>
 
 <Meta
 	config={{
-		title: collection?.name,
-		description: collection?.description
+		title: 'all products',
+		description: 'all products'
 	}}
 />
-{#if collection}
-	<section class="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
-		<Banner name={collection.name} image={collection.featuredAsset?.preview!}/>
-		<div class="mb-2">
-			<BreadcrumbsComponent {breadcrumbs} />
-		</div>
-		<!-- Collections Grid -->
-		<div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-			{#each filteredCollections as collection, i}
-				<CollectionComponent {collection} index={i} />
-			{/each}
-		</div>
 
-		<!-- Products Section with Filters -->
+{#if products}
+	<section class="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
+		<Banner
+			name="All Products"
+		/>
 		<div class="mt-12 lg:grid lg:grid-cols-4 lg:gap-x-8">
 			<Filters
 				{groupedFacets}
@@ -155,5 +128,6 @@
 			/>
 			<ProductGrid {filteredProducts} onProductClick={showProduct} />
 		</div>
+		<Paginations totalCount={total} currentPage={currentPage} perPage={take} {navigate} />
 	</section>
 {/if}

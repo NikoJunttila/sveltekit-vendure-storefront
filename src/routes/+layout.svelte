@@ -11,7 +11,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import Theme from '$src/lib/components/Theme.svelte';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
-	import { Toaster } from 'svelte-sonner';
+	import ToastComponent from '$src/lib/components/Toast.svelte';
 
 	let { data, children } = $props();
 	const collections = data.collections;
@@ -63,7 +63,7 @@
 		{@render children?.()}
 	{:else}
 		<Theme />
-		<Toaster theme={$themeStore.theme} position="top-center" />
+		<ToastComponent  />
 		<NavBar {collections} />
 		<div class="relative">{@render children?.()}</div>
 		<Footer />

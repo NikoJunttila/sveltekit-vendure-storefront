@@ -21,7 +21,7 @@
 	import ShippingMethods from '$lib/components/checkout/ShippingMethods.svelte';
 	import DiscountCode from '$lib/components/checkout/DiscountCode.svelte';
 	import OrderSummary from '$lib/components/checkout/OrderSummary.svelte';
-	import { toast } from 'svelte-sonner';
+	import { toast } from '$lib/toast.svelte';
 
 	let errorMessage: string = $state('');
 	let loaded: boolean = $state(false);
