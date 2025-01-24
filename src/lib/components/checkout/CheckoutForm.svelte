@@ -12,6 +12,16 @@
 	const client = getContextClient();
 	const user = $derived(useFragment(Customer , $userStore));
 
+	let { valid = $bindable() } = $props();
+    let customerValid = $state(false);
+    let addressValid = $state(false);
+
+	$effect(() => {
+        customerValid = validateCustomerForm()
+        addressValid = validateAddressForm()
+        valid = customerValid && addressValid
+	})
+
 	interface CheckoutForm {
 		customerForm: CreateCustomerInput;
 		addressForm: CreateAddressInput;
@@ -234,7 +244,7 @@
 	}
 
 	const debouncedCustomerUpdate = debounce(async (field: string, value: string) => {
-		if (!validateCustomerForm()) return;
+		if (!customerValid) return;
 
 		try {
 			if (user) {
@@ -260,7 +270,7 @@
 	}, 500);
 
 	const debouncedAddressUpdate = debounce(async (field: string, value: string) => {
-		if (!validateAddressForm()) return;
+		if (!addressValid) return;
 		try {
 			if (user && user.addresses?.length > 0) {
 				// If user exists and has addresses, update the default address
@@ -307,6 +317,7 @@
 		if (user) {
 			// If user exists in store, populate form with user data
 			populateFormWithUserData();
+			valid = true
 		} else if (browser) {
 			// If no user in store, try to load from session storage
 			const savedCustomer = sessionStorage.getItem('customerForm');
@@ -327,7 +338,7 @@
 	});
 </script>
 
-<div class="grid gap-4 md:grid-cols-2">
+<div class="grid gap-4 md:grid-cols-2 text-black">
 	<!-- Customer Form -->
 	<div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
 		<div class="border-b border-gray-200 bg-gray-50 px-4 py-3">

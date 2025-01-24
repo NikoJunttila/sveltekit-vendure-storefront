@@ -18,7 +18,6 @@
 	} from '$lib/vendure';
 	import CollectionComponent from '$lib/components/Collection.svelte';
 	let { data } = $props();
-	import { goto } from '$app/navigation';
 	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
 	import ProductGrid from '$src/lib/components/ProductGrid.svelte';
 	import Filters from '$src/lib/components/Filters.svelte';
@@ -76,9 +75,6 @@
 		}
 	});
 
-	function showProduct(slug: string) {
-		goto(`/product/${slug}`);
-	}
 	// Group facets by type (category/brand)
 	const groupedFacets = $derived(
 		facetValues.reduce(
@@ -153,7 +149,7 @@
 					filteredProducts = products;
 				}}
 			/>
-			<ProductGrid {filteredProducts} onProductClick={showProduct} />
+			<ProductGrid {filteredProducts}  />
 		</div>
 	</section>
 {/if}

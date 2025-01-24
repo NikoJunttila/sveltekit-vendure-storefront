@@ -17,10 +17,37 @@
 	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_ORGANIZATION } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages.js';
 	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
+	import { onMount } from 'svelte';
 
 	let { data } = $props();
 	const client = getContextClient();
 	const params = queryParameters();
+
+	let favorites = $state<Record<string, boolean>>({});
+
+		function toggleFavorite(productId: string) {
+		favorites = {
+			...favorites,
+			[productId]: !favorites[productId]
+		};
+
+		try {
+			localStorage.setItem('favorites', JSON.stringify(favorites));
+		} catch (e) {
+			console.error('Error saving favorites:', e);
+		}
+	}
+	onMount(() => {
+		if (typeof localStorage !== 'undefined') {
+			try {
+				const saved = localStorage.getItem('favorites');
+				favorites = saved ? JSON.parse(saved) : {};
+			} catch (e) {
+				console.error('Error loading favorites:', e);
+			}
+		}
+	});
+
 
 	// this will load the data in prerendering and initial site load
 	let product: ProductDetailFragment | null | undefined = $state(
@@ -89,6 +116,7 @@
 		}
 		processing = false;
 	};
+
 </script>
 
 {#if product}
@@ -149,7 +177,20 @@
 			<div class="mb-2">
 				<BreadcrumbsComponent {breadcrumbs} />
 			</div>
-			<h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{product.name}</h1>
+			<h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{product.name}
+<!-- Favorite Button -->
+			<button
+				onclick={() => toggleFavorite(product!.id)}
+				class=" z-10 rounded-full bg-white/80 p-3 backdrop-blur-sm transition-all hover:bg-white hover:text-yellow-400"
+			>
+				{#if favorites[product.id]}
+					<span class="text-2xl">★</span>
+				{:else}
+					<span class="text-2xl">☆</span>
+				{/if}
+			</button>
+				
+			</h1>
 			<h2 id="information-heading" class="sr-only">Product information</h2>
 			<p class="mt-6">{@html xss(product.description || '')}</p>
 			{#each product.optionGroups as optionGroup}

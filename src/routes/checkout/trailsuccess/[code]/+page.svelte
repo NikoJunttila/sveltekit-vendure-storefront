@@ -4,40 +4,69 @@
 	import { getContextClient } from '@urql/svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { ActiveOrder, GetOrderByCode } from '$lib/vendure';
+	import { ActiveOrder, GetOrderByCode, SignOut, AddOrderPayment } from '$lib/vendure';
 	import { useFragment } from '$lib/gql';
-
+	import { cartStore, userStore } from '$lib/stores';
 	import { formatCurrency } from '$src/lib/utils';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages';
+
 
 	interface Props {
 		data: PageData;
 	}
 
 	let { data }: Props = $props();
-	let code = data.code;
+	let code = data.paramVals.code;
 	let order: any = $state(null);
 	let loaded: boolean = $state(false);
 
 	const client = getContextClient();
 
 	const fetchOrder = async () => {
+		await new Promise((resolve) => setTimeout(resolve, 500)) // allow the order to be processed via the webhook before the page is rendered
 		const orderResult = await client
 			.query(GetOrderByCode, { code }, { requestPolicy: 'network-only' })
 			.toPromise();
 		if (orderResult?.data?.orderByCode)
 			order = useFragment(ActiveOrder, orderResult.data.orderByCode);
 	};
-
-
-
 	let lines = $derived(order?.lines || []);
 
+async function makePayment(){
+		try {
+			const payload = data.paramVals
+			//console.log(payload);
+			let result = await client
+				.mutation(AddOrderPayment, { input: { method: 'paytrail-method', metadata: payload } })
+				.toPromise()
+				.then((result) => result?.data?.addPaymentToOrder);
+			console.log(result);
+			switch (result?.__typename) {
+				case 'Order':
+					// Adding payment succeeded!
+					console.log("succesful payment")
+					break;
+				case 'OrderStateTransitionError':
+				case 'OrderPaymentStateError':
+				case 'PaymentDeclinedError':
+				case 'PaymentFailedError':
+				// Display an error to the customer
+				// dropin.clearSelectedPaymentMethod()
+				case 'NoActiveOrderError':
+					console.log('Active order not found');
+			}
+		} catch (e) {
+			console.log(e);
+		}
+	}
+	
 	onMount(async () => {
 		if (browser) {
 			try {
+				await makePayment()
 				await fetchOrder();
+				// await handleSignOut()
 				loaded = true;
 			} catch (error) {
 				console.error(error);

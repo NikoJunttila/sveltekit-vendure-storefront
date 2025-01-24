@@ -10,13 +10,13 @@
 		GetOrderShippingMethods,
 		SetOrderShippingMethod,
 		ShippingMethodQuote,
-		TransitionOrderToState,
+		TransitionOrderToState
 	} from '$lib/vendure';
 	import Meta from '$lib/components/Meta.svelte';
 	import { PUBLIC_SITE_NAME } from '$env/static/public';
 	import CheckoutForm from '$src/lib/components/checkout/CheckoutForm.svelte';
 	import * as m from '$lib/paraglide/messages.js';
-	import StripeComponent from '$src/lib/components/checkout/StripeComponent.svelte';
+	import Payment from '$src/lib/components/Payment.svelte';
 	import CartItems from '$lib/components/checkout/CartItems.svelte';
 	import ShippingMethods from '$lib/components/checkout/ShippingMethods.svelte';
 	import DiscountCode from '$lib/components/checkout/DiscountCode.svelte';
@@ -32,8 +32,8 @@
 	let shippingOptions: FragmentType<typeof ShippingMethodQuote>[] = $state([]);
 	//multivendor stuff
 	//let selectedShippingOptions: string[] = $state([]);
-	let selectedShippingOption: string = $state("");
-	
+	let selectedShippingOption: string = $state('');
+
 	const adjustOrderLine = async (orderLineId: string, e: Event) => {
 		const select = e.target as HTMLSelectElement;
 		const quantity = parseInt(select.value);
@@ -43,7 +43,7 @@
 
 	const getShippingOptions = async () => {
 		let result = await client.query(GetOrderShippingMethods, {}).toPromise();
-		if (result?.data?.eligibleShippingMethods){
+		if (result?.data?.eligibleShippingMethods) {
 			shippingOptions = result.data.eligibleShippingMethods;
 			//multivendor select all shipping methods
 			/*for (const method of shippingOptions) {
@@ -61,7 +61,7 @@
 				errorMessage = 'There are no shipping options available.';
 			} else {
 				selectedShippingOption = useFragment(ShippingMethodQuote, shippingOptions)[index].id;
-				const toSet = [selectedShippingOption]
+				const toSet = [selectedShippingOption];
 				await setShippingOption(toSet);
 			}
 		}
@@ -74,7 +74,7 @@
 	/**
 	 * Transitions the order to a new state in the checkout process.
 	 * Valid states are: 'AddingItems', 'ArrangingPayment', 'PaymentAuthorized', 'PaymentSettled'
-	 * 
+	 *
 	 * @param {string} state - The target state to transition the order to
 	 * @returns {Promise<boolean>} Returns true if transition was successful, throws error otherwise
 	 * @throws {Error} If the transition fails or results in an error
@@ -82,7 +82,12 @@
 	const setOrderState = async (state: string): Promise<boolean> => {
 		try {
 			// Validate input state
-			const validStates = ['AddingItems', 'ArrangingPayment', 'PaymentAuthorized', 'PaymentSettled'];
+			const validStates = [
+				'AddingItems',
+				'ArrangingPayment',
+				'PaymentAuthorized',
+				'PaymentSettled'
+			];
 			if (!validStates.includes(state)) {
 				throw new Error(`Invalid order state: ${state}. Must be one of: ${validStates.join(', ')}`);
 			}
@@ -91,18 +96,20 @@
 			const transitionResult = result?.data?.transitionOrderToState;
 
 			// Handle transition errors
-			if (transitionResult?.__typename === "OrderStateTransitionError") {
+			if (transitionResult?.__typename === 'OrderStateTransitionError') {
 				const transitionError = transitionResult.transitionError;
-				
+
 				// Handle specific case of trying to transition to same state
-				if (transitionError.includes("Cannot transition Order from") && 
-					transitionError.includes("to") && 
-					transitionError.includes(state)) {
+				if (
+					transitionError.includes('Cannot transition Order from') &&
+					transitionError.includes('to') &&
+					transitionError.includes(state)
+				) {
 					toast.error(m.generic_error());
-					
+
 					// If we're stuck in ArrangingPayment, try to reset to AddingItems
-					if (state === "ArrangingPayment") {
-						await setOrderState("AddingItems");
+					if (state === 'ArrangingPayment') {
+						await setOrderState('AddingItems');
 					}
 					return false;
 				}
@@ -119,17 +126,15 @@
 		} catch (error) {
 			// Log the error for debugging
 			console.error('Order state transition failed:', error);
-			
+
 			// Re-throw the error to be handled by the caller
 			throw error;
 		}
 	};
 
-	async function resetState(){
-			await setOrderState('AddingItems');
-
-	}	
-
+	async function resetState() {
+		await setOrderState('AddingItems');
+	}
 
 	onMount(async () => {
 		if (browser) {
@@ -137,6 +142,8 @@
 			loaded = true;
 		}
 	});
+	let showPaymentDialog = $state(false);
+	let formValid = $state(false);
 </script>
 
 <noscript>
@@ -150,13 +157,14 @@
 <Meta
 	config={{
 		title: m.checkout(),
-		description: m.checkout_description(),
+		description: m.checkout_description()
 	}}
 />
 
 <div class="min-h-screen bg-gray-50">
 	{JSON.stringify(selectedShippingOption)}
-	<button onclick={async()=> setOrderState("ArrangingPayment")} class="button">authpAyment</button>
+	<button onclick={async () => setOrderState('ArrangingPayment')} class="button">authpAyment</button
+	>
 	<button class="button" onclick={resetState}>reset</button>
 	{#if loaded && !order?.lines}
 		<div class="flex min-h-[50vh] items-center justify-center">
@@ -188,11 +196,13 @@
 							<path d="M7 11V7a5 5 0 0 1 10 0v4" />
 						</svg>
 					</div>
-					<span class="text-sm font-medium text-gray-600">{m.safe_checkout()} {m.ssl_encryption()}</span>
+					<span class="text-sm font-medium text-gray-600"
+						>{m.safe_checkout()} {m.ssl_encryption()}</span
+					>
 				</div>
 			</div>
 
-			<CheckoutForm />
+			<CheckoutForm bind:valid={formValid} />
 
 			<div class="mt-8">
 				<div class="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-12">
@@ -204,17 +214,78 @@
 							<DiscountCode />
 						</div>
 					</div>
-					
 					<!-- Order Summary -->
 					<div class="lg:col-span-5">
 						<div class="sticky top-8 space-y-6">
 							<ShippingMethods {shippingOptions} {selectedShippingOption} {setShippingOption} />
-							<OrderSummary {order}  {errorMessage}  />
+							<OrderSummary {order} {errorMessage} />
 						</div>
 					</div>
 				</div>
-				<StripeComponent></StripeComponent>
+				<!--
+					<Payment {setOrderState} {setShippingOption} {selectedShippingOption}></Payment>
+				-->
+					<div class="mt-8 text-center">
+						<button
+							id="payment"
+							onclick={() => (showPaymentDialog = true)}
+							disabled={!formValid}
+							class="disabled:bg-gray-500 rounded-lg bg-primary-600 px-8 py-4 font-bold text-white transition-colors hover:bg-primary-700"
+						>
+							{m.proceed_to_payment()}
+						</button>
+					</div>
 			</div>
 		</div>
 	{/if}
 </div>
+
+{#if showPaymentDialog}
+	<div class="fixed inset-0 z-50 flex items-center text-black justify-center bg-black/50 p-4 backdrop-blur-sm">
+		<div
+			class="flex min-h-[100dvh] w-full max-w-[600px] items-center justify-center sm:h-auto sm:min-h-0"
+		>
+			<div
+				class="relative w-full max-w-[95%] rounded-xl bg-white shadow-2xl sm:max-w-none sm:rounded-2xl"
+			>
+				<div
+					class="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent max-h-[90dvh] overflow-y-auto p-4 sm:p-6"
+				>
+					<div class="flex items-center justify-between pb-4">
+						<h2 class="text-lg font-bold sm:text-xl">{m.payment_details()}</h2>
+						<button
+							onclick={() => (showPaymentDialog = false)}
+							class="text-gray-600 hover:text-gray-800"
+						>
+							<span class="sr-only">{m.close()}</span>
+							<svg
+								aria-hidden="true"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M6 18L18 6M6 6l12 12"
+								/>
+							</svg>
+						</button>
+					</div>
+
+					<div class="space-y-4">
+						<Payment {setOrderState} {setShippingOption} {selectedShippingOption} />
+						<button
+							onclick={() => (showPaymentDialog = false)}
+							class="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:outline-2 focus:outline-offset-2 focus:outline-lime-500 sm:text-base"
+						>
+							{m.cancel_payment()}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{/if}

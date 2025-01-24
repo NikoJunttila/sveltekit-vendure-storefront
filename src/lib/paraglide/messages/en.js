@@ -1720,3 +1720,43 @@ export const locationHeading = () => `Our Location`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const mapPlaceholder = () => `Map placeholder - integrate your map service here`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const paytrail = () => `Pay by paytrail. Finnish payment service where you can find all Finnish banks`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const cancel_payment = () => `Cancel payment`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const payment_details = () => `Payment details`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const close = () => `Close`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const welcome = () => `Tervetuloa`

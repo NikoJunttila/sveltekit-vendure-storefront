@@ -218,6 +218,10 @@
 	"submitButton": "Send Message",
 	"contactSuccessMessage": "Thank you for your message! We'll respond within 24 hours.",
 	"locationHeading": "Our Location",
-	"mapPlaceholder": "Map placeholder - integrate your map service here"
-
+	"mapPlaceholder": "Map placeholder - integrate your map service here",
+	"paytrail":"Pay by paytrail. Finnish payment service where you can find all Finnish banks",
+	"cancel_payment":"Cancel payment",
+	"payment_details":"Payment details",
+	"close":"Close",
+	"welcome":"Tervetuloa"
 }

@@ -1720,3 +1720,43 @@ export const locationHeading = () => `Sijaintimme`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const mapPlaceholder = () => `Kartan paikkamerkki - integroi karttapalvelu tähän`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const paytrail = () => `Maksa paytrailillä. Suomalainen maksupalvelu josta löytyy kaikki suomalaiset pankit.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const cancel_payment = () => `Peruuta maksu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const payment_details = () => `Maksutiedot`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const close = () => `Sulje`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const welcome = () => `Tervetuloa`

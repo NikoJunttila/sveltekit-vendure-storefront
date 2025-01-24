@@ -78,7 +78,7 @@
 					client.query(GetActiveOrder, {}, { requestPolicy: 'network-only' }).toPromise()
 				]);
 
-				toast.success('Welcome');
+				toast.success(m.welcome());
 				await invalidateAll();
 				await goto('/');
 			} else {

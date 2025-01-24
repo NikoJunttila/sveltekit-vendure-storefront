@@ -54,9 +54,6 @@
 		}
 	});
 
-	function showProduct(slug: string) {
-		goto(`/product/${slug}`);
-	}
 	// Group facets by type (category/brand)
 	const groupedFacets = $derived(
 		facetValues.reduce(
@@ -126,7 +123,7 @@
 					filteredProducts = products;
 				}}
 			/>
-			<ProductGrid {filteredProducts} onProductClick={showProduct} />
+			<ProductGrid {filteredProducts} />
 		</div>
 		<Paginations totalCount={total} currentPage={currentPage} perPage={take} {navigate} />
 	</section>

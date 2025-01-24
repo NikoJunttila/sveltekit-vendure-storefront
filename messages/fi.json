@@ -213,6 +213,10 @@
 	"submitButton": "Lähetä viesti",
 	"contactSuccessMessage": "Kiitos viestistä! Vastaamme viestiisi 24 tunnin kuluessa.",
 	"locationHeading": "Sijaintimme",
-	"mapPlaceholder": "Kartan paikkamerkki - integroi karttapalvelu tähän"
-	
+	"mapPlaceholder": "Kartan paikkamerkki - integroi karttapalvelu tähän",
+	"paytrail":"Maksa paytrailillä. Suomalainen maksupalvelu josta löytyy kaikki suomalaiset pankit.",
+	"cancel_payment":"Peruuta maksu",
+	"payment_details":"Maksutiedot",
+	"close":"Sulje",
+	"welcome":"Tervetuloa"
 }
