@@ -100,6 +100,7 @@ export const SearchResult = gql(`
 		facetIds
 		facetValueIds
 		currencyCode
+		productVariantId
 	}
 `);
 

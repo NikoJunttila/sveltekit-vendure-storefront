@@ -1,53 +1,48 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { getContextClient } from '@urql/svelte';
 	import { goto, invalidateAll } from '$app/navigation';
-	import AuthContainer from '$src/lib/components/AuthContainer.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { toast } from '$lib/toast.svelte';
-	import { getContextClient } from '@urql/svelte';
-	import { GetCustomer } from '$src/lib/vendure/customer.graphql.js';
-	import { GetActiveOrder } from '$src/lib/vendure/order.graphql.js';
-	import { onMount } from 'svelte';
-	import { SignIn } from '$src/lib/vendure/customer.graphql.js';
 	import { userStore } from '$src/lib/stores';
+	import {
+		GetCustomer,
+		SignIn,
+		GetActiveOrder
+	} from '$src/lib/vendure';
+	import AuthContainer from '$src/lib/components/AuthContainer.svelte';
 	import Signup from '$src/lib/components/Signup.svelte';
 	import RequestPassReset from '$src/lib/components/RequestPassReset.svelte';
 
 	type UserState = 'signIn' | 'signUp' | 'forgot' | 'reset';
 	let userState: UserState = $state('signIn');
-	let processing: boolean = $state(false);
+	let processing = $state(false);
 	let errors = $state({ email: '', password: '' });
-
-	let userInfo = $state({
-		email: '',
-		password: ''
-	});
-
-	onMount(() => {
-		if ($userStore) {
-			goto('/user');
-		}
-	});
+	let userInfo = $state({ email: '', password: '' });
 
 	const client = getContextClient();
 
+	onMount(() => {
+		if ($userStore) goto('/user');
+	});
+
 	function validateForm(): boolean {
 		let isValid = true;
-		errors.email = '';
-		errors.password = '';
+		errors = { email: '', password: '' };
 
 		if (!userInfo.email) {
-			errors.email = 'Email is required';
+			errors.email = m.error_email_required();
 			isValid = false;
 		} else if (!/\S+@\S+\.\S+/.test(userInfo.email)) {
-			errors.email = 'Please enter a valid email address';
+			errors.email = m.error_email_invalid();
 			isValid = false;
 		}
 
 		if (!userInfo.password) {
-			errors.password = 'Password is required';
+			errors.password = m.error_password_required();
 			isValid = false;
 		} else if (userInfo.password.length < 6) {
-			errors.password = 'Password must be at least 6 characters';
+			errors.password = m.error_password_length();
 			isValid = false;
 		}
 
@@ -56,13 +51,10 @@
 
 	async function handleLogin(event: SubmitEvent) {
 		event.preventDefault();
-		
-		if (!validateForm()) {
-			return;
-		}
+		if (!validateForm()) return;
 
 		processing = true;
-		
+
 		try {
 			const result = await client
 				.mutation(SignIn, {
@@ -82,11 +74,11 @@
 				await invalidateAll();
 				await goto('/');
 			} else {
-				toast.error('Invalid email or password');
+				toast.error(m.error_login_invalid());
 			}
 		} catch (error) {
 			console.error('Sign in error:', error);
-			toast.error('An error occurred during sign in');
+			toast.error(m.error_general());
 		} finally {
 			processing = false;
 		}
@@ -94,21 +86,20 @@
 
 	async function handleForgotPassword(event: SubmitEvent) {
 		event.preventDefault();
-		
 		if (!userInfo.email) {
-			errors.email = 'Email is required';
+			errors.email = m.error_email_required();
 			return;
 		}
 
 		processing = true;
-		
+
 		try {
-			// Implement your forgot password logic here
-			toast.success('Password reset instructions sent to your email');
+			// TODO: Implement forgot password logic
+			toast.success(m.reset_instructions_sent());
 			userState = 'signIn';
 		} catch (error) {
 			console.error('Forgot password error:', error);
-			toast.error('An error occurred while processing your request');
+			toast.error(m.error_general());
 		} finally {
 			processing = false;
 		}
@@ -116,21 +107,20 @@
 
 	async function handleResetPassword(event: SubmitEvent) {
 		event.preventDefault();
-		
 		if (!userInfo.password) {
-			errors.password = 'Password is required';
+			errors.password = m.error_password_required();
 			return;
 		}
 
 		processing = true;
-		
+
 		try {
-			// Implement your reset password logic here
-			toast.success('Password reset successfully');
+			// TODO: Implement reset password logic
+			toast.success(m.reset_success());
 			userState = 'signIn';
 		} catch (error) {
 			console.error('Reset password error:', error);
-			toast.error('An error occurred while resetting your password');
+			toast.error(m.error_general());
 		} finally {
 			processing = false;
 		}
@@ -140,16 +130,15 @@
 <AuthContainer>
 	{#if processing}
 		<div class="flex justify-center items-center p-4">
-			<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+			<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" ></div>
 		</div>
+
 	{:else if userState === 'signIn'}
 		<form onsubmit={handleLogin} class="space-y-4">
 			<h3 class="font-heading mb-4 text-center text-3xl font-semibold">
 				{m.account_sign_in()}
 			</h3>
-			<p class="mb-6 text-lg">
-				{m.login_text()}
-			</p>
+			<p class="mb-6 text-lg">{m.login_text()}</p>
 
 			<div class="space-y-2">
 				<label class="block text-sm font-medium" for="email">
@@ -223,23 +212,22 @@
 		</div>
 
 	{:else if userState === 'forgot'}
-	<RequestPassReset></RequestPassReset>
+		<RequestPassReset />
 
-
-			<div class="pt-6 text-center text-sm font-medium">
-				<button
-					type="button"
-					onclick={() => (userState = 'signIn')}
-					class="button"
-				>
-					&larr;&nbsp; {m.sign_in_instead()}
-				</button>
-			</div>
+		<div class="pt-6 text-center text-sm font-medium">
+			<button
+				type="button"
+				onclick={() => (userState = 'signIn')}
+				class="button"
+			>
+				&larr;&nbsp; {m.sign_in_instead()}
+			</button>
+		</div>
 
 	{:else if userState === 'reset'}
 		<form onsubmit={handleResetPassword} class="space-y-4">
 			<h3 class="font-heading mb-4 text-center text-3xl font-semibold">
-				Reset Password
+				{m.account_reset_password()}
 			</h3>
 
 			<div class="space-y-2">

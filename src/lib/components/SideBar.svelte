@@ -46,12 +46,12 @@
 </script>
 
 {#if $open}
-	<button {...$close} class="grow-on-hover items-center align-middle" use:close aria-label={m.menu_close()}>
+	<button {...$close} class="items-center align-middle" use:close aria-label={m.menu_close()}>
 		<X class="h-9 w-9" />
 	</button>
 {:else}
 	<button
-		class="grow-on-hover items-center align-middle"
+		class="items-center align-middle"
 		{...$trigger}
 		use:trigger
 		aria-label={m.menu_open()}
@@ -76,7 +76,7 @@
 			<div class="items-middle mb-6 flex">
 				<div class="mr-auto mt-3">
 					<a href="/" aria-label={m.home()}>
-						<img class="block h-11 w-auto" src="/logo.png" alt="SnoreRx Logo" />
+						<img class="block h-11 w-auto" src="/logo.png" alt="Logo" />
 					</a>
 				</div>
 				<button {...$close} use:close aria-label={m.cancel()}>
@@ -132,7 +132,7 @@
 				<!-- Information about us section -->
 				<div transition:fade={{ duration: 300, delay: 400 }}>
 					<a
-						href="/about"
+						href="/info/about"
 						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
 						aria-label={m.menu_about_us_label()}
 					>
@@ -147,7 +147,7 @@
 				<!-- Guide section -->
 				<div transition:fade={{ duration: 300, delay: 500 }}>
 					<a
-						href="/guide"
+						href="/info/guide"
 						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
 						aria-label={m.menu_guide_label()}
 					>
@@ -162,7 +162,7 @@
 				<!-- Contact us section -->
 				<div transition:fade={{ duration: 300, delay: 600 }}>
 					<a
-						href="/contact"
+						href="/info/contact"
 						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
 						aria-label={m.menu_contact_us_label()}
 					>

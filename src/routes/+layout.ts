@@ -1,10 +1,19 @@
-import { createClient, GetTopLevelCollections, ActiveChannel } from '$lib/vendure';
-
+import { createClient, GetTopLevelCollections, ActiveChannel,SearchProducts } from '$lib/vendure';
+import { type SearchInput } from '$src/lib/gql/graphql';
 const client = createClient();
 
 export const prerender = true;
 
 export async function load() {
+
+	const input: SearchInput = {
+		term: '',
+		groupByProduct: true,
+		//facetValueIds: $filtersStore,
+		take: 8,
+		skip: 0,
+	};
+
 	return {
 		client,
 		collections: await client
@@ -12,5 +21,9 @@ export async function load() {
 			.toPromise()
 			.then((result) => result?.data?.collections?.items),
 		channel: await client.query(ActiveChannel, {}).toPromise().then((result) => result?.data?.activeChannel),
+		topProducts: await client
+		.query(SearchProducts, { input })
+		.toPromise()
+		.then((result) => result?.data?.search.items)
 	};
 }

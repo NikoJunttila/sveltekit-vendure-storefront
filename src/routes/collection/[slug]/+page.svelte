@@ -17,11 +17,13 @@
 		SearchProducts
 	} from '$lib/vendure';
 	import CollectionComponent from '$lib/components/Collection.svelte';
-	let { data } = $props();
 	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
 	import ProductGrid from '$src/lib/components/ProductGrid.svelte';
 	import Filters from '$src/lib/components/Filters.svelte';
 	import Banner from '$src/lib/components/Banner.svelte';
+	import JsonLd from '$src/lib/components/JsonLd.svelte';
+	
+	let { data } = $props();
 
 	// this will load the data in prerendering and initial site load
 	let collection: CollectionFragment | null | undefined = $state(
@@ -115,11 +117,25 @@
 		filterSize = selectedFilters.size;
 	}
 </script>
-
+<JsonLd
+		schema={{
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"@id": "#webpage",
+			"mainEntity": {
+			  "@type": "Collection",
+			  "name": "{collection.name}",
+			  "description": "{collection.description}",
+			  "image": "{collection.featuredAsset?.preview}",
+			}
+		  }}
+	/>
 <Meta
 	config={{
 		title: collection?.name,
-		description: collection?.description
+		description: collection?.description,
+		open_graph_image: collection?.featuredAsset?.preview || "",
+		open_graph_image_alt: collection?.name || ""
 	}}
 />
 {#if collection}

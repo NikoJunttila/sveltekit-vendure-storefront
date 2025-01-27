@@ -18,6 +18,10 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
 	import { onMount } from 'svelte';
+	import { Heart } from 'lucide-svelte';
+	import { browser } from '$app/environment';
+	import { cartDialogStore } from '$lib/stores';
+
 
 	let { data } = $props();
 	const client = getContextClient();
@@ -38,13 +42,16 @@
 		}
 	}
 	onMount(() => {
-		if (typeof localStorage !== 'undefined') {
-			try {
-				const saved = localStorage.getItem('favorites');
-				favorites = saved ? JSON.parse(saved) : {};
-			} catch (e) {
-				console.error('Error loading favorites:', e);
+		if(browser){
+			if (typeof localStorage !== 'undefined') {
+				try {
+					const saved = localStorage.getItem('favorites');
+					favorites = saved ? JSON.parse(saved) : {};
+				} catch (e) {
+					console.error('Error loading favorites:', e);
+				}
 			}
+			
 		}
 	});
 
@@ -114,6 +121,7 @@
 				toast.error(m.error_adding_item());
 				break;
 		}
+		cartDialogStore.set(true)
 		processing = false;
 	};
 
@@ -123,7 +131,9 @@
 	<Meta
 		config={{
 			title: product.name,
-			description: product.description
+			description: product.description,
+			open_graph_image:featuredAsset?.preview || '',
+			open_graph_image_alt: featuredAsset?.name || ''
 		}}
 	/>
 	<JsonLd
@@ -180,13 +190,17 @@
 			<h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{product.name}
 <!-- Favorite Button -->
 			<button
-				onclick={() => toggleFavorite(product!.id)}
-				class=" z-10 rounded-full bg-white/80 p-3 backdrop-blur-sm transition-all hover:bg-white hover:text-yellow-400"
+				onclick={() => toggleFavorite(product!.slug)}
+				class=" z-10 rounded-full  p-3 backdrop-blur-sm transition-all  hover:text-yellow-400"
 			>
-				{#if favorites[product.id]}
-					<span class="text-2xl">★</span>
+				{#if favorites[product.slug]}
+					<span class="text-2xl">
+						<Heart fill="red"></Heart>
+					</span>
 				{:else}
-					<span class="text-2xl">☆</span>
+					<span class="text-2xl">
+						<Heart></Heart>
+					</span>
 				{/if}
 			</button>
 				

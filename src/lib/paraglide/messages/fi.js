@@ -1760,3 +1760,171 @@ export const close = () => `Sulje`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const welcome = () => `Tervetuloa`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const description = () => `Kuvaus`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const hot_products = () => `Kuumat tuotteet!`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const error_email_required = () => `Sähköposti on pakollinen`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const error_email_invalid = () => `Anna kelvollinen sähköpostiosoite`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const error_password_required = () => `Salasana vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const error_password_length = () => `Salasanan tulee olla vähintään 6 merkkiä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const error_login_invalid = () => `Virheellinen sähköposti tai salasana`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const error_general = () => `Tapahtui virhe`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const reset_instructions_sent = () => `Salasanan nollausohjeet lähetetty sähköpostiisi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const reset_success = () => `Salasana nollattu onnistuneesti`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const reset_password_heading = () => `Nollaa salasana`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const no_addresses = () => `Ei tallennettuja osoitteita`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const add_address = () => `Lisää osoite`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const save_address = () => `Tallenna osoite`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const street_address = () => `Katuosoite`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const street_address_2 = () => `Asunto, huoneisto, jne.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const success_new_address = () => `Uusi osoite lisätty`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const banner_text = () => `Ilmainen toimitus | 30 päivän palautus | Premium-laatu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const favorites_title = () => `Suosikit`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const favorites_empty = () => `Suosikitlista on tyhjä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const page_not_found = () => `Sivua ei löytynyt`

@@ -1,6 +1,6 @@
 import { gql } from '$lib/gql';
 
-export const PaytrailPayment = gql(`
+/* export const PaytrailPayment = gql(`
 mutation paytrailPayment {
   createPaytrailPaymentIntent{
     href
@@ -8,6 +8,11 @@ mutation paytrailPayment {
 }
 `)
 
+export const StripePaymentIntent = gql(`
+	mutation createStripePaymentIntent {
+	  createStripePaymentIntent
+	}
+  `); */
 export const Order = gql(`
 	fragment Order on Order {
 		id
@@ -353,8 +358,3 @@ export const TransitionOrderToState = gql(`
 	}
 `);
 
-export const StripePaymentIntent = gql(`
-  mutation createStripePaymentIntent {
-    createStripePaymentIntent
-  }
-`);

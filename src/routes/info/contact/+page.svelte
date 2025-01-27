@@ -1,6 +1,6 @@
 <script>
     import * as m from '$lib/paraglide/messages.js';
-    
+    import Meta from '$src/lib/components/Meta.svelte';
     let name = '';
     let email = '';
     let message = '';
@@ -11,6 +11,12 @@
       isSubmitted = true;
     }
   </script>
+  <Meta
+	config={{
+		title: m.contactTitle(),
+		description: m.contactTitle()
+	}}
+/>
   
   <main class="container mx-auto px-4 py-8 max-w-3xl">
     <h1 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-8">

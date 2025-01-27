@@ -6,6 +6,8 @@ export const cookiesDisabledStore: Writable<boolean> = writable(false);
 
 export const channelStore: Writable<FragmentType<typeof ActiveChannel> | null> = writable();
 
+export const cartDialogStore : Writable<boolean> = writable(false)
+
 export const cartStore: Writable<FragmentType<typeof ActiveOrder> | null> = writable();
 
 export const userStore: Writable<FragmentType<typeof Customer> | null> = writable();

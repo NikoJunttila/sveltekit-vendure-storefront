@@ -7,7 +7,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import { useFragment } from '$lib/gql';
 	import { ActiveOrder, AdjustOrderLine, RemoveOrderLine } from '$lib/vendure';
-	import { cartStore } from '$lib/stores';
+	import { cartStore, cartDialogStore } from '$lib/stores';
 	import { formatCurrency } from '$lib/utils';
 	import Image from '$lib/components/Image.svelte';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
@@ -55,7 +55,7 @@
 	const {
 		elements: { trigger, portalled, overlay, content, title, close },
 		states: { open }
-	} = createDialog({ preventScroll: true });
+	} = createDialog({ preventScroll: true, open: cartDialogStore });
 </script>
 {#if $open}
 	<button {...$close} use:close class="grow-on-hover relative items-center align-middle">

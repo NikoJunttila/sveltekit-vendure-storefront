@@ -3,6 +3,7 @@
 	import { getContextClient, queryStore } from '@urql/svelte';
 	import Meta from '$src/lib/components/Meta.svelte';
 	import { useFragment } from '$lib/gql';
+	
 	import {
 		type SearchResultFragment,
 		type FacetValueResultFragment,

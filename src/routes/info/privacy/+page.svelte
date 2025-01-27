@@ -1,8 +1,16 @@
 <script>
     import * as m from '$lib/paraglide/messages.js';
+    import Meta from '$src/lib/components/Meta.svelte';
     const effectiveDate = new Date('2025-01-01').toLocaleDateString();
   </script>
   
+<Meta
+config={{
+  title: m.privacyTitle(),
+  description: m.privacyTitle()
+}}
+
+/>
   <main class="container mx-auto px-4 py-8 max-w-3xl">
     <h1 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-8">
       {m.privacyTitle()}

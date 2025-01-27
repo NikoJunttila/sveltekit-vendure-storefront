@@ -5,7 +5,16 @@
 	import type { SearchResultFragment } from '$lib/gql/graphql';
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
+	import { formatCurrency } from '$lib/utils';
+	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
+	import { Heart } from 'lucide-svelte';
+	import { getContextClient } from '@urql/svelte';
+	import { toast } from '../toast.svelte';
+	import { AddItemToOrder } from '../vendure';
+	import { cartDialogStore } from '$lib/stores';
 
+
+	const client = getContextClient();
     interface Props {
         filteredProducts : SearchResultFragment[]
 	}
@@ -24,6 +33,28 @@
             }
         }
     });
+
+	const addToCart = async (variantId: string): Promise<void> => {
+		const result = await client
+			.mutation(
+				AddItemToOrder,
+				{ variantId: variantId, quantity: 1 },
+				{ additionalTypenames: ['ActiveOrder'] }
+			)
+			.toPromise();
+		switch (result?.data?.addItemToOrder?.__typename) {
+			case 'InsufficientStockError':
+				toast.error(m.insufficient_stock());
+				break;
+			case 'Order':
+				toast.success(m.item_added());
+				break;
+			default:
+				toast.error(m.error_adding_item());
+				break;
+		}
+		cartDialogStore.set(true)
+	};
 
     function toggleFavorite(productId: string) {
         favorites = { 
@@ -130,20 +161,30 @@
 					</h3>
 					<p class=" text-lg font-medium">
 						{#if p.price.__typename === "PriceRange"}
-						{p.price.min / 100} €
+						{formatCurrency(p.price.min, PUBLIC_DEFAULT_CURRENCY)}
 						{:else if p.price.__typename === "SinglePrice"}
-						{p.price.value / 100}
+						{formatCurrency(p.price.value, PUBLIC_DEFAULT_CURRENCY)}
 						{/if}
 					</p>
 					</div>
+					
+					<button class="button" onclick={() => addToCart(p.productVariantId)}>
+						{m.add_to_cart()}
+					</button>
 						<button
-						onclick={() => toggleFavorite(p.productId)}
-						class="rounded-full ml-auto mr-5 bg-white/80 p-2 backdrop-blur-sm transition-all hover:bg-white hover:text-yellow-400"
+						onclick={() => toggleFavorite(p.slug)}
+						class="rounded-full ml-auto mr-5  p-2 backdrop-blur-sm transition-all  hover:text-yellow-400"
 						>
-						{#if favorites[p.productId]}
-							<span class="text-3xl">★</span>
+						{#if favorites[p.slug]}
+							<span class="text-3xl">
+								<Heart fill="red"></Heart>
+							</span>
 						{:else}
-							<span class="text-3xl">☆</span>
+							<span class="text-3xl">
+								<Heart>
+
+								</Heart>
+							</span>
 						{/if}
 					</button>
 				</div>
