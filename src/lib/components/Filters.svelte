@@ -70,7 +70,7 @@
 									/>
 									<label
 										for={facetValue.id}
-										class="ml-3 cursor-pointer text-sm text-gray-600 transition-colors hover:text-primary-600"
+										class="ml-3 cursor-pointer text-sm  transition-colors hover:text-primary-600"
 									>
 										{facetValue.name}
 										<span class="ml-1 text-gray-400">({count})</span>
@@ -89,7 +89,7 @@
 <div class="mb-6 lg:hidden">
 	<button
 		type="button"
-		class="flex items-center gap-2 text-gray-700 transition-colors hover:text-primary-600"
+		class="flex items-center gap-2  transition-colors hover:text-primary-600"
 		onclick={() => (isMobileFilterOpen = true)}
 	>
 		<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PaytrailPayment } from '../vendure';
+	import { PaytrailPayment, PaytrailMultiPayment } from '../vendure';
 	import { getContextClient } from '@urql/svelte';
 	import Paytrail from './Paytrail.svelte';
 	import StripeComponent from './checkout/StripeComponent.svelte';
@@ -17,6 +17,24 @@
 	let errorMessage = $state('');
 	let href = $state('');
 	const client = getContextClient();
+	
+	
+	async function getPaytrailMultiHref(): Promise<string> {
+		console.error("xdd?")
+		try{
+			const res = await client
+			.mutation(PaytrailMultiPayment, {})
+			.toPromise()
+			.then((result) => {
+				return result
+			});
+			console.log(res)
+			return res?.data?.createMultiPTintent.href || '';
+		} catch (err){
+			console.log(err)
+			return ""
+		}
+	}
 
 	async function getPaytrailHref(): Promise<string> {
 		const paytrailHref = await client
@@ -27,8 +45,10 @@
 			});
 		return paytrailHref?.createPaytrailPaymentIntent.href || '';
 	}
+
 	onMount(async () => {
-		href = await getPaytrailHref();
+		/* href = await getPaytrailHref(); */
+		href = await getPaytrailMultiHref();
 	});
 
 	async function sendPayment() {

@@ -239,5 +239,12 @@
 	"banner_text":"Ilmainen toimitus | 30 päivän palautus | Premium-laatu",
 	"favorites_title":"Suosikit",
 	"favorites_empty":"Suosikitlista on tyhjä",
-	"page_not_found":"Sivua ei löytynyt"
+	"page_not_found":"Sivua ei löytynyt",
+	"sort_by": "Lajittele",
+	"sort_products": "Lajittele tuotteet",
+	"default_sort": "Oletus",
+	"price_low_high": "Hinta: Alhaalta ylöspäin",
+	"price_high_low": "Hinta: Ylhäältä alaspäin",
+	"name_a_z": "Nimi: A-Z",
+	"name_z_a": "Nimi: Z-A"
 }

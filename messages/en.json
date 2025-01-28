@@ -244,5 +244,12 @@
 	"banner_text":"Free shipping | 30-day returns | Premium quality",
 	"favorites_title":"Favourites title",
 	"favorites_empty":"Favourites list is empty",
-	"page_not_found":"PAGE NOT FOUND"
+	"page_not_found":"PAGE NOT FOUND",
+	"sort_by": "Sort by",
+	"sort_products": "Sort products",
+	"default_sort": "Default",
+	"price_low_high": "Price: Low to High",
+	"price_high_low": "Price: High to Low",
+	"name_a_z": "Name: A-Z",
+	"name_z_a": "Name: Z-A"
 }

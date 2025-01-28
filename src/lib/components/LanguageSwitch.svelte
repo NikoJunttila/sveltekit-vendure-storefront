@@ -10,7 +10,7 @@
 		goto(localisedPath);
 	}
 
-	$: currentLang = page.url.pathname.startsWith('/en') ? 'en' : 'fi';
+	const currentLang = $derived(page.url.pathname.startsWith('/en') ? 'en' : 'fi');
 </script>
 
 <div

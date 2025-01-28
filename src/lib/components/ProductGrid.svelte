@@ -3,7 +3,6 @@
 	import Image from '$lib/components/Image.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import type { SearchResultFragment } from '$lib/gql/graphql';
-	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { formatCurrency } from '$lib/utils';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
@@ -68,6 +67,29 @@
             console.error('Error saving favorites:', e);
         }
     }
+	let sortBy = $state<'default' | 'price-asc' | 'price-desc' | 'name-asc' | 'name-desc'>('default');
+	const sortedProducts = $derived.by(() => {
+        if (!filteredProducts) return [];
+        return [...filteredProducts].sort((a, b) => {
+            const getPrice = (product: SearchResultFragment) => 
+                product.price.__typename === 'PriceRange' ? product.price.min : 
+                product.price.__typename === 'SinglePrice' ? product.price.value : 0;
+
+            switch(sortBy) {
+                case 'price-asc':
+                    return getPrice(a) - getPrice(b);
+                case 'price-desc':
+                    return getPrice(b) - getPrice(a);
+                case 'name-asc':
+                    return a.productName.localeCompare(b.productName);
+                case 'name-desc':
+                    return b.productName.localeCompare(a.productName);
+                default:
+                    return 0; // Maintain original order
+            }
+        });
+    });
+
 </script>
 
 <style>
@@ -123,15 +145,25 @@
 
 
 <div class="lg:col-span-3">
-	<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-		{#each filteredProducts as p}
-			<!-- svelte-ignore a11y_click_events_have_key_events -->
-			<!-- svelte-ignore a11y_no_static_element_interactions -->
-			<div
-				class="group relative flex transform flex-col items-center rounded-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-				transition:fade
+    <div class="mb-6 flex items-center justify-end gap-4 px-4">
+        <label class="text-sm font-medium ">{m.sort_by()}:
+			<select 
+            class="rounded-lg border border-gray-300 text-gray-700 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            aria-label="{m.sort_products()}"
+			bind:value={sortBy}
 			>
-				<div id="test" class="relative aspect-square w-full overflow-hidden rounded-lg">
+            <option value="default">{m.default_sort()}</option>
+            <option value="price-asc">{m.price_low_high()}</option>
+            <option value="price-desc">{m.price_high_low()}</option>
+            <option value="name-asc">{m.name_a_z()}</option>
+            <option value="name-desc">{m.name_z_a()}</option>
+        </select>
+	</label>
+    </div>	
+	<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+		{#each sortedProducts as p}
+			<div class="group relative flex flex-col items-center rounded-lg  shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+				<div class="relative aspect-square w-full overflow-hidden rounded-lg">
 					<Image
 						preview={p.productAsset?.preview}
 						preset="medium"
@@ -144,49 +176,62 @@
 						<h3 class="mb-4 px-4 text-center text-lg font-bold text-white">
 							{p.productName}
 						</h3>
-						<p
-							
-							class="inline-flex items-center rounded-md border border-white px-6 py-2 text-white transition-colors duration-300 hover:bg-white hover:text-black"
-						>
+						<p class="inline-flex items-center rounded-md border border-white px-6 py-2 text-white transition-colors duration-300 hover:bg-white hover:text-black">
 							{m.show_product()}
-					</p>
+						</p>
 					</a>
 				</div>
-				<div class="w-full flex items-center gap-2 p-4">
-					<div class="flex justify-center items-center gap-2">
-					<h3
-						class=" text-lg font-medium transition-colors duration-300 group-hover:text-primary-600"
-					>
-						{p.productName}
-					</h3>
-					<p class=" text-lg font-medium">
-						{#if p.price.__typename === "PriceRange"}
-						{formatCurrency(p.price.min, PUBLIC_DEFAULT_CURRENCY)}
-						{:else if p.price.__typename === "SinglePrice"}
-						{formatCurrency(p.price.value, PUBLIC_DEFAULT_CURRENCY)}
-						{/if}
-					</p>
+				<div class=" w-full flex flex-1 flex-col p-4">
+					<div class="mb-4 flex flex-col gap-2">
+						<h3 class="text-lg font-semibold  transition-colors duration-300 group-hover:text-primary-600">
+							<a href={p.slug}>{p.productName}</a>
+						</h3>
+						<p class="text-xl font-bold text-primary-600">
+							{#if p.price.__typename === "PriceRange"}
+								{formatCurrency(p.price.min, PUBLIC_DEFAULT_CURRENCY)}
+							{:else if p.price.__typename === "SinglePrice"}
+								{formatCurrency(p.price.value, PUBLIC_DEFAULT_CURRENCY)}
+							{/if}
+						</p>
 					</div>
-					
-					<button class="button" onclick={() => addToCart(p.productVariantId)}>
+					<div class="mt-auto flex items-center justify-between gap-2">
+						{#if p.inStock}
+						<button
+						class="flex min-w-[120px] items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95"
+						onclick={() => addToCart(p.productVariantId)}
+						aria-label="{m.add_to_cart()}"
+						>
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+						</svg>
 						{m.add_to_cart()}
 					</button>
-						<button
-						onclick={() => toggleFavorite(p.slug)}
-						class="rounded-full ml-auto mr-5  p-2 backdrop-blur-sm transition-all  hover:text-yellow-400"
+					{:else}
+					<button
+						class="flex min-w-[120px] items-center justify-center gap-2 rounded-md bg-gray-700 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95"
+						aria-label="{m.insufficient_stock()}"
+						disabled
 						>
-						{#if favorites[p.slug]}
-							<span class="text-3xl">
-								<Heart fill="red"></Heart>
-							</span>
-						{:else}
-							<span class="text-3xl">
-								<Heart>
-
-								</Heart>
-							</span>
-						{/if}
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+						</svg>
+						{m.add_to_cart()}
 					</button>
+					{/if}
+						<button
+							onclick={() => toggleFavorite(p.slug)}
+							class="rounded-full p-2 transition-all hover:bg-gray-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:scale-95"
+							aria-label="{favorites[p.slug] ? 'Remove from favorites' : 'Add to favorites'}"
+						>
+							<span class="text-2xl">
+								{#if favorites[p.slug]}
+									<Heart fill="red" class="scale-125 transition-transform duration-200 hover:scale-150" />
+								{:else}
+									<Heart class="transition-transform duration-200 hover:scale-125" />
+								{/if}
+							</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		{:else}

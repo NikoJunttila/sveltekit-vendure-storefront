@@ -3,7 +3,7 @@
 	import { getContextClient, queryStore } from '@urql/svelte';
 	import Meta from '$src/lib/components/Meta.svelte';
 	import { useFragment } from '$lib/gql';
-	
+	import * as m from '$lib/paraglide/messages';
 	import {
 		type SearchResultFragment,
 		type FacetValueResultFragment,
@@ -18,13 +18,13 @@
 	import Paginations from '$src/lib/components/Paginations.svelte';
 
 	let products: SearchResultFragment[] = $state(
-		useFragment(SearchResult, data.search?.items) || []
+		useFragment(SearchResult, data.search?.items ?? [])
 	);
 	let facetValues: FacetValueResultFragment[] = $state(
-		useFragment(FacetValueResult, data.search?.facetValues) || []
+		useFragment(FacetValueResult, data.search?.facetValues ?? [])
 	);
 	const total = $derived(data.search?.totalItems || 0)
-
+	
 	// this will load the data in client side navigation
 	const currentPage = $derived(Number(page.params.slug))
 	const skip = $derived(currentPage * 20 - 20 || 0)
@@ -34,7 +34,7 @@
 		groupByProduct: true,
 		//facetValueIds: $filtersStore,
 		take,
-		skip: skip
+		skip: skip,
 	});
 
 	const searchQuery = $derived(
@@ -69,12 +69,12 @@
 			{} as Record<string, typeof facetValues>
 		)
 	);
-
+	
 	// Selected filter values
 	let selectedFilters = $state(new Set<string>());
 	let filterSize = $state(0);
 	// Filter products based on selected facets
-	let filteredProducts = $state(useFragment(SearchResult, data.search?.items) || []);
+	let filteredProducts = $state(useFragment(SearchResult, data.search?.items ??  []));
 	// Mobile filter dialog state
 	let isMobileFilterOpen = $state(false);
 
@@ -97,19 +97,21 @@
 	function navigate(page: number) {
 		goto(`/all/${page}`)
 	}
+
+
 </script>
 
 <Meta
 	config={{
-		title: 'all products',
-		description: 'all products'
+		title:m.menu_all_products(),
+		description: m.menu_all_products(),
 	}}
 />
 
 {#if products}
 	<section class="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
 		<Banner
-			name="All Products"
+			name={m.menu_all_products()}
 		/>
 		<div class="mt-12 lg:grid lg:grid-cols-4 lg:gap-x-8">
 			<Filters

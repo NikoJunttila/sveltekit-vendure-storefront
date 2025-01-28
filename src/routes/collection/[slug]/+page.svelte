@@ -165,7 +165,7 @@
 					filteredProducts = products;
 				}}
 			/>
-			<ProductGrid {filteredProducts}  />
+			<ProductGrid {filteredProducts}/>
 		</div>
 	</section>
 {/if}

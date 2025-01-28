@@ -1928,3 +1928,59 @@ export const favorites_empty = () => `Suosikitlista on tyhjä`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const page_not_found = () => `Sivua ei löytynyt`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const sort_by = () => `Lajittele`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const sort_products = () => `Lajittele tuotteet`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const default_sort = () => `Oletus`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const price_low_high = () => `Hinta: Alhaalta ylöspäin`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const price_high_low = () => `Hinta: Ylhäältä alaspäin`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const name_a_z = () => `Nimi: A-Z`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const name_z_a = () => `Nimi: Z-A`

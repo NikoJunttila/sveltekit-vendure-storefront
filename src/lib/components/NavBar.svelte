@@ -27,7 +27,7 @@
 	}
 </script>
 
-<nav class="top-0 z-50 max-w-screen-2xl drop-shadow-md p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800">
+<nav class="top-0 z-50 max-w-screen-2xl p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800">
 	<div class="mt-3 flex flex-grow items-center justify-between">
 		<div class="flex flex-none items-center">
 			<a class="inline-block text-3xl font-bold" href="/">
@@ -40,7 +40,7 @@
 
 					<a
 					href="/all/0"
-					class="group relative px-3 py-2.5 font-medium text-gray-700 transition-all duration-300 hover:text-lime-700 dark:text-gray-200 dark:hover:text-lime-400"
+					class="group relative px-3 py-2.5 font-medium  transition-all duration-300 hover:text-lime-700 "
 				>
 					<span class="relative block overflow-hidden">
 						<span class="block transition-transform duration-300 group-hover:-translate-y-6">
@@ -50,13 +50,13 @@
 							{m.menu_products()}
 						</span>
 					</span>
-					<span class="absolute bottom-0 left-0 h-0.5 w-0 bg-lime-600 transition-all duration-300 group-hover:w-full dark:bg-lime-400"></span>
+					<span class="absolute bottom-0 left-0 h-0.5 w-0 bg-lime-600 transition-all duration-300 group-hover:w-full "></span>
 				</a>
 
 					{#each visibleCollections as collection}
 						<a
 							href="/collection/{collection.slug}"
-							class="group relative px-3 py-2.5 font-medium text-gray-700 transition-all duration-300 hover:text-lime-700 dark:text-gray-200 dark:hover:text-lime-400"
+							class="group relative px-3 py-2.5 font-medium  transition-all duration-300 hover:text-lime-700 "
 						>
 							<span class="relative block overflow-hidden">
 								<span class="block transition-transform duration-300 group-hover:-translate-y-6">
@@ -66,7 +66,7 @@
 									{collection.name}
 								</span>
 							</span>
-							<span class="absolute bottom-0 left-0 h-0.5 w-0 bg-lime-600 transition-all duration-300 group-hover:w-full dark:bg-lime-400"></span>
+							<span class="absolute bottom-0 left-0 h-0.5 w-0 bg-lime-600 transition-all duration-300 group-hover:w-full "></span>
 						</a>
 					{/each}
 			
@@ -77,7 +77,7 @@
 								onclick={openDropdown}
 								onmouseover={openDropdown}
 								onkeydown={(e) => e.key === 'Enter' && openDropdown()}
-								class="group flex items-center gap-1 px-3 py-2.5 font-medium text-gray-700 transition-colors duration-300 hover:text-lime-700 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 dark:text-gray-200 dark:hover:text-lime-400"
+								class="group flex items-center gap-1 px-3 py-2.5 font-medium  transition-colors duration-300 hover:text-lime-700 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 "
 								aria-haspopup="true"
 								aria-expanded={isDropdownOpen}
 							>
@@ -87,7 +87,7 @@
 			
 							{#if isDropdownOpen}
 								<div
-									class="absolute left-0 z-50 mt-2 w-48 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-black/5 transition-all duration-200 dark:divide-gray-700 dark:bg-gray-800"
+									class="absolute left-0 z-50 mt-2 w-48 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-black/5 transition-all duration-200 "
 									onmouseleave={closeDropdown}
 									role="menu"
 									tabindex="-1"
@@ -95,7 +95,7 @@
 									{#each moreCollections as collection}
 										<a
 											href="/collection/{collection.slug}"
-											class="block px-4 py-2.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-lime-50 hover:text-lime-800 focus:bg-lime-50 focus:text-lime-800 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-lime-400"
+											class="block px-4 py-2.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-lime-50 hover:text-lime-800 focus:bg-lime-50 focus:text-lime-800 focus:outline-none "
 											role="menuitem"
 											tabindex="-1"
 										>

@@ -101,6 +101,7 @@ export const SearchResult = gql(`
 		facetValueIds
 		currencyCode
 		productVariantId
+		inStock
 	}
 `);
 

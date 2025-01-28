@@ -22,7 +22,6 @@
 	import { browser } from '$app/environment';
 	import { cartDialogStore } from '$lib/stores';
 
-
 	let { data } = $props();
 	const client = getContextClient();
 	const params = queryParameters();

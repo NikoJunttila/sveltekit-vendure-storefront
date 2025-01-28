@@ -1928,3 +1928,59 @@ export const favorites_empty = () => `Favourites list is empty`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const page_not_found = () => `PAGE NOT FOUND`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const sort_by = () => `Sort by`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const sort_products = () => `Sort products`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const default_sort = () => `Default`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const price_low_high = () => `Price: Low to High`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const price_high_low = () => `Price: High to Low`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const name_a_z = () => `Name: A-Z`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const name_z_a = () => `Name: Z-A`
