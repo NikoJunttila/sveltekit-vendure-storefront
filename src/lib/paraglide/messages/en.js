@@ -23,6 +23,38 @@ export const hello_world = (params) => `Hello, ${params.name} from en!`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const about_us_title = () => `About Us`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const about_us_description = () => `Learn more about our company, our mission, and what drives us to deliver the best products and services.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const learn_more_about_company = () => `Learn more about our company`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const learn_more = () => `Learn More`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const hero_title = () => `The Best Stuff.`
 
 

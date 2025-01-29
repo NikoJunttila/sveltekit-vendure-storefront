@@ -1,6 +1,5 @@
 import adapter from '@sveltejs/adapter-node';
 // import adapter from '@sveltejs/adapter-vercel'
-//import adapter from '@sveltejs/adapter-cloudflare'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { join } from 'path';
 import 'dotenv/config';
@@ -18,22 +17,6 @@ const config = {
 		})
 	],
 	kit: {
-		// uncomment for Cloudflare
-		/* 		adapter: adapter({
-			routes: {
-				include: ['/*'],
-				exclude: [
-					'/img/*', 
-					'/vid/*',
-					'/crossdomain.xml',
-					'/favicon.ico',
-					'/logo.png',
-					'/logo.svg',
-					'/robots.txt'
-				], 
-			}
-		}), */
-		// uncomment for Node or Vercel
 		adapter: adapter(),
 		alias: {
 			'$src/*': 'src/*'

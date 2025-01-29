@@ -1,6 +1,12 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"hello_world": "Hello, {name} from en!",
+    "about_us_title": "About Us",
+    "about_us_description": "Learn more about our company, our mission, and what drives us to deliver the best products and services.",
+    "learn_more_about_company": "Learn more about our company",
+    "learn_more": "Learn More",
+
+
 	"hero_title": "The Best Stuff.",
 	"hero_description": "We sell the best stuff anywhere.  Everyone loves it.  The best cameras.  The best plants.  The best sofas.  We don't actually ship anything.  This is an example site.  Satisfaction guaranteed.",
 	"shop_now": "Shop now",

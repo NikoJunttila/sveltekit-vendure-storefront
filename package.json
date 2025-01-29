@@ -11,7 +11,9 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check .",
-		"codegen": "graphql-codegen"
+		"codegen": "graphql-codegen",
+		"start":"node build/index.js",
+		"start:custom": "PORT=4000 node build/index.js"
 	},
 	"devDependencies": {
 		"@graphql-codegen/cli": "^5.0.3",

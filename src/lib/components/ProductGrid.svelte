@@ -162,8 +162,8 @@
     </div>	
 	<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		{#each sortedProducts as p}
-			<div class="group relative flex flex-col items-center rounded-lg  shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-				<div class="relative aspect-square w-full overflow-hidden rounded-lg">
+			<div class="group relative flex flex-col items-center rounded-lg  shadow-sm transition-all duration-300 hover:shadow-lg">
+				<div class="relative aspect-square w-full overflow-hidden rounded-t-lg">
 					<Image
 						preview={p.productAsset?.preview}
 						preset="medium"
@@ -181,7 +181,7 @@
 						</p>
 					</a>
 				</div>
-				<div class=" w-full flex flex-1 flex-col p-4">
+				<div class=" w-full flex flex-1 flex-col p-4  dark:bg-gray-800">
 					<div class="mb-4 flex flex-col gap-2">
 						<h3 class="text-lg font-semibold  transition-colors duration-300 group-hover:text-primary-600">
 							<a href={p.slug}>{p.productName}</a>

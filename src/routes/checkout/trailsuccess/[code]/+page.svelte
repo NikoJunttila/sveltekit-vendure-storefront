@@ -4,9 +4,8 @@
 	import { getContextClient } from '@urql/svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { ActiveOrder, GetOrderByCode, SignOut, AddOrderPayment } from '$lib/vendure';
+	import { ActiveOrder, GetOrderByCode, AddOrderPayment } from '$lib/vendure';
 	import { useFragment } from '$lib/gql';
-	import { cartStore, userStore } from '$lib/stores';
 	import { formatCurrency } from '$src/lib/utils';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages';
@@ -38,7 +37,7 @@ async function makePayment(){
 			const payload = data.paramVals
 			//console.log(payload);
 			let result = await client
-				.mutation(AddOrderPayment, { input: { method: 'paytrail-method', metadata: payload } })
+				.mutation(AddOrderPayment, { input: { method: 'paytrail', metadata: payload } })
 				.toPromise()
 				.then((result) => result?.data?.addPaymentToOrder);
 			console.log(result);

@@ -1,18 +1,11 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition';
 	import LanguageSwitch from './LanguageSwitch.svelte';
-	import { onMount } from 'svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	let year = new Date().getFullYear();
-	let visible = false;
 	import Facebook from './icons/facebook.svelte';
 	import Twitter from './icons/twitter.svelte';
 	import YouTube from './icons/you-tube.svelte';
 	
-	// Show animations after component mounts
-	onMount(() => {
-		visible = true;
-	});
 	const resources = [
 		{ url: '/', name: m.footer_blog() },
 		{ url: '/', name: m.footer_guides() },
@@ -44,14 +37,12 @@
 	<h2 id="footer-heading" class="sr-only">Footer</h2>
 
 	<div class="mx-auto max-w-screen-2xl px-4 pt-16 sm:px-6 sm:pt-24 lg:px-8 lg:pt-32">
-		{#if visible}
 			<!-- Main Content Grid -->
 			<div
 				class="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5 xl:gap-12"
-				in:fly={{ y: 50, duration: 500, delay: 200 }}
 			>
 				<!-- Company Info -->
-				<div class="space-y-6 sm:col-span-2 lg:col-span-2" in:fade={{ duration: 300, delay: 300 }}>
+				<div class="space-y-6 sm:col-span-2 lg:col-span-2">
 					<div class="flex flex-col items-center space-y-4 md:items-start">
 						<img
 							class="h-12 transition-transform duration-300 hover:scale-105"
@@ -105,7 +96,7 @@
 				<!-- Navigation Links Grid -->
 				<div class="grid grid-cols-2 gap-8 sm:col-span-2 lg:col-span-3 lg:grid-cols-3 text-white">
 					<div>
-						<h3 class="text-center text-lg font-semibold  md:text-left">
+						<h3 class="text-center  font-semibold  md:text-left text-xl underline underline-offset-8">
 							{m.footer_company()}
 						</h3>
 						<div class="mt-4 flex flex-col space-y-3 text-center md:text-left">
@@ -125,7 +116,7 @@
 					</div>
 
 					<div>
-						<h3 class="text-center text-lg font-semibold  md:text-left">
+						<h3 class="text-center font-semibold  md:text-left text-xl underline underline-offset-8">
 							{m.footer_resources()}
 						</h3>
 						<div class="mt-4 flex flex-col space-y-3 text-center md:text-left">
@@ -145,7 +136,7 @@
 					</div>
 
 					<div class="col-span-2 sm:col-span-1 lg:col-span-1">
-						<h3 class="text-center text-lg font-semibold  md:text-left">
+						<h3 class="text-center font-semibold  md:text-left text-xl underline underline-offset-8">
 							{m.footer_support()}
 						</h3>
 						<div class="mt-4 flex flex-col space-y-3 text-center md:text-left">
@@ -169,7 +160,6 @@
 			<!-- Newsletter Section -->
 			<div
 				class="mt-12 border-t border-gray-200 pt-8"
-				in:fly={{ y: 30, duration: 400, delay: 800 }}
 			>
 				<div class="mx-auto max-w-md text-center">
 					<h3 class="mb-4 text-lg font-semibold text-gray-200">{m.footer_subscribe()}</h3>
@@ -192,7 +182,6 @@
 			<!-- Bottom Bar -->
 			<div
 				class="mt-12 flex w-full flex-col items-center justify-between gap-4 border-t border-gray-200 py-6 sm:flex-row"
-				in:fly={{ y: 20, duration: 400, delay: 1000 }}
 			>
 				<div class="flex flex-wrap items-center justify-center gap-4 sm:justify-start">
 					<p class="text-center text-gray-400 sm:text-left">
@@ -201,15 +190,14 @@
 					<LanguageSwitch />
 				</div>
 				<div class="flex flex-wrap items-center justify-center gap-3 text-gray-300 sm:gap-4">
-					<a href="/" class="transition-colors duration-300 hover:text-primary-600">
+					<a href="/info/terms" class="transition-colors duration-300 hover:text-primary-600">
 						{m.footer_terms()}
 					</a>
 					<span class="hidden sm:inline">•</span>
-					<a href="/" class="transition-colors duration-300 hover:text-primary-600">
+					<a href="/info/privacy" class="transition-colors duration-300 hover:text-primary-600">
 						{m.footer_privacy()}
 					</a>
 				</div>
 			</div>
-		{/if}
 	</div>
 </footer>

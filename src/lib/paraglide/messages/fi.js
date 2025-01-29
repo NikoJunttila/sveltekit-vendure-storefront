@@ -23,6 +23,38 @@ export const hello_world = (params) => `Hello, ${params.name} from fi!`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const about_us_title = () => `Meistä`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const about_us_description = () => `Tutustu yritykseemme, missioomme ja siihen, mikä saa meidät tarjoamaan parhaat tuotteet ja palvelut.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const learn_more_about_company = () => `Lue lisää yrityksestämme`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const learn_more = () => `Lue lisää`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const hero_title = () => `Parasta tavaraa.`
 
 
