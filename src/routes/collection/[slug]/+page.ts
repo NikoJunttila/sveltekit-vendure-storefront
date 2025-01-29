@@ -2,8 +2,6 @@ import type { PageLoad } from './$types';
 import { GetCollection, GetCollections, SearchProducts } from '$lib/vendure';
 import { type SearchInput } from '$src/lib/gql/graphql';
 
-export const prerender = true;
-
 export const load = async function ({ parent, params }) {
 	const { client } = await parent();
 

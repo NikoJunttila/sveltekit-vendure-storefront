@@ -2,7 +2,7 @@ import { createClient, GetTopLevelCollections, ActiveChannel,SearchProducts } fr
 import { type SearchInput } from '$src/lib/gql/graphql';
 const client = createClient();
 
-export const prerender = true;
+export const prerender = "auto";
 
 export async function load() {
 

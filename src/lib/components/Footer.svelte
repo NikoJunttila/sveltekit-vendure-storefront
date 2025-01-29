@@ -14,7 +14,7 @@
 	const company = [
 		{ url: '/', name: m.footer_about() },
 		{ url: '/', name: m.footer_careers() },
-		{ url: '/contact', name: m.footer_contact() }
+		{ url: '/info/contact', name: m.footer_contact() }
 	];
 	const support = [
 		{ url: '/info/contact', name: m.contact() },
