@@ -50,7 +50,7 @@
 					console.error('Error loading favorites:', e);
 				}
 			}
-			
+			console.log(product)
 		}
 	});
 
@@ -115,15 +115,14 @@
 				break;
 			case 'Order':
 				toast.success(m.item_added());
+				cartDialogStore.set(true)
 				break;
 			default:
 				toast.error(m.error_adding_item());
 				break;
 		}
-		cartDialogStore.set(true)
 		processing = false;
 	};
-
 </script>
 
 {#if product}
@@ -261,7 +260,7 @@
 				onclick={async () => {
 					addToCart(selectedVariantId);
 				}}
-				class="mt-6 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white hover:bg-lime-700"
+				class="mt-6 duration-300 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white hover:bg-lime-700"
 			>
 				{m.add_to_cart()}
 			</button>

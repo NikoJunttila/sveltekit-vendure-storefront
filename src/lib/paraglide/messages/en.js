@@ -1943,7 +1943,7 @@ export const banner_text = () => `Free shipping | 30-day returns | Premium quali
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const favorites_title = () => `Favourites title`
+export const favorites_title = () => `Favourites`
 
 
 /**

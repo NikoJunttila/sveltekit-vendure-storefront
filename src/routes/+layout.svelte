@@ -12,6 +12,7 @@
 	import Theme from '$src/lib/components/Theme.svelte';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import ToastComponent from '$src/lib/components/Toast.svelte';
+	import { fly } from 'svelte/transition';
 
 	let { data, children } = $props();
 	const collections = data.collections;

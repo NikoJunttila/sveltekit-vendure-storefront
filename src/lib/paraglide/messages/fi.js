@@ -1951,7 +1951,7 @@ export const favorites_title = () => `Suosikit`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const favorites_empty = () => `Suosikitlista on tyhjä`
+export const favorites_empty = () => `Suosikkisi on tyhjillään`
 
 
 /**

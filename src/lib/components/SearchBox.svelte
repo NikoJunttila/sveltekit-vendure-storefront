@@ -41,7 +41,7 @@
 		<div
 			use:clickOutside
 			on:clickOutside={() => (q = '')}
-			class="absolute z-50 max-h-[80vh] w-full overflow-auto rounded-b-xl border border-gray-200 bg-white"
+			class="absolute z-50 max-h-[80vh] w-full overflow-auto rounded-b-xl border border-gray-200 bg-gray-200 dark:bg-gray-700"
 		>
 			{#each hits as hit}
 				<SearchHit {hit} on:click={handleClick} />

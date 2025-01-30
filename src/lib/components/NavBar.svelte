@@ -9,6 +9,8 @@
 	import LanguageSwitch from './LanguageSwitch.svelte';
 	import { Heart, Menu } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 	let { collections = [] } = $props();
 	
 	let isDropdownOpen = $state(false);
@@ -25,13 +27,47 @@
 	function closeDropdown() {
 		isDropdownOpen = false;
 	}
+
+	let y = $state(0);
+	let maxScrollY = $state(0);
+	let prevY = $state(0);
+	const SCROLL_UP_THRESHOLD = 50;
+	const TOP_THRESHOLD = 50;
+
+	const navbarVisible = $derived(
+		y < TOP_THRESHOLD || (maxScrollY - y) >= SCROLL_UP_THRESHOLD
+	);
+
+	onMount(() => {
+		if (browser) {
+			const handleScroll = () => {
+				const newY = window.scrollY;
+				y = newY;
+				
+				if (newY > maxScrollY) {
+					maxScrollY = newY;
+				}
+				
+				if (newY < TOP_THRESHOLD) {
+					maxScrollY = 0;
+				}
+				
+				prevY = newY;
+			};
+
+			window.addEventListener('scroll', handleScroll);
+			handleScroll(); // Initial call to set values
+			
+			return () => window.removeEventListener('scroll', handleScroll);
+		}
+	});
 </script>
 
-<nav class="top-0 z-50 max-w-screen-2xl p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800">
+<nav class:visible={navbarVisible} class={"navbar top-0 sticky bg-slate-100 dark:bg-slate-800 z-50 p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800"}>
 	<div class="mt-3 flex flex-grow items-center justify-between">
 		<div class="flex flex-none items-center">
 			<a class="inline-block text-3xl font-bold" href="/">
-				<img class="block h-10 w-auto md:hidden" src="/logo.png" alt="Company Name" />
+				<img class="block h-8 w-auto md:hidden" src="/logo.png" alt="Company Name" />
 				<img class="hidden h-14 w-auto md:block" src="/logo.png" alt="Company Name" />
 			</a>
 
@@ -111,11 +147,11 @@
 
 
 		</div>
-		<div class="ml-4 flex flex-grow items-center justify-between align-middle">
+		<div class="ml-0 sm:ml-4 flex flex-grow items-center justify-between align-middle">
 			<SearchBox />
 		</div>
-		<div class="flex flex-none items-center justify-end align-middle md:ml-2 lg:ml-4">
-			<div class="p-2 lg:hidden">
+		<div class="flex flex-none items-center justify-end align-middle ml-0 sm:ml-2 lg:ml-4">
+			<div class="p-1 lg:hidden">
 				<SideBar {collections} />
 			</div>
 			<div>
@@ -129,7 +165,7 @@
 			<div class="p-2">
 				<ThemeSwitcher />
 			</div>
-			<div class="hidden p-2 md:block">
+			<div class="p-2">
 				<LanguageSwitch />
 				<!-- <Account /> -->
 			</div>
@@ -139,3 +175,13 @@
 		</div>
 	</div>
 </nav>
+<style>
+	.navbar {
+		transition: transform 0.3s ease;
+		transform: translateY(-100%);
+	}
+	
+	.visible {
+		transform: translateY(0);
+	}
+</style>
