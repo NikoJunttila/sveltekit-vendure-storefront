@@ -2016,3 +2016,11 @@ export const name_a_z = () => `Nimi: A-Z`
  */
 /* @__NO_SIDE_EFFECTS__ */
 export const name_z_a = () => `Nimi: Z-A`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const out_of_stock = () => `Tuotetta ei varastossa`

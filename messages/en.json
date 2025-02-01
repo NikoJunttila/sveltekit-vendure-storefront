@@ -35,6 +35,7 @@
 	"item_added": "Item added to cart",
 	"error_adding_item": "Error adding item to cart",
 	"insufficient_stock": "Insufficient stock",
+	"out_of_stock":"Out of stock",
 	"item_removed": "Item removed",
 
 	"search": "Search",

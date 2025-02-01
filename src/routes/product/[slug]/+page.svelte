@@ -28,7 +28,7 @@
 
 	let favorites = $state<Record<string, boolean>>({});
 
-		function toggleFavorite(productId: string) {
+	function toggleFavorite(productId: string) {
 		favorites = {
 			...favorites,
 			[productId]: !favorites[productId]
@@ -41,7 +41,7 @@
 		}
 	}
 	onMount(() => {
-		if(browser){
+		if (browser) {
 			if (typeof localStorage !== 'undefined') {
 				try {
 					const saved = localStorage.getItem('favorites');
@@ -50,10 +50,9 @@
 					console.error('Error loading favorites:', e);
 				}
 			}
-			console.log(product)
+			console.log(product);
 		}
 	});
-
 
 	// this will load the data in prerendering and initial site load
 	let product: ProductDetailFragment | null | undefined = $state(
@@ -78,10 +77,12 @@
 	);
 
 	let selectedVariantId = $state('');
-	let selectedOptions: any[any] = $state([]);
 	$effect(() => {
 		selectedVariantId = $params.variant || product?.variants[0]?.id || '';
 	});
+
+	// Derived state for selected variant
+	const selectedVariant = $derived(product?.variants.find((v) => v.id === selectedVariantId));
 
 	let tab: string = $state('reviews');
 	$effect(() => {
@@ -90,14 +91,18 @@
 
 	let processing: boolean = $state(false);
 
-	const handleSelection = (optionGroup: any, option: any) => {
-		selectedOptions[optionGroup.id] = option.id;
-		let selectedVariant = product?.variants.find((v: any) =>
-			v.options.every((o: any) => selectedOptions[o.groupId] === o.id)
-		);
-		if (selectedVariant) {
-			goto(`?variant=${selectedVariant.id}`);
-		}
+	const handleVariantChange = (event: Event) => {
+		event.preventDefault();
+		const variantId = (event.target as HTMLSelectElement).value;
+
+		// Create a URL object from the current location
+		const url = new URL(window.location.href);
+
+		// Update the 'variant' query parameter
+		url.searchParams.set('variant', variantId);
+
+		// Update the URL without reloading the page
+		window.history.pushState({}, '', url);
 	};
 
 	const addToCart = async (variantId: string): Promise<void> => {
@@ -115,7 +120,7 @@
 				break;
 			case 'Order':
 				toast.success(m.item_added());
-				cartDialogStore.set(true)
+				cartDialogStore.set(true);
 				break;
 			default:
 				toast.error(m.error_adding_item());
@@ -123,6 +128,9 @@
 		}
 		processing = false;
 	};
+	const isOutOfStock = $derived.by(() => {
+		return product?.variants.every((variant) => variant.stockLevel !== 'IN_STOCK') ?? false;
+	});
 </script>
 
 {#if product}
@@ -130,7 +138,7 @@
 		config={{
 			title: product.name,
 			description: product.description,
-			open_graph_image:featuredAsset?.preview || '',
+			open_graph_image: featuredAsset?.preview || '',
 			open_graph_image_alt: featuredAsset?.name || ''
 		}}
 	/>
@@ -185,85 +193,83 @@
 			<div class="mb-2">
 				<BreadcrumbsComponent {breadcrumbs} />
 			</div>
-			<h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{product.name}
-<!-- Favorite Button -->
-			<button
-				onclick={() => toggleFavorite(product!.slug)}
-				class=" z-10 rounded-full  p-3 backdrop-blur-sm transition-all  hover:text-yellow-400"
-			>
-				{#if favorites[product.slug]}
-					<span class="text-2xl">
-						<Heart fill="red"></Heart>
-					</span>
-				{:else}
-					<span class="text-2xl">
-						<Heart></Heart>
-					</span>
-				{/if}
-			</button>
-				
+			<h1 class="text-2xl font-bold tracking-tight sm:text-3xl">
+				{product.name}
+				<!-- Favorite Button -->
+				<button
+					onclick={() => toggleFavorite(product!.slug)}
+					class=" z-10 rounded-full p-3 backdrop-blur-sm transition-all hover:text-yellow-400"
+				>
+					{#if favorites[product.slug]}
+						<span class="text-2xl">
+							<Heart fill="red"></Heart>
+						</span>
+					{:else}
+						<span class="text-2xl">
+							<Heart></Heart>
+						</span>
+					{/if}
+				</button>
 			</h1>
 			<h2 id="information-heading" class="sr-only">Product information</h2>
 			<p class="mt-6">{@html xss(product.description || '')}</p>
-			{#each product.optionGroups as optionGroup}
-				<div class="mt-6">
-					<h3 class="text-sm font-medium">{optionGroup.name}</h3>
-					<div class="mt-4">
-						<div class="flex flex-wrap">
-							{#each optionGroup.options as option}
-								{#if option.id === selectedOptions[optionGroup.id]}
-									<button
-										type="button"
-										class="mb-2 mr-2 whitespace-nowrap rounded-lg border-4 border-lime-600 bg-white px-3 py-2 text-sm font-medium uppercase text-black hover:bg-white"
-									>
-										{option.name}
-									</button>
-								{:else}
-									<button
-										type="button"
-										onclick={(e) => {
-											handleSelection(optionGroup, option);
-										}}
-										class="mb-2 mr-2 whitespace-nowrap rounded-lg border border-gray-400 bg-white px-3 py-2 text-sm font-medium uppercase text-black hover:bg-stone-200"
-									>
-										{option.name}
-									</button>
-								{/if}
-							{/each}
-						</div>
-					</div>
-				</div>
-			{/each}
+			<div class="mt-6">
+				<h3 class="text-sm font-medium">{m.select_variant()}</h3>
+				<select
+					bind:value={selectedVariantId}
+					onchange={handleVariantChange}
+					class="mt-2 w-full rounded-md border border-gray-300 p-2 text-gray-800"
+				>
+					{#each product.variants as variant}
+						<option value={variant.id} disabled={variant.stockLevel !== 'IN_STOCK'}>
+							{variant.name} -
+							{#if variant.stockLevel === 'IN_STOCK'}
+								{formatCurrency(variant.price, PUBLIC_DEFAULT_CURRENCY)}
+							{:else}
+								({m.out_of_stock()})
+							{/if}
+						</option>
+					{/each}
+				</select>
+			</div>
+
+			<!-- Price Display -->
 			<div class="mt-6">
 				<h3 class="text-sm font-medium">{m.price()}</h3>
-				{#if product.variants[product.variants.findIndex((v) => v.id === selectedVariantId)]}
+				{#if selectedVariant}
 					<div class="mt-1 flex items-baseline">
 						<p class="text-xl font-semibold">
-							{formatCurrency(
-								product.variants[product.variants.findIndex((v) => v.id === selectedVariantId)]
-									.price,
-								PUBLIC_DEFAULT_CURRENCY
-							)}
+							{formatCurrency(selectedVariant.price, PUBLIC_DEFAULT_CURRENCY)}
 						</p>
 						<p class="ml-1 text-sm font-medium">
-							/ {product.variants[product.variants.findIndex((v) => v.id === selectedVariantId)]
-								?.name}
+							/ {selectedVariant.name}
 						</p>
 					</div>
 				{:else}
 					{m.select_variant()}
 				{/if}
 			</div>
-			<button
-				type="button"
-				disabled={processing}
-				onclick={async () => {
-					addToCart(selectedVariantId);
-				}}
-				class="mt-6 duration-300 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white hover:bg-lime-700"
-			>
-				{m.add_to_cart()}
-			</button>
+
+			{#if isOutOfStock}
+				<button
+					type="button"
+					disabled
+					class="mt-6 w-full items-center justify-center rounded-md border border-transparent bg-gray-600 px-5 py-3 text-lg font-medium text-red-600 duration-300"
+				>
+					{m.out_of_stock()}
+				</button>
+			{:else}
+				<button
+					type="button"
+					disabled={processing}
+					onclick={async () => {
+						addToCart(selectedVariantId);
+					}}
+					class="mt-6 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white duration-300 hover:bg-lime-700"
+				>
+					{m.add_to_cart()}
+				</button>
+			{/if}
 		</div>
 		<div class="mt-10 items-start lg:col-start-2 lg:row-span-2 lg:mt-0">
 			<Gallery assets={product.assets} />

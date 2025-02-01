@@ -26,6 +26,7 @@
 	"item_added": "Tuote lisätty koriin",
 	"error_adding_item": "Virhe lisättäessä tuotetta koriin",
 	"insufficient_stock": "Tuote loppu varastosta",
+	"out_of_stock":"Tuotetta ei varastossa",
 	"search": "Haku",
 	"search_placeholder": "Kirjoita hakusana.",
 	"no_results": "Ei hakutuloksia.",
