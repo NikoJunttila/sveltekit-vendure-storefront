@@ -4,40 +4,58 @@
  * @property {string} message - The message string.
  * @property {number} timeout - The timeout number.
  * @property {string} type - Notif type.
- * @property {string} id - id.
+ * @property {string} id - Unique identifier.
  */
 function createNotificationStore() {
 	/** @type {MessageWithTimeout[]} */
 	// @ts-ignore
-	let nofiticationsArr = $state([]);
+	let notifications = $state([]);
 
 	/**
-	 * A function that takes a string and a number as parameters.
-	 * @param {string} message - The input string.
-	 * @param {number} timeout - The input number.
-	 * @param {string} type - The type string.
-	 * @returns {void}
+	 * Creates a new notification and automatically removes it after timeout
+	 * @param {string} message - The message content
+	 * @param {number} timeout - Time in milliseconds before auto-removal
+	 * @param {string} type - Notification type (success/error)
 	 */
 	function newNotif(message, timeout, type) {
-		const notifObj = {
-			message: message,
-			timeout: timeout,
-			type: type,
+		const notification = {
+			message,
+			timeout,
+			type,
 			id: window.crypto.randomUUID()
 		};
-		nofiticationsArr.push(notifObj);
+
+		notifications.push(notification);
+		
 		setTimeout(() => {
-			nofiticationsArr.shift();
-		}, notifObj.timeout);
+			const index = notifications.findIndex(n => n.id === notification.id);
+			if (index !== -1) {
+				notifications.splice(index, 1);
+			}
+		}, notification.timeout);
 	}
+
+	/**
+	 * Closes a notification immediately by its ID
+	 * @param {string} id - Notification ID to remove
+	 */
+	function closeNotif(id) {
+		const index = notifications.findIndex(n => n.id === id);
+		if (index !== -1) {
+			notifications.splice(index, 1);
+		}
+	}
+
 	return {
 		get notifs() {
-			return nofiticationsArr;
+			return notifications;
 		},
-		success: (/** @type {string} */ message, /** @type {number} */ timeout = 3000) =>
+		success: (/** @type {string} */ message, /** @type {number} */ timeout = 3000) => 
 			newNotif(message, timeout, 'success'),
-		error: (/** @type {string} */ message, /** @type {number} */ timeout = 3000) =>
-			newNotif(message, timeout, 'error')
+		error: (/** @type {string} */ message, /** @type {number} */ timeout = 3000) => 
+			newNotif(message, timeout, 'error'),
+		close: closeNotif
 	};
 }
+
 export const toast = createNotificationStore();
