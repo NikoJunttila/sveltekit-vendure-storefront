@@ -9,7 +9,7 @@
 	import { formatCurrency } from '$src/lib/utils';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages';
-
+	import { cartStore } from '$src/lib/stores';
 
 	interface Props {
 		data: PageData;
@@ -65,6 +65,7 @@ async function makePayment(){
 			try {
 				await makePayment()
 				await fetchOrder();
+				cartStore.set(null)
 				// await handleSignOut()
 				loaded = true;
 			} catch (error) {

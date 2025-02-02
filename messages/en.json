@@ -7,6 +7,18 @@
     "learn_more": "Learn More",
 
 
+	"email_required": "Email is required",
+	"invalid_email": "Invalid email address",
+	"first_name_required": "First name is required",
+	"last_name_required": "Last name is required",
+	"phone_required": "Phone number is required",
+	"invalid_phone": "Invalid phone number",
+	"street_line_1_required": "Street address is required",
+	"city_required": "City is required",
+	"postal_code_required": "Postal code is required",
+	"invalid_postal_code": "Invalid postal code",
+
+
 	"hero_title": "The Best Stuff.",
 	"hero_description": "We sell the best stuff anywhere.  Everyone loves it.  The best cameras.  The best plants.  The best sofas.  We don't actually ship anything.  This is an example site.  Satisfaction guaranteed.",
 	"shop_now": "Shop now",

@@ -105,7 +105,7 @@
 					transitionError.includes('to') &&
 					transitionError.includes(state)
 				) {
-					toast.error(m.generic_error());
+					toast.error(m.error_general());
 
 					// If we're stuck in ArrangingPayment, try to reset to AddingItems
 					if (state === 'ArrangingPayment') {
@@ -162,10 +162,6 @@
 />
 
 <div class="min-h-screen bg-gray-50">
-	{JSON.stringify(selectedShippingOption)}
-	<button onclick={async () => setOrderState('ArrangingPayment')} class="button">authpAyment</button
-	>
-	<button class="button" onclick={resetState}>reset</button>
 	{#if loaded && !order?.lines}
 		<div class="flex min-h-[50vh] items-center justify-center">
 			<p class="text-lg text-gray-600">{m.cart_empty()}</p>

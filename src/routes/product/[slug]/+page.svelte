@@ -213,25 +213,28 @@
 			</h1>
 			<h2 id="information-heading" class="sr-only">Product information</h2>
 			<p class="mt-6">{@html xss(product.description || '')}</p>
-			<div class="mt-6">
-				<h3 class="text-sm font-medium">{m.select_variant()}</h3>
-				<select
-					bind:value={selectedVariantId}
-					onchange={handleVariantChange}
-					class="mt-2 w-full rounded-md border border-gray-300 p-2 text-gray-800"
-				>
-					{#each product.variants as variant}
-						<option value={variant.id} disabled={variant.stockLevel !== 'IN_STOCK'}>
-							{variant.name} -
-							{#if variant.stockLevel === 'IN_STOCK'}
-								{formatCurrency(variant.price, PUBLIC_DEFAULT_CURRENCY)}
-							{:else}
-								({m.out_of_stock()})
-							{/if}
-						</option>
-					{/each}
-				</select>
-			</div>
+
+			{#if product.variants.length > 1}
+				<div class="mt-6">
+					<h3 class="text-sm font-medium">{m.select_variant()}</h3>
+					<select
+						bind:value={selectedVariantId}
+						onchange={handleVariantChange}
+						class="mt-2 w-full rounded-md border border-gray-300 p-2 text-gray-800"
+					>
+						{#each product.variants as variant}
+							<option value={variant.id} disabled={variant.stockLevel !== 'IN_STOCK'}>
+								{variant.name} -
+								{#if variant.stockLevel === 'IN_STOCK'}
+									{formatCurrency(variant.price, PUBLIC_DEFAULT_CURRENCY)}
+								{:else}
+									({m.out_of_stock()})
+								{/if}
+							</option>
+						{/each}
+					</select>
+				</div>
+			{/if}
 
 			<!-- Price Display -->
 			<div class="mt-6">

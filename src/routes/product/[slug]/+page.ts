@@ -1,6 +1,8 @@
 import type { PageLoad } from './$types';
 import { GetProduct } from '$lib/vendure';
 
+export const ssr = false
+
 export const load = async function ({ parent, params }) {
 	const { client } = await parent();
 	return {

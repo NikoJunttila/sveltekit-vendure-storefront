@@ -29,7 +29,10 @@
 			customer: Record<string, boolean>;
 			address: Record<string, boolean>;
 		};
-		errors: { customer: string; address: string };
+		errors: { 
+			customer: Record<string, string>;
+			address: Record<string, string>;
+		};
 	}
 
 	// Initialize form with empty values and disabled states
@@ -79,8 +82,8 @@
 		},
 
 		errors: {
-			customer: '',
-			address: ''
+			customer: {},
+			address: {}
 		}
 	});
 	const updateCustomerFunc = async (input: UpdateCustomerInput) => {
@@ -186,7 +189,7 @@
 	// API functions
 	const setCustomer = async (input: CreateCustomerInput) => {
 		let result = await client.mutation(SetOrderCustomer, { input }).toPromise();
-		console.log('customer', result);
+		console.log('customer updated', result);
 	};
 
 	const setShippingAddress = async (input: CreateAddressInput) => {
@@ -208,39 +211,81 @@
 
 	// Form validation functions
 	function validateCustomerForm(): boolean {
-		if (form.customerForm.emailAddress && !validateEmail(form.customerForm.emailAddress)) {
-			form.errors.customer = 'Invalid email address';
-			return false;
+		let isValid = true;
+		const errors: Record<string, string> = {};
+
+		// Validate email
+		if (!form.disabledFields.customer.emailAddress) {
+			if (!form.customerForm.emailAddress) {
+				errors.emailAddress = m.email_required();
+				isValid = false;
+			} else if (!validateEmail(form.customerForm.emailAddress)) {
+				errors.emailAddress = m.invalid_email();
+				isValid = false;
+			}
 		}
-		if (form.customerForm.phoneNumber && !validatePhone(form.customerForm.phoneNumber)) {
-			form.errors.customer = 'Invalid phone number';
-			return false;
+
+		// Validate first name
+		if (!form.disabledFields.customer.firstName && !form.customerForm.firstName) {
+			errors.firstName = m.first_name_required();
+			isValid = false;
 		}
-		if (!form.customerForm.firstName && !form.customerForm.lastName) {
-			form.errors.customer = 'name missing';
-			return false;
+
+		// Validate last name
+		if (!form.disabledFields.customer.lastName && !form.customerForm.lastName) {
+			errors.lastName = m.last_name_required();
+			isValid = false;
 		}
-		form.addressForm.fullName = `${form.customerForm.firstName} ${form.customerForm.lastName}`;
-		form.errors.customer = '';
-		return true;
+
+		// Validate phone number
+		if (!form.disabledFields.customer.phoneNumber) {
+			if (!form.customerForm.phoneNumber) {
+				errors.phoneNumber = m.phone_required();
+				isValid = false;
+			} else if (!validatePhone(form.customerForm.phoneNumber)) {
+				errors.phoneNumber = m.invalid_phone();
+				isValid = false;
+			}
+		}
+
+		// Update full name if valid
+		if (form.customerForm.firstName && form.customerForm.lastName) {
+			form.addressForm.fullName = `${form.customerForm.firstName} ${form.customerForm.lastName}`;
+		}
+
+		form.errors.customer = errors;
+		return isValid;
 	}
 
 	function validateAddressForm(): boolean {
-		if (!form.addressForm.streetLine1) {
-			form.errors.address = 'streetline missing';
-			return false;
-		}
-		if (!form.addressForm.city) {
-			form.errors.address = 'city missing';
-			return false;
-		}
-		if (form.addressForm.postalCode && !validatePostalCode(form.addressForm.postalCode)) {
-			form.errors.address = 'Invalid postal code';
-			return false;
+		let isValid = true;
+		const errors: Record<string, string> = {};
+
+		// Validate street line 1
+		if (!form.disabledFields.address.streetLine1 && !form.addressForm.streetLine1) {
+			errors.streetLine1 = m.street_line_1_required();
+			isValid = false;
 		}
 
-		form.errors.address = '';
-		return true;
+		// Validate city
+		if (!form.disabledFields.address.city && !form.addressForm.city) {
+			errors.city = m.city_required();
+			isValid = false;
+		}
+
+		// Validate postal code
+		if (!form.disabledFields.address.postalCode) {
+			if (!form.addressForm.postalCode) {
+				errors.postalCode = m.postal_code_required();
+				isValid = false;
+			} else if (!validatePostalCode(form.addressForm.postalCode)) {
+				errors.postalCode = m.invalid_postal_code();
+				isValid = false;
+			}
+		}
+
+		form.errors.address = errors;
+		return isValid;
 	}
 
 	const debouncedCustomerUpdate = debounce(async (field: string, value: string) => {
@@ -248,6 +293,7 @@
 
 		try {
 			if (user) {
+				console.log("updated customer")
 				// If user exists, update the existing user
 				const updateInput: UpdateCustomerInput = {
 					[field]: value
@@ -258,6 +304,7 @@
 				}
 			} else {
 				// If no user exists, create new customer in order
+				console.log("setting customer")
 				await setCustomer(form.customerForm);
 			}
 
@@ -358,6 +405,9 @@
 							class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500"
 							disabled={form.disabledFields.customer.firstName}
 						/>
+						{#if form.errors.customer.firstName}
+							<p class="mt-1 text-sm text-red-600">{form.errors.customer.firstName}</p>
+						{/if}
 					</div>
 					<div>
 						<label for="lastName" class="block text-sm font-medium text-gray-700">{m.last_name()}*</label>
@@ -370,6 +420,9 @@
 							class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500"
 							disabled={form.disabledFields.customer.lastName}
 						/>
+						{#if form.errors.customer.lastName}
+							<p class="mt-1 text-sm text-red-600">{form.errors.customer.lastName}</p>
+						{/if}
 					</div>
 				</div>
 				<div>
@@ -383,6 +436,9 @@
 						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500"
 						disabled={form.disabledFields.customer.emailAddress}
 					/>
+					{#if form.errors.customer.emailAddress}
+						<p class="mt-1 text-sm text-red-600">{form.errors.customer.emailAddress}</p>
+					{/if}
 				</div>
 				<div>
 					<label for="phone" class="block text-sm font-medium text-gray-700">{m.phone()}*</label>
@@ -395,10 +451,10 @@
 						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500 disabled:bg-gray-100 disabled:text-gray-500"
 						disabled={form.disabledFields.customer.phoneNumber}
 					/>
+					{#if form.errors.customer.phoneNumber}
+						<p class="mt-1 text-sm text-red-600">{form.errors.customer.phoneNumber}</p>
+					{/if}
 				</div>
-				{#if form.errors.customer}
-					<p class="mt-1 text-sm text-red-600">{form.errors.customer}</p>
-				{/if}
 			</div>
 		</div>
 	</div>
@@ -411,16 +467,6 @@
 		<div class="p-4">
 			<div class="space-y-3">
 				<div>
-					<label for="company" class="block text-sm font-medium text-gray-700">{m.company()}</label>
-					<input
-						type="text"
-						value={form.addressForm.company}
-						oninput={(e) => handleAddressInput('company', e.currentTarget.value)}
-						name="company"
-						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
-					/>
-				</div>
-				<div>
 					<label for="street1" class="block text-sm font-medium text-gray-700">{m.street_line_1()}*</label>
 					<input
 						name="street1"
@@ -430,6 +476,9 @@
 						required
 						class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
 					/>
+					{#if form.errors.address.streetLine1}
+						<p class="mt-1 text-sm text-red-600">{form.errors.address.streetLine1}</p>
+					{/if}
 				</div>
 				<div>
 					<label for="street2" class="block text-sm font-medium text-gray-700">{m.street_line_2()}</label>
@@ -452,6 +501,9 @@
 							required
 							class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
 						/>
+						{#if form.errors.address.city}
+							<p class="mt-1 text-sm text-red-600">{form.errors.address.city}</p>
+						{/if}
 					</div>
 					<div>
 						<label for="postal" class="block text-sm font-medium text-gray-700">{m.postal_code()}*</label>
@@ -463,8 +515,12 @@
 							required
 							class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:ring-lime-500"
 						/>
+						{#if form.errors.address.postalCode}
+							<p class="mt-1 text-sm text-red-600">{form.errors.address.postalCode}</p>
+						{/if}
 					</div>
 				</div>
+
 				<div>
 					<label for="country" class="block text-sm font-medium text-gray-700">{m.country()}*</label>
 					<select
@@ -477,9 +533,6 @@
 						<option value="FI" selected>{m.finland()}</option>
 					</select>
 				</div>
-				{#if form.errors.address}
-					<p class="mt-1 text-sm text-red-600">{form.errors.address}</p>
-				{/if}
 			</div>
 		</div>
 	</div>

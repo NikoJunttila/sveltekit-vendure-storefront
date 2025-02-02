@@ -6,7 +6,6 @@
 	import { browser } from '$app/environment';
 	import { ActiveOrder, GetOrderByCode } from '$lib/vendure';
 	import { useFragment } from '$lib/gql';
-
 	import { formatCurrency } from '$src/lib/utils';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages';

@@ -255,6 +255,14 @@ export const insufficient_stock = () => `Tuote loppu varastosta`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const out_of_stock = () => `Tuotetta ei varastossa`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const item_removed = () => `Tuote poistettu`
 
 
@@ -2023,4 +2031,76 @@ export const name_z_a = () => `Nimi: Z-A`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const out_of_stock = () => `Tuotetta ei varastossa`
+export const email_required = () => `Sähköposti vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_email = () => `Virheellinen sähköpostiosoite`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const first_name_required = () => `Etunimi vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const last_name_required = () => `Sukunimi vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const phone_required = () => `Puhelinnumero vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_phone = () => `Virheellinen puhelinnumero`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const street_line_1_required = () => `Katuosoite vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const city_required = () => `Kaupunki vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const postal_code_required = () => `Postinumero vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_postal_code = () => `Virheellinen postinumero`
