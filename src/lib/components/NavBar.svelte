@@ -63,7 +63,7 @@
 	});
 </script>
 
-<nav class:visible={navbarVisible} class={"navbar top-0 sticky bg-slate-100 dark:bg-slate-800 z-50 p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800"}>
+<nav class:visible={navbarVisible} class={"navbar top-0 sticky bg-slate-100 dark:bg-slate-800 z-40 p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800"}>
 	<div class="mt-3 flex flex-grow items-center justify-between">
 		<div class="flex flex-none items-center">
 			<a class="inline-block text-3xl font-bold" href="/">
@@ -123,7 +123,7 @@
 			
 							{#if isDropdownOpen}
 								<div
-									class="absolute left-0 z-50 mt-2 w-48 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-black/5 transition-all duration-200 "
+									class="absolute left-0 z-40 mt-2 w-48 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-black/5 transition-all duration-200 "
 									onmouseleave={closeDropdown}
 									role="menu"
 									tabindex="-1"

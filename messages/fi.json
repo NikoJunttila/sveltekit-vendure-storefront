@@ -14,6 +14,8 @@
 	"invalid_phone": "Virheellinen puhelinnumero",
 	"street_line_1_required": "Katuosoite vaaditaan",
 	"city_required": "Kaupunki vaaditaan",
+	"default_shipping_address": "Oletus toimitus",
+	"default_billing_address": "Oletus laskutus",
 	"postal_code_required": "Postinumero vaaditaan",
 	"invalid_postal_code": "Virheellinen postinumero",
 	"checkout": "Kassa",

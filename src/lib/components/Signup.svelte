@@ -54,7 +54,7 @@
 		</h2>
 	</div>
 
-	<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+	<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md text-black">
 		<div class="px-4 py-8 shadow sm:rounded-lg sm:px-10 border ">
 			<form class="space-y-6" onsubmit={signUp}>
 				{#if stuff.error}

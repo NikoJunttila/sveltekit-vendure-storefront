@@ -48,7 +48,9 @@
 		try {
 			const result = await client.mutation(CreateCustomerAddress, { input }).toPromise();
 			if (result.data?.createCustomerAddress) {
-				// Refresh user data
+				await new Promise((resolve) => setTimeout(resolve, 500))
+				await client.query(GetCustomer, {}, { requestPolicy: 'network-only' }).toPromise()
+				toast.success(m.success_new_address())
 				isAddingAddress = false;
 				return true;
 			} else if (result.error) {
@@ -57,11 +59,10 @@
 				return false;
 			}
 		} catch (error) {
+			console.error("err: ",error)
 			toast.error(`${m.generic_error()} ${error}`)
 			return false;
 		}
-		await client.query(GetCustomer, {}, { requestPolicy: 'network-only' }).toPromise()
-		toast.success(m.success_new_address)
 	};
 
 	const startEditing = () => {
@@ -169,12 +170,11 @@
 	<div class="mx-auto max-w-4xl space-y-8 p-4 sm:p-6 lg:p-8">
 		<!-- User Info Section -->
 		<div
-			class="rounded-xl bg-white p-6 shadow-lg ring-1 ring-black/5 transition-all hover:shadow-xl lg:p-8"
+			class="rounded-xl bg-white dark:bg-slate-700 p-6 shadow-lg ring-1 ring-black/5 transition-all hover:shadow-xl lg:p-8"
 		>
 			<div class="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
 				<div>
 					<h1 class="text-2xl font-bold text-gray-900 lg:text-3xl">{m.customer_profile()}</h1>
-					<p class="mt-1 text-gray-600">{m.welcome()}</p>
 				</div>
 				{#if !isEditing}
 					<button
@@ -202,8 +202,9 @@
 			</div>
 
 			{#if isEditing}
-				<form onsubmit={handleSubmit} class="space-y-6">
+				<form onsubmit={handleSubmit} class="space-y-6 ">
 					<!-- Personal Information -->
+					 <div class="grid grid-cols">
 					<div class="space-y-6">
 						<h2 class="text-lg font-semibold text-gray-900 lg:text-xl">
 							{m.personal_information()}
@@ -242,6 +243,98 @@
 									/>
 								</label>
 							</div>
+							<div class="space-y-6">
+								<h2 class="text-lg font-semibold text-gray-900 lg:text-xl">{m.address_information()}</h2>
+								<div class="grid gap-4 sm:grid-cols-2">
+									<div class="space-y-2">
+										<label class="block text-sm font-medium text-gray-700">{m.full_name()}
+											<input
+												type="text"
+												bind:value={addressFormData.fullName}
+												class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+												required
+											/>
+										</label>
+									</div>
+									<div class="space-y-2">
+										<label class="block text-sm font-medium text-gray-700">{m.street_address()}
+											<input
+												type="text"
+												bind:value={addressFormData.streetLine1}
+												class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+												required
+											/>
+										</label>
+									</div>
+									<div class="space-y-2">
+										<label class="block text-sm font-medium text-gray-700">{m.street_address_2()}
+											<input
+												type="text"
+												bind:value={addressFormData.streetLine2}
+												class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+											/>
+										</label>
+									</div>
+									<div class="space-y-2">
+										<label class="block text-sm font-medium text-gray-700">{m.postal_code()}
+											<input
+												type="text"
+												bind:value={addressFormData.postalCode}
+												class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+												required
+											/>
+										</label>
+									</div>
+									<div class="space-y-2">
+										<label class="block text-sm font-medium text-gray-700">{m.city()}
+											<input
+												type="text"
+												bind:value={addressFormData.city}
+												class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+												required
+											/>
+										</label>
+									</div>
+									<div class="space-y-2">
+										<label class="block text-sm font-medium text-gray-700">{m.country()}
+											<input
+												type="text"
+												bind:value={addressFormData.countryCode}
+												class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+												required
+											/>
+										</label>
+									</div>
+									<div class="space-y-2">
+										<label class="block text-sm font-medium text-gray-700">{m.phone()}
+											<input
+												type="tel"
+												bind:value={addressFormData.phoneNumber}
+												class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+											/>
+										</label>
+									</div>
+									<div class="space-y-2 flex items-center gap-3">
+										<label class="flex items-center gap-2 text-sm font-medium ">
+											<input
+												type="checkbox"
+												bind:checked={addressFormData.defaultShippingAddress}
+												class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+											/>
+											{m.default_shipping_address()}
+										</label>
+										<label class="flex items-center gap-2 text-sm font-medium ">
+											<input
+												type="checkbox"
+												bind:checked={addressFormData.defaultBillingAddress}
+												class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+											/>
+											{m.default_billing_address()}
+										</label>
+									</div>
+								</div>
+								</div>
+							</div>
 							<!-- Repeat for other fields -->
 						</div>
 					</div>
@@ -279,9 +372,9 @@
 					</div>
 				</form>
 			{:else if user}
-				<div class="grid gap-8 md:grid-cols-2">
+				<div class="grid gap-8 md:grid-cols-2 ">
 					<!-- Personal Info Card -->
-					<div class="rounded-lg bg-gray-50 p-4">
+					<div class="rounded-lg bg-gray-50 dark:bg-slate-300 p-4">
 						<div class="space-y-4">
 							<div class="flex items-center gap-3">
 								<svg
@@ -301,7 +394,7 @@
 								<h2 class="text-lg font-semibold text-gray-900">{m.personal_information()}</h2>
 							</div>
 							<dl class="space-y-3">
-								<div class="flex items-center gap-2">
+								<div class="flex items-center gap-2 ">
 									<dt class="w-24 shrink-0 text-sm font-medium text-gray-600">{m.name()}:</dt>
 									<dd class="text-gray-900">{user.firstName} {user.lastName}</dd>
 								</div>
@@ -316,7 +409,7 @@
 
 					<!-- Address Card -->
 					{#if user.addresses?.length > 0}
-					<div class="rounded-lg bg-gray-50 p-4">
+					<div class="rounded-lg dark:bg-slate-300 p-4">
 						<div class="space-y-4">
 							<div class="flex items-center gap-3">
 								<svg
@@ -353,7 +446,7 @@
 						</div>
 					</div>
 				{:else}
-					<div class="rounded-lg bg-gray-50 p-4">
+					<div class="rounded-lg bg-gray-50 dark:bg-slate-300 p-4">
 						<div class="space-y-4">
 							<div class="flex items-center gap-3">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -459,11 +552,7 @@
 						</div>
 					</div>
 				{/if}
-
-
-
 					<!-- END Address Card -->
-				
 				
 				
 				</div>
@@ -472,7 +561,7 @@
 
 		<!-- Orders Section -->
 		{#if user?.orders}
-			<div class="rounded-xl bg-white p-6 shadow-lg ring-1 ring-black/5 lg:p-8">
+			<div class="rounded-xl bg-white dark:bg-slate-700 p-6 shadow-lg ring-1 ring-black/5 lg:p-8">
 				<h2 class="mb-6 text-2xl font-bold text-gray-900">
 					{m.order_history({ count: user.orders.totalItems })}
 				</h2>
@@ -480,7 +569,7 @@
 				<div class="space-y-4">
 					{#each user.orders.items as order}
 						<div
-							class="rounded-lg border border-gray-200 bg-white p-4 transition-all hover:border-blue-200 hover:shadow-md"
+							class="rounded-lg border border-gray-200 bg-white dark:bg-slate-400 p-4 transition-all hover:border-blue-200 hover:shadow-md"
 						>
 							<div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
 								<div class="space-y-1">

@@ -55,6 +55,86 @@ export const learn_more = () => `Learn More`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const email_required = () => `Email is required`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_email = () => `Invalid email address`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const first_name_required = () => `First name is required`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const last_name_required = () => `Last name is required`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const phone_required = () => `Phone number is required`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_phone = () => `Invalid phone number`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const street_line_1_required = () => `Street address is required`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const city_required = () => `City is required`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const postal_code_required = () => `Postal code is required`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_postal_code = () => `Invalid postal code`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const hero_title = () => `The Best Stuff.`
 
 
@@ -2031,7 +2111,7 @@ export const name_z_a = () => `Name: Z-A`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const email_required = () => `Email is required`
+export const default_shipping_address = () => `Default Shipping`
 
 
 /**
@@ -2039,68 +2119,4 @@ export const email_required = () => `Email is required`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const invalid_email = () => `Invalid email address`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const first_name_required = () => `First name is required`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const last_name_required = () => `Last name is required`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const phone_required = () => `Phone number is required`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const invalid_phone = () => `Invalid phone number`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const street_line_1_required = () => `Street address is required`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const city_required = () => `City is required`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const postal_code_required = () => `Postal code is required`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const invalid_postal_code = () => `Invalid postal code`
+export const default_billing_address = () => `Default Billing`

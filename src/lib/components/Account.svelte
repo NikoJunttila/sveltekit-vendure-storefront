@@ -50,7 +50,7 @@
 		</button>
 	</a>
 {/if}
-<div {...$menu} use:menu class="menu">
+<div {...$menu} use:menu class="menu bg-white dark:bg-stone-400">
 	<div {...$item} use:item class="item">
 		<a href="/user">{m.your_profile()}</a>
 	</div>
@@ -61,12 +61,12 @@
 
 <style lang="postcss">
 	.menu {
-		@apply z-10 flex flex-col shadow-lg;
-		@apply rounded-lg bg-white p-1 shadow-neutral-900/30;
+		@apply z-50 flex flex-col shadow-lg;
+		@apply rounded-lg   p-1 shadow-neutral-900/30;
 		@apply ring-0 !important;
 	}
 	.item {
-		@apply relative h-6 min-h-[24px] select-none rounded-md px-8 py-6;
+		@apply relative h-6 min-h-[24px] select-none rounded-md px-8 py-6 ;
 		@apply z-20 text-gray-900 outline-none;
 		@apply data-[highlighted]:bg-stone-200 data-[highlighted]:text-purple-900;
 		@apply data-[disabled]:text-neutral-300;

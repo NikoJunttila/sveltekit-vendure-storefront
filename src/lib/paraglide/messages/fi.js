@@ -55,6 +55,86 @@ export const learn_more = () => `Lue lisää`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const email_required = () => `Sähköposti vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_email = () => `Virheellinen sähköpostiosoite`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const first_name_required = () => `Etunimi vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const last_name_required = () => `Sukunimi vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const phone_required = () => `Puhelinnumero vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_phone = () => `Virheellinen puhelinnumero`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const street_line_1_required = () => `Katuosoite vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const city_required = () => `Kaupunki vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const postal_code_required = () => `Postinumero vaaditaan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const invalid_postal_code = () => `Virheellinen postinumero`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const hero_title = () => `Parasta tavaraa.`
 
 
@@ -2031,7 +2111,7 @@ export const name_z_a = () => `Nimi: Z-A`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const email_required = () => `Sähköposti vaaditaan`
+export const default_shipping_address = () => `Oletus toimitus`
 
 
 /**
@@ -2039,68 +2119,4 @@ export const email_required = () => `Sähköposti vaaditaan`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const invalid_email = () => `Virheellinen sähköpostiosoite`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const first_name_required = () => `Etunimi vaaditaan`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const last_name_required = () => `Sukunimi vaaditaan`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const phone_required = () => `Puhelinnumero vaaditaan`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const invalid_phone = () => `Virheellinen puhelinnumero`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const street_line_1_required = () => `Katuosoite vaaditaan`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const city_required = () => `Kaupunki vaaditaan`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const postal_code_required = () => `Postinumero vaaditaan`
-
-
-/**
- * 
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const invalid_postal_code = () => `Virheellinen postinumero`
+export const default_billing_address = () => `Oletus laskutus`
