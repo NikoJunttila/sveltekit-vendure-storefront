@@ -9,8 +9,7 @@
 	import LanguageSwitch from './LanguageSwitch.svelte';
 	import { Heart, Menu } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
-	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
+
 	let { collections = [] } = $props();
 	
 	let isDropdownOpen = $state(false);
@@ -28,6 +27,9 @@
 		isDropdownOpen = false;
 	}
 
+/* 	ANIMATED NAV BAR. HIDES ON SCROLL DOWN.
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 	let y = $state(0);
 	let maxScrollY = $state(0);
 	let prevY = $state(0);
@@ -38,7 +40,7 @@
 		y < TOP_THRESHOLD || (maxScrollY - y) >= SCROLL_UP_THRESHOLD
 	);
 
-	onMount(() => {
+ 	onMount(() => {
 		if (browser) {
 			const handleScroll = () => {
 				const newY = window.scrollY;
@@ -60,13 +62,15 @@
 			
 			return () => window.removeEventListener('scroll', handleScroll);
 		}
-	});
+			class:visible={navbarVisible} TO NAVBAR ID
+	}); */
+	
 </script>
 
-<nav class:visible={navbarVisible} class={"navbar top-0 sticky bg-slate-100 dark:bg-slate-800 z-40 p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800"}>
+<nav id="navbar" class={"navbar top-0 sticky bg-slate-100 dark:bg-slate-800 z-40 p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800"}>
 	<div class="mt-3 flex flex-grow items-center justify-between">
 		<div class="flex flex-none items-center">
-			<a class="inline-block text-3xl font-bold" href="/">
+			<a class="inline-block text-3xl font-bold hover:scale-105 duration-300" href="/">
 				<img class="block h-8 w-auto md:hidden" src="/logo.png" alt="Company Name" />
 				<img class="hidden h-14 w-auto md:block" src="/logo.png" alt="Company Name" />
 			</a>
@@ -176,12 +180,12 @@
 	</div>
 </nav>
 <style>
-	.navbar {
+	/*.navbar {
 		transition: transform 0.3s ease;
 		transform: translateY(-100%);
 	}
 	
 	.visible {
 		transform: translateY(0);
-	}
+	}*/
 </style>

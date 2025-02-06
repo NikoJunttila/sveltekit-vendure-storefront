@@ -135,6 +135,22 @@ export const invalid_postal_code = () => `Invalid postal code`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const default_shipping_address = () => `Default Shipping`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const default_billing_address = () => `Default Billing`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const hero_title = () => `The Best Stuff.`
 
 
@@ -1563,11 +1579,11 @@ export const changesContent = () => `We may update this policy periodically. Sig
 
 
 /**
- * 
+ * @param {{ email: NonNullable<unknown> }} params
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const contactUs = () => `If you have any questions about this Privacy Policy, please contact us at privacy@example.com.`
+export const contactUs = (params) => `If you have any questions about this Privacy Policy, please contact us at ${params.email}.`
 
 
 /**
@@ -1667,11 +1683,11 @@ export const liabilityContent = () => `We are not responsible for delays caused 
 
 
 /**
- * 
+ * @param {{ email: NonNullable<unknown> }} params
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const orderContact = () => `For order-related inquiries, contact us at orders@example.com.`
+export const orderContact = (params) => `For order-related inquiries, contact us at ${params.email}.`
 
 
 /**
@@ -2107,11 +2123,19 @@ export const name_z_a = () => `Name: Z-A`
 
 
 /**
- * 
+ * @param {{ name: NonNullable<unknown> }} params
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const default_shipping_address = () => `Default Shipping`
+export const aboutTitle = (params) => `About Us - ${params.name}`
+
+
+/**
+ * @param {{ name: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const aboutDescription = (params) => `Discover our story, values, and the passionate team behind ${params.name}`
 
 
 /**
@@ -2119,4 +2143,124 @@ export const default_shipping_address = () => `Default Shipping`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const default_billing_address = () => `Default Billing`
+export const heroTitle = () => `Crafting Your Experience`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const heroSubtitle = () => `For over a decade, we've been committed to bringing you the finest products with exceptional service`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourStory = () => `Our Story`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourValues = () => `Our Values`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourTeam = () => `Our Team`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyTitle = () => `From Garage to Global`
+
+
+/**
+ * @param {{ founder: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent1 = (params) => `What started as a small family workshop in 2010 has blossomed into an international e-commerce destination. Our founder, ${params.founder}, began crafting handmade jewelry at her kitchen table, driven by a passion for sustainable fashion.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent2 = () => `Today, we partner with over 200 artisans worldwide, bringing you unique, ethically-made products while maintaining that personal touch that started it all.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueSustainability = () => `Sustainability`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueQuality = () => `Quality`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueCommunity = () => `Community`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription = () => `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCustomers = () => `Happy Customers`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsArtisans = () => `Artisan Partners`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCountries = () => `Countries Served`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription2 = () => `Lorem   ipsum 2 dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`

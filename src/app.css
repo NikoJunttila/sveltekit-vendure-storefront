@@ -5,6 +5,9 @@
 :root {
 	--primary-color: rgba(168, 85, 247, 1);
 }
+.bg-gradient{
+	@apply bg-gradient-to-b from-gray-50 to-primary-400 dark:from-gray-800 dark:to-primary-900
+}
 
 /* Override default focus colors for tailwindcss-forms https://github.com/tailwindlabs/tailwindcss-forms */
 [type='text']:focus,

@@ -63,10 +63,12 @@
 	{#if naked}
 		{@render children?.()}
 	{:else}
-		<Theme />
-		<ToastComponent  />
-		<NavBar {collections} />
+	<Theme />
+	<ToastComponent  />
+	<NavBar {collections} />
+	<div class="bg-gradient">
 		<div class="relative">{@render children?.()}</div>
 		<Footer />
+	</div>
 	{/if}
 </ParaglideJS>

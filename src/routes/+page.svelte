@@ -56,7 +56,7 @@ config={{
 
 <!-- Collection section. -->
 <section class="p-4 my-5 md:my-16">
-	<h2 class="text-xl mb-8 text-center">{m.collections_description()}</h2>
+	<h2 class="text-2xl mb-8 text-center">{m.collections_description()}</h2>
 	<div class="flex flex-wrap gap-5 items-center justify-center">
 	  {#each collections.slice(0, 7) as col}
 		<a 
@@ -142,6 +142,8 @@ config={{
         {/each}
     </div>
 </section>
+
+
 <!--ABOUT US -->
 <section class="relative max-w-screen-xl mx-auto rounded-lg p-4 my-8 md:my-16 overflow-hidden">
   <!-- Animated background elements -->
@@ -155,10 +157,10 @@ config={{
   <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-300/20 rounded-full blur-2xl animate-float-delayed"></div>
 
   <!-- Content container -->
-  <div class=" rounded-lg p-6 md:p-12 border-t-4 border-x-2 border-orange-400 relative backdrop-blur-sm  bg-grid">
+  <div class=" rounded-lg p-6 md:p-12 border-t-4  border-x-2 border-orange-400 relative backdrop-blur-sm  bg-grid">
     <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-6">{m.about_us_title()}</h2>
-      <p class="text-gray-600 dark:text-gray-100 text-2xl font-semibold  mb-8 leading-relaxed">
+      <h2 class="text-3xl font-extrabold mb-6 ">{m.about_us_title()}</h2>
+      <p class=" text-2xl font-extrabold  mb-8 leading-relaxed">
         {m.about_us_description()}
       </p>
       <a 

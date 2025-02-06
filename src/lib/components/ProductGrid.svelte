@@ -194,10 +194,10 @@
 							{/if}
 						</p>
 					</div>
-					<div class="mt-auto flex items-center justify-between gap-2">
+					<div class="mt-auto grid w-full">
 						{#if p.inStock}
 						<button
-						class="flex min-w-[120px] items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95"
+						class="w-full flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95"
 						onclick={() => addToCart(p.productVariantId)}
 						aria-label="{m.add_to_cart()}"
 						>
@@ -208,7 +208,7 @@
 					</button>
 					{:else}
 					<button
-						class="flex min-w-[120px] items-center justify-center gap-2 rounded-md bg-gray-700 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95"
+						class="flex w-full items-center justify-center gap-2 rounded-md bg-gray-700 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95"
 						aria-label="{m.insufficient_stock()}"
 						disabled
 						>
@@ -218,20 +218,21 @@
 						{m.add_to_cart()}
 					</button>
 					{/if}
-						<button
-							onclick={() => toggleFavorite(p.slug)}
-							class="rounded-full p-2 transition-all hover:bg-gray-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:scale-95"
-							aria-label="{favorites[p.slug] ? 'Remove from favorites' : 'Add to favorites'}"
-						>
-							<span class="text-2xl">
-								{#if favorites[p.slug]}
-									<Heart fill="red" class="scale-125 transition-transform duration-200 hover:scale-150" />
-								{:else}
-									<Heart class="transition-transform duration-200 hover:scale-125" />
-								{/if}
-							</span>
-						</button>
+
 					</div>
+					<button
+					onclick={() => toggleFavorite(p.slug)}
+					class="absolute top-1 right-1 rounded-full p-3 transition-all hover:bg-gray-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:scale-95"
+					aria-label="{favorites[p.slug] ? 'Remove from favorites' : 'Add to favorites'}"
+				>
+					<span class="text-3xl">
+						{#if favorites[p.slug]}
+							<Heart fill="red" class="scale-125 transition-transform duration-200 hover:scale-150" />
+						{:else}
+							<Heart class="transition-transform duration-200 hover:scale-125" />
+						{/if}
+					</span>
+				</button>
 				</div>
 			</div>
 		{:else}

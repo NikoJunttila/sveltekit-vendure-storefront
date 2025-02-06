@@ -140,7 +140,7 @@
 			</h3>
 			<p class="mb-6 text-lg">{m.login_text()}</p>
 
-			<div class="space-y-2 dark:text-black">
+			<div class="space-y-2 ">
 				<label class="block text-sm font-medium" for="email">
 					{m.email()}
 				</label>

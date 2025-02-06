@@ -135,6 +135,22 @@ export const invalid_postal_code = () => `Virheellinen postinumero`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
+export const default_shipping_address = () => `Oletus toimitus`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const default_billing_address = () => `Oletus laskutus`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
 export const hero_title = () => `Parasta tavaraa.`
 
 
@@ -1563,11 +1579,11 @@ export const changesContent = () => `Päivitämme tätä käytäntöä ajoittain
 
 
 /**
- * 
+ * @param {{ email: NonNullable<unknown> }} params
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const contactUs = () => `Jos sinulla on kysyttävää tietosuojakäytännöstä, ota yhteyttä sähköpostitse osoitteeseen privacy@example.com.`
+export const contactUs = (params) => `Jos sinulla on kysyttävää tietosuojakäytännöstä, ota yhteyttä sähköpostitse osoitteeseen ${params.email}.`
 
 
 /**
@@ -1667,11 +1683,11 @@ export const liabilityContent = () => `Emme vastaa kuljetusyhtiön tai tullin ai
 
 
 /**
- * 
+ * @param {{ email: NonNullable<unknown> }} params
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const orderContact = () => `Tilaukseen liittyvissä kysymyksissä ota yhteyttä sähköpostitse osoitteeseen orders@example.com.`
+export const orderContact = (params) => `Tilaukseen liittyvissä kysymyksissä ota yhteyttä sähköpostitse osoitteeseen ${params.email}.`
 
 
 /**
@@ -1791,7 +1807,7 @@ export const emailLabel = () => `Sähköpostiosoitteesi`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const emailPlaceholder = () => `matti@example.com`
+export const emailPlaceholder = () => `matti@esimerkki.com`
 
 
 /**
@@ -2107,11 +2123,19 @@ export const name_z_a = () => `Nimi: Z-A`
 
 
 /**
- * 
+ * @param {{ name: NonNullable<unknown> }} params
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const default_shipping_address = () => `Oletus toimitus`
+export const aboutTitle = (params) => `Tietoa meistä - ${params.name}`
+
+
+/**
+ * @param {{ name: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const aboutDescription = (params) => `Tutustu tarinamme, arvoihimme ja intohimoiseen tiimiimme ${params.name} takana`
 
 
 /**
@@ -2119,4 +2143,124 @@ export const default_shipping_address = () => `Oletus toimitus`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const default_billing_address = () => `Oletus laskutus`
+export const heroTitle = () => `Luomme kokemuksesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const heroSubtitle = () => `Olemme sitoutuneet tuomaan sinulle parhaat tuotteet ja poikkeuksellista palvelua jo vuosikymmenen ajan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourStory = () => `Tarinamme`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourValues = () => `Arvomme`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourTeam = () => `Tiimimme`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyTitle = () => `Autotallista maailmalle`
+
+
+/**
+ * @param {{ founder: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent1 = (params) => `Se mikä alkoi pienenä perhepajana vuonna 2010, on kukoistanut kansainväliseksi verkkokaupaksi. Perustajamme ${params.founder} alkoi valmistaa käsintehtyä koruja keittiön pöydällään, intohimonaan kestävä muoti.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent2 = () => `Tänään teemme yhteistyötä yli 200 käsityöläisen kanssa ympäri maailmaa, tuoden sinulle ainutlaatuisia, eettisesti valmistettuja tuotteita säilyttäen sen henkilökohtaisen kosketuksen, josta kaikki alkoi.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueSustainability = () => `Kestävyys`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueQuality = () => `Laatu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueCommunity = () => `Yhteisö`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription = () => `Lorem suomi dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCustomers = () => `Tyytyväistä asiakasta`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsArtisans = () => `Käsityöläiskumppania`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCountries = () => `Palveltua maata`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription2 = () => `Lorem suomi2 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`

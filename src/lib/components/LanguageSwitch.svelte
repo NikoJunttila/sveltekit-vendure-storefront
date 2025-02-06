@@ -32,7 +32,7 @@
 	</button>
 </div>
 
-<style>
+<style lang="postcss">
 	.active-lang {
 		@apply z-10 text-white bg-primary-500;
 	}

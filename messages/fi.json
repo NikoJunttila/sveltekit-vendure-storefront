@@ -3,6 +3,31 @@
 	"hello_world": "Hello, {name} from fi!",
 	"hero_title": "Parasta tavaraa.",
 	"hero_description": "Myymme parasta tavaraa kaikkialla. Kaikki rakastavat sitä. Parhaat kamerat. Parhaat kasvit. Parhaat sohvat. Emme oikeastaan lähetä mitään. Tämä on esimerkkisivusto. Tyytyväisyys taattu.",
+	
+	"aboutTitle": "Tietoa meistä - {name}",
+	"aboutDescription": "Tutustu tarinamme, arvoihimme ja intohimoiseen tiimiimme {name} takana",
+	"heroTitle": "Luomme kokemuksesi",
+	"heroSubtitle": "Olemme sitoutuneet tuomaan sinulle parhaat tuotteet ja poikkeuksellista palvelua jo vuosikymmenen ajan",
+	
+	"ourStory": "Tarinamme",
+	"ourValues": "Arvomme",
+	"ourTeam": "Tiimimme",
+	
+	"storyTitle": "Autotallista maailmalle",
+	"storyContent1": "Se mikä alkoi pienenä perhepajana vuonna 2010, on kukoistanut kansainväliseksi verkkokaupaksi. Perustajamme {founder} alkoi valmistaa käsintehtyä koruja keittiön pöydällään, intohimonaan kestävä muoti.",
+	"storyContent2": "Tänään teemme yhteistyötä yli 200 käsityöläisen kanssa ympäri maailmaa, tuoden sinulle ainutlaatuisia, eettisesti valmistettuja tuotteita säilyttäen sen henkilökohtaisen kosketuksen, josta kaikki alkoi.",
+	
+	"valueSustainability": "Kestävyys",
+	"valueQuality": "Laatu",
+	"valueCommunity": "Yhteisö",
+	"valueDescription": "Lorem suomi dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
+	"valueDescription2": "Lorem suomi2 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
+
+	
+	"statsCustomers": "Tyytyväistä asiakasta",
+	"statsArtisans": "Käsityöläiskumppania",
+	"statsCountries": "Palveltua maata",
+	
 	"shop_now": "Osta nyt",
 	"no_products_found": "Tuotteita ei löytynyt",
 	"products_heading": "Tuotteet",
@@ -192,7 +217,7 @@
 	"userRightsContent": "Sinulla on oikeus tarkastaa, korjata ja poistaa henkilötietojasi. Ota yhteyttä käyttääksesi näitä oikeuksia.",
 	"changesHeading": "5. Käytännön muutokset",
 	"changesContent": "Päivitämme tätä käytäntöä ajoittain. Merkittävät muutokset ilmoitetaan verkkosivustollamme tai sähköpostitse.",
-	"contactUs": "Jos sinulla on kysyttävää tietosuojakäytännöstä, ota yhteyttä sähköpostitse osoitteeseen privacy@example.com.",
+	"contactUs": "Jos sinulla on kysyttävää tietosuojakäytännöstä, ota yhteyttä sähköpostitse osoitteeseen {email}.",
 	"orderTitle": "Tilaus- ja toimitusehdot",
 	"orderIntroduction": "Nämä ehdot kuvaavat tilausprosessiamme, toimitusmenettelyitämme ja palautuskäytäntöjämme. Lue huolellisesti ennen ostosta.",
 	"orderProcessHeading": "1. Tilausprosessi",
@@ -205,7 +230,7 @@
 	"returnsContent": "Avattomia tuotteita voidaan palauttaa 14 päivän kuluessa toimituksesta. Ota yhteyttä palautusluvan saamiseksi. Digitaalisia tuotteita ei palauteta.",
 	"liabilityHeading": "5. Vastuu",
 	"liabilityContent": "Emme vastaa kuljetusyhtiön tai tullin aiheuttamista viivästyksistä. Vaurioituneet tuotteet on ilmoitettava 48 tunnin kuluessa toimituksesta.",
-	"orderContact": "Tilaukseen liittyvissä kysymyksissä ota yhteyttä sähköpostitse osoitteeseen orders@example.com.",
+	"orderContact": "Tilaukseen liittyvissä kysymyksissä ota yhteyttä sähköpostitse osoitteeseen {email}.",
 	"contactTitle": "Yhteystiedot",
 	"contactIntroduction": "Ota meihin yhteyttä alla olevien yhteystietojen kautta. Autamme mielellämme!",
 	"contactDetails": "Yhteystiedot",
@@ -220,7 +245,7 @@
 	"nameLabel": "Nimesi",
 	"namePlaceholder": "Matti Meikäläinen",
 	"emailLabel": "Sähköpostiosoitteesi",
-	"emailPlaceholder": "matti@example.com",
+	"emailPlaceholder": "matti@esimerkki.com",
 	"messageLabel": "Viesti",
 	"messagePlaceholder": "Kirjoita viestisi tähän...",
 	"submitButton": "Lähetä viesti",
