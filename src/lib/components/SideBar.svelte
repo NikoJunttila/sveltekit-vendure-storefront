@@ -70,7 +70,7 @@
 		<div
 			{...$content}
 			use:content
-			class="fixed left-0 top-0 z-50 h-screen w-[80%] overflow-auto bg-primary-700 p-[20px] text-white shadow-lg focus:outline-none sm:w-[70%]"
+			class="fixed left-0 top-0 z-50 h-screen w-[80%] overflow-auto bg-primary-400 dark:bg-primary-800 p-[20px]  shadow-lg focus:outline-none sm:w-[70%]"
 			transition:fly={{ x: '-100%', duration: 300, opacity: 1 }}
 		>
 			<div class="items-middle mb-6 flex">
@@ -87,7 +87,7 @@
 				<!-- Products section -->
 				<div class="">
 					<button
-						transition:fade={{ duration: 300, delay: 200 }}
+						transition:fade={{ duration: 300 }}
 						onclick={() => (showCollections = !showCollections)}
 						class="group mr-2 px-3 py-3 w-full font-medium transition-all duration-200 ease-in-out flex"
 						aria-label={m.menu_toggle_collections()}
@@ -95,7 +95,7 @@
 					{m.menu_products()}
 						<span class="ml-auto relative">
 						{#if showCollections}
-						<div class="absolute right-1 top-1" in:fly={{ y:-50, duration: 200, delay:200}}>
+						<div class="absolute right-1 top-1" in:fly={{ y:-50, duration: 200}}>
 							<Minus />
 						</div>
 						{:else}
@@ -130,7 +130,7 @@
 				</div>
 
 				<!-- Information about us section -->
-				<div transition:fade={{ duration: 300, delay: 400 }}>
+				<div transition:fade={{ duration: 300, delay: 200 }}>
 					<a
 						href="/info/about"
 						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
@@ -145,7 +145,7 @@
 				</div>
 
 				<!-- Guide section -->
-				<div transition:fade={{ duration: 300, delay: 500 }}>
+				<div transition:fade={{ duration: 300, delay: 300 }}>
 					<a
 						href="/info/guide"
 						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"
@@ -160,7 +160,7 @@
 				</div>
 
 				<!-- Contact us section -->
-				<div transition:fade={{ duration: 300, delay: 600 }}>
+				<div transition:fade={{ duration: 300, delay: 400 }}>
 					<a
 						href="/info/contact"
 						class="group mr-2 px-3 py-3 font-medium transition-all duration-200 ease-in-out"

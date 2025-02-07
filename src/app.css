@@ -5,6 +5,10 @@
 :root {
 	--primary-color: rgba(168, 85, 247, 1);
 }
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 400ms;
+}
 .bg-gradient{
 	@apply bg-gradient-to-b from-gray-50 to-primary-400 dark:from-gray-800 dark:to-primary-900
 }

@@ -122,6 +122,402 @@ export const learn_more = (params = {}, options = {}) => {
  * 
  * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
  * 
+ * @param {{ name: NonNullable<unknown> }} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const aboutTitle = (params , options = {}) => {
+	return {
+		en: en.aboutTitle,
+		fi: fi.aboutTitle
+	}[options.languageTag ?? languageTag()](params)
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{ name: NonNullable<unknown> }} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const aboutDescription = (params , options = {}) => {
+	return {
+		en: en.aboutDescription,
+		fi: fi.aboutDescription
+	}[options.languageTag ?? languageTag()](params)
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const heroTitle = (params = {}, options = {}) => {
+	return {
+		en: en.heroTitle,
+		fi: fi.heroTitle
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const heroSubtitle = (params = {}, options = {}) => {
+	return {
+		en: en.heroSubtitle,
+		fi: fi.heroSubtitle
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourStory = (params = {}, options = {}) => {
+	return {
+		en: en.ourStory,
+		fi: fi.ourStory
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourValues = (params = {}, options = {}) => {
+	return {
+		en: en.ourValues,
+		fi: fi.ourValues
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourTeam = (params = {}, options = {}) => {
+	return {
+		en: en.ourTeam,
+		fi: fi.ourTeam
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyTitle = (params = {}, options = {}) => {
+	return {
+		en: en.storyTitle,
+		fi: fi.storyTitle
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{ founder: NonNullable<unknown> }} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent1 = (params , options = {}) => {
+	return {
+		en: en.storyContent1,
+		fi: fi.storyContent1
+	}[options.languageTag ?? languageTag()](params)
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent2 = (params = {}, options = {}) => {
+	return {
+		en: en.storyContent2,
+		fi: fi.storyContent2
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueSustainability = (params = {}, options = {}) => {
+	return {
+		en: en.valueSustainability,
+		fi: fi.valueSustainability
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueQuality = (params = {}, options = {}) => {
+	return {
+		en: en.valueQuality,
+		fi: fi.valueQuality
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueCommunity = (params = {}, options = {}) => {
+	return {
+		en: en.valueCommunity,
+		fi: fi.valueCommunity
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription = (params = {}, options = {}) => {
+	return {
+		en: en.valueDescription,
+		fi: fi.valueDescription
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription2 = (params = {}, options = {}) => {
+	return {
+		en: en.valueDescription2,
+		fi: fi.valueDescription2
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCustomers = (params = {}, options = {}) => {
+	return {
+		en: en.statsCustomers,
+		fi: fi.statsCustomers
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsArtisans = (params = {}, options = {}) => {
+	return {
+		en: en.statsArtisans,
+		fi: fi.statsArtisans
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCountries = (params = {}, options = {}) => {
+	return {
+		en: en.statsCountries,
+		fi: fi.statsCountries
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
  * @param {{}} params
  * @param {{ languageTag?: "en" | "fi" }} options
  * @returns {string}
@@ -5820,59 +6216,15 @@ export const name_z_a = (params = {}, options = {}) => {
  * 
  * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
  * 
- * @param {{ name: NonNullable<unknown> }} params
- * @param {{ languageTag?: "en" | "fi" }} options
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const aboutTitle = (params , options = {}) => {
-	return {
-		en: en.aboutTitle,
-		fi: fi.aboutTitle
-	}[options.languageTag ?? languageTag()](params)
-}
-
-
-
-/**
- * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
- *
- * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
- *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
- * 
- * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
- * 
- * @param {{ name: NonNullable<unknown> }} params
- * @param {{ languageTag?: "en" | "fi" }} options
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const aboutDescription = (params , options = {}) => {
-	return {
-		en: en.aboutDescription,
-		fi: fi.aboutDescription
-	}[options.languageTag ?? languageTag()](params)
-}
-
-
-
-/**
- * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
- *
- * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
- *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
- * 
- * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
- * 
  * @param {{}} params
  * @param {{ languageTag?: "en" | "fi" }} options
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const heroTitle = (params = {}, options = {}) => {
+export const info_title = (params = {}, options = {}) => {
 	return {
-		en: en.heroTitle,
-		fi: fi.heroTitle
+		en: en.info_title,
+		fi: fi.info_title
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -5891,10 +6243,10 @@ export const heroTitle = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const heroSubtitle = (params = {}, options = {}) => {
+export const info_welcome = (params = {}, options = {}) => {
 	return {
-		en: en.heroSubtitle,
-		fi: fi.heroSubtitle
+		en: en.info_welcome,
+		fi: fi.info_welcome
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -5913,10 +6265,10 @@ export const heroSubtitle = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourStory = (params = {}, options = {}) => {
+export const info_our_mission_title = (params = {}, options = {}) => {
 	return {
-		en: en.ourStory,
-		fi: fi.ourStory
+		en: en.info_our_mission_title,
+		fi: fi.info_our_mission_title
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -5935,10 +6287,10 @@ export const ourStory = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourValues = (params = {}, options = {}) => {
+export const info_our_mission_description = (params = {}, options = {}) => {
 	return {
-		en: en.ourValues,
-		fi: fi.ourValues
+		en: en.info_our_mission_description,
+		fi: fi.info_our_mission_description
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -5957,10 +6309,10 @@ export const ourValues = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourTeam = (params = {}, options = {}) => {
+export const info_services_title = (params = {}, options = {}) => {
 	return {
-		en: en.ourTeam,
-		fi: fi.ourTeam
+		en: en.info_services_title,
+		fi: fi.info_services_title
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -5979,54 +6331,10 @@ export const ourTeam = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const storyTitle = (params = {}, options = {}) => {
+export const info_services_description = (params = {}, options = {}) => {
 	return {
-		en: en.storyTitle,
-		fi: fi.storyTitle
-	}[options.languageTag ?? languageTag()]()
-}
-
-
-
-/**
- * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
- *
- * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
- *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
- * 
- * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
- * 
- * @param {{ founder: NonNullable<unknown> }} params
- * @param {{ languageTag?: "en" | "fi" }} options
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const storyContent1 = (params , options = {}) => {
-	return {
-		en: en.storyContent1,
-		fi: fi.storyContent1
-	}[options.languageTag ?? languageTag()](params)
-}
-
-
-
-/**
- * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
- *
- * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
- *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
- * 
- * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
- * 
- * @param {{}} params
- * @param {{ languageTag?: "en" | "fi" }} options
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const storyContent2 = (params = {}, options = {}) => {
-	return {
-		en: en.storyContent2,
-		fi: fi.storyContent2
+		en: en.info_services_description,
+		fi: fi.info_services_description
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -6045,10 +6353,10 @@ export const storyContent2 = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueSustainability = (params = {}, options = {}) => {
+export const title = (params = {}, options = {}) => {
 	return {
-		en: en.valueSustainability,
-		fi: fi.valueSustainability
+		en: en.title,
+		fi: fi.title
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -6067,10 +6375,10 @@ export const valueSustainability = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueQuality = (params = {}, options = {}) => {
+export const newPassword = (params = {}, options = {}) => {
 	return {
-		en: en.valueQuality,
-		fi: fi.valueQuality
+		en: en.newPassword,
+		fi: fi.newPassword
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -6089,10 +6397,10 @@ export const valueQuality = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueCommunity = (params = {}, options = {}) => {
+export const confirmPassword = (params = {}, options = {}) => {
 	return {
-		en: en.valueCommunity,
-		fi: fi.valueCommunity
+		en: en.confirmPassword,
+		fi: fi.confirmPassword
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -6111,10 +6419,10 @@ export const valueCommunity = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueDescription = (params = {}, options = {}) => {
+export const passwordRequirements = (params = {}, options = {}) => {
 	return {
-		en: en.valueDescription,
-		fi: fi.valueDescription
+		en: en.passwordRequirements,
+		fi: fi.passwordRequirements
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -6133,10 +6441,10 @@ export const valueDescription = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsCustomers = (params = {}, options = {}) => {
+export const resetButton = (params = {}, options = {}) => {
 	return {
-		en: en.statsCustomers,
-		fi: fi.statsCustomers
+		en: en.resetButton,
+		fi: fi.resetButton
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -6155,10 +6463,10 @@ export const statsCustomers = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsArtisans = (params = {}, options = {}) => {
+export const successMessage = (params = {}, options = {}) => {
 	return {
-		en: en.statsArtisans,
-		fi: fi.statsArtisans
+		en: en.successMessage,
+		fi: fi.successMessage
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -6177,10 +6485,10 @@ export const statsArtisans = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsCountries = (params = {}, options = {}) => {
+export const errorMessages_general = (params = {}, options = {}) => {
 	return {
-		en: en.statsCountries,
-		fi: fi.statsCountries
+		en: en.errorMessages_general,
+		fi: fi.errorMessages_general
 	}[options.languageTag ?? languageTag()]()
 }
 
@@ -6199,10 +6507,54 @@ export const statsCountries = (params = {}, options = {}) => {
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueDescription2 = (params = {}, options = {}) => {
+export const errorMessages_passwordMismatch = (params = {}, options = {}) => {
 	return {
-		en: en.valueDescription2,
-		fi: fi.valueDescription2
+		en: en.errorMessages_passwordMismatch,
+		fi: fi.errorMessages_passwordMismatch
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const errorMessages_passwordTooShort = (params = {}, options = {}) => {
+	return {
+		en: en.errorMessages_passwordTooShort,
+		fi: fi.errorMessages_passwordTooShort
+	}[options.languageTag ?? languageTag()]()
+}
+
+
+
+/**
+ * This message has been compiled by [inlang paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+ *
+ * - Don't edit the message's code. Use [Sherlock (VS Code extension)](https://inlang.com/m/r7kp499g/app-inlang-ideExtension),
+ *   the [web editor](https://inlang.com/m/tdozzpar/app-inlang-finkLocalizationEditor) instead, or edit the translation files manually.
+ * 
+ * - The params are NonNullable<unknown> because the inlang SDK does not provide information on the type of a param (yet).
+ * 
+ * @param {{}} params
+ * @param {{ languageTag?: "en" | "fi" }} options
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const passwordTooShort = (params = {}, options = {}) => {
+	return {
+		en: en.passwordTooShort,
+		fi: fi.passwordTooShort
 	}[options.languageTag ?? languageTag()]()
 }
 

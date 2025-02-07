@@ -29,7 +29,7 @@
 	// Navigation links (if these are internal routes they can remain hardcoded)
 	const resources = [
 		{ url: '/', name: m.footer_blog() },
-		{ url: '/', name: m.footer_guides() },
+		{ url: '/info/guide', name: m.footer_guides() },
 		{ url: '/', name: m.footer_newsletter() }
 	];
 	const company = [
@@ -126,7 +126,7 @@
 								class="group px-3 py-2 font-medium transition-all duration-200 ease-in-out sm:px-0"
 							>
 								<span
-									class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_4px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_4px]"
+									class="bg-gradient-to-r from-lime-800 to-lime-900 dark:from-lime-600 dark:to-lime-600 bg-[length:0%_4px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_4px]"
 								>
 									{res.name}
 								</span>
@@ -146,7 +146,7 @@
 								class="group px-3 py-2 font-medium transition-all duration-200 ease-in-out sm:px-0"
 							>
 								<span
-									class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_4px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_4px]"
+									class="bg-gradient-to-r from-lime-800 to-lime-900 dark:from-lime-600 dark:to-lime-600 bg-[length:0%_4px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_4px]"
 								>
 									{res.name}
 								</span>
@@ -166,7 +166,7 @@
 								class="group px-3 py-2 font-medium transition-all duration-200 ease-in-out sm:px-0"
 							>
 								<span
-									class="bg-gradient-to-r from-lime-600 to-lime-600 bg-[length:0%_4px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_4px]"
+									class="bg-gradient-to-r from-lime-800 to-lime-900 dark:from-lime-600 dark:to-lime-600 bg-[length:0%_4px] bg-left-bottom bg-no-repeat py-2 transition-all duration-500 ease-out group-hover:bg-[length:100%_4px]"
 								>
 									{res.name}
 								</span>

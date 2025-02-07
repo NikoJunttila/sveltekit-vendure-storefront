@@ -5,14 +5,25 @@
 	import { page } from '$app/state';
 	import { browser } from '$app/environment';
 	import { GetActiveOrder, GetCustomer } from '$lib/vendure';
-	import { cartStore, userStore, themeStore, channelStore } from '$lib/stores';
+	import { cartStore, userStore, channelStore } from '$lib/stores';
 	import { i18n } from '$lib/i18n';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Theme from '$src/lib/components/Theme.svelte';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import ToastComponent from '$src/lib/components/Toast.svelte';
-	import { fly } from 'svelte/transition';
+	import { onNavigate } from '$app/navigation';
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 
 	let { data, children } = $props();
 	const collections = data.collections;
@@ -51,7 +62,7 @@
 		if (browser) {
 			cartQuery.resume();
 			userQuery.resume();
-			if(data.channel){
+			if (data.channel) {
 				//@ts-ignore
 				channelStore.set(data.channel);
 			}
@@ -63,12 +74,12 @@
 	{#if naked}
 		{@render children?.()}
 	{:else}
-	<Theme />
-	<ToastComponent  />
-	<NavBar {collections} />
-	<div class="bg-gradient">
-		<div class="relative">{@render children?.()}</div>
-		<Footer />
-	</div>
+		<Theme />
+		<ToastComponent />
+		<NavBar {collections} />
+		<div class="bg-gradient">
+				<div class="relative">{@render children?.()}</div>
+			<Footer />
+		</div>
 	{/if}
 </ParaglideJS>

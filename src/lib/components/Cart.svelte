@@ -63,7 +63,7 @@
 		<X class="h-10 w-10" />
 		{#if count > 0}
 			<span
-				class="absolute right-2 top-3 z-50 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-lime-600 px-2 py-1 text-xs font-bold leading-none text-white"
+				class="absolute right-2 top-3 z-50 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-lime-600 px-2 py-1 text-xs font-bold leading-none "
 			>
 				{count}
 			</span>
@@ -77,7 +77,7 @@
 		{#key count}	
 		<span
 		in:fly={{y:-200}}
-		class="absolute right-2 top-3 z-50 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-lime-600 px-2 py-1 text-xs font-bold leading-none text-white"
+		class="absolute right-2 top-3 z-50 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-lime-600 px-2 py-1 text-xs font-bold leading-none "
 		>
 		{count}
 	</span>
@@ -96,10 +96,10 @@
 		<div
 			{...$content}
 			use:content
-			class="fixed right-0 top-0 z-50 mb-0 h-full w-full overflow-auto bg-gradient-to-br from-primary-700 to-primary-800 p-[25px] pb-0 shadow-xl focus:outline-none sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/2"
+			class="fixed right-0 top-0 z-50 mb-0 h-full w-full overflow-auto bg-gradient-to-br from-primary-400 via-primary-400 to-accent-400 dark:from-primary-800 dark:via-primary-800 dark:to-accent-800 p-[25px] pb-0 shadow-xl focus:outline-none sm:w-4/5 md:w-2/3 lg:w-2/3 xl:w-1/2"
 			transition:fly={{ x: '100%', duration: 300, opacity: 1 }}
 		>
-			<button {...$close} use:close class="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-all hover:bg-white/20">
+			<button {...$close} use:close class="absolute right-4 top-4 rounded-full bg-white/10 p-2  transition-all hover:bg-white/20">
 				<span class="sr-only">{m.shopping_cart()}</span>
 				<X class="h-6 w-6" />
 			</button>
@@ -107,7 +107,7 @@
 				<h2
 					{...$title}
 					use:title
-					class="mb-8 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl"
+					class="mb-8 text-center text-3xl font-bold tracking-tight  sm:text-4xl"
 				>
 					{m.shopping_cart()}
 				</h2>
@@ -148,28 +148,28 @@
 												href={`/product/${line.productVariant?.product?.slug}?variant=${line.productVariant.id}`}
 												class="cursor-pointer"
 											>
-												<h3 class="text-lg font-medium text-white hover:text-lime-300">
+												<h3 class="text-lg font-medium  hover:text-lime-300">
 													{line.productVariant.product.name}
 												</h3>
 												{#each line.productVariant.options as option}
-													<p class="mt-1 text-sm text-gray-300">{option.group.name}: {option.name}</p>
+													<p class="mt-1 text-sm ">{option.group.name}: {option.name}</p>
 												{/each}
 											</a>
 										</div>
 										<div class="mt-4 flex flex-col items-end sm:mt-0">
-											<p class="text-lg font-medium text-white">
+											<p class="text-lg font-medium ">
 												{formatCurrency(line.linePrice, PUBLIC_DEFAULT_CURRENCY)}
 											</p>
-											<p class="mt-1 text-sm text-gray-300">{m.quantity({ count: line.quantity })}</p>
+											<p class="mt-1 text-sm ">{m.quantity({ count: line.quantity })}</p>
 										</div>
 									</div>
 									<div class="mt-6 flex items-center justify-between">
 										<select
 											name="quantity"
-											class="rounded-lg border-none bg-white/10 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20 focus:border-none focus:ring-2 focus:ring-lime-500"
+											class="rounded-lg border-none bg-white/10 px-6 py-2 text-sm font-medium  transition-colors hover:bg-white/20 focus:border-none focus:ring-2 focus:ring-lime-500"
 											onchange={async (e) => adjustOrderLine(line.id, e)}
 										>
-											{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as qty}
+										{#each Array.from({ length: 20 }, (_, i) => i + 1) as qty}
 												<option
 													value={qty}
 													selected={qty === line.quantity}
@@ -183,7 +183,7 @@
 											onclick={async () => {
 												removeOrderLine(line.id);
 											}}
-											class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+											class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium  transition-colors hover:bg-white/10 "
 										>
 											<span>{m.remove()}</span>
 											<svg
@@ -205,38 +205,38 @@
 						</li>
 					{:else}
 						<div class="py-12 text-center">
-							<p class="text-lg text-white/80">{m.cart_empty()}</p>
+							<p class="text-lg ">{m.cart_empty()}</p>
 						</div>
 					{/each}
 				</ul>
 				<section
 					aria-labelledby="summary-heading"
-					class="sticky bottom-0 mt-8 rounded-t-xl border-t border-white/10 bg-gradient-to-b from-primary-800/95 to-primary-800 px-6 py-6 backdrop-blur-lg"
+					class="sticky bottom-0 mt-8 rounded-t-xl border-t text-white dark:text-black border-white/10 bg-gradient-to-b from-primary-800/95 to-primary-800 dark:from-primary-600/95 dark:to-primary-600 px-6 py-6 backdrop-blur-lg"
 				>
 					{#if lines.length > 0}
 						<h2 id="summary-heading" class="sr-only">Order summary</h2>
 						<div>
 							<dl class="space-y-4">
 								<div class="flex items-center justify-between">
-									<dt class="text-lg font-medium text-white">{m.subtotal()}</dt>
-									<dd class="text-lg font-medium text-white">
+									<dt class="text-lg font-medium ">{m.subtotal()}</dt>
+									<dd class="text-lg font-medium ">
 										{formatCurrency(total, PUBLIC_DEFAULT_CURRENCY)}
 									</dd>
 								</div>
 							</dl>
-							<p class="mt-2 text-sm text-gray-300">{m.shipping_taxes_checkout()}</p>
+							<p class="mt-2 text-sm ">{m.shipping_taxes_checkout()}</p>
 						</div>
 						<form action="/checkout" class="mt-6">
 							<button
 								use:close
 								type="submit"
-								class="w-full rounded-lg bg-lime-500 px-5 py-3.5 text-base font-medium text-white shadow-lg transition-all duration-300 hover:bg-lime-600 hover:shadow-lime-500/25 focus:ring-2 focus:ring-lime-500 focus:ring-offset-2"
+								class="w-full rounded-lg bg-lime-500 px-5 py-3.5 text-base font-medium  shadow-lg transition-all duration-300 hover:bg-lime-600 hover:shadow-lime-500/25 focus:ring-2 focus:ring-lime-500 focus:ring-offset-2"
 							>
 								{m.checkout()}
 							</button>
 						</form>
 					{/if}
-					<button {...$close} use:close class="mt-4 w-full text-center font-medium text-white/80 transition-colors hover:text-white">
+					<button {...$close} use:close class="mt-4 w-full text-center font-medium text-white/80 transition-colors ">
 						&larr; {m.continue_shopping()}
 					</button>
 				</section>

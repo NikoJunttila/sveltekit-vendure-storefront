@@ -51,6 +51,150 @@ export const learn_more = () => `Learn More`
 
 
 /**
+ * @param {{ name: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const aboutTitle = (params) => `About Us - ${params.name}`
+
+
+/**
+ * @param {{ name: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const aboutDescription = (params) => `Discover our story, values, and the passionate team behind ${params.name}`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const heroTitle = () => `Crafting Your Experience`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const heroSubtitle = () => `For over a decade, we've been committed to bringing you the finest products with exceptional service`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourStory = () => `Our Story`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourValues = () => `Our Values`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourTeam = () => `Our Team`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyTitle = () => `From Garage to Global`
+
+
+/**
+ * @param {{ founder: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent1 = (params) => `What started as a small family workshop in 2010 has blossomed into an international e-commerce destination. Our founder, ${params.founder}, began crafting handmade jewelry at her kitchen table, driven by a passion for sustainable fashion.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent2 = () => `Today, we partner with over 200 artisans worldwide, bringing you unique, ethically-made products while maintaining that personal touch that started it all.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueSustainability = () => `Sustainability`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueQuality = () => `Quality`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueCommunity = () => `Community`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription = () => `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription2 = () => `Lorem   ipsum 2 dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCustomers = () => `Happy Customers`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsArtisans = () => `Artisan Partners`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCountries = () => `Countries Served`
+
+
+/**
  * 
  * @returns {string}
  */
@@ -2123,19 +2267,11 @@ export const name_z_a = () => `Name: Z-A`
 
 
 /**
- * @param {{ name: NonNullable<unknown> }} params
+ * 
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const aboutTitle = (params) => `About Us - ${params.name}`
-
-
-/**
- * @param {{ name: NonNullable<unknown> }} params
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const aboutDescription = (params) => `Discover our story, values, and the passionate team behind ${params.name}`
+export const info_title = () => `Information Hub`
 
 
 /**
@@ -2143,7 +2279,7 @@ export const aboutDescription = (params) => `Discover our story, values, and the
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const heroTitle = () => `Crafting Your Experience`
+export const info_welcome = () => `Welcome to our information hub. Here you can learn more about our company, explore helpful guides, and get in touch with us.`
 
 
 /**
@@ -2151,7 +2287,7 @@ export const heroTitle = () => `Crafting Your Experience`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const heroSubtitle = () => `For over a decade, we've been committed to bringing you the finest products with exceptional service`
+export const info_our_mission_title = () => `Our Mission`
 
 
 /**
@@ -2159,7 +2295,7 @@ export const heroSubtitle = () => `For over a decade, we've been committed to br
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourStory = () => `Our Story`
+export const info_our_mission_description = () => `We strive to deliver exceptional quality and service in everything we do, ensuring our customers achieve their goals.`
 
 
 /**
@@ -2167,7 +2303,7 @@ export const ourStory = () => `Our Story`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourValues = () => `Our Values`
+export const info_services_title = () => `Our Services`
 
 
 /**
@@ -2175,7 +2311,7 @@ export const ourValues = () => `Our Values`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourTeam = () => `Our Team`
+export const info_services_description = () => `From innovative solutions to comprehensive support, our services are designed to meet your unique needs.`
 
 
 /**
@@ -2183,15 +2319,7 @@ export const ourTeam = () => `Our Team`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const storyTitle = () => `From Garage to Global`
-
-
-/**
- * @param {{ founder: NonNullable<unknown> }} params
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const storyContent1 = (params) => `What started as a small family workshop in 2010 has blossomed into an international e-commerce destination. Our founder, ${params.founder}, began crafting handmade jewelry at her kitchen table, driven by a passion for sustainable fashion.`
+export const title = () => `Reset Your Password`
 
 
 /**
@@ -2199,7 +2327,7 @@ export const storyContent1 = (params) => `What started as a small family worksho
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const storyContent2 = () => `Today, we partner with over 200 artisans worldwide, bringing you unique, ethically-made products while maintaining that personal touch that started it all.`
+export const newPassword = () => `New Password`
 
 
 /**
@@ -2207,7 +2335,7 @@ export const storyContent2 = () => `Today, we partner with over 200 artisans wor
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueSustainability = () => `Sustainability`
+export const confirmPassword = () => `Confirm Password`
 
 
 /**
@@ -2215,7 +2343,7 @@ export const valueSustainability = () => `Sustainability`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueQuality = () => `Quality`
+export const passwordRequirements = () => `Password must be at least 8 characters long and contain numbers and letters`
 
 
 /**
@@ -2223,7 +2351,7 @@ export const valueQuality = () => `Quality`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueCommunity = () => `Community`
+export const resetButton = () => `Reset Password`
 
 
 /**
@@ -2231,7 +2359,7 @@ export const valueCommunity = () => `Community`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueDescription = () => `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+export const successMessage = () => `Password reset successfully`
 
 
 /**
@@ -2239,7 +2367,7 @@ export const valueDescription = () => `Lorem ipsum dolor sit amet, consectetur a
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsCustomers = () => `Happy Customers`
+export const errorMessages_general = () => `Error resetting password`
 
 
 /**
@@ -2247,7 +2375,7 @@ export const statsCustomers = () => `Happy Customers`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsArtisans = () => `Artisan Partners`
+export const errorMessages_passwordMismatch = () => `Passwords do not match`
 
 
 /**
@@ -2255,7 +2383,7 @@ export const statsArtisans = () => `Artisan Partners`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsCountries = () => `Countries Served`
+export const errorMessages_passwordTooShort = () => `Password must be at least 8 characters long`
 
 
 /**
@@ -2263,4 +2391,4 @@ export const statsCountries = () => `Countries Served`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueDescription2 = () => `Lorem   ipsum 2 dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+export const passwordTooShort = () => `Password must be at least 4 characters long`

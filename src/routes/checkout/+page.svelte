@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getContextClient } from '@urql/svelte';
+	import { ArrowLeft } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { type FragmentType, useFragment } from '$lib/gql';
@@ -10,7 +11,8 @@
 		GetOrderShippingMethods,
 		SetOrderShippingMethod,
 		ShippingMethodQuote,
-		TransitionOrderToState
+		TransitionOrderToState,
+		RemoveOrderLine
 	} from '$lib/vendure';
 	import Meta from '$lib/components/Meta.svelte';
 	import { PUBLIC_SITE_NAME } from '$env/static/public';
@@ -42,7 +44,7 @@
 	};
 
 	const getShippingOptions = async () => {
-		let result = await client.query(GetOrderShippingMethods, {}).toPromise();
+		let result = await client.query(GetOrderShippingMethods, {},{requestPolicy:"network-only"}).toPromise();
 		if (result?.data?.eligibleShippingMethods) {
 			shippingOptions = result.data.eligibleShippingMethods;
 			//multivendor select all shipping methods
@@ -66,6 +68,17 @@
 			}
 		}
 	};
+	const removeOrderLine = async (orderLineId: string) => {
+		const result = await client
+			.mutation(
+				RemoveOrderLine,
+				{ orderLineId: orderLineId },
+				{ additionalTypenames: ['ActiveOrder'] }
+			)
+			.toPromise();
+		if (result.error) toast.error(m.unexpected_error());
+		else if (result.data) toast.success(m.item_removed());
+	}
 
 	const setShippingOption = async (id: string[]) => {
 		let result = await client.mutation(SetOrderShippingMethod, { id }).toPromise();
@@ -131,11 +144,6 @@
 			throw error;
 		}
 	};
-
-	async function resetState() {
-		await setOrderState('AddingItems');
-	}
-
 	onMount(async () => {
 		if (browser) {
 			await getShippingOptions();
@@ -173,6 +181,9 @@
 					<a href="/" class="flex-shrink-0">
 						<img src="/logo.png" class="h-10 w-auto sm:h-12" alt={PUBLIC_SITE_NAME} />
 					</a>
+					 <a href="/" class="flex hover:scale-105 duration-200" >
+						 <ArrowLeft /> {m.continue_shopping()}
+					 </a>
 				</div>
 				<div class="flex items-center space-x-2">
 					<div class="rounded-full bg-lime-50 p-2">
@@ -205,7 +216,7 @@
 					<!-- Cart Items and Shipping -->
 					<div class="lg:col-span-7">
 						<div class="space-y-6">
-							<CartItems {order} {adjustOrderLine} />
+							<CartItems {order} {adjustOrderLine} {removeOrderLine} />
 							<!-- TODO make this working -->
 							<DiscountCode />
 						</div>

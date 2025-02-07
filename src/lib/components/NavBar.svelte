@@ -7,8 +7,9 @@
 	import SideBar from '$lib/components/SideBar.svelte';
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 	import LanguageSwitch from './LanguageSwitch.svelte';
-	import { Heart, Menu } from 'lucide-svelte';
+	import { Heart, Menu, Info } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import { PUBLIC_SITE_SHORT_NAME } from '$env/static/public';
 
 	let { collections = [] } = $props();
 	
@@ -67,12 +68,12 @@
 	
 </script>
 
-<nav id="navbar" class={"navbar top-0 sticky bg-slate-100 dark:bg-slate-800 z-40 p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800"}>
+<header id="navbar" class={"navbar top-0 sticky bg-slate-100 dark:bg-slate-800 z-40 p-2 md:px-4 2xl:mx-auto border-b border-solid border-secondary-800"}>
 	<div class="mt-3 flex flex-grow items-center justify-between">
 		<div class="flex flex-none items-center">
 			<a class="inline-block text-3xl font-bold hover:scale-105 duration-300" href="/">
-				<img class="block h-8 w-auto md:hidden" src="/logo.png" alt="Company Name" />
-				<img class="hidden h-14 w-auto md:block" src="/logo.png" alt="Company Name" />
+				<img class="block h-14 w-auto md:hidden" src="/logo.png" alt={PUBLIC_SITE_SHORT_NAME} />
+				<img class="hidden h-14 w-auto md:block" src="/logo.png" alt={PUBLIC_SITE_SHORT_NAME} />
 			</a>
 
 			<div class="mr-auto hidden lg:ml-6 lg:block">
@@ -127,7 +128,7 @@
 			
 							{#if isDropdownOpen}
 								<div
-									class="absolute left-0 z-40 mt-2 w-48 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-black/5 transition-all duration-200 "
+									class="absolute left-0 z-40 mt-2 w-48 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-lg bg-primary-400 dark:bg-primary-800 shadow-xl ring-1 ring-black/5 transition-all duration-200 "
 									onmouseleave={closeDropdown}
 									role="menu"
 									tabindex="-1"
@@ -135,7 +136,7 @@
 									{#each moreCollections as collection}
 										<a
 											href="/collection/{collection.slug}"
-											class="block px-4 py-2.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-lime-50 hover:text-lime-800 focus:bg-lime-50 focus:text-lime-800 focus:outline-none "
+											class="block px-4 py-2.5 text-sm  transition-colors duration-200 hover:bg-lime-50 hover:text-lime-800 focus:bg-lime-50 focus:text-lime-800 focus:outline-none "
 											role="menuitem"
 											tabindex="-1"
 										>
@@ -163,8 +164,16 @@
 					<Heart class="text-red-400 w-9 h-9 grow-on-hover" fill="red" />
 				</a>
 			</div>
-			<div class="hidden p-2 md:block">
+			<div class="hidden p-2 lg:block">
 				<Account />
+			</div>
+			<div class="hidden p-2 lg:block">
+				<a href="/info">
+					<button type="button" class="grow-on-hover items-center align-middle">
+						<span class="sr-only">{m.account_sign_in()}</span>
+						<Info class="h-9 w-9" />
+					</button>
+				</a>
 			</div>
 			<div class="p-2">
 				<ThemeSwitcher />
@@ -178,8 +187,11 @@
 			</div>
 		</div>
 	</div>
-</nav>
+</header >
 <style>
+	header {
+  view-transition-name: header;
+	}
 	/*.navbar {
 		transition: transform 0.3s ease;
 		transform: translateY(-100%);

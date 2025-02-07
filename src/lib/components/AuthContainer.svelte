@@ -1,5 +1,5 @@
-<section class="min-h-screen px-4 pb-20 pt-8 md:pb-32 lg:px-8">
-	<div class="mx-auto max-w-7xl pt-6 md:pt-16 lg:pt-24">
+<section class="min-h-[80vh] px-4 lg:px-8">
+	<div class="mx-auto max-w-7xl pt-6 md:pt-10">
 		<div class="flex items-center justify-center">
 			<div
 				class="w-full transform transition-all duration-300 ease-out hover:shadow-xl 

@@ -12,6 +12,7 @@
 		firstName: '',
 		lastName: '',
 		error: '',
+		success:"",
 		loading: false
 	});
 
@@ -19,7 +20,11 @@
 		e.preventDefault();
 		stuff.loading = true;
 		stuff.error = '';
-
+		if (stuff.password.length < 4){
+			toast.error(m.passwordTooShort())
+			stuff.error = m.passwordTooShort()
+			return
+		}
 		try {
 			const result = await client
 				.mutation(SignUp, {
@@ -34,6 +39,7 @@
 
 			if (result.data?.registerCustomerAccount.__typename === 'Success') {
 				toast.success(m.verification_email_sent());
+				stuff.success = m.verification_email_sent()
 			} else {
 				toast.error(m.generic_error());
 				//@ts-ignore
@@ -66,6 +72,15 @@
 						</div>
 					</div>
 				{/if}
+			{#if stuff.success}
+				<div class="rounded-md bg-green-50 p-4 ">
+					<div class="flex">
+						<div class="text-sm text-green-700 ">
+							{stuff.success}
+						</div>
+					</div>
+				</div>
+			{/if}
 
 				<div>
 					<label for="firstName" class="block text-sm font-medium  ">

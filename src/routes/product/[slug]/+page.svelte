@@ -280,7 +280,7 @@
 		<div class="mb-4">
 			<Highlights />
 		</div>
-		<!-- Tabs -->
+		<!-- Tabs 
 		<div class="max-w-screen-lg lg:col-span-2">
 			<div class="flex" aria-orientation="horizontal" role="tablist">
 				<a href={`/product/${product.slug}?variant=${selectedVariantId}&tab=reviews`}>
@@ -305,10 +305,12 @@
 				</a>
 			</div>
 			{#if tab == 'reviews'}
-				<!-- <ProductReviews bind:reviewForm={data.reviewForm} {product} {user} {reviews} /> -->
+				<ProductReviews bind:reviewForm={data.reviewForm} {product} {user} {reviews} /> 
 			{:else if tab == 'faq'}
 				<FAQ />
 			{/if}
 		</div>
+	-->
+
 	</div>
 {/if}

@@ -51,6 +51,150 @@ export const learn_more = () => `Lue lisää`
 
 
 /**
+ * @param {{ name: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const aboutTitle = (params) => `Tietoa meistä - ${params.name}`
+
+
+/**
+ * @param {{ name: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const aboutDescription = (params) => `Tutustu tarinamme, arvoihimme ja intohimoiseen tiimiimme ${params.name} takana`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const heroTitle = () => `Luomme kokemuksesi`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const heroSubtitle = () => `Olemme sitoutuneet tuomaan sinulle parhaat tuotteet ja poikkeuksellista palvelua jo vuosikymmenen ajan`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourStory = () => `Tarinamme`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourValues = () => `Arvomme`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const ourTeam = () => `Tiimimme`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyTitle = () => `Autotallista maailmalle`
+
+
+/**
+ * @param {{ founder: NonNullable<unknown> }} params
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent1 = (params) => `Se mikä alkoi pienenä perhepajana vuonna 2010, on kukoistanut kansainväliseksi verkkokaupaksi. Perustajamme ${params.founder} alkoi valmistaa käsintehtyä koruja keittiön pöydällään, intohimonaan kestävä muoti.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const storyContent2 = () => `Tänään teemme yhteistyötä yli 200 käsityöläisen kanssa ympäri maailmaa, tuoden sinulle ainutlaatuisia, eettisesti valmistettuja tuotteita säilyttäen sen henkilökohtaisen kosketuksen, josta kaikki alkoi.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueSustainability = () => `Kestävyys`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueQuality = () => `Laatu`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueCommunity = () => `Yhteisö`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription = () => `Lorem suomi dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const valueDescription2 = () => `Lorem suomi2 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCustomers = () => `Tyytyväistä asiakasta`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsArtisans = () => `Käsityöläiskumppania`
+
+
+/**
+ * 
+ * @returns {string}
+ */
+/* @__NO_SIDE_EFFECTS__ */
+export const statsCountries = () => `Palveltua maata`
+
+
+/**
  * 
  * @returns {string}
  */
@@ -2123,19 +2267,11 @@ export const name_z_a = () => `Nimi: Z-A`
 
 
 /**
- * @param {{ name: NonNullable<unknown> }} params
+ * 
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const aboutTitle = (params) => `Tietoa meistä - ${params.name}`
-
-
-/**
- * @param {{ name: NonNullable<unknown> }} params
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const aboutDescription = (params) => `Tutustu tarinamme, arvoihimme ja intohimoiseen tiimiimme ${params.name} takana`
+export const info_title = () => `Tietokeskus`
 
 
 /**
@@ -2143,7 +2279,7 @@ export const aboutDescription = (params) => `Tutustu tarinamme, arvoihimme ja in
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const heroTitle = () => `Luomme kokemuksesi`
+export const info_welcome = () => `Tervetuloa tietokeskukseemme. Täältä voit oppia lisää yrityksestämme, lukea hyödyllisiä oppaita tai ottaa meihin yhteyttä.`
 
 
 /**
@@ -2151,7 +2287,7 @@ export const heroTitle = () => `Luomme kokemuksesi`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const heroSubtitle = () => `Olemme sitoutuneet tuomaan sinulle parhaat tuotteet ja poikkeuksellista palvelua jo vuosikymmenen ajan`
+export const info_our_mission_title = () => `Missiomme`
 
 
 /**
@@ -2159,7 +2295,7 @@ export const heroSubtitle = () => `Olemme sitoutuneet tuomaan sinulle parhaat tu
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourStory = () => `Tarinamme`
+export const info_our_mission_description = () => `Pyrimme tarjoamaan poikkeuksellista laatua ja palvelua kaikessa mitä teemme, varmistaen että asiakkaamme saavuttavat tavoitteensa.`
 
 
 /**
@@ -2167,7 +2303,7 @@ export const ourStory = () => `Tarinamme`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourValues = () => `Arvomme`
+export const info_services_title = () => `Palvelumme`
 
 
 /**
@@ -2175,7 +2311,7 @@ export const ourValues = () => `Arvomme`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const ourTeam = () => `Tiimimme`
+export const info_services_description = () => `Innovatiivisista ratkaisuista kattavaan tukeen, palvelumme on suunniteltu vastaamaan ainutlaatuisiin tarpeisiisi.`
 
 
 /**
@@ -2183,15 +2319,7 @@ export const ourTeam = () => `Tiimimme`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const storyTitle = () => `Autotallista maailmalle`
-
-
-/**
- * @param {{ founder: NonNullable<unknown> }} params
- * @returns {string}
- */
-/* @__NO_SIDE_EFFECTS__ */
-export const storyContent1 = (params) => `Se mikä alkoi pienenä perhepajana vuonna 2010, on kukoistanut kansainväliseksi verkkokaupaksi. Perustajamme ${params.founder} alkoi valmistaa käsintehtyä koruja keittiön pöydällään, intohimonaan kestävä muoti.`
+export const title = () => `Nollaa salasanasi`
 
 
 /**
@@ -2199,7 +2327,7 @@ export const storyContent1 = (params) => `Se mikä alkoi pienenä perhepajana vu
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const storyContent2 = () => `Tänään teemme yhteistyötä yli 200 käsityöläisen kanssa ympäri maailmaa, tuoden sinulle ainutlaatuisia, eettisesti valmistettuja tuotteita säilyttäen sen henkilökohtaisen kosketuksen, josta kaikki alkoi.`
+export const newPassword = () => `Uusi salasana`
 
 
 /**
@@ -2207,7 +2335,7 @@ export const storyContent2 = () => `Tänään teemme yhteistyötä yli 200 käsi
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueSustainability = () => `Kestävyys`
+export const confirmPassword = () => `Vahvista salasana`
 
 
 /**
@@ -2215,7 +2343,7 @@ export const valueSustainability = () => `Kestävyys`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueQuality = () => `Laatu`
+export const passwordRequirements = () => `Salasanan tulee olla vähintään 8 merkkiä pitkä ja sisältää numeroita ja kirjaimia`
 
 
 /**
@@ -2223,7 +2351,7 @@ export const valueQuality = () => `Laatu`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueCommunity = () => `Yhteisö`
+export const resetButton = () => `Nollaa salasana`
 
 
 /**
@@ -2231,7 +2359,7 @@ export const valueCommunity = () => `Yhteisö`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueDescription = () => `Lorem suomi dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+export const successMessage = () => `Salasana nollattu onnistuneesti`
 
 
 /**
@@ -2239,7 +2367,7 @@ export const valueDescription = () => `Lorem suomi dolor sit amet, consectetur a
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsCustomers = () => `Tyytyväistä asiakasta`
+export const errorMessages_general = () => `Virhe salasanan nollauksessa`
 
 
 /**
@@ -2247,7 +2375,7 @@ export const statsCustomers = () => `Tyytyväistä asiakasta`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsArtisans = () => `Käsityöläiskumppania`
+export const errorMessages_passwordMismatch = () => `Salasanat eivät täsmää`
 
 
 /**
@@ -2255,7 +2383,7 @@ export const statsArtisans = () => `Käsityöläiskumppania`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const statsCountries = () => `Palveltua maata`
+export const errorMessages_passwordTooShort = () => `Salasanan tulee olla vähintään 8 merkkiä pitkä`
 
 
 /**
@@ -2263,4 +2391,4 @@ export const statsCountries = () => `Palveltua maata`
  * @returns {string}
  */
 /* @__NO_SIDE_EFFECTS__ */
-export const valueDescription2 = () => `Lorem suomi2 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.`
+export const passwordTooShort = () => `Salasanan tulee olla vähintään 4 merkkiä pitkä`
