@@ -5,30 +5,24 @@
 	"about_us_description": "Learn more about our company, our mission, and what drives us to deliver the best products and services.",
 	"learn_more_about_company": "Learn more about our company",
 	"learn_more": "Learn More",
-
 	"aboutTitle": "About Us - {name}",
 	"aboutDescription": "Discover our story, values, and the passionate team behind {name}",
 	"heroTitle": "Crafting Your Experience",
 	"heroSubtitle": "For over a decade, we've been committed to bringing you the finest products with exceptional service",
-
 	"ourStory": "Our Story",
 	"ourValues": "Our Values",
 	"ourTeam": "Our Team",
-
 	"storyTitle": "From Garage to Global",
 	"storyContent1": "What started as a small family workshop in 2010 has blossomed into an international e-commerce destination. Our founder, {founder}, began crafting handmade jewelry at her kitchen table, driven by a passion for sustainable fashion.",
 	"storyContent2": "Today, we partner with over 200 artisans worldwide, bringing you unique, ethically-made products while maintaining that personal touch that started it all.",
-
 	"valueSustainability": "Sustainability",
 	"valueQuality": "Quality",
 	"valueCommunity": "Community",
 	"valueDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
 	"valueDescription2": "Lorem   ipsum 2 dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-
 	"statsCustomers": "Happy Customers",
 	"statsArtisans": "Artisan Partners",
 	"statsCountries": "Countries Served",
-
 	"email_required": "Email is required",
 	"invalid_email": "Invalid email address",
 	"first_name_required": "First name is required",
@@ -41,14 +35,11 @@
 	"invalid_postal_code": "Invalid postal code",
 	"default_shipping_address": "Default Shipping",
 	"default_billing_address": "Default Billing",
-
 	"hero_title": "The Best Stuff.",
 	"hero_description": "We sell the best stuff anywhere.  Everyone loves it.  The best cameras.  The best plants.  The best sofas.  We don't actually ship anything.  This is an example site.  Satisfaction guaranteed.",
 	"shop_now": "Shop now",
-
 	"no_products_found": "No products found",
 	"products_heading": "Products",
-
 	"checkout": "Checkout",
 	"safe_checkout": "SAFE AND SECURE CHECKOUT",
 	"ssl_encryption": "128-bit SSL encryption",
@@ -71,7 +62,6 @@
 	"insufficient_stock": "Insufficient stock",
 	"out_of_stock": "Out of stock",
 	"item_removed": "Item removed",
-
 	"search": "Search",
 	"search_placeholder": "Enter a search term.",
 	"no_results": "No results found.",
@@ -104,7 +94,6 @@
 	"collections_description": "Explore our carefully curated collections of high-quality products.",
 	"shop_collection": "Shop Collection",
 	"show_product": "View product",
-
 	"footer_company": "Company",
 	"footer_resources": "Resources",
 	"footer_support": "Support",
