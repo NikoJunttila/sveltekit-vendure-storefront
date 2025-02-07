@@ -34,9 +34,9 @@
 
 <style lang="postcss">
 	.active-lang {
-		@apply z-10 text-white bg-primary-500;
+		@apply z-10 text-white bg-primary-600; /* Darker background for better contrast */
 	}
 	button:not(.active-lang) {
-		@apply text-gray-500 hover:text-secondary-600;
+		@apply text-gray-300 hover:text-secondary-500; /* Darker text for better readability */
 	}
 </style>

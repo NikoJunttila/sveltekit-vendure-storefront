@@ -7,11 +7,11 @@
 </script>
 
 {#if theme === 'dark' || (theme === 'system' && resolvedTheme === 'dark')}
-	<button onclick={() => setTheme('light')} class="grow-on-hover items-center align-middle">
+	<button aria-label="light-theme" onclick={() => setTheme('light')} class="grow-on-hover items-center align-middle">
 		<Sun class="h-9 w-9" />
 	</button>
 {:else}
-	<button onclick={() => setTheme('dark')} class="grow-on-hover items-center align-middle">
+	<button aria-label="dark-theme" onclick={() => setTheme('dark')} class="grow-on-hover items-center align-middle">
 		<Moon class="h-9 w-9" />
 	</button>
 {/if}

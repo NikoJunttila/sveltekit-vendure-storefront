@@ -160,8 +160,9 @@
 				<SideBar {collections} />
 			</div>
 			<div>
-				<a href="/favourites">
+				<a href="/favourites" aria-label="Go to favourites">
 					<Heart class="text-red-400 w-9 h-9 grow-on-hover" fill="red" />
+					<span class="sr-only">Go to favourites</span>
 				</a>
 			</div>
 			<div class="hidden p-2 lg:block">
@@ -170,7 +171,7 @@
 			<div class="hidden p-2 lg:block">
 				<a href="/info">
 					<button type="button" class="grow-on-hover items-center align-middle">
-						<span class="sr-only">{m.account_sign_in()}</span>
+						<span class="sr-only">Info</span>
 						<Info class="h-9 w-9" />
 					</button>
 				</a>

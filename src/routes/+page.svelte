@@ -67,7 +67,7 @@ config={{
 		  <div class="aspect-[4/3] w-36 h-36  md:w-72 md:h-72">
 			<img 
 			  src={col.featuredAsset?.preview} 
-			  alt={col.name}
+        alt={`Preview of the ${col.name} collection`}
 			  loading="lazy"
 			  class="w-full h-full rounded-full object-cover transition-transform duration-300 hover:scale-105"
 			    width="300"
@@ -165,7 +165,7 @@ config={{
       </p>
       <a 
         href="/info/about/" 
-        class="inline-block bg-orange-400 text-white px-8 py-3 rounded-lg 
+        class="inline-block bg-orange-400 text-black px-8 py-3 rounded-lg 
                font-medium hover:bg-orange-500 transition-colors duration-300
                focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
         aria-label="{m.learn_more_about_company()}"
