@@ -8,11 +8,10 @@
 	 **/
 	import {
 		PUBLIC_SITE_NAME,
-		PUBLIC_SITE_SHORT_NAME,
-		PUBLIC_SITE_DESCRIPTION,
 		PUBLIC_SITE_URL,
 		PUBLIC_SITE_IMAGE
 	} from '$env/static/public';
+	import * as m from '$lib/paraglide/messages.js';
 	import { page } from '$app/state';
 
 	interface MetaConfig {
@@ -132,14 +131,14 @@
 	let { config = $bindable({}) }: Props = $props();
 
 	if (config.title === undefined) config.title = PUBLIC_SITE_NAME;
-	if (config.description === undefined) config.description = PUBLIC_SITE_DESCRIPTION;
+	if (config.description === undefined) config.description = m.site_description();
 	if (!config.url) config.url = page.url.href;
 	if (!config.website) config.website = PUBLIC_SITE_URL;
 	if (!config.language) config.language = 'en';
 	if (!config.open_graph_image) config.open_graph_image = PUBLIC_SITE_IMAGE;
-	if (!config.site_name) config.site_name = PUBLIC_SITE_SHORT_NAME;
+	if (!config.site_name) config.site_name = PUBLIC_SITE_NAME;
 
-	if (page.route.id !== '/') config.title += ' | ' + PUBLIC_SITE_SHORT_NAME;
+	if (page.route.id !== '/') config.title += ' | ' + PUBLIC_SITE_NAME;
 </script>
 
 <svelte:head>

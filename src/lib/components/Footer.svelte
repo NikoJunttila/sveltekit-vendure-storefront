@@ -6,7 +6,6 @@
 	// Import public environment variables from SvelteKit
 	import {
 		PUBLIC_ORGANIZATION,
-		PUBLIC_SITE_LOGO,
 		PUBLIC_SITE_ADDRESS,
 		PUBLIC_SITE_CITY,
 		PUBLIC_SITE_STATE,
@@ -66,7 +65,7 @@
 					<!-- Use env logo (or fallback to /logo.png if needed) -->
 					<img
 						class="h-12 transition-transform duration-300 hover:scale-105"
-						src={PUBLIC_SITE_LOGO || '/logo.png'}
+						src='/logo.png'
 						alt={PUBLIC_ORGANIZATION}
 					/>
 					<div class="space-y-2 text-center text-lg md:text-left">

@@ -9,7 +9,7 @@
 	import LanguageSwitch from './LanguageSwitch.svelte';
 	import { Heart, Menu, Info } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
-	import { PUBLIC_SITE_SHORT_NAME } from '$env/static/public';
+	import { PUBLIC_SITE_NAME } from '$env/static/public';
 
 	let { collections = [] } = $props();
 	
@@ -72,8 +72,8 @@
 	<div class="mt-3 flex flex-grow items-center justify-between">
 		<div class="flex flex-none items-center">
 			<a class="inline-block text-3xl font-bold hover:scale-105 duration-300" href="/">
-				<img class="block h-14 w-auto md:hidden" src="/logo.png" alt={PUBLIC_SITE_SHORT_NAME} />
-				<img class="hidden h-14 w-auto md:block" src="/logo.png" alt={PUBLIC_SITE_SHORT_NAME} />
+				<img class="block h-14 w-auto md:hidden" src="/logo.png" alt={PUBLIC_SITE_NAME} />
+				<img class="hidden h-14 w-auto md:block" src="/logo.png" alt={PUBLIC_SITE_NAME} />
 			</a>
 
 			<div class="mr-auto hidden lg:ml-6 lg:block">
@@ -123,7 +123,7 @@
 								aria-expanded={isDropdownOpen}
 							>
 								<span class="sr-only">More collections</span>
-								<Menu class="h-5 w-5 transition-transform duration-300 group-hover:rotate-90" />
+								<Menu class="h-8 w-8 transition-transform duration-300 group-hover:rotate-90" />
 							</button>
 			
 							{#if isDropdownOpen}

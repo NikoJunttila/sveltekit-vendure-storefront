@@ -4,17 +4,6 @@
     import * as m from '$lib/paraglide/messages.js';
     import {
           PUBLIC_SITE_NAME,
-          PUBLIC_SITE_LOGO,
-          PUBLIC_SITE_ADDRESS,
-          PUBLIC_SITE_CITY,
-          PUBLIC_SITE_STATE,
-          PUBLIC_SITE_ZIP,
-          PUBLIC_SITE_COUNTRY,
-          PUBLIC_SITE_PHONE,
-          PUBLIC_SITE_EMAIL,
-          PUBLIC_FACEBOOK_URL,
-          PUBLIC_TWITTER_URL,
-          PUBLIC_YOUTUBE_URL
       } from '$env/static/public';
     // Sample images - replace with your actual image paths
     const teamPhotos = [

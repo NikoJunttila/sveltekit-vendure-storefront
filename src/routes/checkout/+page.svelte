@@ -67,8 +67,6 @@
 			if (index === useFragment(ShippingMethodQuote, shippingOptions).length) {
 				errorMessage = 'There are no shipping options available.';
 			} else {
-				//selectedShippingOption = useFragment(ShippingMethodQuote, shippingOptions)[index].id;
-				//const toSet = [selectedShippingOption];
 				await setShippingOption(selectedShippingOption);
 			}
 		}
@@ -87,7 +85,12 @@
 	}
 
 	const setShippingOption = async (id: string[]) => {
-		let result = await client.mutation(SetOrderShippingMethod, { id }).toPromise();
+		if (PUBLIC_VENDURE_MULTI === "multi"){
+			let result = await client.mutation(SetOrderShippingMethod, { id }).toPromise();
+		}else{
+			const single = id[0]
+			let result = await client.mutation(SetOrderShippingMethod, { id:single }).toPromise();
+		}
 		selectedShippingOption = id
 	};
 
@@ -160,7 +163,6 @@
 	let showPaymentDialog = $state(false);
 	let formValid = $state(false);
 </script>
-{JSON.stringify(selectedShippingOption)}
 <noscript>
 	<p>Please enable javascript to complete checkout.</p>
 	<p>

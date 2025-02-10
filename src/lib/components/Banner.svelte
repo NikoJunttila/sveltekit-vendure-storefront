@@ -1,13 +1,12 @@
 <script lang="ts">
     import Image from "./Image.svelte";
-	import { PUBLIC_SITE_BANNER_IMG } from '$env/static/public';
 	interface Props {
         name: string;
         image? : string;
 	}
 
-
-	let { name, image = PUBLIC_SITE_BANNER_IMG }: Props = $props();
+	const bannerSRC = "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=2535&auto=format&fit=crop"
+	let { name, image = bannerSRC }: Props = $props();
 </script>
 
 <section class="relative mb-8 hidden w-full sm:mb-16 sm:block sm:h-80 lg:h-96">

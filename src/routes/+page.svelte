@@ -6,8 +6,6 @@
 		PUBLIC_SITE_NAME,
 		PUBLIC_SITE_URL,
 		PUBLIC_SITE_IMAGE,
-		PUBLIC_SITE_SHORT_NAME,
-		PUBLIC_SITE_DESCRIPTION,
 		PUBLIC_DEFAULT_CURRENCY
 	} from '$env/static/public';
 	import JsonLd from '$src/lib/components/JsonLd.svelte';
@@ -45,10 +43,10 @@
 <JsonLd schema={JSON.stringify(structuredData)}></JsonLd>
 <Meta
 config={{
-  title: PUBLIC_SITE_SHORT_NAME,
-  description: PUBLIC_SITE_DESCRIPTION,
+  title: PUBLIC_SITE_NAME,
+  description: m.hero_description(),
   open_graph_image:PUBLIC_SITE_IMAGE || '',
-  open_graph_image_alt: PUBLIC_SITE_SHORT_NAME || '',
+  open_graph_image_alt: PUBLIC_SITE_NAME || '',
   url:PUBLIC_SITE_URL,
 }}/>
 

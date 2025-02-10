@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import * as m from '$lib/paraglide/messages.js';
-	import { PUBLIC_SITE_NAME, PUBLIC_SITE_DESCRIPTION } from '$env/static/public';
 </script>
 
 <!-- Hero Section -->
@@ -20,7 +19,7 @@
 			<source src="/video/hero.webm" type="video/webm">
 			<source src="/video/hero.mp4" type="video/mp4">
 		</video>
-			<figcaption class="sr-only">{PUBLIC_SITE_DESCRIPTION}</figcaption>
+			<figcaption class="sr-only">{m.hero_title()}</figcaption>
 		</figure>
 
 		<div class="absolute inset-0 z-10 bg-gradient-to-r from-gray-900/60 to-transparent"></div>
