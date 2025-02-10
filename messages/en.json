@@ -297,5 +297,6 @@
 	"errorMessages_general": "Error resetting password",
 	"errorMessages_passwordMismatch": "Passwords do not match",
 	"errorMessages_passwordTooShort": "Password must be at least 8 characters long",
-	"passwordTooShort": "Password must be at least 4 characters long"
+	"passwordTooShort": "Password must be at least 4 characters long",
+	"home_delivery":"Home delivery"
 }

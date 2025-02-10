@@ -69,9 +69,10 @@
 								errorMessage = stripeResponse.error.message;
 								processing = false;
 							}
-						} catch {
+						} catch (e) {
+							console.error(e)
 							await setOrderState('AddingItems');
-							errorMessage = m.generic_error();
+							errorMessage = m.error_general();
 							processing = false;
 						}
 					}}

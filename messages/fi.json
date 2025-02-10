@@ -300,5 +300,6 @@
 	"success_new_address": "Uusi osoite lisätty",
 	"favorites_title": "Suosikit",
 	"favorites_empty": "Suosikkisi on tyhjillään",
-	"page_not_found": "Sivua ei löytynyt"
-  }
+	"page_not_found": "Sivua ei löytynyt",
+	"home_delivery":"Kotiin kuljetus" 
+}

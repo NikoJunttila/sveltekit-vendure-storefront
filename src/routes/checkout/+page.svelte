@@ -15,7 +15,7 @@
 		RemoveOrderLine
 	} from '$lib/vendure';
 	import Meta from '$lib/components/Meta.svelte';
-	import { PUBLIC_SITE_NAME } from '$env/static/public';
+	import { PUBLIC_SITE_NAME, PUBLIC_VENDURE_MULTI } from '$env/static/public';
 	import CheckoutForm from '$src/lib/components/checkout/CheckoutForm.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import Payment from '$src/lib/components/Payment.svelte';
@@ -33,8 +33,8 @@
 	let order = $derived(useFragment(ActiveOrder, $cartStore));
 	let shippingOptions: FragmentType<typeof ShippingMethodQuote>[] = $state([]);
 	//multivendor stuff
-	//let selectedShippingOptions: string[] = $state([]);
-	let selectedShippingOption: string = $state('');
+	let selectedShippingOption: string[] = $state([]);
+	//let selectedShippingOption: string = $state('');
 
 	const adjustOrderLine = async (orderLineId: string, e: Event) => {
 		const select = e.target as HTMLSelectElement;
@@ -47,11 +47,16 @@
 		let result = await client.query(GetOrderShippingMethods, {},{requestPolicy:"network-only"}).toPromise();
 		if (result?.data?.eligibleShippingMethods) {
 			shippingOptions = result.data.eligibleShippingMethods;
+
 			//multivendor select all shipping methods
-			/*for (const method of shippingOptions) {
+			if (PUBLIC_VENDURE_MULTI === "multi"){
+				for (const method of useFragment(ShippingMethodQuote, shippingOptions)) {
+					if (method.name.includes("multi")) selectedShippingOption.push(method.id);
+				}
+			} else {
 				//@ts-ignore
-				selectedShippingOption.push(method.id);
-			}*/
+				selectedShippingOption.push(shippingOptions[0].id)
+			}
 		}
 		await selectCheapestShippingOption();
 	};
@@ -62,12 +67,13 @@
 			if (index === useFragment(ShippingMethodQuote, shippingOptions).length) {
 				errorMessage = 'There are no shipping options available.';
 			} else {
-				selectedShippingOption = useFragment(ShippingMethodQuote, shippingOptions)[index].id;
-				const toSet = [selectedShippingOption];
-				await setShippingOption(toSet);
+				//selectedShippingOption = useFragment(ShippingMethodQuote, shippingOptions)[index].id;
+				//const toSet = [selectedShippingOption];
+				await setShippingOption(selectedShippingOption);
 			}
 		}
 	};
+
 	const removeOrderLine = async (orderLineId: string) => {
 		const result = await client
 			.mutation(
@@ -82,6 +88,7 @@
 
 	const setShippingOption = async (id: string[]) => {
 		let result = await client.mutation(SetOrderShippingMethod, { id }).toPromise();
+		selectedShippingOption = id
 	};
 
 	/**
@@ -153,7 +160,7 @@
 	let showPaymentDialog = $state(false);
 	let formValid = $state(false);
 </script>
-
+{JSON.stringify(selectedShippingOption)}
 <noscript>
 	<p>Please enable javascript to complete checkout.</p>
 	<p>
@@ -224,14 +231,12 @@
 					<!-- Order Summary -->
 					<div class="lg:col-span-5">
 						<div class="sticky top-8 space-y-6">
-							<ShippingMethods {shippingOptions} {selectedShippingOption} {setShippingOption} />
+							<ShippingMethods {shippingOptions} selectedShippingOption={selectedShippingOption[0]} {setShippingOption} />
 							<OrderSummary {order} {errorMessage} />
 						</div>
 					</div>
 				</div>
-				<!--
-					<Payment {setOrderState} {setShippingOption} {selectedShippingOption}></Payment>
-				-->
+				
 					<div class="mt-8 text-center">
 						<button
 							id="payment"
