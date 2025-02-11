@@ -10,7 +10,8 @@
 		{ url: '/info/guide', name: m.footer_guides() },
 		{ url: '/info/contact', name: m.footer_contact() },
 		{ url: '/info/terms', name: m.footer_terms() },
-		{ url: '/info/privacy', name: m.footer_privacy() }
+		{ url: '/info/privacy', name: m.footer_privacy() },
+		{ url: '/info/cookie-policy', name: m.cookie_policy()}
 	];
 
 	const isActive = $derived((url : string) => {
@@ -25,7 +26,7 @@
 				<li class="text-center">
 					<a 
 						href={link.url} 
-						class="relative py-1 text-gray-600 transition-colors duration-200 font-medium
+						class="relative py-1 text-gray-700 dark:text-gray-200 transition-colors duration-200 font-medium
 						{isActive(link.url) ? 'text-blue-600' : 'hover:text-blue-600'}"
 						aria-current={isActive(link.url) ? 'page' : undefined}
 					>

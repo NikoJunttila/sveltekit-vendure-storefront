@@ -1,7 +1,7 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"hello_world": "Hello, {name} from fi!",
-	"site_description":"Myymme parasta tavaraa kaikkialla. Kaikki rakastavat sitä. Parhaat kamerat. Parhaat kasvit. Parhaat sohvat. Emme oikeastaan lähetä mitään. Tämä on esimerkkisivusto. Tyytyväisyys taattu.",
+	"site_description": "Myymme parasta tavaraa kaikkialla. Kaikki rakastavat sitä. Parhaat kamerat. Parhaat kasvit. Parhaat sohvat. Emme oikeastaan lähetä mitään. Tämä on esimerkkisivusto. Tyytyväisyys taattu.",
 	"hero_description": "Myymme parasta tavaraa kaikkialla. Kaikki rakastavat sitä. Parhaat kamerat. Parhaat kasvit. Parhaat sohvat. Emme oikeastaan lähetä mitään. Tämä on esimerkkisivusto. Tyytyväisyys taattu.",
 	"hero_title": "Parasta tavaraa.",
 	"aboutTitle": "Tietoa meistä - {name}",
@@ -56,8 +56,6 @@
 	"deliveryOptionsContent": "Normaali toimitusaika on 3-5 arkipäivää. Pikatoimitus saatavilla lisämaksusta. Digitaaliset tuotteet toimitetaan välittömästi sähköpostitse.",
 	"returnsContent": "Avattomia tuotteita voidaan palauttaa 14 päivän kuluessa toimituksesta. Ota yhteyttä palautusluvan saamiseksi. Digitaalisia tuotteita ei palauteta.",
 	"liabilityContent": "Emme vastaa kuljetusyhtiön tai tullin aiheuttamista viivästyksistä. Vaurioituneet tuotteet on ilmoitettava 48 tunnin kuluessa toimituksesta.",
-
-
 
 	"shop_now": "Osta nyt",
 	"no_products_found": "Tuotteita ei löytynyt",
@@ -302,5 +300,29 @@
 	"favorites_title": "Suosikit",
 	"favorites_empty": "Suosikkisi on tyhjillään",
 	"page_not_found": "Sivua ei löytynyt",
-	"home_delivery":"Kotiin kuljetus" 
+	"home_delivery": "Kotiin kuljetus",
+	"cookie_policy": "Evästekäytäntö",
+	"cookie_banner_title": "Tuoreet evästeet",
+	"cookie_banner_description": "Tarjoan vierailijoilleni evästeitä tarjotakseni parhaan mahdollisen käyttökokemuksen. Evästeet auttavat minua analysoimaan käyttäytymistä ja parantamaan verkkosivustoani jatkuvasti.",
+	"accept_all": "Hyväksy kaikki",
+	"reject_all": "Hylkää kaikki",
+	"more_options": "Lisää vaihtoehtoja",
+	"customize_cookies_title": "Mukauta evästeitä",
+	"necessary": "Välttämätön",
+	"marketing": "Markkinointi",
+	"analytics": "Analytiikka",
+	"preferences": "Asetukset",
+	"accept_selected": "Hyväksy valitut",
+	"back_to_main_options": "Takaisin päävaihtoehtoihin",
+	"cookie_policy_title": "Evästekäytäntö",
+	"cookie_policy_description": "Opi, miten käytämme evästeitä parantaaksemme käyttökokemustasi.",
+	"cookie_policy_intro": "Käytämme evästeitä paremman käyttökokemuksen tarjoamiseksi, sivuston liikenteen analysoimiseksi ja palveluidemme parantamiseksi.",
+	"what_are_cookies_title": "Mitä evästeet ovat?",
+	"what_are_cookies_content": "Evästeet ovat pieniä tekstitiedostoja, jotka tallennetaan laitteellesi auttamaan verkkosivustoja toimimaan oikein ja muistamaan asetuksesi.",
+	"how_we_use_cookies_title": "Miten käytämme evästeitä",
+	"how_we_use_cookies_content": "Käytämme evästeitä olennaisiin toimintoihin, suorituskyvyn analysointiin ja personoidun sisällön tarjoamiseen.",
+	"cookie_types_title": "Käyttämämme evästetyypit",
+	"cookie_types_content": "Välttämättömät evästeet, analytiikkaevästeet, markkinointievästeet ja asetusevästeet.",
+	"manage_cookies_title": "Evästeiden hallinta",
+	"manage_cookies_content": "Voit hallita evästeasetuksiasi selaimesi asetuksista tai evästebannerimme kautta."
 }

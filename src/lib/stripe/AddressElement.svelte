@@ -14,7 +14,7 @@
 	if (!addressElementOptions) addressElementOptions = { mode: 'shipping' }
 	addressElementOptions.mode = addressElementOptions.mode || 'shipping'
 	addressElementOptions.autocomplete = addressElementOptions.autocomplete || { mode: 'automatic' }
-	addressElementOptions.allowedCountries = addressElementOptions.allowedCountries || ['US']
+	addressElementOptions.allowedCountries = addressElementOptions.allowedCountries || ['FI']
 	addressElementOptions.blockPoBox = addressElementOptions.blockPoBox || false
 	addressElementOptions.contacts = addressElementOptions.contacts || []
 	addressElementOptions.defaultValues = addressElementOptions.defaultValues || {}

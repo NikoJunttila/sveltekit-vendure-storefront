@@ -13,6 +13,8 @@
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import ToastComponent from '$src/lib/components/Toast.svelte';
 	import { onNavigate } from '$app/navigation';
+	import Analytics from '$src/lib/components/Analytics.svelte';
+	import AnalyticsConsent from '$src/lib/components/AnalyticsConsent.svelte';
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
@@ -79,7 +81,9 @@
 		<NavBar {collections} />
 		<div class="bg-gradient min-h-svh">
 				<div class="relative">{@render children?.()}</div>
+				<AnalyticsConsent></AnalyticsConsent>
 			<Footer />
 		</div>
 	{/if}
+	<!-- <Analytics /> -->
 </ParaglideJS>

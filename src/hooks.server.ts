@@ -18,6 +18,9 @@ export const handleSecurity: Handle = async ({ event, resolve }) => {
 		'payment=(*), accelerometer=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), gyroscope=(), hid=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), publickey-credentials-get=(), sync-xhr=(), usb=(), xr-spatial-tracking=(), geolocation=()'
 	);
 
+	// CONTENT SECURITY POLICY (CSP) FOR STRIPE
+	//TODO https://docs.stripe.com/security/guide?csp=csp-connect
+
 	return response;
 };
 const handleParaglide: Handle = i18n.handle();
