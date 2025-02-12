@@ -100,7 +100,7 @@ export const updateCustomerAddress = gql(`
 		...Address
 		}
 	}	
-`)
+`);
 
 export const SignIn = gql(`
 	mutation LogIn($username: String!, $password: String!, $rememberMe: Boolean!) {

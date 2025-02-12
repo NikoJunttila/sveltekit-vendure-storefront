@@ -7,22 +7,31 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import SearchHit from '$lib/components/SearchHit.svelte';
 
-	let q: string = '';
-	let hits: any = [];
-	const client = getContextClient();
-	$: resultStore = queryStore({
-		client,
-		query: SearchProducts,
-		variables: { input: { term: q, take: 10, skip: 0, groupByProduct: true } }
-	});
-	$: {
-		if ($resultStore.data?.search?.items)
-			hits = useFragment(SearchResult, $resultStore.data.search.items);
-	}
+	let q = $state('');
+	let hits = $state<any>([]);
+	let client = getContextClient();
 
-	const handleClick = function (e: any) {
+	const resultStore = $derived(
+		queryStore({
+			client,
+			query: SearchProducts,
+			variables: { input: { term: q, take: 10, skip: 0, groupByProduct: true } }
+		})
+	);
+
+	$effect(() => {
+		if ($resultStore.data?.search?.items) {
+			hits = useFragment(SearchResult, $resultStore.data.search.items);
+		}
+	});
+
+	const handleClick = (e: { detail: string }) => {
 		q = '';
 		window.location.href = `/product/${e.detail}`;
+	};
+	const handleReset = () => {
+		console.log('triggered?');
+		q = '';
 	};
 </script>
 
@@ -32,6 +41,7 @@
 	</div>
 	<label for="q" class="sr-only">Search</label>
 	<input
+		autocomplete="off"
 		id="q"
 		type="search"
 		placeholder={m.search()}
@@ -44,13 +54,13 @@
 	{#if q}
 		<div
 			use:clickOutside
-			on:clickOutside={() => (q = '')}
+			onoutsideclick={handleReset}
 			id="search-results"
 			role="listbox"
 			class="absolute z-50 max-h-[80vh] w-full overflow-auto rounded-b-xl border border-gray-200 bg-gray-200 dark:bg-gray-700"
 		>
 			{#each hits as hit}
-				<SearchHit {hit} on:click={handleClick}  />
+				<SearchHit {hit} on:click={handleClick} />
 			{:else}
 				<div class="p-4" aria-live="polite">
 					<p>{m.no_results()}</p>

@@ -5,7 +5,7 @@
 	import { page } from '$app/state';
 	import { browser } from '$app/environment';
 	import { GetActiveOrder, GetCustomer } from '$lib/vendure';
-	import { cartStore, userStore, channelStore } from '$lib/stores';
+	import { cartStore, userStore } from '$lib/stores';
 	import { i18n } from '$lib/i18n';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
@@ -13,7 +13,6 @@
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import ToastComponent from '$src/lib/components/Toast.svelte';
 	import { onNavigate } from '$app/navigation';
-	import Analytics from '$src/lib/components/Analytics.svelte';
 	import AnalyticsConsent from '$src/lib/components/AnalyticsConsent.svelte';
 
 	onNavigate((navigation) => {
@@ -64,10 +63,10 @@
 		if (browser) {
 			cartQuery.resume();
 			userQuery.resume();
-			if (data.channel) {
+			/* 			if (data.channel) {
 				//@ts-ignore
 				channelStore.set(data.channel);
-			}
+			} */
 		}
 	});
 </script>
@@ -80,8 +79,8 @@
 		<ToastComponent />
 		<NavBar {collections} />
 		<div class="bg-gradient min-h-svh">
-				<div class="relative">{@render children?.()}</div>
-				<AnalyticsConsent></AnalyticsConsent>
+			<div class="relative">{@render children?.()}</div>
+			<AnalyticsConsent></AnalyticsConsent>
 			<Footer />
 		</div>
 	{/if}

@@ -1,41 +1,48 @@
 <script lang="ts">
-	import type { StripePaymentElement, StripePaymentElementOptions } from '@stripe/stripe-js'
-	import { onMount } from 'svelte'
-	import { dev } from '$app/environment'
-	import { stripeElements } from './stores'
+	import type { StripePaymentElement, StripePaymentElementOptions } from '@stripe/stripe-js';
+	import { onMount } from 'svelte';
+	import { dev } from '$app/environment';
+	import { stripeElements } from './stores';
 
-	export let paymentElementOptions: StripePaymentElementOptions|undefined = undefined
-	export let paymentContainer: StripePaymentElement|undefined = undefined
+	interface Props {
+		paymentElementOptions?: StripePaymentElementOptions | undefined;
+		paymentContainer?: StripePaymentElement | undefined;
+	}
+
+	let {
+		paymentElementOptions = $bindable(undefined),
+		paymentContainer = $bindable(undefined)
+	}: Props = $props();
 
 	// see all options available at
 	// https://stripe.com/docs/js/elements_object/create_payment_element
-	if (!paymentElementOptions) paymentElementOptions = { layout: 'tabs' }
+	if (!paymentElementOptions) paymentElementOptions = { layout: 'tabs' };
 
-	let mounted = false
+	let mounted = $state(false);
 
-	$: elements = $stripeElements
+	let elements = $derived($stripeElements);
 
-	onMount(() => {		  
-		mounted = true
+	onMount(() => {
+		mounted = true;
 		return () => {
-			mounted = false
-		}
-	})
-	
+			mounted = false;
+		};
+	});
+
 	const paymentElement = (node: HTMLElement) => {
 		try {
-			paymentContainer = $stripeElements?.create('payment', paymentElementOptions)
-			paymentContainer?.mount(node)
+			paymentContainer = $stripeElements?.create('payment', paymentElementOptions);
+			paymentContainer?.mount(node);
 		} catch (e) {
-			if (dev) console.error(e)
+			if (dev) console.error(e);
 		}
 		return {
 			destroy: () => {
-				if (paymentContainer) paymentContainer.destroy()
-				stripeElements.set(undefined)
+				if (paymentContainer) paymentContainer.destroy();
+				stripeElements.set(undefined);
 			}
-		}
-	}
+		};
+	};
 </script>
 
 {#if mounted && elements}

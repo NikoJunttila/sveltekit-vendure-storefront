@@ -17,22 +17,21 @@
 	let errorMessage = $state('');
 	let href = $state('');
 	const client = getContextClient();
-	
-	
+
 	async function getPaytrailMultiHref(): Promise<string> {
-		console.error("xdd?")
-		try{
+		console.error('xdd?');
+		try {
 			const res = await client
-			.mutation(PaytrailMultiPayment, {})
-			.toPromise()
-			.then((result) => {
-				return result
-			});
-			console.log(res)
+				.mutation(PaytrailMultiPayment, {})
+				.toPromise()
+				.then((result) => {
+					return result;
+				});
+			console.log(res);
 			return res?.data?.createMultiPTintent.href || '';
-		} catch (err){
-			console.log(err)
-			return ""
+		} catch (err) {
+			console.log(err);
+			return '';
 		}
 	}
 

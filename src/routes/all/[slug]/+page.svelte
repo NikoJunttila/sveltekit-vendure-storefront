@@ -23,18 +23,18 @@
 	let facetValues: FacetValueResultFragment[] = $state(
 		useFragment(FacetValueResult, data.search?.facetValues ?? [])
 	);
-	const total = $derived(data.search?.totalItems || 0)
-	
+	const total = $derived(data.search?.totalItems || 0);
+
 	// this will load the data in client side navigation
-	const currentPage = $derived(Number(page.params.slug))
-	const skip = $derived(currentPage * 20 - 20 || 0)
-	const take = 20
+	const currentPage = $derived(Number(page.params.slug));
+	const skip = $derived(currentPage * 20 - 20 || 0);
+	const take = 20;
 	const input: SearchInput = $derived({
 		term: '',
 		groupByProduct: true,
 		//facetValueIds: $filtersStore,
 		take,
-		skip: skip,
+		skip: skip
 	});
 
 	const searchQuery = $derived(
@@ -69,12 +69,12 @@
 			{} as Record<string, typeof facetValues>
 		)
 	);
-	
+
 	// Selected filter values
 	let selectedFilters = $state(new Set<string>());
 	let filterSize = $state(0);
 	// Filter products based on selected facets
-	let filteredProducts = $state(useFragment(SearchResult, data.search?.items ??  []));
+	let filteredProducts = $state(useFragment(SearchResult, data.search?.items ?? []));
 	// Mobile filter dialog state
 	let isMobileFilterOpen = $state(false);
 
@@ -95,24 +95,20 @@
 		filterSize = selectedFilters.size;
 	}
 	function navigate(page: number) {
-		goto(`/all/${page}`)
+		goto(`/all/${page}`);
 	}
-
-
 </script>
 
 <Meta
 	config={{
-		title:m.menu_all_products(),
-		description: m.menu_all_products(),
+		title: m.menu_all_products(),
+		description: m.menu_all_products()
 	}}
 />
 
 {#if products}
 	<section class="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
-		<Banner
-			name={m.menu_all_products()}
-		/>
+		<Banner name={m.menu_all_products()} />
 		<div class="mt-12 lg:grid lg:grid-cols-4 lg:gap-x-8">
 			<Filters
 				{groupedFacets}
@@ -128,6 +124,6 @@
 			/>
 			<ProductGrid {filteredProducts} />
 		</div>
-		<Paginations totalCount={total} currentPage={currentPage} perPage={take} {navigate} />
+		<Paginations totalCount={total} {currentPage} perPage={take} {navigate} />
 	</section>
 {/if}

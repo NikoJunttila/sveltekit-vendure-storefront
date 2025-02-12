@@ -63,7 +63,7 @@
 						<Image
 							preview={thumbnail.preview}
 							preset="thumb"
-							alt={thumbnail.customFields?.alt || ''}
+							alt={`${thumbnail.name} image`}
 							class="h-full w-auto rounded-md object-contain px-3"
 						/>
 					</button>
@@ -80,7 +80,7 @@
 						<Image
 							preview={thumbnail.preview}
 							preset="thumb"
-							alt={thumbnail.customFields?.alt || ''}
+							alt={`${thumbnail.name} image`}
 							class="h-full w-auto rounded-md object-contain px-3"
 						/>
 					</button>

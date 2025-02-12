@@ -2,20 +2,14 @@
 	import { fly } from 'svelte/transition';
 	import * as m from '$lib/paraglide/messages.js';
 	import Image from '$lib/components/Image.svelte';
+	import { type CollectionFragment } from '../gql/graphql';
 
 	interface Props {
-		collection: {
-			slug: string;
-			name: string;
-			description: string;
-			featuredAsset?: {
-				preview: string;
-			};
-		};
+		collection: CollectionFragment;
 		index: number;
 	}
 
-	let { collection, index } = $props();
+	let { collection, index }: Props = $props();
 	let isHovered = $state(false);
 </script>
 
@@ -41,7 +35,7 @@
 			<div class="absolute inset-0 flex flex-col items-start justify-end p-6">
 				<h3 class="text-xl font-medium text-white">{collection.name}</h3>
 
-			<!-- 	<p class="mt-1.5 max-w-[40ch] text-xs text-white text-opacity-90">
+				<!-- 	<p class="mt-1.5 max-w-[40ch] text-xs text-white text-opacity-90">
 					{collection.description}
 				</p> -->
 

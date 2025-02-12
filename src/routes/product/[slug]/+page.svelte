@@ -50,7 +50,6 @@
 					console.error('Error loading favorites:', e);
 				}
 			}
-			console.log(product);
 		}
 	});
 
@@ -311,6 +310,5 @@
 			{/if}
 		</div>
 	-->
-
 	</div>
 {/if}

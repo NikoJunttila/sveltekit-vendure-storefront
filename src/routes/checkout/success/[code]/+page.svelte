@@ -1,4 +1,3 @@
-
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { getContextClient } from '@urql/svelte';
@@ -29,8 +28,6 @@
 			order = useFragment(ActiveOrder, orderResult.data.orderByCode);
 	};
 
-
-
 	let lines = $derived(order?.lines || []);
 
 	onMount(async () => {
@@ -50,28 +47,28 @@
 		<main class="lg:flex lg:max-h-screen lg:min-h-full lg:flex-row-reverse lg:overflow-hidden">
 			<section class="flex-auto px-4 pb-16 pt-12 sm:px-6 sm:pt-16 lg:px-8 lg:pb-4 lg:pt-0">
 				<div class="mx-auto max-w-lg">
-					<h1 class="text-2xl font-bold mb-6">{m.order_confirmation()}</h1>
-					<div class="bg-green-50 p-4 rounded-lg mb-6">
+					<h1 class="mb-6 text-2xl font-bold">{m.order_confirmation()}</h1>
+					<div class="mb-6 rounded-lg bg-green-50 p-4">
 						<p class="text-green-700">{m.thank_you_order()}</p>
 						<p class="text-green-700">
 							{m.your_order_number()} <span class="font-bold">{code}</span>
 						</p>
 					</div>
 
-					<div class="border rounded-lg overflow-hidden">
+					<div class="overflow-hidden rounded-lg border">
 						<div class="divide-y divide-gray-200">
 							{#each lines as line}
-								<div class="p-4 flex gap-4">
+								<div class="flex gap-4 p-4">
 									{#if line.featuredAsset}
 										<img
 											src={line.featuredAsset.preview}
 											alt={line.productVariant.name}
-											class="w-20 h-20 object-cover rounded"
+											class="h-20 w-20 rounded object-cover"
 										/>
 									{/if}
 									<div class="flex-1">
 										<h3 class="font-medium">{line.productVariant.name}</h3>
-										<div class="text-sm text-gray-500 mt-1">
+										<div class="mt-1 text-sm text-gray-500">
 											{#each line.productVariant.options as option}
 												<span>{option.group.name}: {option.name}</span>
 												{#if !option === line.productVariant.options[line.productVariant.options.length - 1]}
@@ -99,16 +96,8 @@
 					</div>
 
 					<div class="mt-8">
-						<a
-							href="/"
-							class="inline-flex items-center text-lime-600 hover:text-lime-700"
-						>
-							<svg
-								class="w-4 h-4 mr-2"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
+						<a href="/" class="inline-flex items-center text-lime-600 hover:text-lime-700">
+							<svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									stroke-linecap="round"
 									stroke-linejoin="round"

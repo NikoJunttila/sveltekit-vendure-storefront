@@ -29,8 +29,8 @@
 				.then((result: any) => result.data);
 		}
 		if (success!.verifyCustomerAccount?.__typename == 'CurrentUser') {
-			toast.success(m.redirect())
-			setTimeout(async() => {
+			toast.success(m.redirect());
+			setTimeout(async () => {
 				await invalidateAll();
 				await Promise.all([
 					client.query(GetCustomer, {}, { requestPolicy: 'network-only' }).toPromise(),
@@ -43,27 +43,26 @@
 </script>
 
 {#if token}
-	
 	{#if success && success.verifyCustomerAccount}
-	{#if success.verifyCustomerAccount.__typename === 'CurrentUser'}
-	<div>
-		<h2>{m.account_verified()}</h2>
-		<p>{m.email()}: {success.verifyCustomerAccount.identifier}</p>
-	</div>
-	{:else if success.verifyCustomerAccount.__typename === 'VerificationTokenInvalidError'}
-	<div>
-		<h2>{m.verification_failed()}</h2>
-		<p>{m.unexpected_error} {success.verifyCustomerAccount.message}</p>
-		<p>Code: {success.verifyCustomerAccount.errorCode}</p>
-	</div>
+		{#if success.verifyCustomerAccount.__typename === 'CurrentUser'}
+			<div>
+				<h2>{m.account_verified()}</h2>
+				<p>{m.email()}: {success.verifyCustomerAccount.identifier}</p>
+			</div>
+		{:else if success.verifyCustomerAccount.__typename === 'VerificationTokenInvalidError'}
+			<div>
+				<h2>{m.verification_failed()}</h2>
+				<p>{m.unexpected_error} {success.verifyCustomerAccount.message}</p>
+				<p>Code: {success.verifyCustomerAccount.errorCode}</p>
+			</div>
+		{:else}
+			<div>{m.unexpected_type()} {success.verifyCustomerAccount.__typename}</div>
+		{/if}
 	{:else}
-	<div>{m.unexpected_type()} {success.verifyCustomerAccount.__typename}</div>
+		<div>{m.verifying_account()}</div>
 	{/if}
-	{:else}
-	<div>{m.verifying_account()}</div>
-	{/if}
-	{:else}
+{:else}
 	<div>
-		{m.hello_world({name:"test"})}
+		{m.hello_world({ name: 'test' })}
 	</div>
 {/if}

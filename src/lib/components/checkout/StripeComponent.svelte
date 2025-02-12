@@ -1,26 +1,26 @@
 <script lang="ts">
-    import { getContextClient } from "@urql/svelte";
-   	import { 
-        PUBLIC_DEFAULT_CURRENCY,
+	import { getContextClient } from '@urql/svelte';
+	import {
+		PUBLIC_DEFAULT_CURRENCY,
 		PUBLIC_STRIPE_KEY,
-		PUBLIC_STRIPE_REDIRECT_URL,
-	} from '$env/static/public' 
-    import { StripePaymentIntent, ActiveOrder, TransitionOrderToState } from "../../vendure";
-    import { useFragment } from "../../gql";
-    import { Elements, PaymentElement } from '../../stripe/index'
-    import { cartStore } from "../../stores";
-	const client = getContextClient()
-    import * as m from '$lib/paraglide/messages';
-    
+		PUBLIC_STRIPE_REDIRECT_URL
+	} from '$env/static/public';
+	import { StripePaymentIntent, ActiveOrder, TransitionOrderToState } from '../../vendure';
+	import { useFragment } from '../../gql';
+	import { Elements, PaymentElement } from '../../stripe/index';
+	import { cartStore } from '../../stores';
+	const client = getContextClient();
+	import * as m from '$lib/paraglide/messages';
+
 	let order = $derived(useFragment(ActiveOrder, $cartStore));
-    let processing =  $state(false)
-    let errorMessage : string | undefined = $state('')
-    const startPayment = async () => {
-		const result = await client.mutation(StripePaymentIntent, {}).toPromise()
-		console.log(result)
-		return (result?.data?.createStripePaymentIntent)? result.data.createStripePaymentIntent : ''
-	}
-    const setOrderState = async (state: string) => {
+	let processing = $state(false);
+	let errorMessage: string | undefined = $state('');
+	const startPayment = async () => {
+		const result = await client.mutation(StripePaymentIntent, {}).toPromise();
+		console.log(result);
+		return result?.data?.createStripePaymentIntent ? result.data.createStripePaymentIntent : '';
+	};
+	const setOrderState = async (state: string) => {
 		let result = await client.mutation(TransitionOrderToState, { state }).toPromise();
 	};
 </script>
@@ -48,12 +48,11 @@
 				<form
 					class="grid gap-y-8"
 					onsubmit={async (e) => {
-                        e.preventDefault();
+						e.preventDefault();
 						if (processing) return;
 						processing = true;
 						try {
 							await setOrderState('ArrangingPayment');
-					
 
 							const clientSecret = await startPayment();
 							let stripeResponse = await elements?.submit();
@@ -70,7 +69,7 @@
 								processing = false;
 							}
 						} catch (e) {
-							console.error(e)
+							console.error(e);
 							await setOrderState('AddingItems');
 							errorMessage = m.error_general();
 							processing = false;
@@ -93,7 +92,7 @@
 					>
 						{#if processing}
 							{m.processing()}...{:else}
-							 {m.complete_order()}
+							{m.complete_order()}
 						{/if}
 					</button>
 					<p class="flex justify-center pb-4 text-sm font-medium text-gray-500">
@@ -109,7 +108,7 @@
 								clip-rule="evenodd"
 							/>
 						</svg>
-					{m.stripe_handles()}
+						{m.stripe_handles()}
 					</p>
 				</form>
 			</Elements>

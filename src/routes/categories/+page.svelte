@@ -6,11 +6,12 @@
 	import Meta from '$src/lib/components/Meta.svelte';
 	const collections = page.data.collections;
 </script>
+
 <Meta
-config={{
-	title: m.shop_collection(),
-	description: m.collections_description(),
-}}
+	config={{
+		title: m.shop_collection(),
+		description: m.collections_description()
+	}}
 />
 <div class="min-h-screen">
 	<div class="mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -18,7 +19,7 @@ config={{
 			<h1 class="text-3xl font-bold sm:text-4xl">
 				{m.our_collections()}
 			</h1>
-			<p class="mx-auto mt-4 max-w-md text-gray-500 ">
+			<p class="mx-auto mt-4 max-w-md text-gray-500">
 				{m.collections_description()}
 			</p>
 		</header>

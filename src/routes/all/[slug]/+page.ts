@@ -6,10 +6,10 @@ export const prerender = true;
 
 export const load = async function ({ parent, params }) {
 	const { client } = await parent();
-	const page = Number(params.slug)
-	let skip = page * 20
-	if(skip >= 20){
-		skip -= 20
+	const page = Number(params.slug);
+	let skip = page * 20;
+	if (skip >= 20) {
+		skip -= 20;
 	}
 	const input: SearchInput = {
 		term: '',
@@ -24,5 +24,5 @@ export const load = async function ({ parent, params }) {
 			.query(SearchProducts, { input })
 			.toPromise()
 			.then((result) => result?.data?.search)
-		};
+	};
 } satisfies PageLoad;

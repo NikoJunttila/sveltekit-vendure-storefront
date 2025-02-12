@@ -3,24 +3,36 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { getContextClient } from '@urql/svelte';
-	import { type CreateCustomerInput, type CreateAddressInput, type UpdateCustomerInput, type UpdateAddressInput  } from '$lib/gql/graphql';
-	import { SetOrderCustomer, SetOrderBillingAddress, SetOrderShippingAddress,updateCustomer, updateCustomerAddress,Customer } from '$lib/vendure';
+	import {
+		type CreateCustomerInput,
+		type CreateAddressInput,
+		type UpdateCustomerInput,
+		type UpdateAddressInput
+	} from '$lib/gql/graphql';
+	import {
+		SetOrderCustomer,
+		SetOrderBillingAddress,
+		SetOrderShippingAddress,
+		updateCustomer,
+		updateCustomerAddress,
+		Customer
+	} from '$lib/vendure';
 	import * as m from '$lib/paraglide/messages.js';
 	import { userStore } from '../../stores';
 	import { useFragment } from '$src/lib/gql';
 
 	const client = getContextClient();
-	const user = $derived(useFragment(Customer , $userStore));
+	const user = $derived(useFragment(Customer, $userStore));
 
 	let { valid = $bindable() } = $props();
-    let customerValid = $state(false);
-    let addressValid = $state(false);
+	let customerValid = $state(false);
+	let addressValid = $state(false);
 
 	$effect(() => {
-        customerValid = validateCustomerForm()
-        addressValid = validateAddressForm()
-        valid = customerValid && addressValid
-	})
+		customerValid = validateCustomerForm();
+		addressValid = validateAddressForm();
+		valid = customerValid && addressValid;
+	});
 
 	interface CheckoutForm {
 		customerForm: CreateCustomerInput;
@@ -29,7 +41,7 @@
 			customer: Record<string, boolean>;
 			address: Record<string, boolean>;
 		};
-		errors: { 
+		errors: {
 			customer: Record<string, string>;
 			address: Record<string, string>;
 		};
@@ -137,7 +149,7 @@
 			};
 
 			// Find default shipping address
-			const defaultAddress = user.addresses?.find(addr => addr.defaultShippingAddress);
+			const defaultAddress = user.addresses?.find((addr) => addr.defaultShippingAddress);
 			if (defaultAddress) {
 				form.addressForm = {
 					...form.addressForm,
@@ -189,7 +201,6 @@
 	// API functions
 	const setCustomer = async (input: CreateCustomerInput) => {
 		let result = await client.mutation(SetOrderCustomer, { input }).toPromise();
-		console.log('customer updated', result);
 	};
 
 	const setShippingAddress = async (input: CreateAddressInput) => {
@@ -293,7 +304,6 @@
 
 		try {
 			if (user) {
-				console.log("updated customer")
 				// If user exists, update the existing user
 				const updateInput: UpdateCustomerInput = {
 					[field]: value
@@ -304,7 +314,6 @@
 				}
 			} else {
 				// If no user exists, create new customer in order
-				console.log("setting customer")
 				await setCustomer(form.customerForm);
 			}
 
@@ -321,7 +330,7 @@
 		try {
 			if (user && user.addresses?.length > 0) {
 				// If user exists and has addresses, update the default address
-				const defaultAddress = user.addresses.find(addr => addr.defaultShippingAddress);
+				const defaultAddress = user.addresses.find((addr) => addr.defaultShippingAddress);
 				if (defaultAddress) {
 					const updateInput: UpdateAddressInput = {
 						id: defaultAddress.id,
@@ -364,17 +373,17 @@
 		if (user) {
 			// If user exists in store, populate form with user data
 			populateFormWithUserData();
-			valid = true
+			valid = true;
 		} else if (browser) {
 			// If no user in store, try to load from session storage
 			const savedCustomer = sessionStorage.getItem('customerForm');
 			const savedAddress = sessionStorage.getItem('addressForm');
 
-			if (savedCustomer){
+			if (savedCustomer) {
 				form.customerForm = JSON.parse(savedCustomer);
 				await setCustomer(form.customerForm);
-			} 
-			if (savedAddress){
+			}
+			if (savedAddress) {
 				form.addressForm = JSON.parse(savedAddress);
 				await Promise.all([
 					setShippingAddress(form.addressForm),
@@ -385,7 +394,7 @@
 	});
 </script>
 
-<div class="grid gap-4 md:grid-cols-2 text-black">
+<div class="grid gap-4 text-black md:grid-cols-2">
 	<!-- Customer Form -->
 	<div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
 		<div class="border-b border-gray-200 bg-gray-50 px-4 py-3">
@@ -395,7 +404,9 @@
 			<div class="space-y-3">
 				<div class="grid gap-3 sm:grid-cols-2">
 					<div>
-						<label for="name" class="block text-sm font-medium text-gray-700">{m.first_name()}*</label>
+						<label for="name" class="block text-sm font-medium text-gray-700"
+							>{m.first_name()}*</label
+						>
 						<input
 							type="text"
 							value={form.customerForm.firstName}
@@ -410,7 +421,9 @@
 						{/if}
 					</div>
 					<div>
-						<label for="lastName" class="block text-sm font-medium text-gray-700">{m.last_name()}*</label>
+						<label for="lastName" class="block text-sm font-medium text-gray-700"
+							>{m.last_name()}*</label
+						>
 						<input
 							type="text"
 							value={form.customerForm.lastName}
@@ -426,7 +439,8 @@
 					</div>
 				</div>
 				<div>
-					<label for="emailaddr" class="block text-sm font-medium text-gray-700">{m.email()}*</label>
+					<label for="emailaddr" class="block text-sm font-medium text-gray-700">{m.email()}*</label
+					>
 					<input
 						type="email"
 						value={form.customerForm.emailAddress}
@@ -467,7 +481,9 @@
 		<div class="p-4">
 			<div class="space-y-3">
 				<div>
-					<label for="street1" class="block text-sm font-medium text-gray-700">{m.street_line_1()}*</label>
+					<label for="street1" class="block text-sm font-medium text-gray-700"
+						>{m.street_line_1()}*</label
+					>
 					<input
 						name="street1"
 						type="text"
@@ -481,7 +497,9 @@
 					{/if}
 				</div>
 				<div>
-					<label for="street2" class="block text-sm font-medium text-gray-700">{m.street_line_2()}</label>
+					<label for="street2" class="block text-sm font-medium text-gray-700"
+						>{m.street_line_2()}</label
+					>
 					<input
 						type="text"
 						name="street2"
@@ -506,7 +524,9 @@
 						{/if}
 					</div>
 					<div>
-						<label for="postal" class="block text-sm font-medium text-gray-700">{m.postal_code()}*</label>
+						<label for="postal" class="block text-sm font-medium text-gray-700"
+							>{m.postal_code()}*</label
+						>
 						<input
 							name="postal"
 							type="text"
@@ -522,7 +542,8 @@
 				</div>
 
 				<div>
-					<label for="country" class="block text-sm font-medium text-gray-700">{m.country()}*</label>
+					<label for="country" class="block text-sm font-medium text-gray-700">{m.country()}*</label
+					>
 					<select
 						name="country"
 						value={form.addressForm.countryCode}

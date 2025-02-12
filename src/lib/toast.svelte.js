@@ -26,9 +26,9 @@ function createNotificationStore() {
 		};
 
 		notifications.push(notification);
-		
+
 		setTimeout(() => {
-			const index = notifications.findIndex(n => n.id === notification.id);
+			const index = notifications.findIndex((n) => n.id === notification.id);
 			if (index !== -1) {
 				notifications.splice(index, 1);
 			}
@@ -40,7 +40,7 @@ function createNotificationStore() {
 	 * @param {string} id - Notification ID to remove
 	 */
 	function closeNotif(id) {
-		const index = notifications.findIndex(n => n.id === id);
+		const index = notifications.findIndex((n) => n.id === id);
 		if (index !== -1) {
 			notifications.splice(index, 1);
 		}
@@ -50,9 +50,9 @@ function createNotificationStore() {
 		get notifs() {
 			return notifications;
 		},
-		success: (/** @type {string} */ message, /** @type {number} */ timeout = 3000) => 
+		success: (/** @type {string} */ message, /** @type {number} */ timeout = 3000) =>
 			newNotif(message, timeout, 'success'),
-		error: (/** @type {string} */ message, /** @type {number} */ timeout = 3000) => 
+		error: (/** @type {string} */ message, /** @type {number} */ timeout = 3000) =>
 			newNotif(message, timeout, 'error'),
 		close: closeNotif
 	};

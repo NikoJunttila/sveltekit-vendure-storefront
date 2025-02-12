@@ -6,14 +6,14 @@ mutation paytrailPayment {
     href
   }
 }
-`)
+`);
 export const PaytrailMultiPayment = gql(`
 mutation paytrailMultiPayment {
   createMultiPTintent{
     href
   }
 }
-`)
+`);
 export const StripePaymentIntent = gql(`
 	mutation createStripePaymentIntent {
 	  createStripePaymentIntent
@@ -363,4 +363,3 @@ export const TransitionOrderToState = gql(`
 		}
 	}
 `);
-

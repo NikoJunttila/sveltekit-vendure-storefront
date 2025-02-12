@@ -6,11 +6,7 @@
 	 * and Kazuma Oe (oekazuma) (https://github.com/oekazuma/svelte-meta-tags)
 	 *
 	 **/
-	import {
-		PUBLIC_SITE_NAME,
-		PUBLIC_SITE_URL,
-		PUBLIC_SITE_IMAGE
-	} from '$env/static/public';
+	import { PUBLIC_SITE_NAME, PUBLIC_SITE_URL, PUBLIC_SITE_IMAGE } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages.js';
 	import { page } from '$app/state';
 

@@ -22,7 +22,7 @@
 					emailAddress: stuff.email
 				})
 				.toPromise();
-			console.log(result)
+			console.log(result);
 			if (result.data?.requestPasswordReset?.__typename) {
 				toast.success(m.account_email_sent());
 			} else {
@@ -46,7 +46,7 @@
 	</div>
 
 	<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-		<div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10 dark:bg-gray-800">
+		<div class="bg-white px-4 py-8 shadow dark:bg-gray-800 sm:rounded-lg sm:px-10">
 			<form class="space-y-6" onsubmit={resetPass}>
 				{#if stuff.error}
 					<div class="rounded-md bg-red-50 p-4 dark:bg-red-900/50">
@@ -71,7 +71,7 @@
 							required
 							placeholder={m.placeholder_email()}
 							bind:value={stuff.email}
-							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
 						/>
 					</div>
 				</div>

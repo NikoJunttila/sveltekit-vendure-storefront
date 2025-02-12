@@ -3,8 +3,12 @@
 	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_VENDURE_MULTI } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages';
 
-	export let order: any;
-	export let errorMessage: string;
+	interface Props {
+		order: any;
+		errorMessage: string;
+	}
+
+	let { order, errorMessage }: Props = $props();
 </script>
 
 <section class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">

@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	export let hit: any;
+	interface Props {
+		hit: any;
+	}
+
+	let { hit }: Props = $props();
 	const dispatch = createEventDispatcher();
 </script>
 
 <button
-	on:click={() => dispatch('click', `${hit.slug}`)}
+	onclick={() => dispatch('click', `${hit.slug}`)}
 	class="cursor-pointer overflow-hidden p-4 text-left hover:bg-stone-100 dark:hover:bg-stone-700"
 >
 	<h3 class="font-bold">{hit.productName}</h3>

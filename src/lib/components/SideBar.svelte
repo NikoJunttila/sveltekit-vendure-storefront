@@ -14,7 +14,6 @@
 	import { SignOut } from '$lib/vendure';
 	import { MoveRight, Plus, Minus } from 'lucide-svelte';
 
-
 	const client = getContextClient();
 	const handleSignOut = async () => {
 		const result = await client.mutation(SignOut, {}).toPromise();
@@ -50,12 +49,7 @@
 		<X class="h-9 w-9" />
 	</button>
 {:else}
-	<button
-		class="items-center align-middle"
-		{...$trigger}
-		use:trigger
-		aria-label={m.menu_open()}
-	>
+	<button class="items-center align-middle" {...$trigger} use:trigger aria-label={m.menu_open()}>
 		<Menu class="h-9 w-9" />
 	</button>
 {/if}
@@ -70,7 +64,7 @@
 		<div
 			{...$content}
 			use:content
-			class="fixed left-0 top-0 z-50 h-screen w-[80%] overflow-auto bg-primary-400 dark:bg-primary-800 p-[20px]  shadow-lg focus:outline-none sm:w-[70%]"
+			class="fixed left-0 top-0 z-50 h-screen w-[80%] overflow-auto bg-primary-400 p-[20px] shadow-lg focus:outline-none dark:bg-primary-800 sm:w-[70%]"
 			transition:fly={{ x: '-100%', duration: 300, opacity: 1 }}
 		>
 			<div class="items-middle mb-6 flex">
@@ -83,50 +77,50 @@
 					<X class="h-9 w-9" />
 				</button>
 			</div>
-			<div class="h-100% my-8 flex flex-col space-y-12 pb-6 font-bold text-xl">
+			<div class="h-100% my-8 flex flex-col space-y-12 pb-6 text-xl font-bold">
 				<!-- Products section -->
 				<div class="">
 					<button
 						transition:fade={{ duration: 300 }}
 						onclick={() => (showCollections = !showCollections)}
-						class="group mr-2 px-3 py-3 w-full font-medium transition-all duration-200 ease-in-out flex"
+						class="group mr-2 flex w-full px-3 py-3 font-medium transition-all duration-200 ease-in-out"
 						aria-label={m.menu_toggle_collections()}
 					>
-					{m.menu_products()}
-						<span class="ml-auto relative">
-						{#if showCollections}
-						<div class="absolute right-1 top-1" in:fly={{ y:-50, duration: 200}}>
-							<Minus />
-						</div>
-						{:else}
-						<div class="absolute right-1 top-1" out:fly={{ y:50, duration: 200}}>
-							<Plus />
-						</div>
-						{/if}
+						{m.menu_products()}
+						<span class="relative ml-auto">
+							{#if showCollections}
+								<div class="absolute right-1 top-1" in:fly={{ y: -50, duration: 200 }}>
+									<Minus />
+								</div>
+							{:else}
+								<div class="absolute right-1 top-1" out:fly={{ y: 50, duration: 200 }}>
+									<Plus />
+								</div>
+							{/if}
 						</span>
 					</button>
-						{#if showCollections}
-							<ul class="flex flex-col gap-1 items-center" in:fade={{ duration: 200 }}>
-								<a
+					{#if showCollections}
+						<ul class="flex flex-col items-center gap-1" in:fade={{ duration: 200 }}>
+							<a
 								href="/all/1"
-								class="text-center h-full flex bg-primary-600 hover:bg-primary-500 rounded-md w-[90%] p-4 duration-300"
+								class="flex h-full w-[90%] rounded-md bg-primary-600 p-4 text-center duration-300 hover:bg-primary-500"
 								aria-label={m.menu_view_all_products()}
 							>
-									{m.menu_all_products()}
-									<span class="ml-auto"><MoveRight></MoveRight></span>
+								{m.menu_all_products()}
+								<span class="ml-auto"><MoveRight></MoveRight></span>
 							</a>
-								{#each useFragment(Collection, collections) as collection}
-										<a
-											href="/collection/{collection.slug}"
-											class="text-center h-full flex bg-primary-600 hover:bg-primary-500 rounded-md w-[90%] p-4 duration-300"
-											aria-label={m.menu_view_collection({ collectionName: collection.name })}
-										>
-												{collection.name}
-												<span class="ml-auto"><MoveRight></MoveRight></span>
-										</a>
-								{/each}
-							</ul>
-						{/if}
+							{#each useFragment(Collection, collections) as collection}
+								<a
+									href="/collection/{collection.slug}"
+									class="flex h-full w-[90%] rounded-md bg-primary-600 p-4 text-center duration-300 hover:bg-primary-500"
+									aria-label={m.menu_view_collection({ collectionName: collection.name })}
+								>
+									{collection.name}
+									<span class="ml-auto"><MoveRight></MoveRight></span>
+								</a>
+							{/each}
+						</ul>
+					{/if}
 				</div>
 
 				<!-- Information about us section -->

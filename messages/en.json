@@ -2,6 +2,7 @@
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"hello_world": "Hello, {name} from en!",
 	"about_us_title": "About Us",
+	"site_description": "We sell the best stuff everywhere. Everyone loves it. The best cameras. The best plants. The best sofas. We don't really ship anything. This is a sample site. Satisfaction guaranteed.",
 	"about_us_description": "Learn more about our company, our mission, and what drives us to deliver the best products and services.",
 	"learn_more_about_company": "Learn more about our company",
 	"learn_more": "Learn More",

@@ -3,27 +3,43 @@
 	// Most of this is from svelte-themes (https://github.com/beynar/svelte-themes) by @beynar
 	//
 	import { browser } from '$app/environment';
-	import { themeStore, setTheme } from '$lib/stores';
+	//import { themeStore, setTheme } from '$lib/stores';
+	import { themeStore, setTheme } from '$src/lib/themeStore.svelte';
+
 	import ThemeScript from '$lib/components/ThemeScript.svelte';
 
-	/** Forced theme name for the current page */
-	export let forcedTheme: string | undefined = undefined;
-	/** Disable all CSS transitions when switching themes */
-	export let disableTransitionOnChange = false;
-	/** Whether to switch between dark and light themes based on prefers-color-scheme */
-	export let enableSystem: boolean = true;
-	/** Whether to indicate to browsers which color scheme is used (dark or light) for built-in UI like inputs and buttons */
-	export let enableColorScheme: boolean = true;
-	/** Key used to store theme setting in localStorage */
-	export let storageKey: string = 'theme';
-	/** List of all available theme names */
-	export let themes: string[] = enableSystem ? ['light', 'dark', 'system'] : ['light', 'dark'];
-	/** Default theme name (for v0.0.12 and lower the default was light). If `enableSystem` is false, the default theme is light */
-	export let defaultTheme: string = enableSystem ? 'system' : 'light';
-	/** HTML attribute modified based on the active theme. Accepts `class` and `data-*` (meaning any data attribute, `data-mode`, `data-color`, etc.) */
-	export let attribute: string | 'class' = 'class';
-	/** Mapping of theme name to HTML attribute value. Object where key is the theme name and value is the attribute value */
-	export let value: { [themeName: string]: string } | undefined = undefined;
+	interface Props {
+		/** Forced theme name for the current page */
+		forcedTheme?: string | undefined;
+		/** Disable all CSS transitions when switching themes */
+		disableTransitionOnChange?: boolean;
+		/** Whether to switch between dark and light themes based on prefers-color-scheme */
+		enableSystem?: boolean;
+		/** Whether to indicate to browsers which color scheme is used (dark or light) for built-in UI like inputs and buttons */
+		enableColorScheme?: boolean;
+		/** Key used to store theme setting in localStorage */
+		storageKey?: string;
+		/** List of all available theme names */
+		themes?: string[];
+		/** Default theme name (for v0.0.12 and lower the default was light). If `enableSystem` is false, the default theme is light */
+		defaultTheme?: string;
+		/** HTML attribute modified based on the active theme. Accepts `class` and `data-*` (meaning any data attribute, `data-mode`, `data-color`, etc.) */
+		attribute?: string | 'class';
+		/** Mapping of theme name to HTML attribute value. Object where key is the theme name and value is the attribute value */
+		value?: { [themeName: string]: string } | undefined;
+	}
+
+	let {
+		forcedTheme = undefined,
+		disableTransitionOnChange = false,
+		enableSystem = true,
+		enableColorScheme = true,
+		storageKey = 'theme',
+		themes = enableSystem ? ['light', 'dark', 'system'] : ['light', 'dark'],
+		defaultTheme = enableSystem ? 'system' : 'light',
+		attribute = 'class',
+		value = undefined
+	}: Props = $props();
 
 	const colorSchemes = ['light', 'dark'];
 	const MEDIA = '(prefers-color-scheme: dark)';
@@ -64,7 +80,7 @@
 
 	const initialTheme = getTheme(storageKey, defaultTheme);
 
-	themeStore.set({
+	themeStore.setWhole({
 		//@ts-ignore
 		theme: initialTheme,
 		forcedTheme,
@@ -73,14 +89,15 @@
 		systemTheme: (enableSystem ? getTheme(storageKey) : undefined) as 'light' | 'dark' | undefined
 	});
 
-	$: theme = $themeStore.theme;
-	$: resolvedTheme = $themeStore.resolvedTheme;
+	let theme = $derived(themeStore.theme.theme);
+	let resolvedTheme = $derived(themeStore.theme.resolvedTheme);
 
 	const attrs = !value ? themes : Object.values(value);
 
 	const handleMediaQuery = (e?: any) => {
 		const systemTheme = getSystemTheme(e);
-		$themeStore.resolvedTheme = systemTheme;
+		//@ts-ignore
+		themeStore.theme.resolvedTheme = systemTheme;
 		if (theme === 'system' && !forcedTheme) changeTheme(systemTheme, false);
 	};
 
@@ -134,21 +151,23 @@
 	};
 
 	// color-scheme handling
-	$: if (enableColorScheme && browser) {
-		// color-scheme tells browser how to render built-in elements like forms, scrollbars, etc.
-		let colorScheme;
-		if (forcedTheme && colorSchemes.includes(forcedTheme)) colorScheme = forcedTheme;
-		else if (theme && colorSchemes.includes(theme)) colorScheme = theme;
-		else if (theme === 'system') colorScheme = resolvedTheme || null;
-		else colorScheme = null;
-		// if color-scheme is null, this will remove the property
-		document.documentElement.style.setProperty('color-scheme', colorScheme);
-	}
+	$effect.pre(() => {
+		if (enableColorScheme && browser) {
+			// color-scheme tells browser how to render built-in elements like forms, scrollbars, etc.
+			let colorScheme;
+			if (forcedTheme && colorSchemes.includes(forcedTheme)) colorScheme = forcedTheme;
+			else if (theme && colorSchemes.includes(theme)) colorScheme = theme;
+			else if (theme === 'system') colorScheme = resolvedTheme || null;
+			else colorScheme = null;
+			// if color-scheme is null, this will remove the property
+			document.documentElement.style.setProperty('color-scheme', colorScheme);
+		}
+	});
 
-	$: {
+	$effect.pre(() => {
 		if (forcedTheme) changeTheme(forcedTheme, true, false);
 		else if (theme) changeTheme(theme);
-	}
+	});
 </script>
 
 <ThemeScript {forcedTheme} {storageKey} {attribute} {enableSystem} {defaultTheme} {value} {attrs} />

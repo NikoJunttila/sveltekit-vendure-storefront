@@ -14,7 +14,7 @@
 </script>
 
 <div
-	class="flex flex-col sm:flex-row items-center rounded-md p-0.5 text-xs bg-primary-900 text-white"
+	class="flex flex-col items-center rounded-md bg-primary-900 p-0.5 text-xs text-white sm:flex-row"
 >
 	<button
 		class="relative rounded px-2 py-1 font-medium transition-colors duration-200 focus:outline-none"
@@ -34,7 +34,7 @@
 
 <style lang="postcss">
 	.active-lang {
-		@apply z-10 text-white bg-primary-600; /* Darker background for better contrast */
+		@apply z-10 bg-primary-600 text-white; /* Darker background for better contrast */
 	}
 	button:not(.active-lang) {
 		@apply text-gray-300 hover:text-secondary-500; /* Darker text for better readability */

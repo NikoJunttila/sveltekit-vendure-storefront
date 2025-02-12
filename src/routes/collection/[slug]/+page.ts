@@ -2,7 +2,7 @@ import type { PageLoad } from './$types';
 import { GetCollection, GetCollections, SearchProducts } from '$lib/vendure';
 import { type SearchInput } from '$src/lib/gql/graphql';
 
-export const ssr = false
+export const ssr = false;
 
 export const load = async function ({ parent, params }) {
 	const { client } = await parent();
@@ -21,7 +21,10 @@ export const load = async function ({ parent, params }) {
 			.query(GetCollection, { slug: params.slug })
 			.toPromise()
 			.then((result) => result?.data?.collection),
-		products: await client.query(GetCollection, { slug: params.slug }).toPromise().then(result => result?.data?.search?.items),
+		products: await client
+			.query(GetCollection, { slug: params.slug })
+			.toPromise()
+			.then((result) => result?.data?.search?.items),
 		collections: await client
 			.query(GetCollections, {})
 			.toPromise()
@@ -30,5 +33,5 @@ export const load = async function ({ parent, params }) {
 			.query(SearchProducts, { input })
 			.toPromise()
 			.then((result) => result?.data?.search)
-		};
+	};
 } satisfies PageLoad;

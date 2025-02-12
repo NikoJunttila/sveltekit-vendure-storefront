@@ -5,11 +5,7 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import { toast } from '$lib/toast.svelte';
 	import { userStore } from '$src/lib/stores';
-	import {
-		GetCustomer,
-		SignIn,
-		GetActiveOrder
-	} from '$src/lib/vendure';
+	import { GetCustomer, SignIn, GetActiveOrder } from '$src/lib/vendure';
 	import AuthContainer from '$src/lib/components/AuthContainer.svelte';
 	import Signup from '$src/lib/components/Signup.svelte';
 	import RequestPassReset from '$src/lib/components/RequestPassReset.svelte';
@@ -129,10 +125,9 @@
 
 <AuthContainer>
 	{#if processing}
-		<div class="flex justify-center items-center p-4">
-			<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" ></div>
+		<div class="flex items-center justify-center p-4">
+			<div class="h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900"></div>
 		</div>
-
 	{:else if userState === 'signIn'}
 		<form onsubmit={handleLogin} class="space-y-4">
 			<h3 class="font-heading mb-4 text-center text-3xl font-semibold">
@@ -140,7 +135,7 @@
 			</h3>
 			<p class="mb-6 text-lg">{m.login_text()}</p>
 
-			<div class="space-y-2 ">
+			<div class="space-y-2">
 				<label class="block text-sm font-medium" for="email">
 					{m.email()}
 				</label>
@@ -152,7 +147,7 @@
 					class:border-red-500={errors.email}
 				/>
 				{#if errors.email}
-					<p class="text-red-500 text-sm">{errors.email}</p>
+					<p class="text-sm text-red-500">{errors.email}</p>
 				{/if}
 			</div>
 
@@ -168,7 +163,7 @@
 					class:border-red-500={errors.password}
 				/>
 				{#if errors.password}
-					<p class="text-red-500 text-sm">{errors.password}</p>
+					<p class="text-sm text-red-500">{errors.password}</p>
 				{/if}
 			</div>
 
@@ -176,54 +171,35 @@
 				{m.account_sign_in()}
 			</button>
 
-			<div class="text-center text-sm font-medium space-y-4">
+			<div class="space-y-4 text-center text-sm font-medium">
 				<div>
 					<span>{m.account_need_account()}&nbsp;</span>
-					<button
-						type="button"
-						onclick={() => (userState = 'signUp')}
-						class="button"
-					>
+					<button type="button" onclick={() => (userState = 'signUp')} class="button">
 						{m.create_account()}
 					</button>
 				</div>
 
-				<button
-					type="button"
-					onclick={() => (userState = 'forgot')}
-					class="button"
-				>
+				<button type="button" onclick={() => (userState = 'forgot')} class="button">
 					{m.account_forgot_password()}
 				</button>
 			</div>
 		</form>
-
 	{:else if userState === 'signUp'}
 		<Signup />
-		<div class="text-center text-sm font-medium mt-4">
+		<div class="mt-4 text-center text-sm font-medium">
 			<span>{m.already_account()}&nbsp;</span>
-			<button
-				type="button"
-				onclick={() => (userState = 'signIn')}
-				class="button"
-			>
+			<button type="button" onclick={() => (userState = 'signIn')} class="button">
 				{m.sign_in()}
 			</button>
 		</div>
-
 	{:else if userState === 'forgot'}
 		<RequestPassReset />
 
 		<div class="pt-6 text-center text-sm font-medium">
-			<button
-				type="button"
-				onclick={() => (userState = 'signIn')}
-				class="button"
-			>
+			<button type="button" onclick={() => (userState = 'signIn')} class="button">
 				&larr;&nbsp; {m.sign_in_instead()}
 			</button>
 		</div>
-
 	{:else if userState === 'reset'}
 		<form onsubmit={handleResetPassword} class="space-y-4">
 			<h3 class="font-heading mb-4 text-center text-3xl font-semibold">
@@ -242,7 +218,7 @@
 					class:border-red-500={errors.password}
 				/>
 				{#if errors.password}
-					<p class="text-red-500 text-sm">{errors.password}</p>
+					<p class="text-sm text-red-500">{errors.password}</p>
 				{/if}
 			</div>
 

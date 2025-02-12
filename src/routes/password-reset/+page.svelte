@@ -8,9 +8,9 @@
 	const { data } = $props();
 	const token = $derived(data.code);
 	const client = getContextClient();
-	
-	let password = $state("");
-	let confirmPassword = $state("");
+
+	let password = $state('');
+	let confirmPassword = $state('');
 	let isLoading = $state(false);
 
 	function validatePassword(pass: string): boolean {
@@ -31,10 +31,12 @@
 		isLoading = true;
 
 		try {
-			const result = await client.mutation(ResetPassword, {
-				token,
-				password
-			}).toPromise();
+			const result = await client
+				.mutation(ResetPassword, {
+					token,
+					password
+				})
+				.toPromise();
 
 			if (result.error) {
 				throw new Error(result.error.message);
@@ -54,10 +56,10 @@
 {#if token}
 	<div class="password-reset-container">
 		<h1>{m.title()}</h1>
-		
+
 		<div class="form-group">
-			<input 
-				type="password" 
+			<input
+				type="password"
 				bind:value={password}
 				placeholder={m.newPassword()}
 				disabled={isLoading}
@@ -66,8 +68,8 @@
 		</div>
 
 		<div class="form-group">
-			<input 
-				type="password" 
+			<input
+				type="password"
 				bind:value={confirmPassword}
 				placeholder={m.confirmPassword()}
 				disabled={isLoading}
@@ -79,8 +81,8 @@
 			{m.passwordRequirements()}
 		</p>
 
-		<button 
-			onclick={resetPass} 
+		<button
+			onclick={resetPass}
 			disabled={isLoading || !password || !confirmPassword}
 			class="reset-button"
 		>

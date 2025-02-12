@@ -1,4 +1,4 @@
-import { gql } from "$lib/gql"
+import { gql } from '$lib/gql';
 
 export const ActiveChannel = gql(`
 query ActiveChannel {
@@ -14,4 +14,4 @@ query ActiveChannel {
     }
   }
 }    
-`)
+`);
