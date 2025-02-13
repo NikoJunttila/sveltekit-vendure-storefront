@@ -1,7 +1,8 @@
-export function clickOutside(node) {
+//@ts-nocheck
+export function clickOutside(node : any) {
 	// the node has been mounted in the DOM
 	window.addEventListener('click', handleClick);
-	function handleClick(e) {
+	function handleClick(e : any) {
 		if (!node.contains(e.target)) {
 			node.dispatchEvent(new CustomEvent('outsideclick'));
 		}
@@ -29,3 +30,37 @@ export const formatCurrency = function (value: number, currencyCode: string, loc
 		return majorUnits.toFixed(2);
 	}
 };
+
+export type HasParent = { id: string; parentId: string | null };
+export type TreeNode<T extends HasParent> = T & {
+    children: Array<TreeNode<T>>;
+};
+export type RootNode<T extends HasParent> = {
+    id?: string;
+    children: Array<TreeNode<T>>;
+};
+
+/**
+ * Builds a tree from an array of nodes which have a parent.
+ * Based on https://stackoverflow.com/a/31247960/772859, modified to preserve ordering.
+ */
+export function arrayToTree<T extends HasParent>(nodes: T[]): TreeNode<T>[] {
+    const map: { [id: string]: TreeNode<T> } = {};
+    const roots: TreeNode<T>[] = [];
+
+    // Initialize all nodes in the map
+    for (const node of nodes) {
+        map[node.id] = { ...node, children: [] };
+    }
+
+    // Assign children to their respective parents
+    for (const node of nodes) {
+        if (node.parentId && map[node.parentId]) {
+            map[node.parentId].children.push(map[node.id]);
+        } else {
+            roots.push(map[node.id]); // Root-level items
+        }
+    }
+
+    return roots;
+}

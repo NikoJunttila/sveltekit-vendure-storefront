@@ -13,6 +13,8 @@
 	import { goto } from '$app/navigation';
 	import { SignOut } from '$lib/vendure';
 	import { MoveRight, Plus, Minus } from 'lucide-svelte';
+	import SidebarCols from './SidebarCols.svelte';
+	import { arrayToTree } from '../utils';
 
 	const client = getContextClient();
 	const handleSignOut = async () => {
@@ -42,6 +44,8 @@
 	});
 
 	let showCollections = $state(false);
+	//@ts-ignore
+	const treeCols = arrayToTree(collections)
 </script>
 
 {#if $open}
@@ -99,8 +103,9 @@
 							{/if}
 						</span>
 					</button>
+					<!-- Collection section -->
 					{#if showCollections}
-						<ul class="flex flex-col items-center gap-1" in:fade={{ duration: 200 }}>
+						<ul class="flex flex-col" in:fade={{ duration: 200 }}>
 							<a
 								href="/all/1"
 								class="flex h-full w-[90%] rounded-md bg-primary-600 p-4 text-center duration-300 hover:bg-primary-500"
@@ -109,16 +114,8 @@
 								{m.menu_all_products()}
 								<span class="ml-auto"><MoveRight></MoveRight></span>
 							</a>
-							{#each useFragment(Collection, collections) as collection}
-								<a
-									href="/collection/{collection.slug}"
-									class="flex h-full w-[90%] rounded-md bg-primary-600 p-4 text-center duration-300 hover:bg-primary-500"
-									aria-label={m.menu_view_collection({ collectionName: collection.name })}
-								>
-									{collection.name}
-									<span class="ml-auto"><MoveRight></MoveRight></span>
-								</a>
-							{/each}
+
+							<SidebarCols collections={treeCols}></SidebarCols>
 						</ul>
 					{/if}
 				</div>

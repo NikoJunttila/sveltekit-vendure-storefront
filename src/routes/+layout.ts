@@ -1,4 +1,4 @@
-import { createClient, GetTopLevelCollections, ActiveChannel, SearchProducts } from '$lib/vendure';
+import { createClient, GetTopLevelCollections, ActiveChannel, SearchProducts, GetCollections } from '$lib/vendure';
 import { type SearchInput } from '$src/lib/gql/graphql';
 const client = createClient();
 
@@ -16,7 +16,7 @@ export async function load() {
 	return {
 		client,
 		collections: await client
-			.query(GetTopLevelCollections, {})
+			.query(GetCollections, {})
 			.toPromise()
 			.then((result) => result?.data?.collections?.items),
 		/* channel: await client.query(ActiveChannel, {}).toPromise().then((result) => result?.data?.activeChannel), */

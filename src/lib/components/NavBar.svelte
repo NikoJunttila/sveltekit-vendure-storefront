@@ -10,6 +10,7 @@
 	import { Heart, Menu, Info } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { PUBLIC_SITE_NAME } from '$env/static/public';
+	import CollectionTree from './CollectionTree.svelte';
 
 	let { collections = [] } = $props();
 
@@ -65,11 +66,11 @@
 		}
 			class:visible={navbarVisible} TO NAVBAR ID
 	}); */
-</script>
 
+</script>
 <header
-	id="navbar"
-	class={'navbar sticky top-0 z-40 border-b border-solid border-secondary-800 bg-slate-100 p-2 dark:bg-slate-800 md:px-4 2xl:mx-auto'}
+id="navbar"
+class={'navbar sticky top-0 z-40 border-b border-solid border-secondary-800 bg-slate-100 p-2 dark:bg-slate-800 md:px-4 2xl:mx-auto'}
 >
 	<div class="mt-3 flex flex-grow items-center justify-between">
 		<div class="flex flex-none items-center">

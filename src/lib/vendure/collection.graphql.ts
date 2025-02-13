@@ -6,6 +6,7 @@ export const Collection = gql(`
 		name
 		slug
 		description
+		parentId
 		parent {
 			id
 			name

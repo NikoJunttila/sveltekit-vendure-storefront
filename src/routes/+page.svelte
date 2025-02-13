@@ -15,6 +15,8 @@
 	import { Collection, SearchResult } from '$lib/vendure';
 	let { data } = $props();
 	let collections: CollectionFragment[] = $state(useFragment(Collection, data.collections || []));
+	let topLevelCollections = $derived(collections.filter((col) => col.parent?.name === "__root_collection__"))
+
 	let products: SearchResultFragment[] = $state(useFragment(SearchResult, data.topProducts) || []);
 
 	const structuredData = {
@@ -47,7 +49,7 @@
 <section class="my-5 p-4 md:my-16">
 	<h2 class="mb-8 text-center text-2xl">{m.collections_description()}</h2>
 	<div class="flex flex-wrap items-center justify-center gap-5">
-		{#each collections.slice(0, 7) as col}
+		{#each topLevelCollections.slice(0, 7) as col}
 			<a
 				href={`/collection/${col.slug}`}
 				class="relative rounded-lg duration-300"
