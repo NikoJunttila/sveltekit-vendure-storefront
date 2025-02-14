@@ -327,5 +327,13 @@
 	"cookie_types_content": "Välttämättömät evästeet, analytiikkaevästeet, markkinointievästeet ja asetusevästeet.",
 	"manage_cookies_title": "Evästeiden hallinta",
 	"manage_cookies_content": "Voit hallita evästeasetuksiasi selaimesi asetuksista tai evästebannerimme kautta.",
-	"password_reset_link_sent":"Salasanan vaihto linkki lähetetty sähköpostiisi"
+	"password_reset_link_sent":"Salasanan vaihto linkki lähetetty sähköpostiisi",
+	"country_required": "Maa on pakollinen",
+    "country_min_length": "Maan nimen on oltava vähintään 2 merkkiä pitkä",
+    "invalid_country": "Virheellinen maa",
+    "selection_error": "Virhe maan valinnassa",
+    "filter_error": "Virhe maiden suodatuksessa",
+    "navigation_error": "Virhe navigoinnissa",
+    "invalid_country_code": "Virheellinen maakoodi",
+    "no_countries_found": "Maita ei löytynyt"
 }

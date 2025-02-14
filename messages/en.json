@@ -326,5 +326,13 @@
 	"cookie_types_title": "Types of Cookies We Use",
 	"cookie_types_content": "Essential cookies, analytics cookies, marketing cookies, and preference cookies.",
 	"manage_cookies_title": "Managing Cookies",
-	"manage_cookies_content": "You can manage your cookie preferences through your browser settings or our cookie banner."
+	"manage_cookies_content": "You can manage your cookie preferences through your browser settings or our cookie banner.",
+	"country_required": "Country is required",
+    "country_min_length": "Country must be at least 2 characters long",
+    "invalid_country": "Invalid country",
+    "selection_error": "An error occurred while selecting the country",
+    "filter_error": "An error occurred while filtering countries",
+    "navigation_error": "An error occurred during navigation",
+    "invalid_country_code": "Invalid country code",
+    "no_countries_found": "No countries found"
 }

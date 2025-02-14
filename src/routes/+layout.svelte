@@ -63,10 +63,6 @@
 		if (browser) {
 			cartQuery.resume();
 			userQuery.resume();
-			/* 			if (data.channel) {
-				//@ts-ignore
-				channelStore.set(data.channel);
-			} */
 		}
 	});
 </script>

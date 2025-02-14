@@ -28,8 +28,8 @@
 	let { valid = $bindable() } = $props();
 	let customerValid = $state(false);
 	let addressValid = $state(false);
-	let countryCode = $state("FI")
-	
+	let countryCode = $state('FI');
+
 	$effect(() => {
 		customerValid = validateCustomerForm();
 		addressValid = validateAddressForm();
@@ -37,7 +37,7 @@
 	});
 	$effect(() => {
 		handleAddressInput('countryCode', countryCode);
-		$inspect(countryCode)
+		$inspect(countryCode);
 	});
 
 	interface CheckoutForm {
@@ -171,7 +171,7 @@
 					defaultBillingAddress: defaultAddress.defaultBillingAddress,
 					defaultShippingAddress: defaultAddress.defaultShippingAddress
 				};
-				countryCode = defaultAddress.country.code || "FI"
+				countryCode = defaultAddress.country.code || 'FI';
 				// Set disabled states for address fields
 				form.disabledFields.address = {
 					city: Boolean(defaultAddress.city),
@@ -299,6 +299,9 @@
 				errors.postalCode = m.invalid_postal_code();
 				isValid = false;
 			}
+		}
+		if (!form.addressForm.countryCode) {
+			isValid = false;
 		}
 
 		form.errors.address = errors;
@@ -549,7 +552,6 @@
 						{/if}
 					</div>
 				</div>
-
 				<CountrySelect bind:selectedCountryCode={countryCode}></CountrySelect>
 			</div>
 		</div>

@@ -10,23 +10,29 @@
 		goto(localisedPath);
 	}
 
-	const currentLang = $derived(page.url.pathname.startsWith('/en') ? 'en' : 'fi');
+	// Determine the current language based on the URL.
+	const currentLang = page.url.pathname.startsWith('/en') ? 'en' : 'fi';
 </script>
 
 <div
+	role="tablist"
 	class="flex flex-col items-center rounded-md bg-primary-900 p-0.5 text-xs text-white sm:flex-row"
 >
 	<button
-		class="relative rounded px-2 py-1 font-medium transition-colors duration-200 focus:outline-none"
+		role="tab"
+		aria-selected={currentLang === 'en'}
+		class="relative rounded px-2 py-1 font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white"
 		class:active-lang={currentLang === 'en'}
-		onclick={() => switchToLanguage('en')}
+		on:click={() => switchToLanguage('en')}
 	>
 		EN
 	</button>
 	<button
-		class="relative w-full rounded px-2 py-1 font-medium transition-colors duration-200 focus:outline-none"
+		role="tab"
+		aria-selected={currentLang === 'fi'}
+		class="relative rounded px-2 py-1 font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white"
 		class:active-lang={currentLang === 'fi'}
-		onclick={() => switchToLanguage('fi')}
+		on:click={() => switchToLanguage('fi')}
 	>
 		FI
 	</button>
@@ -34,9 +40,9 @@
 
 <style lang="postcss">
 	.active-lang {
-		@apply z-10 bg-primary-600 text-white; /* Darker background for better contrast */
+		@apply z-10 bg-primary-600 text-white; /* Darker background for the active tab */
 	}
 	button:not(.active-lang) {
-		@apply text-gray-300 hover:text-secondary-500; /* Darker text for better readability */
+		@apply text-gray-300 hover:text-secondary-500; /* Contrast for inactive tabs */
 	}
 </style>

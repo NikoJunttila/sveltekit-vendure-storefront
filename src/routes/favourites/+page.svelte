@@ -102,7 +102,7 @@
 		</div>
 	{:else if products.length === 0}
 		<div class="py-16 text-center">
-			<p class="text-lg text-gray-500">{m.favorites_empty()}</p>
+			<p class="text-lg text-gray-500 dark:text-gray-200">{m.favorites_empty()}</p>
 		</div>
 	{:else}
 		<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
