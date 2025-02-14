@@ -44,7 +44,7 @@ export type RootNode<T extends HasParent> = {
  * Builds a tree from an array of nodes which have a parent.
  * Based on https://stackoverflow.com/a/31247960/772859, modified to preserve ordering.
  */
-export function arrayToTree<T extends HasParent>(nodes: T[]): TreeNode<T>[] {
+export function arrayToTree(nodes: any): any[] {
     const map: { [id: string]: TreeNode<T> } = {};
     const roots: TreeNode<T>[] = [];
 
