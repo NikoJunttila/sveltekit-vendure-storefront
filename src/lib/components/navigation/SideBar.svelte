@@ -14,7 +14,7 @@
 	import { SignOut } from '$lib/vendure';
 	import { MoveRight, Plus, Minus } from 'lucide-svelte';
 	import SidebarCols from './SidebarCols.svelte';
-	import { arrayToTree } from '../utils';
+	import { arrayToTree } from '../../utils';
 
 	const client = getContextClient();
 	const handleSignOut = async () => {

@@ -20,7 +20,7 @@
 			<h1 class="text-3xl font-bold sm:text-4xl">
 				{m.our_collections()}
 			</h1>
-			<p class="mx-auto mt-4 max-w-md text-gray-500">
+			<p class="mx-auto mt-4 max-w-md text-gray-500 dark:text-gray-200">
 				{m.collections_description()}
 			</p>
 		</header>

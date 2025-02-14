@@ -23,6 +23,7 @@
 		if (stuff.password.length < 4) {
 			toast.error(m.passwordTooShort());
 			stuff.error = m.passwordTooShort();
+			stuff.loading = false;
 			return;
 		}
 		try {

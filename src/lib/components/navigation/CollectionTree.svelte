@@ -1,4 +1,5 @@
 <script lang="ts">
+  //useless file
   import CollectionTree from './CollectionTree.svelte';
   
   interface Props {

@@ -20,6 +20,7 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import { userStore } from '../../stores';
 	import { useFragment } from '$src/lib/gql';
+	import CountrySelect from './CountrySelect.svelte';
 
 	const client = getContextClient();
 	const user = $derived(useFragment(Customer, $userStore));
@@ -27,11 +28,16 @@
 	let { valid = $bindable() } = $props();
 	let customerValid = $state(false);
 	let addressValid = $state(false);
-
+	let countryCode = $state("FI")
+	
 	$effect(() => {
 		customerValid = validateCustomerForm();
 		addressValid = validateAddressForm();
 		valid = customerValid && addressValid;
+	});
+	$effect(() => {
+		handleAddressInput('countryCode', countryCode);
+		$inspect(countryCode)
 	});
 
 	interface CheckoutForm {
@@ -92,12 +98,12 @@
 				streetLine2: false
 			}
 		},
-
 		errors: {
 			customer: {},
 			address: {}
 		}
 	});
+
 	const updateCustomerFunc = async (input: UpdateCustomerInput) => {
 		try {
 			const result = await client.mutation(updateCustomer, { input }).toPromise();
@@ -165,7 +171,7 @@
 					defaultBillingAddress: defaultAddress.defaultBillingAddress,
 					defaultShippingAddress: defaultAddress.defaultShippingAddress
 				};
-
+				countryCode = defaultAddress.country.code || "FI"
 				// Set disabled states for address fields
 				form.disabledFields.address = {
 					city: Boolean(defaultAddress.city),
@@ -384,7 +390,10 @@
 				await setCustomer(form.customerForm);
 			}
 			if (savedAddress) {
-				form.addressForm = JSON.parse(savedAddress);
+				const parsedAddress = JSON.parse(savedAddress);
+				form.addressForm = parsedAddress;
+				// Update countryCode from saved address
+				countryCode = parsedAddress.countryCode || 'FI';
 				await Promise.all([
 					setShippingAddress(form.addressForm),
 					setBillingAddress(form.addressForm)
@@ -396,7 +405,7 @@
 
 <div class="grid gap-4 text-black md:grid-cols-2">
 	<!-- Customer Form -->
-	<div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
+	<div class=" rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
 		<div class="border-b border-gray-200 bg-gray-50 px-4 py-3">
 			<h2 class="text-lg font-semibold text-gray-900">{m.customer_information()}</h2>
 		</div>
@@ -474,7 +483,7 @@
 	</div>
 
 	<!-- Address Form -->
-	<div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
+	<div class="rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
 		<div class="border-b border-gray-200 bg-gray-50 px-4 py-3">
 			<h2 class="text-lg font-semibold text-gray-900">{m.address_information()}</h2>
 		</div>
@@ -541,19 +550,7 @@
 					</div>
 				</div>
 
-				<div>
-					<label for="country" class="block text-sm font-medium text-gray-700">{m.country()}*</label
-					>
-					<select
-						name="country"
-						value={form.addressForm.countryCode}
-						onchange={(e) => handleAddressInput('countryCode', e.currentTarget.value)}
-						required
-						class="mt-1 block w-full rounded-md border-gray-300 bg-white py-2 pl-3 pr-10 text-sm shadow-sm transition duration-150 focus:border-lime-500 focus:outline-none focus:ring-lime-500"
-					>
-						<option value="FI" selected>{m.finland()}</option>
-					</select>
-				</div>
+				<CountrySelect bind:selectedCountryCode={countryCode}></CountrySelect>
 			</div>
 		</div>
 	</div>

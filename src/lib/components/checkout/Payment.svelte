@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { PaytrailPayment, PaytrailMultiPayment } from '../vendure';
+	import { PaytrailPayment, PaytrailMultiPayment } from '../../vendure';
 	import { getContextClient } from '@urql/svelte';
 	import Paytrail from './Paytrail.svelte';
-	import StripeComponent from './checkout/StripeComponent.svelte';
+	import StripeComponent from './StripeComponent.svelte';
 	import { onMount } from 'svelte';
 	import * as m from '$lib/paraglide/messages.js';
 
@@ -19,7 +19,6 @@
 	const client = getContextClient();
 
 	async function getPaytrailMultiHref(): Promise<string> {
-		console.error('xdd?');
 		try {
 			const res = await client
 				.mutation(PaytrailMultiPayment, {})

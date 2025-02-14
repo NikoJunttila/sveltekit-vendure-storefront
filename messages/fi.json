@@ -56,6 +56,7 @@
 	"deliveryOptionsContent": "Normaali toimitusaika on 3-5 arkipäivää. Pikatoimitus saatavilla lisämaksusta. Digitaaliset tuotteet toimitetaan välittömästi sähköpostitse.",
 	"returnsContent": "Avattomia tuotteita voidaan palauttaa 14 päivän kuluessa toimituksesta. Ota yhteyttä palautusluvan saamiseksi. Digitaalisia tuotteita ei palauteta.",
 	"liabilityContent": "Emme vastaa kuljetusyhtiön tai tullin aiheuttamista viivästyksistä. Vaurioituneet tuotteet on ilmoitettava 48 tunnin kuluessa toimituksesta.",
+	"company_country":"Suomi",
 
 	"shop_now": "Osta nyt",
 	"no_products_found": "Tuotteita ei löytynyt",
@@ -278,6 +279,7 @@
 	"errorMessages_passwordMismatch": "Salasanat eivät täsmää",
 	"errorMessages_passwordTooShort": "Salasanan tulee olla vähintään 8 merkkiä pitkä",
 	"passwordTooShort": "Salasanan tulee olla vähintään 4 merkkiä pitkä",
+	"change_password":"Vaihda salasana",
 	"orderContact": "Tilaukseen liittyvissä kysymyksissä ota yhteyttä sähköpostitse osoitteeseen {email}.",
 	"hot_products": "Kuumat tuotteet!",
 	"no_addresses": "Ei tallennettuja osoitteita",
@@ -324,5 +326,6 @@
 	"cookie_types_title": "Käyttämämme evästetyypit",
 	"cookie_types_content": "Välttämättömät evästeet, analytiikkaevästeet, markkinointievästeet ja asetusevästeet.",
 	"manage_cookies_title": "Evästeiden hallinta",
-	"manage_cookies_content": "Voit hallita evästeasetuksiasi selaimesi asetuksista tai evästebannerimme kautta."
+	"manage_cookies_content": "Voit hallita evästeasetuksiasi selaimesi asetuksista tai evästebannerimme kautta.",
+	"password_reset_link_sent":"Salasanan vaihto linkki lähetetty sähköpostiisi"
 }

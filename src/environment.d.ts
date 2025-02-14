@@ -22,7 +22,6 @@ declare global {
 			PUBLIC_SITE_CITY: string;
 			PUBLIC_SITE_STATE: string;
 			PUBLIC_SITE_ZIP: string;
-			PUBLIC_SITE_COUNTRY: string;
 			PUBLIC_SITE_EMAIL: string;
 			PUBLIC_SITE_PHONE: string;
 			PUBLIC_FACEBOOK_URL: string;

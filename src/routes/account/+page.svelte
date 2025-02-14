@@ -4,11 +4,12 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import * as m from '$lib/paraglide/messages.js';
 	import { toast } from '$lib/toast.svelte';
-	import { userStore } from '$src/lib/stores';
+	import { userStore } from '$lib/stores';
 	import { GetCustomer, SignIn, GetActiveOrder } from '$src/lib/vendure';
-	import AuthContainer from '$src/lib/components/AuthContainer.svelte';
-	import Signup from '$src/lib/components/Signup.svelte';
-	import RequestPassReset from '$src/lib/components/RequestPassReset.svelte';
+	import AuthContainer from '$lib/components/account/AuthContainer.svelte';
+	import Signup from '$lib/components/account/Signup.svelte';
+	import RequestPassReset from '$lib/components/account/RequestPassReset.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 
 	type UserState = 'signIn' | 'signUp' | 'forgot' | 'reset';
 	let userState: UserState = $state('signIn');
@@ -37,7 +38,7 @@
 		if (!userInfo.password) {
 			errors.password = m.error_password_required();
 			isValid = false;
-		} else if (userInfo.password.length < 6) {
+		} else if (userInfo.password.length < 4) {
 			errors.password = m.error_password_length();
 			isValid = false;
 		}
@@ -79,49 +80,14 @@
 			processing = false;
 		}
 	}
-
-	async function handleForgotPassword(event: SubmitEvent) {
-		event.preventDefault();
-		if (!userInfo.email) {
-			errors.email = m.error_email_required();
-			return;
-		}
-
-		processing = true;
-
-		try {
-			// TODO: Implement forgot password logic
-			toast.success(m.reset_instructions_sent());
-			userState = 'signIn';
-		} catch (error) {
-			console.error('Forgot password error:', error);
-			toast.error(m.error_general());
-		} finally {
-			processing = false;
-		}
-	}
-
-	async function handleResetPassword(event: SubmitEvent) {
-		event.preventDefault();
-		if (!userInfo.password) {
-			errors.password = m.error_password_required();
-			return;
-		}
-
-		processing = true;
-
-		try {
-			// TODO: Implement reset password logic
-			toast.success(m.reset_success());
-			userState = 'signIn';
-		} catch (error) {
-			console.error('Reset password error:', error);
-			toast.error(m.error_general());
-		} finally {
-			processing = false;
-		}
-	}
 </script>
+
+<Meta
+config={{
+	title: m.sign_in(),
+	description: m.sign_in()
+}}
+/>
 
 <AuthContainer>
 	{#if processing}
@@ -194,37 +160,10 @@
 		</div>
 	{:else if userState === 'forgot'}
 		<RequestPassReset />
-
 		<div class="pt-6 text-center text-sm font-medium">
 			<button type="button" onclick={() => (userState = 'signIn')} class="button">
 				&larr;&nbsp; {m.sign_in_instead()}
 			</button>
 		</div>
-	{:else if userState === 'reset'}
-		<form onsubmit={handleResetPassword} class="space-y-4">
-			<h3 class="font-heading mb-4 text-center text-3xl font-semibold">
-				{m.account_reset_password()}
-			</h3>
-
-			<div class="space-y-2">
-				<label class="block text-sm font-medium" for="new-password">
-					{m.password()}
-				</label>
-				<input
-					id="new-password"
-					type="password"
-					bind:value={userInfo.password}
-					class="input w-full"
-					class:border-red-500={errors.password}
-				/>
-				{#if errors.password}
-					<p class="text-sm text-red-500">{errors.password}</p>
-				{/if}
-			</div>
-
-			<button type="submit" class="button w-full">
-				{m.request_reset()}
-			</button>
-		</form>
 	{/if}
 </AuthContainer>

@@ -8,7 +8,8 @@
 		updateCustomer,
 		updateCustomerAddress,
 		CreateCustomerAddress,
-		GetCustomer
+		GetCustomer,
+		RequestPasswordReset
 	} from '$src/lib/vendure';
 	import type {
 		UpdateCustomerInput,
@@ -19,6 +20,7 @@
 	import { Customer } from '$src/lib/vendure';
 	import * as m from '$lib/paraglide/messages';
 	import { toast } from '$src/lib/toast.svelte';
+	import Meta from '$src/lib/components/Meta.svelte';
 
 	const user = $derived(useFragment(Customer, $userStore));
 	const isLoading = $derived(!user || Object.keys(user).length === 0);
@@ -79,7 +81,7 @@
 			customFields: {}
 		};
 
-		const defaultAddress = user.addresses?.find((addr: any) => addr.defaultShippingAddress);
+		const defaultAddress : any = user.addresses?.find((addr: any) => addr.defaultShippingAddress);
 		if (defaultAddress) {
 			addressFormData = {
 				id: defaultAddress.id,
@@ -160,7 +162,33 @@
 		if (!dateString) return 'In Progress';
 		return new Date(dateString).toLocaleDateString('fi-FI');
 	};
+
+	async function resetPass(e: SubmitEvent) {
+		e.preventDefault();
+		try {
+			const result = await client
+				.mutation(RequestPasswordReset, {
+					emailAddress: user?.emailAddress!
+				})
+				.toPromise();
+			if (result.data?.requestPasswordReset?.__typename) {
+				toast.success(m.password_reset_link_sent());
+			} else {
+				//@ts-ignore
+				toast.error( result.data?.registerCustomerAccount.message || m.generic_error());
+			}
+		} catch (e) {
+			toast.error(m.unexpected_error());
+		}
+	}
 </script>
+
+<Meta
+config={{
+	title: m.customer_profile(),
+	description: m.customer_profile()
+}}
+/>
 
 {#if isLoading}
 	<div class="flex min-h-screen items-center justify-center p-4">
@@ -181,6 +209,29 @@
 				<div>
 					<h1 class="text-2xl font-bold text-gray-900 lg:text-3xl">{m.customer_profile()}</h1>
 				</div>
+				<form onsubmit={resetPass}>
+					<button
+					type="submit"
+					class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+					>
+					<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-5 w-5"
+					viewBox="0 0 24 24"
+							stroke-width="2"
+							stroke="currentColor"
+							fill="none"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							>
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+							<path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+							<path d="M16 5l3 3" />
+						</svg>
+						{m.change_password()}
+					</button>
+				</form>
 				{#if !isEditing}
 					<button
 						onclick={startEditing}
@@ -258,7 +309,7 @@
 												>{m.full_name()}
 												<input
 													type="text"
-													bind:value={addressFormData.fullName}
+													bind:value={addressFormData!.fullName}
 													class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 													required
 												/>
@@ -269,7 +320,7 @@
 												>{m.street_address()}
 												<input
 													type="text"
-													bind:value={addressFormData.streetLine1}
+													bind:value={addressFormData!.streetLine1}
 													class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 													required
 												/>
@@ -280,7 +331,7 @@
 												>{m.street_address_2()}
 												<input
 													type="text"
-													bind:value={addressFormData.streetLine2}
+													bind:value={addressFormData!.streetLine2}
 													class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 												/>
 											</label>
@@ -290,7 +341,7 @@
 												>{m.postal_code()}
 												<input
 													type="text"
-													bind:value={addressFormData.postalCode}
+													bind:value={addressFormData!.postalCode}
 													class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 													required
 												/>
@@ -301,7 +352,7 @@
 												>{m.city()}
 												<input
 													type="text"
-													bind:value={addressFormData.city}
+													bind:value={addressFormData!.city}
 													class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 													required
 												/>
@@ -312,7 +363,7 @@
 												>{m.country()}
 												<input
 													type="text"
-													bind:value={addressFormData.countryCode}
+													bind:value={addressFormData!.countryCode}
 													class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 													required
 												/>
@@ -323,7 +374,7 @@
 												>{m.phone()}
 												<input
 													type="tel"
-													bind:value={addressFormData.phoneNumber}
+													bind:value={addressFormData!.phoneNumber}
 													class="block w-full rounded-md border-gray-300 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 												/>
 											</label>
@@ -332,7 +383,7 @@
 											<label class="flex items-center gap-2 text-sm font-medium">
 												<input
 													type="checkbox"
-													bind:checked={addressFormData.defaultShippingAddress}
+													bind:checked={addressFormData!.defaultShippingAddress}
 													class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
 												/>
 												{m.default_shipping_address()}
@@ -340,7 +391,7 @@
 											<label class="flex items-center gap-2 text-sm font-medium">
 												<input
 													type="checkbox"
-													bind:checked={addressFormData.defaultBillingAddress}
+													bind:checked={addressFormData!.defaultBillingAddress}
 													class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
 												/>
 												{m.default_billing_address()}

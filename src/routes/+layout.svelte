@@ -7,7 +7,7 @@
 	import { GetActiveOrder, GetCustomer } from '$lib/vendure';
 	import { cartStore, userStore } from '$lib/stores';
 	import { i18n } from '$lib/i18n';
-	import NavBar from '$lib/components/NavBar.svelte';
+	import NavBar from '$src/lib/components/navigation/NavBar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Theme from '$src/lib/components/Theme.svelte';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';

@@ -10,7 +10,6 @@
 		PUBLIC_SITE_CITY,
 		PUBLIC_SITE_STATE,
 		PUBLIC_SITE_ZIP,
-		PUBLIC_SITE_COUNTRY,
 		PUBLIC_SITE_PHONE,
 		PUBLIC_SITE_EMAIL,
 		PUBLIC_FACEBOOK_URL,
@@ -73,7 +72,7 @@
 							{PUBLIC_SITE_ADDRESS}<br />
 							{PUBLIC_SITE_CITY}, {PUBLIC_SITE_STATE}
 							{PUBLIC_SITE_ZIP}<br />
-							{PUBLIC_SITE_COUNTRY}
+							{m.company_country()}
 						</address>
 					</div>
 					<div class="h-1 w-20 rounded-full bg-gradient-to-r from-primary-500 to-primary-600"></div>

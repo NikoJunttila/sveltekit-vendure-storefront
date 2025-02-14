@@ -46,7 +46,7 @@
 	</div>
 
 	<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-		<div class="bg-white px-4 py-8 shadow dark:bg-gray-800 sm:rounded-lg sm:px-10">
+		<div class="bg-primary-200 px-4 py-8 shadow dark:bg-primary-900 sm:rounded-lg sm:px-10">
 			<form class="space-y-6" onsubmit={resetPass}>
 				{#if stuff.error}
 					<div class="rounded-md bg-red-50 p-4 dark:bg-red-900/50">

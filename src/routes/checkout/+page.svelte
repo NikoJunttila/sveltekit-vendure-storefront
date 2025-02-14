@@ -18,7 +18,7 @@
 	import { PUBLIC_SITE_NAME, PUBLIC_VENDURE_MULTI } from '$env/static/public';
 	import CheckoutForm from '$src/lib/components/checkout/CheckoutForm.svelte';
 	import * as m from '$lib/paraglide/messages.js';
-	import Payment from '$src/lib/components/Payment.svelte';
+	import Payment from '$src/lib/components/checkout/Payment.svelte';
 	import CartItems from '$lib/components/checkout/CartItems.svelte';
 	import ShippingMethods from '$lib/components/checkout/ShippingMethods.svelte';
 	import DiscountCode from '$lib/components/checkout/DiscountCode.svelte';

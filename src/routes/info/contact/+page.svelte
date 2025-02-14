@@ -6,7 +6,6 @@
 		PUBLIC_SITE_CITY,
 		PUBLIC_SITE_STATE,
 		PUBLIC_SITE_ZIP,
-		PUBLIC_SITE_COUNTRY,
 		PUBLIC_SITE_PHONE,
 		PUBLIC_SITE_EMAIL
 	} from '$env/static/public';
@@ -72,7 +71,7 @@
 								{PUBLIC_SITE_ADDRESS}<br />
 								{PUBLIC_SITE_CITY}, {PUBLIC_SITE_STATE}
 								{PUBLIC_SITE_ZIP}<br />
-								{PUBLIC_SITE_COUNTRY}
+								{m.company_country()}
 							</address>
 						</span>
 					</li>

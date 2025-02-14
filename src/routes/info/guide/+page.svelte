@@ -1,6 +1,6 @@
 <script lang="ts">
-import CollectionTree from "$src/lib/components/CollectionTree.svelte";
-import SidebarCols from "$src/lib/components/SidebarCols.svelte";
+import CollectionTree from "$src/lib/components/navigation/CollectionTree.svelte";
+import SidebarCols from "$src/lib/components/navigation/SidebarCols.svelte";
 import { arrayToTree } from "$src/lib/utils";
 let { data} = $props();
 //@ts-ignore
