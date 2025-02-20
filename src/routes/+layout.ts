@@ -15,7 +15,7 @@ export const prerender = 'auto';
 export async function load() {
 	if (browser) {
 		posthog.init('phc_Dh5qlcajmyjubClhzoSUlseSv2ewxrkv5iTpDrr89Sn', {
-			api_host: 'https://eu.i.posthog.com',
+			api_host: 'https://cworker.randomderp.org',
 			person_profiles:'always',
 			capture_pageview: false,
 			capture_pageleave: false
