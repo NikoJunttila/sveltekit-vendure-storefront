@@ -20,7 +20,7 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			'$src/*': 'src/*'
-		}
+		},
 		// csp: {
 		// 	directives: {
 		// 		'script-src': ['self', 'https://laroastingco.com/', 'https://challenges.cloudflare.com/', 'https://js.stripe.com/'],

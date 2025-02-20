@@ -1,6 +1,4 @@
 import { Client, cacheExchange, fetchExchange } from '@urql/svelte';
-
-import { page } from '$app/state';
 import { dev } from '$app/environment';
 import {
 	PUBLIC_VENDURE_LANGUAGE,
@@ -21,7 +19,7 @@ export const createClient = () => {
 		url.concat(`?languageCode=${PUBLIC_VENDURE_LANGUAGE}`);
 	}
 	const client = new Client({
-		url: dev ? PUBLIC_SHOPAPI_DEV_URL : PUBLIC_SHOPAPI_PROD_URL,
+		url,
 		exchanges: [cacheExchange, fetchExchange],
 		fetchOptions: {
 			credentials: 'include',

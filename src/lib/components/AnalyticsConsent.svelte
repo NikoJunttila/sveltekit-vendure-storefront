@@ -1,4 +1,5 @@
 <script lang="ts">
+	//using post hog. Uncomment gAnalytics stuff if you want to use it
 	import { dev, browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import * as m from '$lib/paraglide/messages.js';
@@ -20,12 +21,12 @@
 	function setConsent(consent: any) {
 		// get up dataLayer and gtag https://developers.google.com/tag- platform/tag-manager/datalayer
 		//@ts-ignore
-		window.dataLayer = window.dataLayer || [];
+		//window.dataLayer = window.dataLayer || [];
 		//@ts-ignore
-		function gtag() {
+/* 		function gtag() {
 			//@ts-ignore
 			dataLayer.push(arguments);
-		}
+		} */
 
 		// set the consentMode based on the users response to the consent banner
 		const consentMode = {
@@ -38,7 +39,7 @@
 
 		// update the users consent in Google Tag Manager
 		//@ts-ignore
-		gtag('consent', 'update', consentMode);
+		//gtag('consent', 'update', consentMode);
 
 		// save user's preferences to localStorage so they don't have to consent every time they visit our website
 		localStorage.setItem('consentMode', JSON.stringify(consentMode));
@@ -101,8 +102,8 @@
 	}
 </script>
 
-<svelte:head>
-	<!-- disable tracking until consent is given -->
+<!-- disable tracking until consent is given -->
+<!-- <svelte:head>
 	<script>
 		// get up dataLayer and gtag https://developers.google.com/tag- platform/tag-manager/datalayer
 
@@ -124,10 +125,10 @@
 		} else {
 			gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
 		}
-	</script>
+	</script> -->
 
-	<!-- google tag manager script that will load all tags -->
-	<script>
+<!-- <script>
+		//google tag manager script that will load all tags
 		//https://www.googletagmanager.com/gtag/js?id=G-G2QSCNFZPV
 		(function (w, d, s, l, i) {
 			w[l] = w[l] || [];
@@ -140,7 +141,7 @@
 			f.parentNode.insertBefore(j, f);
 		})(window, document, 'script', 'dataLayer', 'YOUR_GTM_ID');
 	</script>
-</svelte:head>
+</svelte:head> -->
 
 <!--  
 -- Variables we set above that we'll use now to conditionally display the consent banner

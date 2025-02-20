@@ -1,10 +1,26 @@
-import { createClient, GetTopLevelCollections, ActiveChannel, SearchProducts, GetCollections } from '$lib/vendure';
+import {
+	createClient,
+	GetTopLevelCollections,
+	ActiveChannel,
+	SearchProducts,
+	GetCollections
+} from '$lib/vendure';
 import { type SearchInput } from '$src/lib/gql/graphql';
-const client = createClient();
+import { browser } from '$app/environment';
+import posthog from 'posthog-js';
 
+const client = createClient();
 export const prerender = 'auto';
 
 export async function load() {
+	if (browser) {
+		posthog.init('phc_Dh5qlcajmyjubClhzoSUlseSv2ewxrkv5iTpDrr89Sn', {
+			api_host: 'https://eu.i.posthog.com',
+			person_profiles:'always',
+			capture_pageview: false,
+			capture_pageleave: false
+		});
+	}
 	const input: SearchInput = {
 		term: '',
 		groupByProduct: true,

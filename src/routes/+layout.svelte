@@ -14,6 +14,9 @@
 	import ToastComponent from '$src/lib/components/Toast.svelte';
 	import { onNavigate } from '$app/navigation';
 	import AnalyticsConsent from '$src/lib/components/AnalyticsConsent.svelte';
+	import posthog from 'posthog-js'
+	import { beforeNavigate, afterNavigate } from '$app/navigation';
+
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
@@ -59,12 +62,17 @@
 	const nakedPaths = ['/checkout', '/sitemap.xml'];
 	let naked = $derived(nakedPaths.includes(page.url.pathname));
 
-	onMount(async () => {
+	onMount(() => {
 		if (browser) {
 			cartQuery.resume();
 			userQuery.resume();
 		}
 	});
+  if (browser) {
+    beforeNavigate(() => posthog.capture('$pageleave'));
+    afterNavigate(() => posthog.capture('$pageview'));
+  }
+ 
 </script>
 
 <ParaglideJS {i18n}>
