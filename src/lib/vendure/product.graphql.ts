@@ -75,6 +75,80 @@ export const ProductDetail = gql(`
 			slug
 			}
 		}
+		customFields {
+    		customizationOptions {
+    			enabled
+       			limit
+       			filling
+      			}
+			}
+	}
+`);
+
+export const ProductDetailCustomFields = gql(`
+	fragment ProductDetailCustomFields on Product {
+		id
+		name
+		slug
+		description
+		featuredAsset {
+			...Asset
+		}
+		assets {
+			...Asset
+		}
+		optionGroups {
+			id
+			code
+			name
+			options {
+				id
+				code
+				name
+			}
+		}
+		variants {
+			id
+			name
+			sku
+			stockLevel
+			currencyCode
+			price
+			priceWithTax
+			facetValues {
+				id
+				name
+				facet {
+					id
+					name
+				}
+			}
+			options {
+				id
+				groupId
+				code
+				name
+			}
+			featuredAsset {
+				...Asset
+			}
+			assets {
+				...Asset
+			}
+		}
+		collections {
+			breadcrumbs {
+			name
+			slug
+			}
+		}
+	    customFields {
+    		customizationOptions {
+    			enabled
+       			limit
+       			filling
+      			}
+			}
 	}
 `);
 
@@ -145,8 +219,8 @@ export const GetProducts = gql(`
 export const GetProduct = gql(`
 	query GetProduct($slug: String!) {
 		product(slug: $slug) {
-			...ProductDetail
-		}
+			...ProductDetailCustomFields
+			}
 	}
 `);
 

@@ -192,22 +192,26 @@ export const GetActiveOrder = gql(`
 `);
 
 export const AddItemToOrder = gql(`
-	mutation AddItemToOrder($variantId: ID!, $quantity: Int!) {
-		addItemToOrder(productVariantId: $variantId, quantity: $quantity) {
-			__typename
-			...ActiveOrder
-			... on ErrorResult {
-				errorCode
-				message
-			}
-			... on InsufficientStockError {
-				quantityAvailable
-				order {
-					...ActiveOrder
-				}
-			}
-		}
-	}
+mutation AddItemToOrder($variantId: ID!, $quantity: Int!, $fillings: String!) {
+  addItemToOrder(
+    productVariantId: $variantId
+    quantity: $quantity
+    customFields: { fillings: $fillings }
+  ) {
+    __typename
+    ...ActiveOrder
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+    ... on InsufficientStockError {
+      quantityAvailable
+      order {
+        ...ActiveOrder
+      }
+    }
+  }
+}
 `);
 
 export const RemoveOrderLine = gql(`

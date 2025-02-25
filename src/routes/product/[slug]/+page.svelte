@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
 	import { getContextClient, queryStore } from '@urql/svelte';
 	import { queryParameters } from 'sveltekit-search-params';
 	import { toast } from '$lib/toast.svelte';
 	import xss from 'xss';
 	import { formatCurrency } from '$lib/utils';
 	import { useFragment } from '$lib/gql';
-	import { type ProductDetailFragment } from '$lib/gql/graphql';
-	import { Asset, AddItemToOrder, GetProduct, ProductDetail } from '$lib/vendure';
+	import { type ProductDetailCustomFieldsFragment } from '$lib/gql/graphql';
+	import {
+		Asset,
+		AddItemToOrder,
+		GetProduct,
+		ProductDetailCustomFields
+	} from '$lib/vendure';
 	import Meta from '$lib/components/Meta.svelte';
 	import JsonLd from '$lib/components/JsonLd.svelte';
 	import FAQ from '$lib/components/FAQ.svelte';
@@ -54,8 +58,8 @@
 	});
 
 	// this will load the data in prerendering and initial site load
-	let product: ProductDetailFragment | null | undefined = $state(
-		useFragment(ProductDetail, data.product)
+	let product: ProductDetailCustomFieldsFragment | null | undefined = $state(
+		useFragment(ProductDetailCustomFields, data.product)
 	);
 	const featuredAsset = $derived(useFragment(Asset, product?.featuredAsset));
 
@@ -65,7 +69,7 @@
 	);
 	$effect(() => {
 		if ($productQuery?.data?.product) {
-			product = useFragment(ProductDetail, $productQuery.data.product);
+			product = useFragment(ProductDetailCustomFields, $productQuery.data.product);
 		}
 	});
 
@@ -106,10 +110,11 @@
 
 	const addToCart = async (variantId: string): Promise<void> => {
 		processing = true;
+		const fillings = selectedFillings.join(", ") || ""
 		const result = await client
 			.mutation(
 				AddItemToOrder,
-				{ variantId: variantId, quantity: 1 },
+				{ variantId: variantId, quantity: 1, fillings: fillings },
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
 			.toPromise();
@@ -130,6 +135,31 @@
 	const isOutOfStock = $derived.by(() => {
 		return product?.variants.every((variant) => variant.stockLevel !== 'IN_STOCK') ?? false;
 	});
+
+	let selectedFillings = $state<string[]>([]);
+
+	// Add this function to handle filling selection
+	function toggleFilling(filling: string) {
+		const customizationOptions = product?.customFields?.customizationOptions;
+		if (!customizationOptions) return;
+
+		if (selectedFillings.includes(filling)) {
+			selectedFillings = selectedFillings.filter((f) => f !== filling);
+		} else if (selectedFillings.length < customizationOptions.limit!) {
+			selectedFillings = [...selectedFillings, filling];
+		}
+	}
+
+	// Reset selected fillings when variant changes
+	$effect(() => {
+		selectedFillings = [];
+	});
+	const selectedFilling = $derived.by(() => {
+		const customizationOptions = product?.customFields?.customizationOptions;
+		if(!customizationOptions?.enabled) return false
+		return customizationOptions.limit == selectedFillings.length;
+	});
+
 </script>
 
 {#if product}
@@ -192,6 +222,7 @@
 			<div class="mb-2">
 				<BreadcrumbsComponent {breadcrumbs} />
 			</div>
+
 			<h1 class="text-2xl font-bold tracking-tight sm:text-3xl">
 				{product.name}
 				<!-- Favorite Button -->
@@ -251,7 +282,34 @@
 					{m.select_variant()}
 				{/if}
 			</div>
-
+			{#if product.customFields?.customizationOptions?.enabled}
+				<div class="mt-4">
+					<h3 class="text-lg font-medium">
+						{m.choose_up_to({limit:`${product.customFields.customizationOptions.limit}`})}:
+					</h3>
+					<div class="mt-2 flex flex-wrap gap-2">
+						{#each product.customFields.customizationOptions.filling!.split(',') as filling}
+							<button
+								type="button"
+								onclick={() => toggleFilling(filling)}
+								class:selected={selectedFillings.includes(filling)}
+								class="rounded-full border-2 px-4 py-2 {selectedFillings.includes(filling)
+									? 'border-lime-600 bg-lime-100 text-black'
+									: 'border-gray-500'} {selectedFillings.length >=
+									product.customFields.customizationOptions.limit! &&
+								!selectedFillings.includes(filling)
+									? 'cursor-not-allowed opacity-50'
+									: ''}"
+							>
+								{filling}
+							</button>
+						{/each}
+					</div>
+					<p class="mt-2 text-sm ">
+						{selectedFillings.length} / {product.customFields.customizationOptions.limit} {m.selected()}
+					</p>
+				</div>
+			{/if}
 			{#if isOutOfStock}
 				<button
 					type="button"
@@ -263,11 +321,11 @@
 			{:else}
 				<button
 					type="button"
-					disabled={processing}
+					disabled={!selectedFilling}
 					onclick={async () => {
 						addToCart(selectedVariantId);
 					}}
-					class="mt-6 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white duration-300 hover:bg-lime-700"
+					class="disabled:bg-gray-600 mt-6 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white duration-300 hover:bg-lime-700"
 				>
 					{m.add_to_cart()}
 				</button>

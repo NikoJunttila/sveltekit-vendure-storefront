@@ -335,5 +335,7 @@
     "filter_error": "Virhe maiden suodatuksessa",
     "navigation_error": "Virhe navigoinnissa",
     "invalid_country_code": "Virheellinen maakoodi",
-    "no_countries_found": "Maita ei löytynyt"
+    "no_countries_found": "Maita ei löytynyt",
+	"selected":"valittu",
+	"choose_up_to":"Valitse {limit} täytettä"
 }

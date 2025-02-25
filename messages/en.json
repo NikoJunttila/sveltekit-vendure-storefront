@@ -334,5 +334,7 @@
     "filter_error": "An error occurred while filtering countries",
     "navigation_error": "An error occurred during navigation",
     "invalid_country_code": "Invalid country code",
-    "no_countries_found": "No countries found"
+    "no_countries_found": "No countries found",
+	"selected":"selected",
+	"choose_up_to":"Choose up to {limit} fillings"
 }
