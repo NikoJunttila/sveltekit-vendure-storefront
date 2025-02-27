@@ -318,10 +318,20 @@
 				>
 					{m.out_of_stock()}
 				</button>
-			{:else}
+			{:else if product.customFields?.customizationOptions?.enabled}
 				<button
 					type="button"
 					disabled={!selectedFilling}
+					onclick={async () => {
+						addToCart(selectedVariantId);
+					}}
+					class="disabled:bg-gray-600 mt-6 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white duration-300 hover:bg-lime-700"
+				>
+					{!selectedFilling ? m.choose_up_to({limit:`${product.customFields.customizationOptions.limit}`}) : m.add_to_cart()}
+				</button>
+			{:else}	
+				<button
+					type="button"
 					onclick={async () => {
 						addToCart(selectedVariantId);
 					}}

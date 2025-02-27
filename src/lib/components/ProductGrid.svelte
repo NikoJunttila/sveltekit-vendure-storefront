@@ -153,8 +153,7 @@
 					</div>
 					<div class="mt-auto grid w-full">
 						{#if p.inStock}
-						<!-- 	{#if} -->
-							<button
+							<!-- <button
 								class="flex w-full items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95"
 								onclick={() => addToCart(p.productVariantId)}
 								aria-label={m.add_to_cart()}
@@ -172,7 +171,10 @@
 									/>
 								</svg>
 								{m.add_to_cart()}
-							</button>
+							</button> -->
+							<div>
+
+							</div>
 						{:else}
 							<button
 								class="flex w-full items-center justify-center gap-2 rounded-md bg-gray-700 px-4 py-2 text-sm font-medium text-white transition-all duration-200"
