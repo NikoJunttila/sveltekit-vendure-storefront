@@ -337,5 +337,13 @@
     "invalid_country_code": "Virheellinen maakoodi",
     "no_countries_found": "Maita ei löytynyt",
 	"selected":"valittu",
-	"choose_up_to":"Valitse {limit} täytettä"
+	"choose_up_to":"Valitse {limit} täytettä",
+  	"deliveryInfo": "Kotiinkuljetus mahdollista klo 10-18 välillä",
+    "selectDeliveryTime": "Valitse kotiinkuljetusaika",
+    "selectedTime": "Valittu aika",
+    "normal": "Normaali",
+    "quiet": "Hiljainen",
+    "behindDoor": "Oven taakse",
+    "deliveryInstructions": "Tarkat ohjeet kotiinkuljetukselle esim. soita puhelimeen, lähetä tekstiviesti toimittaessa jne.",
+    "driverInfo": "Lisätietoa kuljettajalle"
 }

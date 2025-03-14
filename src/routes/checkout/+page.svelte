@@ -24,6 +24,7 @@
 	import DiscountCode from '$lib/components/checkout/DiscountCode.svelte';
 	import OrderSummary from '$lib/components/checkout/OrderSummary.svelte';
 	import { toast } from '$lib/toast.svelte';
+	import TimeSelect from '$src/lib/components/checkout/TimeSelect.svelte';
 
 	let errorMessage: string = $state('');
 	let loaded: boolean = $state(false);
@@ -164,6 +165,7 @@
 	});
 	let showPaymentDialog = $state(false);
 	let formValid = $state(false);
+	let timeSelected = $state(false)
 </script>
 
 <noscript>
@@ -234,28 +236,32 @@
 							<DiscountCode />
 						</div>
 					</div>
+					
 					<!-- Order Summary -->
 					<div class="lg:col-span-5">
 						<div class="sticky top-8 space-y-6">
 							<ShippingMethods
-								{shippingOptions}
-								selectedShippingOption={selectedShippingOption[0]}
-								{setShippingOption}
+							{shippingOptions}
+							selectedShippingOption={selectedShippingOption[0]}
+							{setShippingOption}
 							/>
 							<OrderSummary {order} {errorMessage} />
 						</div>
 					</div>
 				</div>
 
+				<!-- Order Time select -->
+				<TimeSelect bind:valid={timeSelected}></TimeSelect>
+				
 				<div class="mt-8 text-center">
 					<button
-						id="payment"
-						onclick={() => (showPaymentDialog = true)}
-						disabled={!formValid}
-						class="rounded-lg bg-primary-600 px-8 py-4 font-bold text-white transition-colors hover:bg-primary-700 disabled:bg-gray-500"
+					id="payment"
+					onclick={() => (showPaymentDialog = true)}
+					disabled={!formValid && !timeSelected}
+					class="rounded-lg bg-primary-600 px-8 py-4 font-bold text-white transition-colors hover:bg-primary-700 disabled:bg-gray-500"
 					>
-						{m.proceed_to_payment()}
-					</button>
+					{m.proceed_to_payment()}
+				</button>
 				</div>
 			</div>
 		</div>

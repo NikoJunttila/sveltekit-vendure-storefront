@@ -336,5 +336,13 @@
     "invalid_country_code": "Invalid country code",
     "no_countries_found": "No countries found",
 	"selected":"selected",
-	"choose_up_to":"Choose up to {limit} fillings"
+	"choose_up_to":"Choose up to {limit} fillings",
+	"deliveryInfo": "For the campaign, it is only possible to order home-delivery on 4.12 and 20.12. The order must be placed for the first day on 28.11 at 11:30 and for the second day on 16.12 at 11:30.",
+    "selectDeliveryTime": "Select home delivery time",
+    "selectedTime": "Selected time",
+    "normal": "Normal",
+    "quiet": "Quiet",
+    "behindDoor": "Behind door",
+    "deliveryInstructions": "Detailed instructions for home delivery e.g. call the phone, send an SMS when delivering, etc.",
+    "driverInfo": "Additional information for the driver"
 }

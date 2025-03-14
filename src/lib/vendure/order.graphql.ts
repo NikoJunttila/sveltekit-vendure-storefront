@@ -19,6 +19,15 @@ export const StripePaymentIntent = gql(`
 	  createStripePaymentIntent
 	}
   `);
+
+export const SetOrderCustomFields = gql(`
+	mutation SetOrderCustomFields($input: UpdateOrderInput!) {
+		setOrderCustomFields(input: $input) {
+			...ActiveOrder
+		}
+	}
+`);
+
 export const Order = gql(`
 	fragment Order on Order {
 		id
