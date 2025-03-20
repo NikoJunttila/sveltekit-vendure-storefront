@@ -345,5 +345,6 @@
     "quiet": "Hiljainen",
     "behindDoor": "Oven taakse",
     "deliveryInstructions": "Tarkat ohjeet kotiinkuljetukselle esim. soita puhelimeen, lähetä tekstiviesti toimittaessa jne.",
-    "driverInfo": "Lisätietoa kuljettajalle"
+    "driverInfo": "Lisätietoa kuljettajalle",
+	"pagination":"Näytetään {min}-{max} / {total}"
 }

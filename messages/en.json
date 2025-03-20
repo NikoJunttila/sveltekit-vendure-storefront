@@ -344,5 +344,6 @@
     "quiet": "Quiet",
     "behindDoor": "Behind door",
     "deliveryInstructions": "Detailed instructions for home delivery e.g. call the phone, send an SMS when delivering, etc.",
-    "driverInfo": "Additional information for the driver"
+    "driverInfo": "Additional information for the driver",
+		"pagination":"Showing {min}-{max} of {total}"
 }

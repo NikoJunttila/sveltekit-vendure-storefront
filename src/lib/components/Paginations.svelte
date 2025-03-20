@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
-
+	import * as m from '$lib/paraglide/messages.js';
 	interface Props {
 		totalCount: number;
 		perPage: number;
@@ -99,6 +99,10 @@
 	</div>
 
 	<div class="text-sm text-gray-600">
-		Showing {(currentPage - 1) * perPage + 1} - {Math.min(currentPage * perPage, totalCount)} of {totalCount}
+		{m.pagination({
+			min: (currentPage - 1) * perPage + 1,
+			max: Math.min(currentPage * perPage, totalCount),
+			total: totalCount
+		})}
 	</div>
 </div>
