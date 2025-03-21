@@ -346,5 +346,16 @@
     "behindDoor": "Oven taakse",
     "deliveryInstructions": "Tarkat ohjeet kotiinkuljetukselle esim. soita puhelimeen, lähetä tekstiviesti toimittaessa jne.",
     "driverInfo": "Lisätietoa kuljettajalle",
-	"pagination":"Näytetään {min}-{max} / {total}"
+	"pagination":"Näytetään {min}-{max} / {total}",
+	"nextweek":"Seuraava viikko",
+	"prevweek":"Edellinen viikko",
+	"show_ingredients_allergens": "Näytä ainesosat & allergeenit",
+    "hide_ingredients_allergens": "Piilota ainesosat & allergeenit",
+    "ingredients": "Ainesosat:",
+    "allergens": "Allergeenit:",
+    "add_extras": "Lisää ekstroja:",
+    "each": "kappale",
+    "extras_selected": "{count} ekstra(a) valittu: +{price}",
+    "base": "Perushinta:",
+    "extras": "Ekstrat:"
 }

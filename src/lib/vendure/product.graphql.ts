@@ -76,11 +76,18 @@ export const ProductDetail = gql(`
 			}
 		}
 		customFields {
+			incredientlist
+			allergenlist
     		customizationOptions {
     			enabled
        			limit
        			filling
       			}
+			extraoptions {
+				enabled
+				price
+				extrachoices
+				}
 			}
 	}
 `);
@@ -142,12 +149,19 @@ export const ProductDetailCustomFields = gql(`
 			slug
 			}
 		}
-	    customFields {
+		customFields {
+			incredientlist  # string with , seperating incredients
+	 		allergenlist # string with , seperating incredients
     		customizationOptions {
-    			enabled
-       			limit
-       			filling
+    			enabled #boolean
+       			limit #int
+       			filling # string with , seperating incredients
       			}
+			extraoptions {
+				enabled #boolean
+				price # int
+				extrachoices # string with , seperating incredients
+				}
 			}
 	}
 `);

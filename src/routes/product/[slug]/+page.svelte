@@ -110,11 +110,13 @@
 
 	const addToCart = async (variantId: string): Promise<void> => {
 		processing = true;
-		const fillings = selectedFillings.join(", ") || ""
+		const fillings = selectedFillings.join(", ") || "";
+		const extrachoices = selectedExtras.join(", ") || "";
+		
 		const result = await client
 			.mutation(
 				AddItemToOrder,
-				{ variantId: variantId, quantity: 1, fillings: fillings },
+				{ variantId: variantId, quantity: 1, customFields: {fillings, extrachoices} },
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
 			.toPromise();
@@ -132,13 +134,16 @@
 		}
 		processing = false;
 	};
+	
 	const isOutOfStock = $derived.by(() => {
 		return product?.variants.every((variant) => variant.stockLevel !== 'IN_STOCK') ?? false;
 	});
 
+	// State for fillings and extras selection
 	let selectedFillings = $state<string[]>([]);
+	let selectedExtras = $state<string[]>([]);
 
-	// Add this function to handle filling selection
+	// Handle filling selection
 	function toggleFilling(filling: string) {
 		const customizationOptions = product?.customFields?.customizationOptions;
 		if (!customizationOptions) return;
@@ -150,16 +155,54 @@
 		}
 	}
 
-	// Reset selected fillings when variant changes
+	// Handle extra options selection
+	function toggleExtra(extra: string) {
+		if (selectedExtras.includes(extra)) {
+			selectedExtras = selectedExtras.filter((e) => e !== extra);
+		} else {
+			selectedExtras = [...selectedExtras, extra];
+		}
+	}
+
+	// Reset selections when variant changes
 	$effect(() => {
 		selectedFillings = [];
+		selectedExtras = [];
 	});
-	const selectedFilling = $derived.by(() => {
+	
+	// Check if correct number of fillings is selected
+	const fillingRequirementMet = $derived.by(() => {
 		const customizationOptions = product?.customFields?.customizationOptions;
-		if(!customizationOptions?.enabled) return false
+		if(!customizationOptions?.enabled) return true;
 		return customizationOptions.limit == selectedFillings.length;
 	});
 
+	// Calculate extra price
+	const extraPrice = $derived.by(() => {
+		const extraOptions = product?.customFields?.extraoptions;
+		if(!extraOptions?.enabled || selectedExtras.length === 0) return 0;
+		return extraOptions.price! * selectedExtras.length;
+	});
+
+	// Total price calculation
+	const totalPrice = $derived.by(() => {
+		if(!selectedVariant) return 0;
+		return selectedVariant.price + extraPrice;
+	});
+
+	// Format ingredients and allergens for display
+	const ingredientsList = $derived.by(() => {
+		const list = product?.customFields?.incredientlist;
+		return list ? list.split(',').map(item => item.trim()) : [];
+	});
+
+	const allergensList = $derived.by(() => {
+		const list = product?.customFields?.allergenlist;
+		return list ? list.split(',').map(item => item.trim()) : [];
+	});
+
+	// Show ingredient info panel
+	let showIngredientInfo = $state(false);
 </script>
 
 {#if product}
@@ -177,15 +220,8 @@
 			name: product.name,
 			image: featuredAsset?.preview || '',
 			description: product.description || '',
-			// gtin: product.customFields?.gtin || '',
-			// category: product.customFields?.category || '',
-			// brand: {
-			// 	name: product.customFields?.brand || '',
-			// 	'@type': "Brand"
-			// },
 			offers: {
 				'@type': 'Offer',
-				// itemCondition: product.customFields?.itemCondition as any,
 				priceCurrency: product.variants[0].currencyCode,
 				seller: {
 					name: PUBLIC_ORGANIZATION,
@@ -199,20 +235,8 @@
 				),
 				hasMerchantReturnPolicy: {
 					'@type': 'MerchantReturnPolicy'
-					// returnFees: product.customFields?.returnFees as any,
-					// returnMethod: product.customFields?.returnMethod as any,
-					// returnPolicyCategory: product.customFields?.returnPolicyCategory as any,
-					// merchantReturnDays: product.customFields?.merchantReturnDays as any,
-					// merchantReturnLink: product.customFields?.merchantReturnLink as any
 				}
 			}
-			// aggregateRating: {
-			// 	bestRating: 5,
-			// 	reviewCount: 617,
-			// 	ratingValue: 4.28,
-			// 	'@type': "AggregateRating"
-			// },
-			// review: jsonldReviews(snorerxReviews)
 		}}
 	/>
 	<div
@@ -244,6 +268,34 @@
 			<h2 id="information-heading" class="sr-only">Product information</h2>
 			<p class="mt-6">{@html xss(product.description || '')}</p>
 
+			<!-- Ingredients & Allergen Info Button -->
+			{#if ingredientsList.length > 0 || allergensList.length > 0}
+				<button
+					onclick={() => (showIngredientInfo = !showIngredientInfo)}
+					class="mt-4 text-sm font-medium text-lime-600 hover:text-lime-800"
+				>
+					{showIngredientInfo ? m.hide_ingredients_allergens() : m.show_ingredients_allergens()}
+				</button>
+				
+				{#if showIngredientInfo}
+					<div class="mt-2 rounded-md border border-gray-200 bg-gray-50 p-4">
+						{#if ingredientsList.length > 0}
+							<div class="mb-3">
+								<h3 class="font-medium">{m.ingredients()}</h3>
+								<p class="text-sm text-gray-600">{ingredientsList.join(', ')}</p>
+							</div>
+						{/if}
+						
+						{#if allergensList.length > 0}
+							<div>
+								<h3 class="font-medium">{m.allergens()}</h3>
+								<p class="text-sm text-gray-600 font-bold">{allergensList.join(', ')}</p>
+							</div>
+						{/if}
+					</div>
+				{/if}
+			{/if}
+
 			{#if product.variants.length > 1}
 				<div class="mt-6">
 					<h3 class="text-sm font-medium">{m.select_variant()}</h3>
@@ -272,16 +324,24 @@
 				{#if selectedVariant}
 					<div class="mt-1 flex items-baseline">
 						<p class="text-xl font-semibold">
-							{formatCurrency(selectedVariant.price, PUBLIC_DEFAULT_CURRENCY)}
+							{formatCurrency(totalPrice, PUBLIC_DEFAULT_CURRENCY)}
 						</p>
 						<p class="ml-1 text-sm font-medium">
 							/ {selectedVariant.name}
 						</p>
 					</div>
+					{#if extraPrice > 0}
+						<p class="text-sm text-gray-600">
+							({m.base()} {formatCurrency(selectedVariant.price, PUBLIC_DEFAULT_CURRENCY)} + 
+							{m.extras()} {formatCurrency(extraPrice, PUBLIC_DEFAULT_CURRENCY)})
+						</p>
+					{/if}
 				{:else}
 					{m.select_variant()}
 				{/if}
 			</div>
+			
+			<!-- Customization Options (Fillings) -->
 			{#if product.customFields?.customizationOptions?.enabled}
 				<div class="mt-4">
 					<h3 class="text-lg font-medium">
@@ -291,25 +351,55 @@
 						{#each product.customFields.customizationOptions.filling!.split(',') as filling}
 							<button
 								type="button"
-								onclick={() => toggleFilling(filling)}
-								class:selected={selectedFillings.includes(filling)}
-								class="rounded-full border-2 px-4 py-2 {selectedFillings.includes(filling)
+								onclick={() => toggleFilling(filling.trim())}
+								class:selected={selectedFillings.includes(filling.trim())}
+								class="rounded-full border-2 px-4 py-2 {selectedFillings.includes(filling.trim())
 									? 'border-lime-600 bg-lime-100 text-black'
 									: 'border-gray-500'} {selectedFillings.length >=
 									product.customFields.customizationOptions.limit! &&
-								!selectedFillings.includes(filling)
+								!selectedFillings.includes(filling.trim())
 									? 'cursor-not-allowed opacity-50'
 									: ''}"
 							>
-								{filling}
+								{filling.trim()}
 							</button>
 						{/each}
 					</div>
-					<p class="mt-2 text-sm ">
+					<p class="mt-2 text-sm">
 						{selectedFillings.length} / {product.customFields.customizationOptions.limit} {m.selected()}
 					</p>
 				</div>
 			{/if}
+			
+			<!-- Extra Options -->
+			{#if product.customFields?.extraoptions?.enabled}
+				<div class="mt-6">
+					<h3 class="text-lg font-medium">
+						{m.add_extras()} (+{formatCurrency(product.customFields.extraoptions.price!, PUBLIC_DEFAULT_CURRENCY)} {m.each()})
+					</h3>
+					<div class="mt-2 flex flex-wrap gap-2">
+						{#each product.customFields.extraoptions.extrachoices!.split(',') as extra}
+							<button
+								type="button"
+								onclick={() => toggleExtra(extra.trim())}
+								class:selected={selectedExtras.includes(extra.trim())}
+								class="rounded-full border-2 px-4 py-2 {selectedExtras.includes(extra.trim())
+									? 'border-lime-600 bg-lime-100 text-black'
+									: 'border-gray-500'}"
+							>
+								{extra.trim()}
+							</button>
+						{/each}
+					</div>
+					{#if selectedExtras.length > 0}
+						<p class="mt-2 text-sm">
+							{m.extras_selected({count:selectedExtras.length,price:formatCurrency(extraPrice, PUBLIC_DEFAULT_CURRENCY)})}
+						</p>
+					{/if}
+				</div>
+			{/if}
+			
+			<!-- Add to Cart Button -->
 			{#if isOutOfStock}
 				<button
 					type="button"
@@ -321,13 +411,13 @@
 			{:else if product.customFields?.customizationOptions?.enabled}
 				<button
 					type="button"
-					disabled={!selectedFilling}
+					disabled={!fillingRequirementMet}
 					onclick={async () => {
 						addToCart(selectedVariantId);
 					}}
 					class="disabled:bg-gray-600 mt-6 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white duration-300 hover:bg-lime-700"
 				>
-					{!selectedFilling ? m.choose_up_to({limit:`${product.customFields.customizationOptions.limit}`}) : m.add_to_cart()}
+					{!fillingRequirementMet ? m.choose_up_to({limit:`${product.customFields.customizationOptions.limit}`}) : m.add_to_cart()}
 				</button>
 			{:else}	
 				<button
@@ -347,36 +437,6 @@
 		<div class="mb-4">
 			<Highlights />
 		</div>
-		<!-- Tabs 
-		<div class="max-w-screen-lg lg:col-span-2">
-			<div class="flex" aria-orientation="horizontal" role="tablist">
-				<a href={`/product/${product.slug}?variant=${selectedVariantId}&tab=reviews`}>
-					<button
-						type="button"
-						class={tab === 'reviews'
-							? 'mr-4 whitespace-nowrap border-b-2 border-lime-600 p-3 pr-4 font-medium'
-							: 'mr-4 whitespace-nowrap border-b border-gray-300 p-3 pr-4 text-gray-500 hover:border-b-2 hover:border-gray-300 hover:text-gray-700'}
-					>
-						{m.customer_reviews()}
-					</button>
-				</a>
-				<a href={`/product/${product.slug}?variant=${selectedVariantId}&tab=faq`}>
-					<button
-						type="button"
-						class={tab === 'faq'
-							? 'mr-4 whitespace-nowrap border-b-2 border-lime-600 p-3 px-4 font-medium'
-							: 'mr-4 whitespace-nowrap border-b border-gray-300 p-3 px-4 text-gray-500 hover:border-b-2 hover:border-gray-300 hover:text-gray-700'}
-					>
-						{m.faq()}
-					</button>
-				</a>
-			</div>
-			{#if tab == 'reviews'}
-				<ProductReviews bind:reviewForm={data.reviewForm} {product} {user} {reviews} /> 
-			{:else if tab == 'faq'}
-				<FAQ />
-			{/if}
-		</div>
-	-->
+		<!-- Tabs section commented out as in original code -->
 	</div>
 {/if}

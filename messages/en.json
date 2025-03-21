@@ -345,5 +345,16 @@
     "behindDoor": "Behind door",
     "deliveryInstructions": "Detailed instructions for home delivery e.g. call the phone, send an SMS when delivering, etc.",
     "driverInfo": "Additional information for the driver",
-		"pagination":"Showing {min}-{max} of {total}"
+	"pagination":"Showing {min}-{max} of {total}",
+	"nextweek":"Seuraava viikko",
+	"prevweek":"Edellinen viikko",
+	"show_ingredients_allergens": "Show ingredients & allergens",
+    "hide_ingredients_allergens": "Hide ingredients & allergens",
+    "ingredients": "Ingredients:",
+    "allergens": "Allergens:",
+    "add_extras": "Add extras:",
+    "each": "each",
+    "extras_selected": "{count} extra(s) selected: +{price}",
+    "base": "Base:",
+    "extras": "Extras:"
 }

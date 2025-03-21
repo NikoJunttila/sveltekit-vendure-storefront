@@ -1,4 +1,5 @@
 import { gql } from '$lib/gql';
+import type { OrderLineCustomFieldsInput } from '../gql/graphql';
 
 export const PaytrailPayment = gql(`
 mutation paytrailPayment {
@@ -201,11 +202,11 @@ export const GetActiveOrder = gql(`
 `);
 
 export const AddItemToOrder = gql(`
-mutation AddItemToOrder($variantId: ID!, $quantity: Int!, $fillings: String!) {
+mutation AddItemToOrder($variantId: ID!, $quantity: Int!, $customFields: OrderLineCustomFieldsInput!) {
   addItemToOrder(
     productVariantId: $variantId
     quantity: $quantity
-    customFields: { fillings: $fillings }
+    customFields:  $customFields
   ) {
     __typename
     ...ActiveOrder

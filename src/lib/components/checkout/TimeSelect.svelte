@@ -171,7 +171,7 @@
           disabled={weekOffset === 0} 
           onclick={() => { if (weekOffset >= 7) weekOffset -= 7; }}
         >
-          Edellinen viikko
+          {m.prevweek()}
         </button>
         <span class="text-lg font-semibold">
           Viikko {week.days[0].date} - {week.days[6].date}
@@ -180,7 +180,7 @@
           class="p-2 bg-gray-200 rounded" 
           onclick={() => { weekOffset += 7; }}
         >
-          Seuraava viikko
+          {m.nextweek()}
         </button>
       </div>
     {/if}
@@ -198,7 +198,7 @@
                     {#each day.slots as slot}
                         <button
                             class="p-2 text-base font-medium bg-gray-100 rounded hover:bg-blue-600 hover:text-white transition-colors"
-                            class:bg-blue-700={selectedSlot?.display === `${day.day} (${day.date}) ${slot.time}`}
+                            class:!bg-blue-700={selectedSlot?.display === `${day.day} (${day.date}) ${slot.time}`}
                             class:text-white={selectedSlot?.display === `${day.day} (${day.date}) ${slot.time}`}
                             onclick={() => selectTimeSlot(day.day, day.date, day.fullDate, slot.time)}
                         >
