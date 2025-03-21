@@ -116,7 +116,8 @@
 		const result = await client
 			.mutation(
 				AddItemToOrder,
-				{ variantId: variantId, quantity: 1, customFields: {fillings, extrachoices} },
+				{ variantId: variantId, quantity: 1, customFields: {fillings, extrachoices, extraoptions:{
+					enabled:product!.customFields?.extraoptions?.enabled,price: product!.customFields?.extraoptions?.price!,extrachoices:extrachoices}} },
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
 			.toPromise();
@@ -281,14 +282,14 @@
 					<div class="mt-2 rounded-md border border-gray-200 bg-gray-50 p-4">
 						{#if ingredientsList.length > 0}
 							<div class="mb-3">
-								<h3 class="font-medium">{m.ingredients()}</h3>
+								<h3 class="font-medium text-black">{m.ingredients()}</h3>
 								<p class="text-sm text-gray-600">{ingredientsList.join(', ')}</p>
 							</div>
 						{/if}
 						
 						{#if allergensList.length > 0}
 							<div>
-								<h3 class="font-medium">{m.allergens()}</h3>
+								<h3 class="font-medium text-black">{m.allergens()}</h3>
 								<p class="text-sm text-gray-600 font-bold">{allergensList.join(', ')}</p>
 							</div>
 						{/if}
@@ -331,7 +332,7 @@
 						</p>
 					</div>
 					{#if extraPrice > 0}
-						<p class="text-sm text-gray-600">
+						<p class="text-sm text-gray-600 dark:text-gray-200">
 							({m.base()} {formatCurrency(selectedVariant.price, PUBLIC_DEFAULT_CURRENCY)} + 
 							{m.extras()} {formatCurrency(extraPrice, PUBLIC_DEFAULT_CURRENCY)})
 						</p>

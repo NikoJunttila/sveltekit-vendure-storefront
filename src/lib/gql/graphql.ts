@@ -2264,12 +2264,27 @@ export type OrderLine = Node & {
 export type OrderLineCustomFields = {
   __typename?: 'OrderLineCustomFields';
   extrachoices?: Maybe<Scalars['String']['output']>;
+  extraoptions?: Maybe<OrderLineExtraoptionsStruct>;
   fillings?: Maybe<Scalars['String']['output']>;
 };
 
 export type OrderLineCustomFieldsInput = {
   extrachoices?: InputMaybe<Scalars['String']['input']>;
+  extraoptions?: InputMaybe<OrderLineExtraoptionsStructInput>;
   fillings?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type OrderLineExtraoptionsStruct = {
+  __typename?: 'OrderLineExtraoptionsStruct';
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+  extrachoices?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['Int']['output']>;
+};
+
+export type OrderLineExtraoptionsStructInput = {
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  extrachoices?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type OrderList = PaginatedList & {
@@ -6319,12 +6334,27 @@ export type OrderLine = Node & {
 export type OrderLineCustomFields = {
   __typename?: 'OrderLineCustomFields';
   extrachoices?: Maybe<Scalars['String']['output']>;
+  extraoptions?: Maybe<OrderLineExtraoptionsStruct>;
   fillings?: Maybe<Scalars['String']['output']>;
 };
 
 export type OrderLineCustomFieldsInput = {
   extrachoices?: InputMaybe<Scalars['String']['input']>;
+  extraoptions?: InputMaybe<OrderLineExtraoptionsStructInput>;
   fillings?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type OrderLineExtraoptionsStruct = {
+  __typename?: 'OrderLineExtraoptionsStruct';
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+  extrachoices?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['Int']['output']>;
+};
+
+export type OrderLineExtraoptionsStructInput = {
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  extrachoices?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type OrderList = PaginatedList & {
