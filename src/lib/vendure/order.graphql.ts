@@ -111,6 +111,12 @@ export const ActiveOrder = gql(`
 				id
 				preview
 			}
+			customFields {
+				fillings
+				extraoptions{
+					extrachoices
+				}
+			}
 		}
 		shippingLines {
 			shippingMethod {

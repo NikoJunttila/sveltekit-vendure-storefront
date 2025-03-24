@@ -54,6 +54,7 @@
 			//multivendor select all shipping methods
 			if (PUBLIC_VENDURE_MULTI === 'multi') {
 				for (const method of useFragment(ShippingMethodQuote, shippingOptions)) {
+					console.log(method.name)
 					if (method.name.includes('multi')) selectedShippingOption.push(method.id);
 				}
 			} else {
@@ -61,6 +62,7 @@
 				selectedShippingOption.push(shippingOptions[0].id);
 			}
 		}
+		console.log(selectedShippingOption)
 		await selectCheapestShippingOption();
 	};
 
@@ -90,9 +92,11 @@
 	const setShippingOption = async (id: string[]) => {
 		if (PUBLIC_VENDURE_MULTI === 'multi') {
 			let result = await client.mutation(SetOrderShippingMethod, { id }).toPromise();
+			console.error(result)
 		} else {
 			const single = id[0];
 			let result = await client.mutation(SetOrderShippingMethod, { id: single }).toPromise();
+			console.error(result)
 		}
 		selectedShippingOption = id;
 	};
@@ -159,7 +163,11 @@
 	};
 	onMount(async () => {
 		if (browser) {
-			await getShippingOptions();
+			try{
+				await getShippingOptions();
+			} catch (e){
+				console.error(e)
+			}
 			loaded = true;
 		}
 	});

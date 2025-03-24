@@ -3,12 +3,14 @@
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import Image from '$lib/components/Image.svelte';
 	import * as m from '$lib/paraglide/messages';
+	interface Props {
+		order: any;
+		adjustOrderLine: (orderLineId: string, e: Event) => Promise<void>;
+		removeOrderLine: (orderLineId: string) => Promise<void>; // New prop for removal
+	}
 
-	export let order: any;
-	export let adjustOrderLine: (orderLineId: string, e: Event) => Promise<void>;
-	export let removeOrderLine: (orderLineId: string) => Promise<void>; // New prop for removal
+	let { order, adjustOrderLine, removeOrderLine }: Props = $props();
 </script>
-
 <section class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
 	<div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
 		<h2 class="text-lg font-semibold text-gray-900">{m.cart_items()}</h2>
@@ -40,8 +42,23 @@
 										)}
 									</p>
 								{/if}
+								
+								{#if line.customFields}
+									<div class="mt-2 space-y-1 rounded-md bg-gray-50 p-3 text-sm">
+										{#if line.customFields.fillings}
+											<p class="text-gray-700">
+												<span class="font-medium text-gray-900">{m.choices()}</span> {line.customFields.fillings}
+											</p>
+										{/if}
+										{#if line.customFields.extraoptions?.extrachoices}
+											<p class="text-gray-700">
+												<span class="font-medium text-gray-900">{m.extras()}</span> {line.customFields.extraoptions.extrachoices}
+											</p>
+										{/if}
+									</div>
+								{/if}
 							</div>
-							<div class="flex items-center space-x-4">
+							<div class="mt-4 flex items-center space-x-4">
 								<label for="quantity" class="text-sm text-gray-600"
 									>{m.quantity({ count: line.quantity })}</label
 								>
@@ -51,15 +68,15 @@
 									onchange={async (e) => adjustOrderLine(line.id, e)}
 								>
 									{#each { length: 20 } as _, qty}
-										<option value={qty} selected={qty === line.quantity} class="text-sm text-black">
-											{qty}
+										<option value={qty + 1} selected={qty + 1 === line.quantity} class="text-sm text-black">
+											{qty + 1}
 										</option>
 									{/each}
 								</select>
 								<button
 									onclick={async () => await removeOrderLine(line.id)}
 									aria-label="delete"
-									class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-white/10"
+									class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-100"
 								>
 									<span>{m.remove()}</span>
 									<svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -77,7 +94,6 @@
 			{/each}
 		{/if}
 	</ul>
-
 	{#if order?.subTotal}
 		<div class="border-t border-gray-200 p-6">
 			<div class="flex justify-between text-lg font-semibold">

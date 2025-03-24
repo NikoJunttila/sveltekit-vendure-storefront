@@ -51,7 +51,6 @@
 		else if (result.data) toast.success(m.item_removed());
 		processing = false;
 	};
-
 	const {
 		elements: { trigger, portalled, overlay, content, title, close },
 		states: { open }
@@ -157,6 +156,21 @@
 													<p class="mt-1 text-sm">{option.group.name}: {option.name}</p>
 												{/each}
 											</a>
+											
+											{#if line.customFields}
+												<div class="mt-3 mr-16 bg-white/5 p-2 rounded-lg">
+													{#if line.customFields.fillings}
+														<p class="text-sm">
+															<span class="font-medium">{m.choices()}</span> {line.customFields.fillings}
+														</p>
+													{/if}
+													{#if line.customFields.extraoptions?.extrachoices}
+														<p class="text-sm">
+															<span class="font-medium">{m.extras()}</span> {line.customFields.extraoptions.extrachoices}
+														</p>
+													{/if}
+												</div>
+											{/if}
 										</div>
 										<div class="mt-4 flex flex-col items-end sm:mt-0">
 											<p class="text-lg font-medium">
@@ -173,9 +187,9 @@
 										>
 											{#each { length: 20 } as _, qty}
 												<option
-													value={qty}
-													selected={qty === line.quantity}
-													class="bg-primary-700 text-white">{qty}</option
+													value={qty + 1}
+													selected={qty + 1 === line.quantity}
+													class="bg-primary-700 text-white">{qty + 1}</option
 												>
 											{/each}
 										</select>
@@ -217,7 +231,7 @@
 				>
 					{#if lines.length > 0}
 						<h2 id="summary-heading" class="sr-only">Order summary</h2>
-						<div>
+						<div class="text-white">
 							<dl class="space-y-4">
 								<div class="flex items-center justify-between">
 									<dt class="text-lg font-medium">{m.subtotal()}</dt>

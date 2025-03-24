@@ -116,8 +116,10 @@
 		const result = await client
 			.mutation(
 				AddItemToOrder,
-				{ variantId: variantId, quantity: 1, customFields: {fillings, extrachoices, extraoptions:{
-					enabled:product!.customFields?.extraoptions?.enabled,price: product!.customFields?.extraoptions?.price!,extrachoices:extrachoices}} },
+				{ variantId: variantId, quantity: 1, 
+					customFields: {fillings, extraoptions:{
+					enabled:product!.customFields?.extraoptions?.enabled,price: product!.customFields?.extraoptions?.price!,extrachoices:extrachoices}} 
+				},
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
 			.toPromise();
@@ -245,7 +247,9 @@
 	>
 		<div class="lg:max-w-lg">
 			<div class="mb-2">
+				{#if breadcrumbs}
 				<BreadcrumbsComponent {breadcrumbs} />
+				{/if}
 			</div>
 
 			<h1 class="text-2xl font-bold tracking-tight sm:text-3xl">

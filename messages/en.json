@@ -356,5 +356,6 @@
     "each": "each",
     "extras_selected": "{count} extra(s) selected: +{price}",
     "base": "Base:",
-    "extras": "Extras:"
+    "extras": "Extras:",
+	"choices":"Choices"
 }

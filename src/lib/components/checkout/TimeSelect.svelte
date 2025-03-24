@@ -95,11 +95,11 @@
         };
         
         localStorage.setItem('delivery', `Kotiin kuljetus ${day} (${date}) ${time}`);
-
+        const ToimitusInfo = information ? information : "normaali"
         const updatedCustomFields = {
             dateString: selectedSlot.display,
             dateTime: new Date(selectedSlot.timestamp),
-            ToimitusInfo: information,
+            ToimitusInfo: ToimitusInfo,
         };
         
         try {
@@ -157,7 +157,7 @@
     }
 </script>
 
-<div>
+<div class="text-black">
     <!-- Delivery Info Header -->
     <div class="w-full py-4 text-lg font-semibold text-gray-700">
         {m.deliveryInfo()}
@@ -177,7 +177,7 @@
           Viikko {week.days[0].date} - {week.days[6].date}
         </span>
         <button 
-          class="p-2 bg-gray-200 rounded" 
+          class="p-2 bg-gray-200 rounded hover:bg-gray-400 duration-200" 
           onclick={() => { weekOffset += 7; }}
         >
           {m.nextweek()}

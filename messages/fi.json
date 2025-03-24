@@ -357,5 +357,6 @@
     "each": "kappale",
     "extras_selected": "{count} ekstra(a) valittu: +{price}",
     "base": "Perushinta:",
-    "extras": "Ekstrat:"
+    "extras": "Ekstrat:",
+	"choices":"valinnat"
 }
