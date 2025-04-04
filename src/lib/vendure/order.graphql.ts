@@ -113,6 +113,7 @@ export const ActiveOrder = gql(`
 			}
 			customFields {
 				fillings
+				extrachoicestring
 				extraoptions{
 					extrachoices
 				}

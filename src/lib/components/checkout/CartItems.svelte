@@ -50,9 +50,9 @@
 												<span class="font-medium text-gray-900">{m.choices()}</span> {line.customFields.fillings}
 											</p>
 										{/if}
-										{#if line.customFields.extraoptions?.extrachoices}
+										{#if line.customFields.extrachoicestring}
 											<p class="text-gray-700">
-												<span class="font-medium text-gray-900">{m.extras()}</span> {line.customFields.extraoptions.extrachoices}
+												<span class="font-medium text-gray-900">{m.extras()}</span> {line.customFields.extrachoicestring}
 											</p>
 										{/if}
 									</div>

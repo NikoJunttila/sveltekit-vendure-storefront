@@ -27,15 +27,17 @@
     // Using Svelte 5 $state for reactive variables
     let week = $state<WeekObject>({ days: [] });
     let selectedSlot = $state<{ display: string; timestamp: number } | null>(null);
-    let closeDelivery = $state(false);
     let information = $state('');
     let noiseLevel = $state<string>('Normaali');
     let weekOffset = $state(0); // Added week offset
     
+    // Buffer time in hours (how many hours in advance an order must be placed)
+    const BUFFER_HOURS = 1;
+    
     // Function to get next 7 days with offset
     function getNext7Days(offset: number) {
         const days = [];
-        const dayNames = ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'];
+        const dayNames = [m.sunday(), m.monday(), m.tuesday(), m.wednesday(), m.thursday(), m.friday(),m.saturday()];
         
         for (let i = 0; i <= 6; i++) {
             const date = new Date();
@@ -54,15 +56,35 @@
         return days;
     }
     
-    // Function to generate hourly time slots
-    function generateHourlySlots() {
+    // Function to generate time slots based on day of week and current time
+    function generateTimeSlots(day: Day) {
         const slots = [];
+        const currentDate = new Date();
+        const dayOfWeek = day.fullDate.getDay(); // 0 is Sunday, 6 is Saturday
+        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
         
-        for (let hour = 10; hour <= 16; hour++) {
+        // Check if this is the current day
+        const isSameDay = day.fullDate.getDate() === currentDate.getDate() && 
+                         day.fullDate.getMonth() === currentDate.getMonth() && 
+                         day.fullDate.getFullYear() === currentDate.getFullYear();
+                         
+        const currentHour = currentDate.getHours();
+        
+        // For weekends (Saturday and Sunday), only show later hours
+        const startHour = isWeekend ? 18 : 10;
+        const endHour = 20;
+        
+        for (let hour = startHour; hour <= endHour; hour++) {
+            // Skip hours that have already passed or are within buffer period if it's the current day
+            if (isSameDay && hour <= currentHour + BUFFER_HOURS) continue;
+            
+            // Skip midday hours (13-17) for weekdays
+            if (!isWeekend && hour > 12 && hour < 18) continue;
+            
             slots.push({
                 time: `${hour}:00-${hour + 1}:00`,
                 ordersAmount: 0,
-                maxOrders: 3
+                maxOrders: 33
             });
         }
         
@@ -72,11 +94,10 @@
     // Generate week based on weekOffset
     $effect(() => {
         const days = getNext7Days(weekOffset);
-        const hourlySlots = generateHourlySlots();
         
         days.forEach(day => {
             //@ts-ignore
-            day.slots = [...hourlySlots];
+            day.slots = generateTimeSlots(day);
         });
         
         week = { days };
@@ -194,18 +215,24 @@
                     <br />
                     <span class="text-sm text-gray-600">{day.date}</span>
                 </div>
-                <div class="grid grid-cols-2 gap-2">
-                    {#each day.slots as slot}
-                        <button
-                            class="p-2 text-base font-medium bg-gray-100 rounded hover:bg-blue-600 hover:text-white transition-colors"
-                            class:!bg-blue-700={selectedSlot?.display === `${day.day} (${day.date}) ${slot.time}`}
-                            class:text-white={selectedSlot?.display === `${day.day} (${day.date}) ${slot.time}`}
-                            onclick={() => selectTimeSlot(day.day, day.date, day.fullDate, slot.time)}
-                        >
-                            {slot.time}
-                        </button>
-                    {/each}
-                </div>
+                {#if day.slots.length > 0}
+                    <div class="grid grid-cols-2 gap-2">
+                        {#each day.slots as slot}
+                            <button
+                                class="p-2 text-base font-medium bg-gray-100 rounded hover:bg-blue-600 hover:text-white transition-colors"
+                                class:!bg-blue-700={selectedSlot?.display === `${day.day} (${day.date}) ${slot.time}`}
+                                class:text-white={selectedSlot?.display === `${day.day} (${day.date}) ${slot.time}`}
+                                onclick={() => selectTimeSlot(day.day, day.date, day.fullDate, slot.time)}
+                            >
+                                {slot.time}
+                            </button>
+                        {/each}
+                    </div>
+                {:else}
+                    <div class="text-center py-4 text-gray-500">
+                        {m.noAvailableSlots ? m.noAvailableSlots() : "No available time slots"}
+                    </div>
+                {/if}
             </div>
         {/each}
     </div>
@@ -221,6 +248,12 @@
             {m.selectDeliveryTime()}
         </div>
     {/if}
+
+    <!-- Buffer Time Info -->
+    <div class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-blue-700">
+        <i class="fas fa-info-circle mr-2"></i>
+        {m.deliveryBufferInfo ? m.deliveryBufferInfo({BUFFER_HOURS}) : `Note: Orders require at least ${BUFFER_HOURS} hours advance notice.`}
+    </div>
 
     <!-- Noise Level Selection -->
     <div class="mt-6">

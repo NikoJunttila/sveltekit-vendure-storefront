@@ -357,5 +357,14 @@
     "extras_selected": "{count} extra(s) selected: +{price}",
     "base": "Base:",
     "extras": "Extras:",
-	"choices":"Choices"
+	"choices":"Choices",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+	"noAvailableSlots":"No available time slot for this day.",
+	"deliveryBufferInfo":"Note: Orders require at least {BUFFER_HOURS} hours advance notice."
 }

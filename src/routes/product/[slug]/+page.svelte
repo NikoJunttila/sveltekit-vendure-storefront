@@ -59,6 +59,7 @@
 
 	// this will load the data in prerendering and initial site load
 	let product: ProductDetailCustomFieldsFragment | null | undefined = $state(
+		//@ts-ignore
 		useFragment(ProductDetailCustomFields, data.product)
 	);
 	const featuredAsset = $derived(useFragment(Asset, product?.featuredAsset));
@@ -69,6 +70,7 @@
 	);
 	$effect(() => {
 		if ($productQuery?.data?.product) {
+		//@ts-ignore
 			product = useFragment(ProductDetailCustomFields, $productQuery.data.product);
 		}
 	});
@@ -108,17 +110,57 @@
 		window.history.pushState({}, '', url);
 	};
 
+	// Parse extra options from JSON
+	const extraOptionsMap = $derived.by(() => {
+		try {
+			if (!product?.customFields?.extraoptions?.extrachoices) return {};
+			// Handle both string JSON format or direct object
+			const extraChoicesRaw = product.customFields.extraoptions.extrachoices;
+			return typeof extraChoicesRaw === 'string' ? JSON.parse(extraChoicesRaw) : extraChoicesRaw;
+		} catch (e) {
+			console.error('Error parsing extra options:', e);
+			return {};
+		}
+	});
+
+	// Get array of extra options
+	const extraOptionsList = $derived.by(() => {
+		return Object.keys(extraOptionsMap);
+	});
+
+	// Track selected extras and their prices
+	interface SelectedExtra {
+		name: string;
+		price: number;
+	}
+	
+	let selectedExtras = $state<SelectedExtra[]>([]);
+
 	const addToCart = async (variantId: string): Promise<void> => {
 		processing = true;
 		const fillings = selectedFillings.join(", ") || "";
-		const extrachoices = selectedExtras.join(", ") || "";
+		const extrachoicestring = selectedExtras.length > 0 ? selectedExtras.map(item => `${item.name} ${item.price/100}€`).join(", ") : "";
+		console.log("string", extrachoicestring)
+		// For backward compatibility with the backend schema
+		// Encode the JSON information about extras in the extrachoices field
+		// Format: "option1:price1,option2:price2"
+		const extrachoices = selectedExtras.length > 0
+			? selectedExtras.map(item => `${item.name}:${item.price}`).join(",")
+			: "";
 		
 		const result = await client
 			.mutation(
 				AddItemToOrder,
 				{ variantId: variantId, quantity: 1, 
-					customFields: {fillings, extraoptions:{
-					enabled:product!.customFields?.extraoptions?.enabled,price: product!.customFields?.extraoptions?.price!,extrachoices:extrachoices}} 
+					customFields: {
+						fillings, 
+						extrachoicestring,
+						extraoptions: {
+							enabled: product!.customFields?.extraoptions?.enabled,
+							price: product!.customFields?.extraoptions?.price,
+							extrachoices: extrachoices
+						}
+					} 
 				},
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
@@ -142,9 +184,8 @@
 		return product?.variants.every((variant) => variant.stockLevel !== 'IN_STOCK') ?? false;
 	});
 
-	// State for fillings and extras selection
+	// State for fillings selection
 	let selectedFillings = $state<string[]>([]);
-	let selectedExtras = $state<string[]>([]);
 
 	// Handle filling selection
 	function toggleFilling(filling: string) {
@@ -160,10 +201,13 @@
 
 	// Handle extra options selection
 	function toggleExtra(extra: string) {
-		if (selectedExtras.includes(extra)) {
-			selectedExtras = selectedExtras.filter((e) => e !== extra);
+		const price = extraOptionsMap[extra] || 0;
+		const isSelected = selectedExtras.some(item => item.name === extra);
+		
+		if (isSelected) {
+			selectedExtras = selectedExtras.filter(item => item.name !== extra);
 		} else {
-			selectedExtras = [...selectedExtras, extra];
+			selectedExtras = [...selectedExtras, { name: extra, price }];
 		}
 	}
 
@@ -182,9 +226,8 @@
 
 	// Calculate extra price
 	const extraPrice = $derived.by(() => {
-		const extraOptions = product?.customFields?.extraoptions;
-		if(!extraOptions?.enabled || selectedExtras.length === 0) return 0;
-		return extraOptions.price! * selectedExtras.length;
+		if (selectedExtras.length === 0) return 0;
+		return selectedExtras.reduce((sum, item) => sum + item.price, 0);
 	});
 
 	// Total price calculation
@@ -377,28 +420,28 @@
 			{/if}
 			
 			<!-- Extra Options -->
-			{#if product.customFields?.extraoptions?.enabled}
+			{#if product.customFields?.extraoptions?.enabled && extraOptionsList.length > 0}
 				<div class="mt-6">
 					<h3 class="text-lg font-medium">
-						{m.add_extras()} (+{formatCurrency(product.customFields.extraoptions.price!, PUBLIC_DEFAULT_CURRENCY)} {m.each()})
+						{m.add_extras()}
 					</h3>
 					<div class="mt-2 flex flex-wrap gap-2">
-						{#each product.customFields.extraoptions.extrachoices!.split(',') as extra}
+						{#each extraOptionsList as extra}
 							<button
 								type="button"
 								onclick={() => toggleExtra(extra.trim())}
-								class:selected={selectedExtras.includes(extra.trim())}
-								class="rounded-full border-2 px-4 py-2 {selectedExtras.includes(extra.trim())
+								class:selected={selectedExtras.some(item => item.name === extra.trim())}
+								class="rounded-full border-2 px-4 py-2 {selectedExtras.some(item => item.name === extra.trim())
 									? 'border-lime-600 bg-lime-100 text-black'
 									: 'border-gray-500'}"
 							>
-								{extra.trim()}
+								{extra.trim()} (+{formatCurrency(extraOptionsMap[extra], PUBLIC_DEFAULT_CURRENCY)})
 							</button>
 						{/each}
 					</div>
 					{#if selectedExtras.length > 0}
 						<p class="mt-2 text-sm">
-							{m.extras_selected({count:selectedExtras.length,price:formatCurrency(extraPrice, PUBLIC_DEFAULT_CURRENCY)})}
+							{m.extras_selected({count:selectedExtras.length, price:formatCurrency(extraPrice, PUBLIC_DEFAULT_CURRENCY)})}
 						</p>
 					{/if}
 				</div>

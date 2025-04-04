@@ -67,6 +67,7 @@
 	};
 
 	const selectCheapestShippingOption = async () => {
+		// if (PUBLIC_VENDURE_MULTI === 'multi') return
 		if (shippingOptions) {
 			let index = 0;
 			if (index === useFragment(ShippingMethodQuote, shippingOptions).length) {
@@ -92,7 +93,6 @@
 	const setShippingOption = async (id: string[]) => {
 		if (PUBLIC_VENDURE_MULTI === 'multi') {
 			let result = await client.mutation(SetOrderShippingMethod, { id }).toPromise();
-			console.error(result)
 		} else {
 			const single = id[0];
 			let result = await client.mutation(SetOrderShippingMethod, { id: single }).toPromise();

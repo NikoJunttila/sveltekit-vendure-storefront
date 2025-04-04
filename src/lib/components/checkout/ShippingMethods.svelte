@@ -27,7 +27,7 @@
 	</div>
 	<div class="p-6">
 		<div class="space-y-4" role="radiogroup">
-			{#if PUBLIC_VENDURE_MULTI === 'multi'}
+			{#if PUBLIC_VENDURE_MULTI === 'multi pois'}
 				<label
 					class="flex cursor-pointer items-center space-x-3 rounded-lg border border-gray-200 p-4 hover:border-lime-500"
 				>

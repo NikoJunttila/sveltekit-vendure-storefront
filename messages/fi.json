@@ -358,5 +358,14 @@
     "extras_selected": "{count} ekstra(a) valittu: +{price}",
     "base": "Perushinta:",
     "extras": "Ekstrat:",
-	"choices":"valinnat"
+	"choices":"valinnat",
+	    "monday": "Maanantai",
+    "tuesday": "Tiistai",
+    "wednesday": "Keskiviikko",
+    "thursday": "Torstai",
+    "friday": "Perjantai",
+    "saturday": "Lauantai",
+    "sunday": "Sunnuntai",
+	"noAvailableSlots":"Ei kuljetusaikoja jäljellä tälle päivälle.",
+	"deliveryBufferInfo":"Huomautus: Tilaukset edellyttävät vähintään {BUFFER_HOURS} tunnin ennakkoilmoitusta."
 }

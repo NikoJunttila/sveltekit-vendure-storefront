@@ -52,15 +52,14 @@
 	async function sendPayment() {
 		errorMessage = '';
 		disabled = true;
-		//disabled for multivendor purposes
-	/* 	try {
+		try {
 			// ensure the method set is what is showing on this page
 			// protects against method being changed on another page
 			// the final shipping method should be the one on the page submitted
 			await setShippingOption(selectedShippingOption);
 		} catch (e) {
 			console.log(e);
-		} */
+		}
 		try {
 			await setOrderState('ArrangingPayment');
 		} catch (e) {

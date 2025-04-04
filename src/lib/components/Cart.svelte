@@ -164,9 +164,9 @@
 															<span class="font-medium">{m.choices()}</span> {line.customFields.fillings}
 														</p>
 													{/if}
-													{#if line.customFields.extraoptions?.extrachoices}
+													{#if line.customFields.extrachoicestring}
 														<p class="text-sm">
-															<span class="font-medium">{m.extras()}</span> {line.customFields.extraoptions.extrachoices}
+															<span class="font-medium">{m.extras()}</span> {line.customFields.extrachoicestring}
 														</p>
 													{/if}
 												</div>
