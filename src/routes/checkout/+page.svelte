@@ -55,7 +55,7 @@
 			if (PUBLIC_VENDURE_MULTI === 'multi') {
 				for (const method of useFragment(ShippingMethodQuote, shippingOptions)) {
 					console.log(method.name)
-					if (method.name.includes('multi')) selectedShippingOption.push(method.id);
+					selectedShippingOption.push(method.id);
 				}
 			} else {
 				//@ts-ignore
@@ -68,6 +68,8 @@
 
 	const selectCheapestShippingOption = async () => {
 		// if (PUBLIC_VENDURE_MULTI === 'multi') return
+		console.log("select cheapest:", shippingOptions)
+		console.log("selected", selectedShippingOption)
 		if (shippingOptions) {
 			let index = 0;
 			if (index === useFragment(ShippingMethodQuote, shippingOptions).length) {
@@ -93,6 +95,7 @@
 	const setShippingOption = async (id: string[]) => {
 		if (PUBLIC_VENDURE_MULTI === 'multi') {
 			let result = await client.mutation(SetOrderShippingMethod, { id }).toPromise();
+			console.log(result)
 		} else {
 			const single = id[0];
 			let result = await client.mutation(SetOrderShippingMethod, { id: single }).toPromise();

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_VENDURE_MULTI } from '$env/static/public';
+	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_VENDURE_MULTI, PUBLIC_HOMEDELIVERY_PRICE } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages';
 
 	interface Props {
@@ -9,6 +9,7 @@
 	}
 
 	let { order, errorMessage }: Props = $props();
+	const toNum = parseInt(PUBLIC_HOMEDELIVERY_PRICE)
 </script>
 
 <section class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
@@ -57,7 +58,7 @@
 						<div class="flex justify-between">
 							<dt class="font-medium text-gray-700">{m.home_delivery()}</dt>
 							<dd class="text-gray-900">
-								{formatCurrency(0, PUBLIC_DEFAULT_CURRENCY)}
+								{formatCurrency(toNum, PUBLIC_DEFAULT_CURRENCY)}
 							</dd>
 						</div>
 					{:else}

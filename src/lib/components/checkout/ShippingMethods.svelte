@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_VENDURE_MULTI } from '$env/static/public';
+	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_VENDURE_MULTI, PUBLIC_HOMEDELIVERY_PRICE } from '$env/static/public';
 	import { useFragment } from '$lib/gql';
 	import { ShippingMethodQuote } from '$lib/vendure';
 	import * as m from '$lib/paraglide/messages';
@@ -18,7 +18,7 @@
 	}: Props = $props();
 
 	//TODO FETCH FROM VENDURE
-	const homeDeliveryPrice = 0;
+	const homeDeliveryPrice = parseInt(PUBLIC_HOMEDELIVERY_PRICE);
 </script>
 
 <section class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-900/5">
@@ -27,7 +27,7 @@
 	</div>
 	<div class="p-6">
 		<div class="space-y-4" role="radiogroup">
-			{#if PUBLIC_VENDURE_MULTI === 'multi pois'}
+			{#if PUBLIC_VENDURE_MULTI === 'multi'}
 				<label
 					class="flex cursor-pointer items-center space-x-3 rounded-lg border border-gray-200 p-4 hover:border-lime-500"
 				>
