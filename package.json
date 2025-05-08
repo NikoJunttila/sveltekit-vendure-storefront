@@ -21,6 +21,7 @@
 		"@inlang/paraglide-sveltekit": "^0.15.5",
 		"@melt-ui/svelte": "^0.86.2",
 		"@stripe/stripe-js": "^5.5.0",
+		"@sveltejs/adapter-auto": "^6.0.0",
 		"@sveltejs/adapter-node": "^5.2.9",
 		"@sveltejs/adapter-vercel": "^5.7.2",
 		"@sveltejs/kit": "^2.0.0",
