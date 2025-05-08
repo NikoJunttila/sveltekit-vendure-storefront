@@ -4,8 +4,8 @@
 </script>
 
 <!-- Hero Section -->
-<div class="max-w-screen-2xl bg-transparent px-2 py-1 md:px-6 md:py-4 2xl:mx-auto">
-	<div class="relative min-h-[500px] w-full overflow-hidden rounded-2xl shadow-2xl">
+<div class="max-w-screen-2xl bg-transparent md:px-6 2xl:mx-auto">
+	<div class="relative min-h-[500px] w-full overflow-hidden  shadow-2xl">
 		<figure class="absolute inset-0 z-0 m-0">
 			<video
 				aria-hidden="true"
