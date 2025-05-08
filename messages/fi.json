@@ -367,5 +367,9 @@
     "saturday": "Lauantai",
     "sunday": "Sunnuntai",
 	"noAvailableSlots":"Ei kuljetusaikoja jäljellä tälle päivälle.",
-	"deliveryBufferInfo":"Huomautus: Tilaukset edellyttävät vähintään {BUFFER_HOURS} tunnin ennakkoilmoitusta."
+	"deliveryBufferInfo":"Huomautus: Tilaukset edellyttävät vähintään {BUFFER_HOURS} tunnin ennakkoilmoitusta.",
+	"no_allergens":"Ei merkattu allergeeneja",
+	"decrease_item_quantity_label":"Vähennä määrää",
+	"increase_item_quantity_label":"Lisää tuote",
+	"remove_item_label":"Poista tuote"
 }

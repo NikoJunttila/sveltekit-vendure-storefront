@@ -43,7 +43,7 @@
 		open.set(false);
 	});
 
-	let showCollections = $state(false);
+	let showCollections = $state(true);
 	//@ts-ignore
 	const treeCols = arrayToTree(collections)
 </script>

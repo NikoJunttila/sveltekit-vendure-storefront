@@ -334,10 +334,14 @@
 							</div>
 						{/if}
 						
+						<h3 class="font-medium text-black">{m.allergens()}</h3>
 						{#if allergensList.length > 0}
 							<div>
-								<h3 class="font-medium text-black">{m.allergens()}</h3>
 								<p class="text-sm text-gray-600 font-bold">{allergensList.join(', ')}</p>
+							</div>
+						{:else}
+							<div>
+								<p class="text-sm text-gray-600 font-bold">{m.no_allergens()}</p>
 							</div>
 						{/if}
 					</div>

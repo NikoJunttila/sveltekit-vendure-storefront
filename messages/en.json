@@ -366,5 +366,9 @@
     "saturday": "Saturday",
     "sunday": "Sunday",
 	"noAvailableSlots":"No available time slot for this day.",
-	"deliveryBufferInfo":"Note: Orders require at least {BUFFER_HOURS} hours advance notice."
+	"deliveryBufferInfo":"Note: Orders require at least {BUFFER_HOURS} hours advance notice.",
+	"no_allergens":"No allergens marked",
+	"decrease_item_quantity_label":"Decrease product amount",
+	"increase_item_quantity_label":"Add product",
+	"remove_item_label":"Remove product"
 }

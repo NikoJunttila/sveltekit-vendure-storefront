@@ -15,7 +15,9 @@
 	import { Collection, SearchResult } from '$lib/vendure';
 	let { data } = $props();
 	let collections: CollectionFragment[] = $state(useFragment(Collection, data.collections || []));
-	let topLevelCollections = $derived(collections.filter((col) => col.parent?.name === "__root_collection__"))
+	let topLevelCollections = $derived(
+		collections.filter((col) => col.parent?.name === '__root_collection__')
+	);
 
 	let products: SearchResultFragment[] = $state(useFragment(SearchResult, data.topProducts) || []);
 
@@ -139,15 +141,7 @@
 </section>
 
 <!--ABOUT US -->
-<section class="relative mx-auto my-8 max-w-screen-xl overflow-hidden rounded-lg p-4 md:my-16">
-	<!-- Animated background elements -->
-	<div class="animate-gradient absolute inset-0 -z-10 opacity-25">
-		<div class="absolute inset-0 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200"></div>
-		<div
-			class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.8)_0%,_transparent_70%)]"
-		></div>
-	</div>
-
+<section class="relative mx-auto my-4 max-w-screen-xl rounded-lg p-4 md:my-16">
 	<!-- Floating blobs -->
 	<div
 		class="animate-float absolute -left-20 -top-20 h-64 w-64 rounded-full bg-orange-300/20 blur-2xl"
@@ -158,16 +152,16 @@
 
 	<!-- Content container -->
 	<div
-		class=" bg-grid relative rounded-lg border-x-2 border-t-4 border-orange-400 p-6 backdrop-blur-sm md:p-12"
+		class="bg-grid cool relative rounded-lg border-x-2 border-t-4 border-orange-400 p-6 backdrop-blur-sm md:p-12 cool"
 	>
-		<div class="mx-auto max-w-2xl text-center">
-			<h2 class="mb-6 text-3xl font-extrabold">{m.about_us_title()}</h2>
+		<div class="mx-auto darkbg max-w-2xl text-center">
+			<!-- <h2 class="mb-6 text-3xl font-extrabold">{m.about_us_title()}</h2> -->
 			<p class=" mb-8 text-2xl font-extrabold leading-relaxed">
 				{m.about_us_description()}
 			</p>
 			<a
 				href="/info/about/"
-				class="inline-block rounded-lg bg-orange-400 px-8 py-3 font-medium
+				class="inline-block rounded-lg bg-orange-400 px-8 py-3 font-bold
                text-black transition-colors duration-300 hover:bg-orange-500
                focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
 				aria-label={m.learn_more_about_company()}
@@ -179,6 +173,11 @@
 </section>
 
 <style>
+	.darkbg{
+		padding: 15px;
+		border-radius: 10px;
+		background-color: rgba(3, 3, 3, 0.3);
+	}
 	@keyframes scroll {
 		0% {
 			transform: translateX(0);
@@ -215,17 +214,6 @@
 			grid-row: span 2;
 		}
 	}
-	@keyframes gradient {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
-	}
 
 	@keyframes float {
 		0%,
@@ -237,11 +225,6 @@
 		}
 	}
 
-	.animate-gradient {
-		animation: gradient 12s ease infinite;
-		background-size: 200% 200%;
-	}
-
 	.animate-float {
 		animation: float 8s ease-in-out infinite;
 	}
@@ -249,8 +232,9 @@
 	.animate-float-delayed {
 		animation: float 8s ease-in-out infinite 2s;
 	}
+	.cool {
+		background-color: rgba(60,150,20,0.1);
+	    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23161644' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23055522'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='105' r='5'/%3E%3Ccircle cx='578' cy='42' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E");
 
-	.bg-grid {
-		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='%23e5e7eb'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
 	}
 </style>
