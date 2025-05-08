@@ -74,7 +74,7 @@
 		<Theme />
 		<ToastComponent />
 		<NavBar {collections} />
-		<div class="bg-gradient min-h-svh">
+		<div class="bg-gradient min-h-svh overflow-hidden">
 			<div class="relative">{@render children?.()}</div>
 			<AnalyticsConsent></AnalyticsConsent>
 			<Footer />
