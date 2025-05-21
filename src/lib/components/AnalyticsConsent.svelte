@@ -1,119 +1,142 @@
 <script lang="ts">
-	import { dev, browser } from '$app/environment';
+	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import * as m from '$lib/paraglide/messages.js';
 
+	// --- Type Definitions ---
+	interface ConsentPreferencesInternal {
+		necessary: boolean;
+		analytics: boolean;
+		preferences: boolean;
+		marketing: boolean;
+	}
+
+	interface GtmConsentMode {
+		functionality_storage: 'granted' | 'denied';
+		security_storage: 'granted' | 'denied';
+		ad_storage: 'granted' | 'denied';
+		analytics_storage: 'granted' | 'denied';
+		personalization_storage: 'granted' | 'denied';
+	}
+
 	let showBanner = $state(false);
-	let currentConsentMode: any = $state({}); // get current consent mode in localStorage onMount
-	let screen = $state('MAIN'); // MAIN = accept, reject, more options, OPTIONS = toggle options;
+	// Stores the consent mode as it is structured for GTM (and localStorage)
+	let currentGtmConsentMode: GtmConsentMode | null = $state(null);
+	let screen = $state<'MAIN' | 'OPTIONS'>('MAIN'); // Explicit type for screen states
+
 	onMount(() => {
-		if (browser && !dev) {
-			currentConsentMode = localStorage.getItem('consentMode');
-			if (!currentConsentMode) showBanner = true;
+		if (browser) {
+			const storedConsentJSON = localStorage.getItem('consentMode');
+			if (storedConsentJSON) {
+				try {
+					currentGtmConsentMode = JSON.parse(storedConsentJSON) as GtmConsentMode;
+					// Banner remains hidden if consent is already stored and valid
+				} catch (error) {
+					console.error("Failed to parse consentMode from localStorage:", error);
+					localStorage.removeItem('consentMode'); // Clear invalid entry
+					showBanner = true; // Show banner if stored consent is invalid
+				}
+			} else {
+				showBanner = true; // Show banner if no consent is stored
+			}
 		}
 	});
-	/**
-	 * This is the function we're going to use to tell Google Tag Manager
-	 * the user's consent preferences, and also save their preferences in localStorage
-	 * @param consent
-	 */
-	function setConsent(consent: any) {
-		// get up dataLayer and gtag https://developers.google.com/tag- platform/tag-manager/datalayer
-		//@ts-ignore
-		window.dataLayer = window.dataLayer || [];
-		//@ts-ignore
-		function gtag() {
-			//@ts-ignore
-			dataLayer.push(arguments);
-		}
 
-		// set the consentMode based on the users response to the consent banner
-		const consentMode = {
-			functionality_storage: consent.necessary ? 'granted' : 'denied',
-			security_storage: consent.necessary ? 'granted' : 'denied',
-			ad_storage: consent.marketing ? 'granted' : 'denied',
-			analytics_storage: consent.analytics ? 'granted' : 'denied',
-			personalization_storage: consent.preferences ? 'granted' : 'denied'
+	/**
+	 * Updates GTM with user's consent preferences and saves them to localStorage.
+	 * @param internalPreferences - User's choices with boolean flags.
+	 */
+	function setConsent(internalPreferences: ConsentPreferencesInternal) {
+		// The gtag function is globally available from <svelte:head>
+
+		const newGtmConsentMode: GtmConsentMode = {
+			functionality_storage: internalPreferences.necessary ? 'granted' : 'denied',
+			security_storage: internalPreferences.necessary ? 'granted' : 'denied',
+			ad_storage: internalPreferences.marketing ? 'granted' : 'denied',
+			analytics_storage: internalPreferences.analytics ? 'granted' : 'denied',
+			personalization_storage: internalPreferences.preferences ? 'granted' : 'denied'
 		};
 
-		// update the users consent in Google Tag Manager
-		//@ts-ignore
-		gtag('consent', 'update', consentMode);
+		// @ts-ignore - gtag is on window, but TS might not know this in Svelte script scope without further config
+		gtag('consent', 'update', newGtmConsentMode);
 
-		// save user's preferences to localStorage so they don't have to consent every time they visit our website
-		localStorage.setItem('consentMode', JSON.stringify(consentMode));
+		localStorage.setItem('consentMode', JSON.stringify(newGtmConsentMode));
+		currentGtmConsentMode = newGtmConsentMode; // Update reactive state
+		showBanner = false;
 	}
 
 	/**
-	 * This is the function that will run whenever the user clicks Accepts All on our banner
+	 * Handles "Accept All" action.
 	 */
 	function acceptConsent() {
-		if (localStorage.getItem('consentMode') === null) {
-			setConsent({
-				necessary: true,
-				analytics: true,
-				preferences: true,
-				marketing: true
-			});
-			showBanner = false;
-		}
+		setConsent({
+			necessary: true,
+			analytics: true,
+			preferences: true,
+			marketing: true
+		});
 	}
 
 	/**
-	 * This is the function that will run whenever the user clicks Rejects All on our banner
+	 * Handles "Reject All" action.
+	 * Necessary cookies are typically kept for site functionality.
 	 */
 	function rejectConsent() {
-		if (localStorage.getItem('consentMode') === null) {
-			setConsent({
-				necessary: false,
-				analytics: false,
-				preferences: false,
-				marketing: false
-			});
-			showBanner = false;
-		}
+		setConsent({
+			necessary: true, // Functionality & Security storage will be 'granted'
+			analytics: false,
+			preferences: false,
+			marketing: false
+		});
 	}
 
 	/**
-	 * This is the function that will run whenever the user consents to custom options
+	 * Handles customized consent submission.
+	 * @param e - The form submission event.
 	 */
-	function customizedConsent(e: any) {
+	function customizedConsent(e: SubmitEvent) {
 		e.preventDefault();
-		let newConsent = {};
-		const data = new FormData(e.target);
-		const consent = {
-			necessary: data.get('necessary_consent'),
-			marketing: data.get('marketing_consent'),
-			analytics: data.get('analytics_consent'),
-			preferences: data.get('preferences_consent')
+		const target = e.target as HTMLFormElement;
+		const formData = new FormData(target);
+
+		const newInternalPreferences: ConsentPreferencesInternal = {
+			// 'necessary_consent' input is now disabled and checked, so always true
+			necessary: true,
+			marketing: formData.get('marketing_consent') === 'on',
+			analytics: formData.get('analytics_consent') === 'on',
+			preferences: formData.get('preferences_consent') === 'on'
 		};
 
-		// fill out the newConsent object based on options the user selected
-		Object.entries(consent).forEach(([key, value]) => {
-			if (value === 'on') {
-				//@ts-ignore
-				newConsent[key] = 'granted';
-			}
-		});
-
-		setConsent(newConsent);
-		showBanner = false;
+		setConsent(newInternalPreferences);
 	}
 </script>
 
 <svelte:head>
-	<!-- disable tracking until consent is given -->
 	<script>
-		// get up dataLayer and gtag https://developers.google.com/tag- platform/tag-manager/datalayer
-
+		// Initialize dataLayer and gtag function globally
 		window.dataLayer = window.dataLayer || [];
-
 		function gtag() {
-			dataLayer.push(arguments);
+			window.dataLayer.push(arguments);
 		}
 
-		// default to no consent
-		if (localStorage.getItem('consentMode') === null) {
+		// Set GTM default consent state
+		// This runs before GTM script loads and before any tags fire.
+		try {
+			const storedConsent = localStorage.getItem('consentMode');
+			if (storedConsent) {
+				gtag('consent', 'default', JSON.parse(storedConsent));
+			} else {
+				gtag('consent', 'default', {
+					ad_storage: 'denied',
+					analytics_storage: 'denied',
+					personalization_storage: 'denied',
+					functionality_storage: 'denied', // Or 'granted' if you always need basic functionality before consent
+					security_storage: 'denied'       // Or 'granted' similarly
+				});
+			}
+		} catch (e) {
+			console.error("Error setting GTM default consent:", e);
+			// Fallback to all denied if parsing fails
 			gtag('consent', 'default', {
 				ad_storage: 'denied',
 				analytics_storage: 'denied',
@@ -121,14 +144,10 @@
 				functionality_storage: 'denied',
 				security_storage: 'denied'
 			});
-		} else {
-			gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
 		}
 	</script>
 
-	<!-- google tag manager script that will load all tags -->
 	<script>
-		//https://www.googletagmanager.com/gtag/js?id=G-G2QSCNFZPV
 		(function (w, d, s, l, i) {
 			w[l] = w[l] || [];
 			w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
@@ -136,90 +155,126 @@
 				j = d.createElement(s),
 				dl = l != 'dataLayer' ? '&l=' + l : '';
 			j.async = true;
-			j.src = 'https://www.googletagmanager.com/gtm.js?id=G-G2QSCNFZPV' + i + dl;
+			j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
 			f.parentNode.insertBefore(j, f);
-		})(window, document, 'script', 'dataLayer', 'YOUR_GTM_ID');
+		})(window, document, 'script', 'dataLayer', 'G-G2QSCNFZPV'); // <-- REPLACE WITH YOUR ACTUAL GTM CONTAINER ID
 	</script>
-</svelte:head>
+	</svelte:head>
 
-<!--  
--- Variables we set above that we'll use now to conditionally display the consent banner
-
-let
-  showBanner = false,
-  screen = 'MAIN'; // MAIN = accept, reject, more options, OPTIONS = toggle options;
--->
 {#if showBanner}
 	<div
 		id="cookie-consent-banner"
 		class="pointer-events-none fixed inset-x-0 bottom-0 z-30 px-6 pb-6"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="cookie-consent-title"
+		aria-describedby="cookie-consent-description"
 	>
 		{#if screen === 'MAIN'}
 			<div
 				class="border-primary dark:border-secondary pointer-events-auto ml-auto max-w-md rounded-xl border-2 bg-gray-50 p-6 shadow-lg ring-1 ring-gray-900/10 dark:bg-gray-950"
 			>
-				<p class="mb-2 text-2xl font-bold leading-tight">👨🏻‍🍳 {m.cookie_banner_title()}</p>
-				<p class="text-base text-gray-900 dark:text-gray-50">
+				<p id="cookie-consent-title" class="mb-2 text-2xl font-bold leading-tight">
+					👨🏻‍🍳 {m.cookie_banner_title()}
+				</p>
+				<p id="cookie-consent-description" class="text-base text-gray-900 dark:text-gray-50">
 					{m.cookie_banner_description()}
 					<a href="/info/cookie-policy" class="font-semibold text-indigo-600">
-						{m.cookie_policy()}</a
-					>.
+						{m.cookie_policy()}
+					</a>.
 				</p>
 				<div class="mt-4 flex items-center gap-x-5">
 					<div class="accept-all-btn-wrapper">
 						<button
 							type="button"
 							class="button bg-secondary relative !mt-0 !px-4 !py-1.5 text-sm font-semibold text-black hover:-translate-y-[7px]"
-							onclick={acceptConsent}>{m.accept_all()}</button
+							onclick={acceptConsent}
 						>
+							{m.accept_all()}
+						</button>
 					</div>
 					<button
 						type="button"
 						class="button button-white !mt-0 !px-4 !py-1.5 text-sm font-semibold"
-						onclick={rejectConsent}>{m.reject_all()}</button
+						onclick={rejectConsent}
 					>
+						{m.reject_all()}
+					</button>
 					<button
 						type="button"
 						class="text-sm font-semibold leading-6 text-gray-900 hover:underline dark:text-gray-50"
-						onclick={() => (screen = 'OPTIONS')}>{m.more_options()}</button
+						onclick={() => (screen = 'OPTIONS')}
 					>
+						{m.more_options()}
+					</button>
 				</div>
 			</div>
 		{:else if screen === 'OPTIONS'}
 			<div
 				class="border-primary dark:border-secondary pointer-events-auto ml-auto max-w-md rounded-xl border-2 bg-gray-50 p-6 shadow-lg ring-1 ring-gray-900/10 dark:bg-gray-950"
 			>
-				<p class="mb-2 text-2xl font-bold leading-tight">👨🏻‍🍳 {m.customize_cookies_title()}</p>
-				<form action="" onsubmit={customizedConsent}>
-					<label for="necessary_consent" class="flex items-center justify-between">
-						<p class="capitalize">{m.necessary()}</p>
-						<input type="checkbox" name="necessary_consent" id="necessary_consent" checked />
-					</label>
-					<label for="marketing_consent" class="flex items-center justify-between">
-						<p class="capitalize">{m.marketing()}</p>
-						<input type="checkbox" name="marketing_consent" id="marketing_consent" checked />
-					</label>
-					<label for="analytics_consent" class="flex items-center justify-between">
-						<p class="capitalize">{m.marketing()}</p>
-						<input type="checkbox" name="analytics_consent" id="analytics_consent" checked />
-					</label>
-					<label for="preferences_consent" class="flex items-center justify-between">
-						<p class="capitalize">{m.preferences()}</p>
-						<input type="checkbox" name="preferences_consent" id="preferences_consent" checked />
-					</label>
+				<p class="mb-2 text-2xl font-bold leading-tight">
+					👨🏻‍🍳 {m.customize_cookies_title()}
+				</p>
+				<form onsubmit={customizedConsent}>
+					<fieldset>
+						<legend class="sr-only">{m.customize_cookies_title()}</legend>
+						<div class="space-y-2">
+							<label for="necessary_consent" class="flex items-center justify-between">
+								<span class="capitalize">{m.necessary()}</span>
+								<input
+									type="checkbox"
+									name="necessary_consent"
+									id="necessary_consent"
+									checked
+									disabled
+								/>
+							</label>
+							<label for="preferences_consent" class="flex items-center justify-between">
+								<span class="capitalize">{m.preferences()}</span>
+								<input
+									type="checkbox"
+									name="preferences_consent"
+									id="preferences_consent"
+									checked={currentGtmConsentMode?.personalization_storage === 'granted'}
+								/>
+							</label>
+							<label for="analytics_consent" class="flex items-center justify-between">
+								<span class="capitalize">{m.analytics()}</span>
+								<input
+									type="checkbox"
+									name="analytics_consent"
+									id="analytics_consent"
+									checked={currentGtmConsentMode?.analytics_storage === 'granted'}
+								/>
+							</label>
+							<label for="marketing_consent" class="flex items-center justify-between">
+								<span class="capitalize">{m.marketing()}</span>
+								<input
+									type="checkbox"
+									name="marketing_consent"
+									id="marketing_consent"
+									checked={currentGtmConsentMode?.ad_storage === 'granted'}
+								/>
+							</label>
+						</div>
+					</fieldset>
 					<div class="mt-4 flex items-center gap-x-5">
 						<div class="accept-all-btn-wrapper">
 							<button
 								type="submit"
 								class="button bg-secondary relative !mt-0 !px-4 !py-1.5 text-sm font-semibold text-black hover:-translate-y-[7px]"
-								>{m.accept_selected()}</button
 							>
+								{m.accept_selected()}
+							</button>
 						</div>
 						<button
 							type="button"
 							class="text-sm font-semibold leading-6 text-gray-900 hover:underline dark:text-gray-50"
-							onclick={() => (screen = 'MAIN')}>{m.back_to_main_options()}</button
+							onclick={() => (screen = 'MAIN')}
 						>
+							{m.back_to_main_options()}
+						</button>
 					</div>
 				</form>
 			</div>
@@ -237,21 +292,33 @@ let
 			position: absolute;
 			inset: 0;
 			background: transparent;
+			/* border: 1px solid transparent; /* Base border for transition or consistent spacing */
 		}
 	}
 
 	:is(.dark .accept-all-btn-wrapper)::before {
-		border: 1px solid gray;
+		border: 1px solid gray; /* Consider your theme's secondary color here */
 	}
 
 	.accept-all-btn-wrapper > .button {
 		position: relative;
 		z-index: 1;
-		background: green;
-		color: black !important; /* overwrite .button color */
+		background: green; /* Example - ensure this aligns with your theme variables if possible */
+		color: black !important; /* Try to avoid !important if possible by increasing specificity or adjusting base button styles */
 
 		&:hover {
 			transform: translateY(-3px);
 		}
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
 	}
 </style>
