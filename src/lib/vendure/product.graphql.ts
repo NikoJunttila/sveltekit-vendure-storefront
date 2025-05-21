@@ -85,7 +85,6 @@ export const ProductDetail = gql(`
       			}
 			extraoptions {
 				enabled
-				price
 				extrachoices
 				}
 			}
@@ -159,7 +158,6 @@ export const ProductDetailCustomFields = gql(`
       			}
 			extraoptions {
 				enabled #boolean
-				price # int
 				extrachoices # JSON
 				}
 			}

@@ -4,7 +4,7 @@
 </script>
 
 <!-- Hero Section -->
-<div class="max-w-screen-2xl bg-transparent xl:px-6 xl:py-2 2xl:mx-auto">
+<div class=" bg-transparent 2xl:mx-auto">
 	<div class="relative min-h-[500px] w-full overflow-hidden shadow-2xl">
 		<figure class="absolute inset-0 z-0 m-0">
 			<video
@@ -27,7 +27,7 @@
 			class="absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent"
 		></div>
 
-		<header class="relative z-20 px-8 py-12 md:px-16 md:py-24 lg:py-32">
+		<div class="relative z-20 px-8 py-12 md:px-16 md:py-24 lg:py-32 xl:ml-[15%]">
 			<div class="max-w-2xl space-y-6 text-white">
 				<h1
 					class="animate-fade-in-up text-5xl font-bold leading-tight drop-shadow-2xl md:text-6xl lg:text-7xl xl:text-8xl"
@@ -63,6 +63,6 @@
 					</svg>
 				</button>
 			</div>
-		</header>
+		</div>
 	</div>
 </div>

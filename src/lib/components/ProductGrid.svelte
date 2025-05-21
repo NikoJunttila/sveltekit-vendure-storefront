@@ -1,4 +1,3 @@
-<!-- ProductGrid.svelte -->
 <script lang="ts">
 	import Image from '$lib/components/Image.svelte';
 	import * as m from '$lib/paraglide/messages.js';
@@ -7,12 +6,13 @@
 	import { formatCurrency } from '$lib/utils';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import { Heart } from 'lucide-svelte';
-	import { getContextClient } from '@urql/svelte';
-	import { toast } from '../toast.svelte';
-	import { AddItemToOrder } from '../vendure';
-	import { cartDialogStore } from '$lib/stores';
+	// import { getContextClient } from '@urql/svelte';
+	// import { toast } from '../toast.svelte';
+	// import { AddItemToOrder } from '../vendure';
+	// import { cartDialogStore } from '$lib/stores';
 
-	const client = getContextClient();
+	// const client = getContextClient();
+
 	interface Props {
 		filteredProducts: SearchResultFragment[];
 	}
@@ -32,27 +32,27 @@
 		}
 	});
 
-	const addToCart = async (variantId: string): Promise<void> => {
-		const result = await client
-			.mutation(
-				AddItemToOrder,
-				{ variantId: variantId, quantity: 1, fillings:""},
-				{ additionalTypenames: ['ActiveOrder'] }
-			)
-			.toPromise();
-		switch (result?.data?.addItemToOrder?.__typename) {
-			case 'InsufficientStockError':
-				toast.error(m.insufficient_stock());
-				break;
-			case 'Order':
-				toast.success(m.item_added());
-				break;
-			default:
-				toast.error(m.error_adding_item());
-				break;
-		}
-		cartDialogStore.set(true);
-	};
+	// const addToCart = async (variantId: string): Promise<void> => {
+	// 	const result = await client
+	// 		.mutation(
+	// 			AddItemToOrder,
+	// 			{ variantId: variantId, quantity: 1, fillings:""},
+	// 			{ additionalTypenames: ['ActiveOrder'] }
+	// 		)
+	// 		.toPromise();
+	// 	switch (result?.data?.addItemToOrder?.__typename) {
+	// 		case 'InsufficientStockError':
+	// 			toast.error(m.insufficient_stock());
+	// 			break;
+	// 		case 'Order':
+	// 			toast.success(m.item_added());
+	// 			break;
+	// 		default:
+	// 			toast.error(m.error_adding_item());
+	// 			break;
+	// 	}
+	// 	cartDialogStore.set(true);
+	// };
 
 	function toggleFavorite(productId: string) {
 		favorites = {
@@ -113,7 +113,7 @@
 	<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		{#each sortedProducts as p}
 			<div
-				class="group relative flex flex-col items-center rounded-lg shadow-sm transition-all duration-300 hover:shadow-lg"
+				class="group relative flex flex-col items-center rounded-lg shadow-lg transition-all duration-300 hover:shadow-lg"
 			>
 				<div class="relative aspect-square w-full overflow-hidden rounded-t-lg">
 					<Image
@@ -223,53 +223,3 @@
 	</div>
 </div>
 
-<style>
-	/* Basic fade animation for all browsers */
-	.lg\:col-span-3 .grid > * {
-		opacity: 0;
-		transition: opacity 0.5s ease-out;
-	}
-
-	/* Modern browsers with animation-timeline support */
-	@supports (animation-timeline: view()) {
-		@media (prefers-reduced-motion: no-preference) {
-			.lg\:col-span-3 .grid > * {
-				opacity: 0;
-				scale: 0.8;
-				animation: fade-in linear forwards;
-				animation-timeline: view();
-				animation-range: 50px 28%;
-				transition: none; /* Disable basic fade for modern browsers */
-			}
-		}
-	}
-
-	/* Fallback for browsers without animation-timeline support */
-	@supports not (animation-timeline: view()) {
-		@media (prefers-reduced-motion: no-preference) {
-			.lg\:col-span-3 .grid > * {
-				opacity: 1;
-				scale: 1;
-				animation: simple-fade 0.5s ease-out;
-			}
-		}
-	}
-
-	@keyframes fade-in {
-		to {
-			opacity: 1;
-			scale: 1;
-		}
-	}
-
-	@keyframes simple-fade {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-</style>

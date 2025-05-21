@@ -110,23 +110,43 @@
 		window.history.pushState({}, '', url);
 	};
 
+
 	// Parse extra options from JSON
 	const extraOptionsMap = $derived.by(() => {
 		try {
-			if (!product?.customFields?.extraoptions?.extrachoices) return {};
-			// Handle both string JSON format or direct object
-			const extraChoicesRaw = product.customFields.extraoptions.extrachoices;
-			return typeof extraChoicesRaw === 'string' ? JSON.parse(extraChoicesRaw) : extraChoicesRaw;
+			const extraChoicesRaw = product?.customFields?.extraoptions?.extrachoices;
+			if (!extraChoicesRaw) {
+				return []; // Return empty array if no raw choices
+			}
+			
+			const parsedChoices = typeof extraChoicesRaw === 'string' ? JSON.parse(extraChoicesRaw) : extraChoicesRaw;
+
+			// Validate that parsedChoices is an array of the expected structure
+			if (Array.isArray(parsedChoices) && 
+				parsedChoices.every(item => 
+					typeof item === 'object' && 
+					item !== null && 
+					'name' in item && 
+					typeof item.name === 'string' &&
+					'price' in item && 
+					typeof item.price === 'number'
+				)
+			) {
+				return parsedChoices as { name: string; price: number }[];
+			} else {
+				// Log a warning if the structure is not as expected
+				console.warn(
+					'Extra options raw data is not in the expected format (array of {name: string, price: number}):', 
+					parsedChoices
+				);
+				return []; // Return empty array for incorrect format
+			}
 		} catch (e) {
 			console.error('Error parsing extra options:', e);
-			return {};
+			return []; // Return empty array on parsing error
 		}
 	});
 
-	// Get array of extra options
-	const extraOptionsList = $derived.by(() => {
-		return Object.keys(extraOptionsMap);
-	});
 
 	// Track selected extras and their prices
 	interface SelectedExtra {
@@ -200,14 +220,20 @@
 	}
 
 	// Handle extra options selection
-	function toggleExtra(extra: string) {
-		const price = extraOptionsMap[extra] || 0;
-		const isSelected = selectedExtras.some(item => item.name === extra);
+	function toggleExtra(extraName: string) { // extraName is the name of the extra, e.g., "Extra Cheese"
+		// Find the extra definition in the extraOptionsMap array
+		const extraDefinition = extraOptionsMap.find(opt => opt.name.trim() === extraName.trim());
+		
+		// Get the price from the found definition, default to 0 if not found (or handle as error)
+		const price = extraDefinition ? extraDefinition.price : 0;
+
+		const isSelected = selectedExtras.some(item => item.name === extraName.trim());
 		
 		if (isSelected) {
-			selectedExtras = selectedExtras.filter(item => item.name !== extra);
+			selectedExtras = selectedExtras.filter(item => item.name !== extraName.trim());
 		} else {
-			selectedExtras = [...selectedExtras, { name: extra, price }];
+			// Add the extra with its name and the correctly retrieved price
+			selectedExtras = [...selectedExtras, { name: extraName.trim(), price }];
 		}
 	}
 
@@ -215,6 +241,7 @@
 	$effect(() => {
 		selectedFillings = [];
 		selectedExtras = [];
+		console.log(extraOptionsMap)
 	});
 	
 	// Check if correct number of fillings is selected
@@ -424,22 +451,22 @@
 			{/if}
 			
 			<!-- Extra Options -->
-			{#if product.customFields?.extraoptions?.enabled && extraOptionsList.length > 0}
+			{#if product.customFields?.extraoptions?.enabled && extraOptionsMap.length > 0}
 				<div class="mt-6">
 					<h3 class="text-lg font-medium">
 						{m.add_extras()}
 					</h3>
 					<div class="mt-2 flex flex-wrap gap-2">
-						{#each extraOptionsList as extra}
+						{#each extraOptionsMap as extra}
 							<button
 								type="button"
-								onclick={() => toggleExtra(extra.trim())}
-								class:selected={selectedExtras.some(item => item.name === extra.trim())}
-								class="rounded-full border-2 px-4 py-2 {selectedExtras.some(item => item.name === extra.trim())
+								onclick={() => toggleExtra(extra.name.trim())}
+								class:selected={selectedExtras.some(item => item.name === extra.name.trim())}
+								class="rounded-full border-2 px-4 py-2 {selectedExtras.some(item => item.name === extra.name.trim())
 									? 'border-lime-600 bg-lime-100 text-black'
 									: 'border-gray-500'}"
 							>
-								{extra.trim()} (+{formatCurrency(extraOptionsMap[extra], PUBLIC_DEFAULT_CURRENCY)})
+								{extra.name.trim()} (+{formatCurrency(extra.price, PUBLIC_DEFAULT_CURRENCY)})
 							</button>
 						{/each}
 					</div>
@@ -489,6 +516,5 @@
 		<div class="mb-4">
 			<Highlights />
 		</div>
-		<!-- Tabs section commented out as in original code -->
 	</div>
 {/if}

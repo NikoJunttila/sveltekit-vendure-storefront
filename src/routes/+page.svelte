@@ -155,8 +155,7 @@
 		class="bg-grid cool relative rounded-lg border-x-2 border-t-4 border-orange-400 p-6 backdrop-blur-sm md:p-12 cool"
 	>
 		<div class="mx-auto darkbg max-w-2xl text-center">
-			<!-- <h2 class="mb-6 text-3xl font-extrabold">{m.about_us_title()}</h2> -->
-			<p class=" mb-8 text-2xl font-extrabold leading-relaxed">
+			<p class=" mb-8 text-2xl text-white font-bold leading-relaxed">
 				{m.about_us_description()}
 			</p>
 			<a
