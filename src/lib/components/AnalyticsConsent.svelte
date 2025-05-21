@@ -157,7 +157,7 @@
 			j.async = true;
 			j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
 			f.parentNode.insertBefore(j, f);
-		})(window, document, 'script', 'dataLayer', 'G-G2QSCNFZPV'); // <-- REPLACE WITH YOUR ACTUAL GTM CONTAINER ID
+		})(window, document, 'script', 'dataLayer', 'GTM-KZ5LP7QN'); // <-- REPLACE WITH YOUR ACTUAL GTM CONTAINER ID
 	</script>
 	</svelte:head>
 
@@ -187,7 +187,7 @@
 					<div class="accept-all-btn-wrapper">
 						<button
 							type="button"
-							class="button bg-secondary relative !mt-0 !px-4 !py-1.5 text-sm font-semibold text-black hover:-translate-y-[7px]"
+							class="button bg-secondary !w-24 h-16 relative !mt-0 !px-4 !py-1.5 text-sm font-semibold text-black hover:-translate-y-[7px]"
 							onclick={acceptConsent}
 						>
 							{m.accept_all()}
@@ -195,7 +195,7 @@
 					</div>
 					<button
 						type="button"
-						class="button button-white !mt-0 !px-4 !py-1.5 text-sm font-semibold"
+						class="button button-white !w-24 h-16 !mt-0 !px-4 !py-1.5 text-sm font-semibold"
 						onclick={rejectConsent}
 					>
 						{m.reject_all()}
