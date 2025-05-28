@@ -43,7 +43,7 @@
 									</p>
 								{/if}
 								
-								{#if line.customFields}
+								{#if line.customFields.fillings || line.customFields.extrachoicestring}
 									<div class="mt-2 space-y-1 rounded-md bg-gray-50 p-3 text-sm">
 										{#if line.customFields.fillings}
 											<p class="text-gray-700">

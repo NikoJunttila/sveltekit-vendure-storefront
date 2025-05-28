@@ -3,6 +3,7 @@
 	import { ArrowLeft } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import {goto} from "$app/navigation"
 	import { type FragmentType, useFragment } from '$lib/gql';
 	import { cartStore } from '$lib/stores';
 	import {
@@ -81,6 +82,7 @@
 	};
 
 	const removeOrderLine = async (orderLineId: string) => {
+		//this breaks the page if no more items left
 		const result = await client
 			.mutation(
 				RemoveOrderLine,
@@ -90,6 +92,10 @@
 			.toPromise();
 		if (result.error) toast.error(m.unexpected_error());
 		else if (result.data) toast.success(m.item_removed());
+		console.log(order)
+		if (order?.lines.length == 1){
+			goto("/")
+		}
 	};
 
 	const setShippingOption = async (id: string[]) => {

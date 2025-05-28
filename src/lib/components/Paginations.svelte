@@ -98,7 +98,7 @@
 		</button>
 	</div>
 
-	<div class="text-sm text-gray-600">
+	<div class="text-sm text-black dark:text-white">
 		{m.pagination({
 			min: (currentPage - 1) * perPage + 1,
 			max: Math.min(currentPage * perPage, totalCount),
