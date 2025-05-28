@@ -59,5 +59,7 @@ Make sure your backend is running first and that you configure the api urls in y
 npm dev
 ```
 
+For analytics get google tag manager and change in analyticsConsent.svelte file correct when tag is correctly configured
+
 For 1gb vm builds
 NODE_OPTIONS="--max-old-space-size=768" npm run build

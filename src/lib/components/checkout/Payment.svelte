@@ -34,18 +34,25 @@
 		}
 	}
 
-	async function getPaytrailHref(): Promise<string> {
-		const paytrailHref = await client
-			.mutation(PaytrailPayment, {})
-			.toPromise()
-			.then((result) => {
-				return result.data;
-			});
-		return paytrailHref?.createPaytrailPaymentIntent.href || '';
-	}
+	// async function getPaytrailHref(): Promise<string> {
+	// 	try {
+
+	// 		const paytrailHref = await client
+	// 		.mutation(PaytrailPayment, {})
+	// 		.toPromise()
+	// 		.then((result) => {
+	// 			return result.data;
+	// 		});
+	// 		console.log(paytrailHref)
+	// 		return paytrailHref?.createPaytrailPaymentIntent.href || '';
+	// 	} catch (e){
+	// 		console.error(e)
+	// 		return ""
+	// 	}
+	// }
 
 	onMount(async () => {
-		/* href = await getPaytrailHref(); */
+		//  href = await getPaytrailHref(); 
 		href = await getPaytrailMultiHref();
 	});
 
