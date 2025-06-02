@@ -177,7 +177,6 @@
 						extrachoicestring,
 						extraoptions: {
 							enabled: product!.customFields?.extraoptions?.enabled,
-							price: product!.customFields?.extraoptions?.price,
 							extrachoices: extrachoices
 						}
 					} 
@@ -241,7 +240,6 @@
 	$effect(() => {
 		selectedFillings = [];
 		selectedExtras = [];
-		console.log(extraOptionsMap)
 	});
 	
 	// Check if correct number of fillings is selected

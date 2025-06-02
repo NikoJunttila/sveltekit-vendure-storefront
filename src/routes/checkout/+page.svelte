@@ -92,7 +92,6 @@
 			.toPromise();
 		if (result.error) toast.error(m.unexpected_error());
 		else if (result.data) toast.success(m.item_removed());
-		console.log(order)
 		if (order?.lines.length == 1){
 			goto("/")
 		}
