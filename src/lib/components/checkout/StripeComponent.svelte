@@ -1,29 +1,32 @@
 <script lang="ts">
-    import { getContextClient } from "@urql/svelte";
-   	import { 
-        PUBLIC_DEFAULT_CURRENCY,
+	import { getContextClient } from '@urql/svelte';
+	import {
+		PUBLIC_DEFAULT_CURRENCY,
 		PUBLIC_STRIPE_KEY,
-		PUBLIC_STRIPE_REDIRECT_URL,
-	} from '$env/static/public' 
-    import { StripePaymentIntent, ActiveOrder, TransitionOrderToState } from "../../vendure";
-    import { useFragment } from "../../gql";
-    import { Elements, PaymentElement } from '../../stripe/index'
-    import { cartStore } from "../../stores";
-	const client = getContextClient()
-    import * as m from '$lib/paraglide/messages';
-    
+		PUBLIC_STRIPE_REDIRECT_URL
+	} from '$env/static/public';
+	import { StripePaymentIntent, ActiveOrder, TransitionOrderToState } from '../../vendure';
+	import { useFragment } from '../../gql';
+	import { Elements, PaymentElement } from '../../stripe/index';
+	import { cartStore } from '../../stores';
+	const client = getContextClient();
+	import * as m from '$lib/paraglide/messages';
+
 	let order = $derived(useFragment(ActiveOrder, $cartStore));
-    let processing =  $state(false)
-    let errorMessage : string | undefined = $state('')
-    const startPayment = async () => {
-		const result = await client.mutation(StripePaymentIntent, {}).toPromise()
-		console.log(result)
-		return (result?.data?.createStripePaymentIntent)? result.data.createStripePaymentIntent : ''
-	}
-    const setOrderState = async (state: string) => {
+	let processing = $state(false);
+	let errorMessage: string | undefined = $state('');
+
+	const startPayment = async () => {
+		const result = await client.mutation(StripePaymentIntent, {}).toPromise();
+		console.log(result);
+		return result?.data?.createStripePaymentIntent ? result.data.createStripePaymentIntent : '';
+	};
+
+	const setOrderState = async (state: string) => {
 		let result = await client.mutation(TransitionOrderToState, { state }).toPromise();
 	};
 </script>
+
 <main class="lg:flex lg:max-h-screen lg:min-h-full lg:flex-row-reverse lg:overflow-hidden">
 	<section
 		aria-labelledby="payment-heading"
@@ -47,24 +50,36 @@
 				<form
 					class="grid gap-y-8"
 					onsubmit={async (e) => {
-                        e.preventDefault();
+						e.preventDefault();
 						if (processing) return;
 						processing = true;
 						try {
 							await setOrderState('ArrangingPayment');
-					
+
 							const clientSecret = await startPayment();
-							let stripeResponse = await elements?.submit();
-							if (stripeResponse && !stripeResponse.error) {
-								// TODO: save payment method
-								stripeResponse = await stripe?.confirmPayment({
-									elements,
-									clientSecret,
-									confirmParams: { return_url: `${PUBLIC_STRIPE_REDIRECT_URL}/${order?.code}` }
-								});
-								console.log(stripeResponse);
-							} else if (stripeResponse && stripeResponse.error) {
-								errorMessage = stripeResponse.error.message;
+							console.log('Client Secret:', clientSecret); // Debug this
+
+							if (!clientSecret || !clientSecret.includes('_secret_')) {
+								throw new Error('Invalid client secret received');
+							}
+							//@ts-ignore
+							const { error: submitError } = await elements?.submit();
+							if (submitError) {
+								errorMessage = submitError.message;
+								processing = false;
+								return;
+							}
+							//@ts-ignore
+							const { error } = await stripe?.confirmPayment({
+								elements,
+								clientSecret,
+								confirmParams: {
+									return_url: `${PUBLIC_STRIPE_REDIRECT_URL}/${order?.code}`
+								}
+							});
+
+							if (error) {
+								errorMessage = error.message;
 								processing = false;
 							}
 						} catch {
@@ -90,7 +105,7 @@
 					>
 						{#if processing}
 							{m.processing()}...{:else}
-							 {m.complete_order()}
+							{m.complete_order()}
 						{/if}
 					</button>
 					<p class="flex justify-center pb-4 text-sm font-medium text-gray-500">
@@ -106,7 +121,7 @@
 								clip-rule="evenodd"
 							/>
 						</svg>
-					{m.stripe_handles()}
+						{m.stripe_handles()}
 					</p>
 				</form>
 			</Elements>

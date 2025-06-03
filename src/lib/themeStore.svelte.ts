@@ -13,7 +13,7 @@
  */
 function createThemeStore() {
 	/** @type {ThemeStore} */
-	let state = $state({
+	let state : any = $state({
 		themes: [],
 		forcedTheme: undefined,
 		theme: 'light',
@@ -25,11 +25,11 @@ function createThemeStore() {
 	 * Update the active theme.
 	 * @param {'dark' | 'light' | 'system'} newTheme - The new active theme.
 	 */
-	function setTheme(newTheme) {
+	function setTheme(newTheme : any) {
 		state.theme = newTheme;
 		// Optionally: add logic to update resolvedTheme or systemTheme here.
 	}
-	function setWhole(whole) {
+	function setWhole(whole : any) {
 		state = whole;
 	}
 

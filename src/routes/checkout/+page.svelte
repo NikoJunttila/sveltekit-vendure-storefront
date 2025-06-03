@@ -42,7 +42,7 @@
 		const select = e.target as HTMLSelectElement;
 		const quantity = parseInt(select.value);
 		let result = await client.mutation(AdjustOrderLine, { orderLineId, quantity }).toPromise();
-		console.log(result);
+		// console.log(result);
 	};
 
 	const getShippingOptions = async () => {
@@ -55,7 +55,7 @@
 			//multivendor select all shipping methods
 			if (PUBLIC_VENDURE_MULTI === 'multi') {
 				for (const method of useFragment(ShippingMethodQuote, shippingOptions)) {
-					console.log(method.name)
+					// console.log(method.name)
 					selectedShippingOption.push(method.id);
 				}
 			} else {
@@ -63,14 +63,14 @@
 				selectedShippingOption.push(shippingOptions[0].id);
 			}
 		}
-		console.log(selectedShippingOption)
+		// console.log(selectedShippingOption)
 		await selectCheapestShippingOption();
 	};
 
 	const selectCheapestShippingOption = async () => {
 		// if (PUBLIC_VENDURE_MULTI === 'multi') return
-		console.log("select cheapest:", shippingOptions)
-		console.log("selected", selectedShippingOption)
+		// console.log("select cheapest:", shippingOptions)
+		// console.log("selected", selectedShippingOption)
 		if (shippingOptions) {
 			let index = 0;
 			if (index === useFragment(ShippingMethodQuote, shippingOptions).length) {
@@ -173,6 +173,7 @@
 		if (browser) {
 			try{
 				await getShippingOptions();
+				setOrderState("AddingItems")
 			} catch (e){
 				console.error(e)
 			}
