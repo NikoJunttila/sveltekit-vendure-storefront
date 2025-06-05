@@ -131,7 +131,7 @@
 							</p>
 						</a>
 					</div>
-					<div class=" flex w-full flex-1 flex-col p-4 dark:bg-gray-800">
+					<div class=" flex w-full flex-1 flex-col p-4 dark:bg-gray-800 bg-primary-200">
 						<div class="mb-4 flex flex-col gap-2">
 							<h3
 								class="text-lg font-semibold transition-colors duration-300 group-hover:text-primary-600"

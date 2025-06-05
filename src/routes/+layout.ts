@@ -1,4 +1,4 @@
-import { createClient, GetCollections } from '$lib/vendure';
+import { createClient, GetCollections, GetTopLevelCollections } from '$lib/vendure';
 const client : any = createClient();
 
 export const prerender = 'auto';
@@ -10,6 +10,7 @@ export async function load() {
 			.query(GetCollections, {})
 			.toPromise()
 			.then((result : any) => result?.data?.collections?.items),
+		topCollections: await client.query(GetTopLevelCollections, {}).toPromise().then((result : any) => result?.data?.collections?.items)
 		/* channel: await client.query(ActiveChannel, {}).toPromise().then((result) => result?.data?.activeChannel), */
 	};
 }

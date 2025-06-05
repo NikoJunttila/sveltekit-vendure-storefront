@@ -207,7 +207,7 @@ config={{
 		>
 			<div class="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
 				<div>
-					<h1 class="text-2xl font-bold text-gray-900 lg:text-3xl">{m.customer_profile()}</h1>
+					<h1 class="text-2xl font-bold text-gray-900 dark:text-gray-200 lg:text-3xl">{m.customer_profile()}</h1>
 				</div>
 				<form onsubmit={resetPass}>
 					<button
@@ -659,7 +659,7 @@ config={{
 		<!-- Orders Section -->
 		{#if user?.orders}
 			<div class="rounded-xl bg-white p-6 shadow-lg ring-1 ring-black/5 dark:bg-slate-700 lg:p-8">
-				<h2 class="mb-6 text-2xl font-bold text-gray-900">
+				<h2 class="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-200">
 					{m.order_history({ count: user.orders.totalItems })}
 				</h2>
 

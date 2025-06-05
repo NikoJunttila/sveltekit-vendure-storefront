@@ -16,23 +16,23 @@
 
 <div
 	role="tablist"
-	class="flex flex-col items-center rounded-md bg-primary-900 p-0.5 text-xs text-white sm:flex-row"
+	class="flex flex-col items-center rounded-md bg-primary-900  text-xs text-white sm:flex-row "
 >
 	<button
 		role="tab"
 		aria-selected={currentLang === 'en'}
-		class="relative rounded px-2 py-1 font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white"
+		class="relative rounded px-4 py-2 font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white"
 		class:active-lang={currentLang === 'en'}
-		on:click={() => switchToLanguage('en')}
+		onclick={() => switchToLanguage('en')}
 	>
 		EN
 	</button>
 	<button
 		role="tab"
 		aria-selected={currentLang === 'fi'}
-		class="relative rounded px-2 py-1 font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white"
+		class="relative rounded px-4 py-2 font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white"
 		class:active-lang={currentLang === 'fi'}
-		on:click={() => switchToLanguage('fi')}
+		onclick={() => switchToLanguage('fi')}
 	>
 		FI
 	</button>

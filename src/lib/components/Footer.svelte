@@ -207,7 +207,10 @@
 					&copy; {year}
 					{PUBLIC_ORGANIZATION}
 				</p>
-				<LanguageSwitch />
+				<div class="bg-accent-500 p-1 rounded-md">
+					
+					<LanguageSwitch />
+				</div>
 			</div>
 			<div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
 				<a href="/info/terms" class="transition-colors duration-300 hover:text-primary-600">
