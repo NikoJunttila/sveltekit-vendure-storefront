@@ -2,24 +2,25 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import Meta from '$src/lib/components/Meta.svelte';
 	import Hero from '$src/lib/components/hero.svelte';
+	import ScrollingBanner from '$src/lib/components/ScrollingBanner.svelte';
 	import {
 		PUBLIC_SITE_NAME,
 		PUBLIC_SITE_URL,
 		PUBLIC_SITE_IMAGE,
-		PUBLIC_DEFAULT_CURRENCY
 	} from '$env/static/public';
 	import JsonLd from '$src/lib/components/JsonLd.svelte';
-	import { formatCurrency } from '$lib/utils';
 	import { useFragment } from '$lib/gql';
-	import { type CollectionFragment, type SearchResultFragment } from '$lib/gql/graphql';
-	import { Collection, SearchResult } from '$lib/vendure';
+	import { type CollectionFragment} from '$lib/gql/graphql';
+	import { Collection } from '$lib/vendure';
+	import HotProducts from '$src/lib/components/HotProducts.svelte';
 	let { data } = $props();
+	//@ts-ignore
 	let collections: CollectionFragment[] = $state(useFragment(Collection, data.collections || []));
+
 	let topLevelCollections = $derived(
 		collections.filter((col) => col.parent?.name === '__root_collection__')
 	);
 
-	let products: SearchResultFragment[] = $state(useFragment(SearchResult, data.topProducts) || []);
 
 	const structuredData = {
 		'@context': 'https://schema.org',
@@ -75,70 +76,10 @@
 	</div>
 </section>
 
-<!-- Scrolling banner text -->
-<section class="mx-auto my-8 max-w-screen-xl p-4">
-	<div class="overflow-hidden rounded-lg bg-orange-400 shadow-sm">
-		<div class="group relative py-4">
-			<div class="scrolling-text whitespace-nowrap text-lg font-medium text-gray-800">
-				{#each { length: 4 } as _}
-					<span class="inline-block pr-8">
-						<!-- PLACE HOLDER. FETCH REAL DATA LATER-->
-						{m.banner_text()}
-					</span>
-				{/each}
-			</div>
-		</div>
-	</div>
-</section>
 
-<!-- Hot products section - Mosaic grid -->
-<section class="mx-auto my-8 max-w-screen-2xl p-4">
-	<h2 class="mb-8 text-center text-3xl font-bold">{m.hot_products()}</h2>
-	<div class="grid grid-cols-2 overflow-hidden rounded-md md:grid-cols-3 lg:grid-cols-4">
-		{#each products as product, i}
-			<a
-				aria-label={`Browse ${product.productName} product`}
-				href={`/product/${product.slug}`}
-				class="group relative overflow-hidden shadow-md
-                       {i === 0 ? 'md:col-span-2 md:row-span-2' : ''}
-                       {i === 3 ? 'lg:col-span-2' : ''}"
-			>
-				<div class="aspect-square h-full w-full">
-					<img
-						loading="lazy"
-						src={product.productAsset?.preview}
-						alt={product.productName}
-						class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-						width="600"
-						height="600"
-					/>
-				</div>
+<ScrollingBanner></ScrollingBanner>
 
-				<!-- Overlay content -->
-				<div
-					class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t
-                            from-black/40 to-transparent p-4"
-				>
-					<h3 class="text-center text-lg font-semibold text-white drop-shadow-lg md:text-xl">
-						{product.productName}
-					</h3>
-					<div
-						class="absolute inset-0 flex items-center justify-center bg-black/60
-                                p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-					>
-						<div class="text-center text-xl text-white">
-							{#if product.price.__typename === 'PriceRange'}
-								{formatCurrency(product.price.min, PUBLIC_DEFAULT_CURRENCY)}
-							{:else if product.price.__typename === 'SinglePrice'}
-								{formatCurrency(product.price.value, PUBLIC_DEFAULT_CURRENCY)}
-							{/if}
-						</div>
-					</div>
-				</div>
-			</a>
-		{/each}
-	</div>
-</section>
+<HotProducts></HotProducts>
 
 <!--ABOUT US -->
 <section class="relative mx-auto my-4 max-w-screen-xl rounded-lg p-4 md:my-16">
@@ -177,42 +118,8 @@
 		border-radius: 10px;
 		background-color: rgba(3, 3, 3, 0.3);
 	}
-	@keyframes scroll {
-		0% {
-			transform: translateX(0);
-		}
-		100% {
-			transform: translateX(-50%);
-		}
-	}
-	.scrolling-text {
-		animation: scroll 20s linear infinite;
-		display: inline-block;
-		min-width: max-content;
-	}
-	/* Pause on hover */
-	.group:hover .scrolling-text {
-		animation-play-state: paused;
-	}
-	/* Respect reduced motion preferences */
-	@media (prefers-reduced-motion: reduce) {
-		.scrolling-text {
-			animation: none;
-			white-space: normal;
-		}
-	}
-	/* Custom grid sizing for mosaic effect */
-	@media (min-width: 768px) {
-		.grid {
-			grid-auto-rows: minmax(200px, auto);
-		}
-		.md\:col-span-2 {
-			grid-column: span 2;
-		}
-		.md\:row-span-2 {
-			grid-row: span 2;
-		}
-	}
+
+
 
 	@keyframes float {
 		0%,

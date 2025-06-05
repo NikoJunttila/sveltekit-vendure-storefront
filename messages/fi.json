@@ -371,5 +371,6 @@
 	"no_allergens":"Ei merkattu allergeeneja",
 	"decrease_item_quantity_label":"Vähennä määrää",
 	"increase_item_quantity_label":"Lisää tuote",
-	"remove_item_label":"Poista tuote"
+	"remove_item_label":"Poista tuote",
+	"if_order":"Jos tilaus on maksettu ja tämä näkyy sivun päivittämisen jälkeen, etkä ole saanut sähköpostivarmistusta tilauksesta. Ota yhteyttä asiakaspalveluun:"
 }

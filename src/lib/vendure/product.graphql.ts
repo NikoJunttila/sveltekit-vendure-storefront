@@ -18,79 +18,6 @@ export const Product = gql(`
 	}
 `);
 
-export const ProductDetail = gql(`
-	fragment ProductDetail on Product {
-		id
-		name
-		slug
-		description
-		featuredAsset {
-			...Asset
-		}
-		assets {
-			...Asset
-		}
-		optionGroups {
-			id
-			code
-			name
-			options {
-				id
-				code
-				name
-			}
-		}
-		variants {
-			id
-			name
-			sku
-			stockLevel
-			currencyCode
-			price
-			priceWithTax
-			facetValues {
-				id
-				name
-				facet {
-					id
-					name
-				}
-			}
-			options {
-				id
-				groupId
-				code
-				name
-			}
-			featuredAsset {
-				...Asset
-			}
-			assets {
-				...Asset
-			}
-		}
-		collections {
-			breadcrumbs {
-			name
-			slug
-			}
-		}
-		customFields {
-			incredientlist
-			allergenlist
-    		customizationOptions {
-    			enabled
-       			limit
-       			filling
-      			}
-			extraoptions {
-				enabled
-				extrachoices
-				}
-			}
-	}
-`);
-
 export const ProductDetailCustomFields = gql(`
 	fragment ProductDetailCustomFields on Product {
 		id
@@ -221,7 +148,7 @@ export const GetProducts = gql(`
 	query GetProducts($options: ProductListOptions) {
 		products(options: $options) {
 			items {
-				...ProductDetail
+				...ProductDetailCustomFields
 			}
 			totalItems
 		}

@@ -6,7 +6,7 @@
 	import { ActiveOrder, GetOrderByCode } from '$lib/vendure';
 	import { useFragment } from '$lib/gql';
 	import { formatCurrency } from '$src/lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
+	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_SITE_EMAIL } from '$env/static/public';
 	import * as m from '$lib/paraglide/messages';
 
 	interface Props {
@@ -114,6 +114,16 @@
 	{:else}
 		<div class="p-4">
 			<p class="text-red-600">{m.order_not_found()}</p>
+			<p>{m.if_order()}</p>
+			<p>
+				<span class="font-semibold">{m.footer_email()}:</span>
+				<a
+					href={'mailto:' + PUBLIC_SITE_EMAIL}
+					class="block transition-colors hover:text-primary-600 md:inline"
+				>
+					{PUBLIC_SITE_EMAIL}
+				</a>
+			</p>
 		</div>
 	{/if}
 {/if}

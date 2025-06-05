@@ -370,5 +370,6 @@
 	"no_allergens":"No allergens marked",
 	"decrease_item_quantity_label":"Decrease product amount",
 	"increase_item_quantity_label":"Add product",
-	"remove_item_label":"Remove product"
+	"remove_item_label":"Remove product",
+	"if_order":"If the order has been paid for and this appears after the page has been refreshed, and you have not received an email confirmation of the order. Please contact customer service:"
 }

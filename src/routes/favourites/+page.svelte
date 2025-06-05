@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import { getContextClient } from '@urql/svelte';
 	import { GetProduct, AddItemToOrder } from '$src/lib/vendure';
-	import type { ProductDetailFragment } from '$lib/gql/graphql';
+	import type { ProductDetailCustomFieldsFragment } from '$lib/gql/graphql';
 	import { formatCurrency } from '$src/lib/utils';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
 	import { toast } from '$src/lib/toast.svelte';
@@ -13,7 +13,7 @@
 
 	const client = getContextClient();
 
-	let products = $state<ProductDetailFragment[]>([]);
+	let products = $state<ProductDetailCustomFieldsFragment[]>([]);
 	let favorites = $state<Record<string, boolean>>({});
 	let loading = $state(true);
 	let processing = $state(false);
@@ -71,7 +71,7 @@
 		}
 	});
 
-	async function toggleFavorite(product: ProductDetailFragment) {
+	async function toggleFavorite(product: ProductDetailCustomFieldsFragment) {
 		const newFavorites = {
 			...favorites,
 			[product.slug]: !favorites[product.slug]
@@ -180,7 +180,7 @@
 					{/if} -->
 						</div>
 
-					<!-- 	<button
+						<button
 							onclick={() => toggleFavorite(p)}
 							class="absolute right-1 top-1 rounded-full p-3 transition-all hover:bg-gray-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:scale-95"
 							aria-label={favorites[p.slug] ? 'Remove from favorites' : 'Add to favorites'}
@@ -195,7 +195,7 @@
 									<Heart class="transition-transform duration-200 hover:scale-125" />
 								{/if}
 							</span>
-						</button> -->
+						</button>
 					</div>
 				</div>
 			{/each}
