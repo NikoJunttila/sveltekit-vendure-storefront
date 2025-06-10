@@ -4,7 +4,7 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import Collection from '$lib/components/Collection.svelte';
 	import Meta from '$src/lib/components/Meta.svelte';
-	const collections = page.data.collections;
+	const collections = page.data.topCollections;
 	
 </script>
 

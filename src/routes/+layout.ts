@@ -1,9 +1,11 @@
+//+layout.ts file
 import { createClient, GetCollections, GetTopLevelCollections } from '$lib/vendure';
-const client : any = createClient();
 
 export const prerender = 'auto';
 
-export async function load() {
+export async function load({data}) {
+	const { languageCode } = data;
+	const client : any = createClient(languageCode);
 	return {
 		client,
 		collections: await client

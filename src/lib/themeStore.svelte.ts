@@ -1,3 +1,4 @@
+import { goto, invalidateAll } from "$app/navigation";
 /**
  * @typedef {Object} ThemeStore
  * @property {string[]} themes - List of all available theme names.
@@ -27,19 +28,12 @@ function createThemeStore() {
 	 */
 	function setTheme(newTheme : any) {
 		state.theme = newTheme;
-		// Optionally: add logic to update resolvedTheme or systemTheme here.
+
 	}
+
 	function setWhole(whole : any) {
 		state = whole;
 	}
-
-	// (Optional) Additional methods to update other parts of the theme state:
-	// function setForcedTheme(newForcedTheme) {
-	//     state.forcedTheme = newForcedTheme;
-	// }
-	// function setThemes(newThemes) {
-	//     state.themes = newThemes;
-	// }
 
 	return {
 		/** Returns the current theme state. */

@@ -4,7 +4,6 @@ import { i18n } from '$lib/i18n';
 export const handleSecurity: Handle = async ({ event, resolve }) => {
 	// Required for all paths
 	const response = await resolve(event);
-
 	// SECURITY HEADERS
 	// CSP directives are set elsewhere in svelte.config.js and added automatically by SvelteKit.
 	// CSRF mitigation in SvelteKit is handled by header-checking and is enabled by default. More secure token-based CSRF mitigation must be added manually.
@@ -17,11 +16,11 @@ export const handleSecurity: Handle = async ({ event, resolve }) => {
 		'Permissions-Policy',
 		'payment=(*), accelerometer=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), gyroscope=(), hid=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), publickey-credentials-get=(), sync-xhr=(), usb=(), xr-spatial-tracking=(), geolocation=()'
 	);
-
 	// CONTENT SECURITY POLICY (CSP) FOR STRIPE
 	//TODO https://docs.stripe.com/security/guide?csp=csp-connect
 
 	return response;
 };
 const handleParaglide: Handle = i18n.handle();
+
 export const handle: Handle = sequence(handleParaglide, handleSecurity);
