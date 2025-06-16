@@ -1,5 +1,4 @@
 import { gql } from '$lib/gql';
-import type { OrderLineCustomFieldsInput } from '../gql/graphql';
 
 export const PaytrailPayment = gql(`
 mutation paytrailPayment {

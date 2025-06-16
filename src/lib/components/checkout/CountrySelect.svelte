@@ -149,7 +149,7 @@
   
   // Effects
   $effect(() => {
-    if (selectedCountryCode && !inputValue) {
+    if (selectedCountryCode) {
       const country = countries.find(c => c.code === selectedCountryCode);
       if (country) {
         inputValue = country.name;

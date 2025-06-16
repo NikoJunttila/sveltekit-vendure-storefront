@@ -23,7 +23,6 @@ export const createClient = (languageCode : string = "") => {
 			url += `?languageCode=${PUBLIC_VENDURE_LANGUAGE}`;
 		}
 	}
-	console.log(url)
 	const client = new Client({
 		url: url,
 		exchanges: [cacheExchange, fetchExchange],
