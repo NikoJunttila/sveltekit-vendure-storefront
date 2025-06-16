@@ -28,6 +28,7 @@ declare global {
 			PUBLIC_TWITTER_URL: string;
 			PUBLIC_YOUTUBE_URL: string;
 			PUBLIC_STRIPE_REDIRECT_URL: string;
+			PUBLIC_GOOGLE_TAG_MANAGER: string;
 		}
 	}
 }

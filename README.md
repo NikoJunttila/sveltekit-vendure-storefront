@@ -32,7 +32,7 @@ mv .env.example .env
 
 - To make development a bit easier, you can change the urls in the EmailPlugin configuration options in vendure-config.ts to match the default SvelteKit dev url: http://localhost:5173:
 
-`majel-config.ts`
+`vendure-config.ts`
 ```js
 verifyEmailAddressUrl: 'http://localhost:5173/verify',
 passwordResetUrl: 'http://localhost:5173/auth',

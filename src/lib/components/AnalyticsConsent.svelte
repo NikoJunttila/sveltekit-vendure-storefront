@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import { PUBLIC_GOOGLE_TAG_MANAGER } from '$env/static/public';
 
 	// --- Type Definitions ---
 	interface ConsentPreferencesInternal {
@@ -20,35 +21,54 @@
 	}
 
 	let showBanner = $state(false);
-	// Stores the consent mode as it is structured for GTM (and localStorage)
 	let currentGtmConsentMode: GtmConsentMode | null = $state(null);
-	let screen = $state<'MAIN' | 'OPTIONS'>('MAIN'); // Explicit type for screen states
+	let screen = $state<'MAIN' | 'OPTIONS'>('MAIN');
 
+	// --- MODIFIED onMount FUNCTION ---
 	onMount(() => {
 		if (browser) {
 			const storedConsentJSON = localStorage.getItem('consentMode');
 			if (storedConsentJSON) {
 				try {
 					currentGtmConsentMode = JSON.parse(storedConsentJSON) as GtmConsentMode;
-					// Banner remains hidden if consent is already stored and valid
 				} catch (error) {
-					console.error("Failed to parse consentMode from localStorage:", error);
-					localStorage.removeItem('consentMode'); // Clear invalid entry
-					showBanner = true; // Show banner if stored consent is invalid
+					console.error('Failed to parse consentMode from localStorage:', error);
+					localStorage.removeItem('consentMode');
+					showBanner = true;
 				}
 			} else {
-				showBanner = true; // Show banner if no consent is stored
+				showBanner = true;
+			}
+
+			// --- ADD THIS SCRIPT INJECTION LOGIC ---
+			// This dynamically loads the GTM script using the `gtm` variable.
+			// It runs after the default consent script in <svelte:head> has executed.
+			if (gtm) {
+				const script = document.createElement('script');
+				script.async = true;
+				// Use the `gtm` variable, which is accessible here
+				script.src = `https://www.googletagmanager.com/gtm.js?id=${gtm}`;
+
+				// This mimics the standard GTM installation by inserting the script
+				// at the beginning of the <head> or at least before other scripts.
+				const head = document.head;
+				const firstScript = head.getElementsByTagName('script')[0];
+				if (firstScript) {
+					head.insertBefore(script, firstScript);
+				} else {
+					head.appendChild(script);
+				}
+				
+				// Initialize the GTM start event
+				//@ts-ignore
+				window.dataLayer = window.dataLayer || [];
+				//@ts-ignore
+				window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 			}
 		}
 	});
 
-	/**
-	 * Updates GTM with user's consent preferences and saves them to localStorage.
-	 * @param internalPreferences - User's choices with boolean flags.
-	 */
 	function setConsent(internalPreferences: ConsentPreferencesInternal) {
-		// The gtag function is globally available from <svelte:head>
-
 		const newGtmConsentMode: GtmConsentMode = {
 			functionality_storage: internalPreferences.necessary ? 'granted' : 'denied',
 			security_storage: internalPreferences.necessary ? 'granted' : 'denied',
@@ -57,17 +77,14 @@
 			personalization_storage: internalPreferences.preferences ? 'granted' : 'denied'
 		};
 
-		// @ts-ignore - gtag is on window, but TS might not know this in Svelte script scope without further config
+		// @ts-ignore
 		gtag('consent', 'update', newGtmConsentMode);
 
 		localStorage.setItem('consentMode', JSON.stringify(newGtmConsentMode));
-		currentGtmConsentMode = newGtmConsentMode; // Update reactive state
+		currentGtmConsentMode = newGtmConsentMode;
 		showBanner = false;
 	}
 
-	/**
-	 * Handles "Accept All" action.
-	 */
 	function acceptConsent() {
 		setConsent({
 			necessary: true,
@@ -77,30 +94,21 @@
 		});
 	}
 
-	/**
-	 * Handles "Reject All" action.
-	 * Necessary cookies are typically kept for site functionality.
-	 */
 	function rejectConsent() {
 		setConsent({
-			necessary: true, // Functionality & Security storage will be 'granted'
+			necessary: true,
 			analytics: false,
 			preferences: false,
 			marketing: false
 		});
 	}
 
-	/**
-	 * Handles customized consent submission.
-	 * @param e - The form submission event.
-	 */
 	function customizedConsent(e: SubmitEvent) {
 		e.preventDefault();
 		const target = e.target as HTMLFormElement;
 		const formData = new FormData(target);
 
 		const newInternalPreferences: ConsentPreferencesInternal = {
-			// 'necessary_consent' input is now disabled and checked, so always true
 			necessary: true,
 			marketing: formData.get('marketing_consent') === 'on',
 			analytics: formData.get('analytics_consent') === 'on',
@@ -109,6 +117,8 @@
 
 		setConsent(newInternalPreferences);
 	}
+	
+	const gtm = $state(PUBLIC_GOOGLE_TAG_MANAGER);
 </script>
 
 <svelte:head>
@@ -118,7 +128,8 @@
 		function gtag() {
 			window.dataLayer.push(arguments);
 		}
-
+	</script>
+	<script>
 		// Set GTM default consent state
 		// This runs before GTM script loads and before any tags fire.
 		try {
@@ -130,12 +141,12 @@
 					ad_storage: 'denied',
 					analytics_storage: 'denied',
 					personalization_storage: 'denied',
-					functionality_storage: 'denied', // Or 'granted' if you always need basic functionality before consent
-					security_storage: 'denied'       // Or 'granted' similarly
+					functionality_storage: 'denied',
+					security_storage: 'denied'
 				});
 			}
 		} catch (e) {
-			console.error("Error setting GTM default consent:", e);
+			console.error('Error setting GTM default consent:', e);
 			// Fallback to all denied if parsing fails
 			gtag('consent', 'default', {
 				ad_storage: 'denied',
@@ -146,20 +157,7 @@
 			});
 		}
 	</script>
-
-	<script>
-		(function (w, d, s, l, i) {
-			w[l] = w[l] || [];
-			w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-			var f = d.getElementsByTagName(s)[0],
-				j = d.createElement(s),
-				dl = l != 'dataLayer' ? '&l=' + l : '';
-			j.async = true;
-			j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-			f.parentNode.insertBefore(j, f);
-		})(window, document, 'script', 'dataLayer', 'GTM-KZ5LP7QN'); // <-- REPLACE WITH YOUR ACTUAL GTM CONTAINER ID
-	</script>
-	</svelte:head>
+</svelte:head>
 
 {#if showBanner}
 	<div
@@ -187,7 +185,7 @@
 					<div class="accept-all-btn-wrapper">
 						<button
 							type="button"
-							class="button bg-secondary !w-24 h-16 relative !mt-0 !px-4 !py-1.5 text-sm font-semibold text-black hover:-translate-y-[7px]"
+							class="button bg-secondary relative !mt-0 h-16 !w-24 !px-4 !py-1.5 text-sm font-semibold text-black hover:-translate-y-[7px]"
 							onclick={acceptConsent}
 						>
 							{m.accept_all()}
@@ -195,7 +193,7 @@
 					</div>
 					<button
 						type="button"
-						class="button button-white !w-24 h-16 !mt-0 !px-4 !py-1.5 text-sm font-semibold"
+						class="button button-white !mt-0 h-16 !w-24 !px-4 !py-1.5 text-sm font-semibold"
 						onclick={rejectConsent}
 					>
 						{m.reject_all()}
