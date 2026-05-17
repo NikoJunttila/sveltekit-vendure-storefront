@@ -30,8 +30,7 @@
 	let formData: UpdateCustomerInput = $state({
 		firstName: '',
 		lastName: '',
-		phoneNumber: '',
-		customFields: {}
+		phoneNumber: ''
 	});
 
 	let addressFormData: UpdateAddressInput | null = $state(null);
@@ -77,8 +76,7 @@
 		formData = {
 			firstName: user.firstName,
 			lastName: user.lastName,
-			phoneNumber: user.phoneNumber || '',
-			customFields: {}
+			phoneNumber: user.phoneNumber || ''
 		};
 
 		const defaultAddress : any = user.addresses?.find((addr: any) => addr.defaultShippingAddress);

@@ -15,7 +15,6 @@
 	} from '$lib/vendure';
 	import Meta from '$lib/components/Meta.svelte';
 	import JsonLd from '$lib/components/JsonLd.svelte';
-	import FAQ from '$lib/components/FAQ.svelte';
 	import Gallery from '$lib/components/Gallery.svelte';
 	import Highlights from '$lib/components/Highlights.svelte';
 	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_ORGANIZATION } from '$env/static/public';
@@ -110,77 +109,12 @@
 		window.history.pushState({}, '', url);
 	};
 
-
-	// Parse extra options from JSON
-	const extraOptionsMap = $derived.by(() => {
-		try {
-			const extraChoicesRaw = product?.customFields?.extraoptions?.extrachoices;
-			if (!extraChoicesRaw) {
-				return []; // Return empty array if no raw choices
-			}
-			
-			const parsedChoices = typeof extraChoicesRaw === 'string' ? JSON.parse(extraChoicesRaw) : extraChoicesRaw;
-
-			// Validate that parsedChoices is an array of the expected structure
-			if (Array.isArray(parsedChoices) && 
-				parsedChoices.every(item => 
-					typeof item === 'object' && 
-					item !== null && 
-					'name' in item && 
-					typeof item.name === 'string' &&
-					'price' in item && 
-					typeof item.price === 'number'
-				)
-			) {
-				return parsedChoices as { name: string; price: number }[];
-			} else {
-				// Log a warning if the structure is not as expected
-				console.warn(
-					'Extra options raw data is not in the expected format (array of {name: string, price: number}):', 
-					parsedChoices
-				);
-				return []; // Return empty array for incorrect format
-			}
-		} catch (e) {
-			console.error('Error parsing extra options:', e);
-			return []; // Return empty array on parsing error
-		}
-	});
-
-
-	// Track selected extras and their prices
-	interface SelectedExtra {
-		name: string;
-		price: number;
-	}
-	
-	let selectedExtras = $state<SelectedExtra[]>([]);
-
 	const addToCart = async (variantId: string): Promise<void> => {
 		processing = true;
-		const fillings = selectedFillings.join(", ") || "";
-		const extrachoicestring = selectedExtras.length > 0 ? selectedExtras.map(item => `${item.name} ${item.price/100}€`).join(", ") : "";
-		console.log("string", extrachoicestring)
-		// For backward compatibility with the backend schema
-		// Encode the JSON information about extras in the extrachoices field
-		// Format: "option1:price1,option2:price2"
-		const extrachoices = selectedExtras.length > 0
-			? selectedExtras.map(item => `${item.name}:${item.price}`).join(",")
-			: "";
-		
 		const result = await client
 			.mutation(
 				AddItemToOrder,
-				{ variantId: variantId, quantity: 1, 
-					customFields: {
-						fillings, 
-						extrachoicestring,
-						extraoptions: {
-							enabled: product!.customFields?.extraoptions?.enabled,
-							extrachoices: extrachoices
-						}
-					} 
-				},
+				{ variantId: variantId, quantity: 1 },
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
 			.toPromise();
@@ -198,82 +132,10 @@
 		}
 		processing = false;
 	};
-	
+
 	const isOutOfStock = $derived.by(() => {
 		return product?.variants.every((variant) => variant.stockLevel !== 'IN_STOCK') ?? false;
 	});
-
-	// State for fillings selection
-	let selectedFillings = $state<string[]>([]);
-
-	// Handle filling selection
-	function toggleFilling(filling: string) {
-		const customizationOptions = product?.customFields?.customizationOptions;
-		if (!customizationOptions) return;
-
-		if (selectedFillings.includes(filling)) {
-			selectedFillings = selectedFillings.filter((f) => f !== filling);
-		} else if (selectedFillings.length < customizationOptions.limit!) {
-			selectedFillings = [...selectedFillings, filling];
-		}
-	}
-
-	// Handle extra options selection
-	function toggleExtra(extraName: string) { // extraName is the name of the extra, e.g., "Extra Cheese"
-		// Find the extra definition in the extraOptionsMap array
-		const extraDefinition = extraOptionsMap.find(opt => opt.name.trim() === extraName.trim());
-		
-		// Get the price from the found definition, default to 0 if not found (or handle as error)
-		const price = extraDefinition ? extraDefinition.price : 0;
-
-		const isSelected = selectedExtras.some(item => item.name === extraName.trim());
-		
-		if (isSelected) {
-			selectedExtras = selectedExtras.filter(item => item.name !== extraName.trim());
-		} else {
-			// Add the extra with its name and the correctly retrieved price
-			selectedExtras = [...selectedExtras, { name: extraName.trim(), price }];
-		}
-	}
-
-	// Reset selections when variant changes
-	$effect(() => {
-		selectedFillings = [];
-		selectedExtras = [];
-	});
-	
-	// Check if correct number of fillings is selected
-	const fillingRequirementMet = $derived.by(() => {
-		const customizationOptions = product?.customFields?.customizationOptions;
-		if(!customizationOptions?.enabled) return true;
-		return customizationOptions.limit == selectedFillings.length;
-	});
-
-	// Calculate extra price
-	const extraPrice = $derived.by(() => {
-		if (selectedExtras.length === 0) return 0;
-		return selectedExtras.reduce((sum, item) => sum + item.price, 0);
-	});
-
-	// Total price calculation
-	const totalPrice = $derived.by(() => {
-		if(!selectedVariant) return 0;
-		return selectedVariant.price + extraPrice;
-	});
-
-	// Format ingredients and allergens for display
-	const ingredientsList = $derived.by(() => {
-		const list = product?.customFields?.incredientlist;
-		return list ? list.split(',').map(item => item.trim()) : [];
-	});
-
-	const allergensList = $derived.by(() => {
-		const list = product?.customFields?.allergenlist;
-		return list ? list.split(',').map(item => item.trim()) : [];
-	});
-
-	// Show ingredient info panel
-	let showIngredientInfo = $state(false);
 </script>
 
 {#if product}
@@ -341,38 +203,6 @@
 			<h2 id="information-heading" class="sr-only">Product information</h2>
 			<p class="mt-6">{@html xss(product.description || '')}</p>
 
-			<!-- Ingredients & Allergen Info Button -->
-			{#if ingredientsList.length > 0 || allergensList.length > 0}
-				<button
-					onclick={() => (showIngredientInfo = !showIngredientInfo)}
-					class="mt-4 text-sm font-medium text-lime-600 hover:text-lime-800"
-				>
-					{showIngredientInfo ? m.hide_ingredients_allergens() : m.show_ingredients_allergens()}
-				</button>
-				
-				{#if showIngredientInfo}
-					<div class="mt-2 rounded-md border border-gray-200 bg-gray-50 p-4">
-						{#if ingredientsList.length > 0}
-							<div class="mb-3">
-								<h3 class="font-medium text-black">{m.ingredients()}</h3>
-								<p class="text-sm text-gray-600">{ingredientsList.join(', ')}</p>
-							</div>
-						{/if}
-						
-						<h3 class="font-medium text-black">{m.allergens()}</h3>
-						{#if allergensList.length > 0}
-							<div>
-								<p class="text-sm text-gray-600 font-bold">{allergensList.join(', ')}</p>
-							</div>
-						{:else}
-							<div>
-								<p class="text-sm text-gray-600 font-bold">{m.no_allergens()}</p>
-							</div>
-						{/if}
-					</div>
-				{/if}
-			{/if}
-
 			{#if product.variants.length > 1}
 				<div class="mt-6">
 					<h3 class="text-sm font-medium">{m.select_variant()}</h3>
@@ -401,81 +231,17 @@
 				{#if selectedVariant}
 					<div class="mt-1 flex items-baseline">
 						<p class="text-xl font-semibold">
-							{formatCurrency(totalPrice, PUBLIC_DEFAULT_CURRENCY)}
+							{formatCurrency(selectedVariant.price, PUBLIC_DEFAULT_CURRENCY)}
 						</p>
 						<p class="ml-1 text-sm font-medium">
 							/ {selectedVariant.name}
 						</p>
 					</div>
-					{#if extraPrice > 0}
-						<p class="text-sm text-gray-600 dark:text-gray-200">
-							({m.base()} {formatCurrency(selectedVariant.price, PUBLIC_DEFAULT_CURRENCY)} + 
-							{m.extras()} {formatCurrency(extraPrice, PUBLIC_DEFAULT_CURRENCY)})
-						</p>
-					{/if}
 				{:else}
 					{m.select_variant()}
 				{/if}
 			</div>
-			
-			<!-- Customization Options (Fillings) -->
-			{#if product.customFields?.customizationOptions?.enabled}
-				<div class="mt-4">
-					<h3 class="text-lg font-medium">
-						{m.choose_up_to({limit:`${product.customFields.customizationOptions.limit}`})}:
-					</h3>
-					<div class="mt-2 flex flex-wrap gap-2">
-						{#each product.customFields.customizationOptions.filling!.split(',') as filling}
-							<button
-								type="button"
-								onclick={() => toggleFilling(filling.trim())}
-								class:selected={selectedFillings.includes(filling.trim())}
-								class="rounded-full border-2 px-4 py-2 {selectedFillings.includes(filling.trim())
-									? 'border-lime-600 bg-lime-100 text-black'
-									: 'border-gray-500'} {selectedFillings.length >=
-									product.customFields.customizationOptions.limit! &&
-								!selectedFillings.includes(filling.trim())
-									? 'cursor-not-allowed opacity-50'
-									: ''}"
-							>
-								{filling.trim()}
-							</button>
-						{/each}
-					</div>
-					<p class="mt-2 text-sm">
-						{selectedFillings.length} / {product.customFields.customizationOptions.limit} {m.selected()}
-					</p>
-				</div>
-			{/if}
-			
-			<!-- Extra Options -->
-			{#if product.customFields?.extraoptions?.enabled && extraOptionsMap.length > 0}
-				<div class="mt-6">
-					<h3 class="text-lg font-medium">
-						{m.add_extras()}
-					</h3>
-					<div class="mt-2 flex flex-wrap gap-2">
-						{#each extraOptionsMap as extra}
-							<button
-								type="button"
-								onclick={() => toggleExtra(extra.name.trim())}
-								class:selected={selectedExtras.some(item => item.name === extra.name.trim())}
-								class="rounded-full border-2 px-4 py-2 {selectedExtras.some(item => item.name === extra.name.trim())
-									? 'border-lime-600 bg-lime-100 text-black'
-									: 'border-gray-500'}"
-							>
-								{extra.name.trim()} (+{formatCurrency(extra.price, PUBLIC_DEFAULT_CURRENCY)})
-							</button>
-						{/each}
-					</div>
-					{#if selectedExtras.length > 0}
-						<p class="mt-2 text-sm">
-							{m.extras_selected({count:selectedExtras.length, price:formatCurrency(extraPrice, PUBLIC_DEFAULT_CURRENCY)})}
-						</p>
-					{/if}
-				</div>
-			{/if}
-			
+
 			<!-- Add to Cart Button -->
 			{#if isOutOfStock}
 				<button
@@ -485,20 +251,10 @@
 				>
 					{m.out_of_stock()}
 				</button>
-			{:else if product.customFields?.customizationOptions?.enabled}
+			{:else}
 				<button
 					type="button"
-					disabled={!fillingRequirementMet}
-					onclick={async () => {
-						addToCart(selectedVariantId);
-					}}
-					class="disabled:bg-gray-600 mt-6 w-full items-center justify-center rounded-md border border-transparent bg-lime-600 px-5 py-3 text-base font-medium text-white duration-300 hover:bg-lime-700"
-				>
-					{!fillingRequirementMet ? m.choose_up_to({limit:`${product.customFields.customizationOptions.limit}`}) : m.add_to_cart()}
-				</button>
-			{:else}	
-				<button
-					type="button"
+					disabled={processing}
 					onclick={async () => {
 						addToCart(selectedVariantId);
 					}}

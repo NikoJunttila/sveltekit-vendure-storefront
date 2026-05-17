@@ -25,7 +25,6 @@
 	import DiscountCode from '$lib/components/checkout/DiscountCode.svelte';
 	import OrderSummary from '$lib/components/checkout/OrderSummary.svelte';
 	import { toast } from '$lib/toast.svelte';
-	import TimeSelect from '$src/lib/components/checkout/TimeSelect.svelte';
 
 	let errorMessage: string = $state('');
 	let loaded: boolean = $state(false);
@@ -182,15 +181,10 @@
 	});
 	let showPaymentDialog = $state(false);
 	let formValid = $state(false);
-	let timeSelected = $state(false)
 </script>
 
 <noscript>
 	<p>Please enable javascript to complete checkout.</p>
-	<p>
-		We use a third party (<a href="https://stripe.com">Stripe</a>) to process credit card payments
-		for enhanced security. Making payments on this site using Stripe requires javascript.
-	</p>
 </noscript>
 
 <Meta
@@ -267,14 +261,11 @@
 					</div>
 				</div>
 
-				<!-- Order Time select -->
-				<TimeSelect bind:valid={timeSelected}></TimeSelect>
-				
 				<div class="mt-8 text-center">
 					<button
 					id="payment"
 					onclick={() => (showPaymentDialog = true)}
-					disabled={!formValid && !timeSelected}
+					disabled={!formValid}
 					class="rounded-lg bg-primary-600 px-8 py-4 font-bold text-white transition-colors hover:bg-primary-700 disabled:bg-gray-500"
 					>
 					{m.proceed_to_payment()}

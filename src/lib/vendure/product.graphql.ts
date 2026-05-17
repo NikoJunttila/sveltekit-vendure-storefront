@@ -75,19 +75,6 @@ export const ProductDetailCustomFields = gql(`
 			slug
 			}
 		}
-		customFields {
-			incredientlist  # string with , seperating incredients
-	 		allergenlist # string with , seperating incredients
-    		customizationOptions {
-    			enabled #boolean
-       			limit #int
-       			filling # string with , seperating incredients
-      			}
-			extraoptions {
-				enabled #boolean
-				extrachoices # JSON
-				}
-			}
 	}
 `);
 

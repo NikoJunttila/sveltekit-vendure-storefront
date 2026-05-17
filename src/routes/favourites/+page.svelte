@@ -23,7 +23,7 @@
 		const result = await client
 			.mutation(
 				AddItemToOrder,
-				{ variantId: variantId, quantity: 1, customFields:{} },
+				{ variantId: variantId, quantity: 1 },
 				{ additionalTypenames: ['ActiveOrder'] }
 			)
 			.toPromise();

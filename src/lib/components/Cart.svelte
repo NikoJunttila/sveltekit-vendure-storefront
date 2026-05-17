@@ -173,23 +173,6 @@
 													<p class="mt-1 text-xs sm:text-sm">{option.group.name}: {option.name}</p>
 												{/each}
 											</a>
-
-											{#if line.customFields?.fillings || line.customFields?.extrachoicestring}
-												<div class="mt-2 mr-0 sm:mr-4 md:mr-12 bg-white/5 p-2 rounded-lg text-xs sm:text-sm">
-													{#if line.customFields.fillings}
-														<p>
-															<span class="font-medium">{m.choices()}</span>
-															{line.customFields.fillings}
-														</p>
-													{/if}
-													{#if line.customFields.extrachoicestring}
-														<p class="{line.customFields.fillings ? 'mt-1' : ''} text-xs sm:text-sm">
-															<span class="font-medium">{m.extras()}</span>
-															{line.customFields.extrachoicestring}
-														</p>
-													{/if}
-												</div>
-											{/if}
 										</div>
 										<div class="mt-2 flex flex-row items-center justify-between sm:mt-0 sm:flex-col sm:items-end sm:justify-start">
 											<p class="text-md sm:text-lg font-medium">

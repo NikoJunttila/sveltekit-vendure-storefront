@@ -1,96 +1,102 @@
 <script lang="ts">
-	import { PaytrailPayment, PaytrailMultiPayment } from '../../vendure';
 	import { getContextClient } from '@urql/svelte';
-	import Paytrail from './Paytrail.svelte';
-	import StripeComponent from './StripeComponent.svelte';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { AddOrderPayment, GetOrderPaymentMethods } from '$lib/vendure';
+	import { useFragment } from '$lib/gql';
+	import { ActiveOrder } from '$lib/vendure';
+	import { cartStore } from '$lib/stores';
 	import * as m from '$lib/paraglide/messages.js';
 
 	interface Props {
-		setOrderState: any;
-		setShippingOption: any;
-		selectedShippingOption: any;
+		setOrderState: (state: string) => Promise<boolean>;
+		setShippingOption: (id: string[]) => Promise<void>;
+		selectedShippingOption: string[];
 	}
+
 	let { setOrderState, setShippingOption, selectedShippingOption }: Props = $props();
 
+	let order = $derived(useFragment(ActiveOrder, $cartStore));
+	let methods = $state<{ code: string; name: string; isEligible: boolean }[]>([]);
+	let selectedMethod = $state<string>('');
 	let disabled = $state(false);
 	let errorMessage = $state('');
-	let href = $state('');
+
 	const client = getContextClient();
 
-	async function getPaytrailMultiHref(): Promise<string> {
-		try {
-			const res = await client
-				.mutation(PaytrailMultiPayment, {})
-				.toPromise()
-				.then((result) => {
-					return result;
-				});
-			console.log(res);
-			return res?.data?.createMultiPTintent.href || '';
-		} catch (err) {
-			console.log(err);
-			return '';
-		}
-	}
-
-	// async function getPaytrailHref(): Promise<string> {
-	// 	try {
-
-	// 		const paytrailHref = await client
-	// 		.mutation(PaytrailPayment, {})
-	// 		.toPromise()
-	// 		.then((result) => {
-	// 			return result.data;
-	// 		});
-	// 		console.log(paytrailHref)
-	// 		return paytrailHref?.createPaytrailPaymentIntent.href || '';
-	// 	} catch (e){
-	// 		console.error(e)
-	// 		return ""
-	// 	}
-	// }
-
 	onMount(async () => {
-		//  href = await getPaytrailHref(); 
-		href = await getPaytrailMultiHref();
+		const result = await client
+			.query(GetOrderPaymentMethods, {}, { requestPolicy: 'network-only' })
+			.toPromise();
+		const eligible = (result?.data?.eligiblePaymentMethods ?? []).filter((mth) => mth.isEligible);
+		methods = eligible;
+		if (eligible.length > 0) selectedMethod = eligible[0].code;
 	});
 
 	async function sendPayment() {
+		if (!selectedMethod) return;
 		errorMessage = '';
 		disabled = true;
 		try {
-			// ensure the method set is what is showing on this page
-			// protects against method being changed on another page
-			// the final shipping method should be the one on the page submitted
 			await setShippingOption(selectedShippingOption);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		}
 		try {
 			await setOrderState('ArrangingPayment');
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			disabled = false;
 			return;
 		}
-		window.location.href = href;
+		const result = await client
+			.mutation(AddOrderPayment, { input: { method: selectedMethod, metadata: {} } })
+			.toPromise();
+
+		const payment = result?.data?.addPaymentToOrder;
+		if (!payment) {
+			errorMessage = m.generic_error();
+			disabled = false;
+			return;
+		}
+		if (payment.__typename === 'Order') {
+			goto(`/checkout/success/${order?.code}`);
+			return;
+		}
+		errorMessage = ('message' in payment && payment.message) || m.generic_error();
+		await setOrderState('AddingItems');
 		disabled = false;
 	}
 </script>
 
 <div>
 	{#if errorMessage}
-		<div class="alert alert-danger">{errorMessage}</div>
+		<div class="rounded bg-red-100 p-3 text-sm text-red-700">{errorMessage}</div>
 	{/if}
-	<div class="grid columns-2 gap-2">
-		{#if href}
-			<div>
-				<Paytrail {sendPayment} {disabled} text={m.paytrail()} />
-			</div>
-		{/if}
-		<div>
-			<StripeComponent></StripeComponent>
+
+	{#if methods.length === 0}
+		<p class="text-sm text-gray-600">No payment methods available.</p>
+	{:else}
+		<div class="space-y-2">
+			{#each methods as method}
+				<label class="flex items-center gap-2">
+					<input
+						type="radio"
+						name="paymentMethod"
+						value={method.code}
+						bind:group={selectedMethod}
+					/>
+					<span>{method.name}</span>
+				</label>
+			{/each}
 		</div>
-	</div>
+
+		<button
+			onclick={sendPayment}
+			{disabled}
+			class="mt-4 w-full rounded-lg bg-lime-600 px-5 py-3 text-base font-medium text-white duration-300 hover:bg-lime-700 disabled:bg-gray-500"
+		>
+			{m.complete_order()}
+		</button>
+	{/if}
 </div>

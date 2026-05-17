@@ -1,0 +1,83 @@
+version: '3'
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+
+  install:
+    desc: Install dependencies
+    cmds:
+      - npm install
+
+  dev:
+    desc: Start the SvelteKit dev server
+    cmds:
+      - npm run dev
+
+  build:
+    desc: Build the production bundle
+    cmds:
+      - npm run build
+
+  preview:
+    desc: Preview the production build locally
+    cmds:
+      - npm run preview
+
+  start:
+    desc: Run the built Node server (port 3000)
+    cmds:
+      - npm run start
+
+  start:custom:
+    desc: Run the built Node server on port 4000
+    cmds:
+      - npm run start:custom
+
+  check:
+    desc: Type-check the project with svelte-check
+    cmds:
+      - npm run check
+
+  check:watch:
+    desc: Type-check in watch mode
+    cmds:
+      - npm run check:watch
+
+  format:
+    desc: Format the codebase with Prettier
+    cmds:
+      - npm run format
+
+  lint:
+    desc: Check formatting with Prettier
+    cmds:
+      - npm run lint
+
+  codegen:
+    desc: Regenerate GraphQL types
+    cmds:
+      - npm run codegen
+
+  clean:
+    desc: Remove build artifacts and SvelteKit cache
+    cmds:
+      - rm -rf build .svelte-kit
+
+  clean:all:
+    desc: Remove build artifacts and node_modules
+    deps: [clean]
+    cmds:
+      - rm -rf node_modules
+
+  docker:build:
+    desc: Build the Docker image
+    cmds:
+      - docker build -t newpeveystorefront .
+
+  docker:run:
+    desc: Run the Docker image on port 3000
+    cmds:
+      - docker run --rm -p 3000:3000 --env-file .env newpeveystorefront

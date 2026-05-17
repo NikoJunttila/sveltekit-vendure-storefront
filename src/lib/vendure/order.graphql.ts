@@ -1,33 +1,5 @@
 import { gql } from '$lib/gql';
 
-export const PaytrailPayment = gql(`
-mutation paytrailPayment {
-  createPaytrailPaymentIntent{
-    href
-  }
-}
-`);
-export const PaytrailMultiPayment = gql(`
-mutation paytrailMultiPayment {
-  createMultiPTintent{
-    href
-  }
-}
-`);
-export const StripePaymentIntent = gql(`
-	mutation createStripePaymentIntent {
-	  createStripePaymentIntent
-	}
-  `);
-
-export const SetOrderCustomFields = gql(`
-	mutation SetOrderCustomFields($input: UpdateOrderInput!) {
-		setOrderCustomFields(input: $input) {
-			...ActiveOrder
-		}
-	}
-`);
-
 export const Order = gql(`
 	fragment Order on Order {
 		id
@@ -109,13 +81,6 @@ export const ActiveOrder = gql(`
 			featuredAsset {
 				id
 				preview
-			}
-			customFields {
-				fillings
-				extrachoicestring
-				extraoptions{
-					extrachoices
-				}
 			}
 		}
 		shippingLines {
@@ -208,26 +173,22 @@ export const GetActiveOrder = gql(`
 `);
 
 export const AddItemToOrder = gql(`
-mutation AddItemToOrder($variantId: ID!, $quantity: Int!, $customFields: OrderLineCustomFieldsInput!) {
-  addItemToOrder(
-    productVariantId: $variantId
-    quantity: $quantity
-    customFields:  $customFields
-  ) {
-    __typename
-    ...ActiveOrder
-    ... on ErrorResult {
-      errorCode
-      message
-    }
-    ... on InsufficientStockError {
-      quantityAvailable
-      order {
-        ...ActiveOrder
-      }
-    }
-  }
-}
+	mutation AddItemToOrder($variantId: ID!, $quantity: Int!) {
+		addItemToOrder(productVariantId: $variantId, quantity: $quantity) {
+			__typename
+			...ActiveOrder
+			... on ErrorResult {
+				errorCode
+				message
+			}
+			... on InsufficientStockError {
+				quantityAvailable
+				order {
+					...ActiveOrder
+				}
+			}
+		}
+	}
 `);
 
 export const RemoveOrderLine = gql(`

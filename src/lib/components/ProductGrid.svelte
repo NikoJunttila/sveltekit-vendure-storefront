@@ -32,28 +32,6 @@
 		}
 	});
 
-	// const addToCart = async (variantId: string): Promise<void> => {
-	// 	const result = await client
-	// 		.mutation(
-	// 			AddItemToOrder,
-	// 			{ variantId: variantId, quantity: 1, fillings:""},
-	// 			{ additionalTypenames: ['ActiveOrder'] }
-	// 		)
-	// 		.toPromise();
-	// 	switch (result?.data?.addItemToOrder?.__typename) {
-	// 		case 'InsufficientStockError':
-	// 			toast.error(m.insufficient_stock());
-	// 			break;
-	// 		case 'Order':
-	// 			toast.success(m.item_added());
-	// 			break;
-	// 		default:
-	// 			toast.error(m.error_adding_item());
-	// 			break;
-	// 	}
-	// 	cartDialogStore.set(true);
-	// };
-
 	function toggleFavorite(productId: string) {
 		favorites = {
 			...favorites,

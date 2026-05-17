@@ -60,15 +60,13 @@
 			firstName: '',
 			lastName: '',
 			phoneNumber: '',
-			title: '',
-			customFields: null
+			title: ''
 		} as CreateCustomerInput,
 
 		addressForm: {
 			city: '',
 			company: '',
 			countryCode: 'FI',
-			customFields: null,
 			defaultBillingAddress: true,
 			defaultShippingAddress: true,
 			fullName: '',

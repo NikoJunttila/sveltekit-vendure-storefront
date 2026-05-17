@@ -16,7 +16,6 @@ const config: CodegenConfig = {
 				gqlTagName: 'gql'
 				// fragmentMasking: false,
 			},
-			plugins: ['typescript'],
 			config: {
 				useTypeImports: true, // This is needed to avoid Vite/SvelteKit import errors
 				scalars: {

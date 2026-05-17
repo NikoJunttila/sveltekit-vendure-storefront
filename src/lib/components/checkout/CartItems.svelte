@@ -42,21 +42,6 @@
 										)}
 									</p>
 								{/if}
-								
-								{#if line.customFields.fillings || line.customFields.extrachoicestring}
-									<div class="mt-2 space-y-1 rounded-md bg-gray-50 p-3 text-sm">
-										{#if line.customFields.fillings}
-											<p class="text-gray-700">
-												<span class="font-medium text-gray-900">{m.choices()}</span> {line.customFields.fillings}
-											</p>
-										{/if}
-										{#if line.customFields.extrachoicestring}
-											<p class="text-gray-700">
-												<span class="font-medium text-gray-900">{m.extras()}</span> {line.customFields.extrachoicestring}
-											</p>
-										{/if}
-									</div>
-								{/if}
 							</div>
 							<div class="mt-4 flex items-center space-x-4">
 								<label for="quantity" class="text-sm text-gray-600"

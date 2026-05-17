@@ -186,7 +186,7 @@
 					<input
 						type="email"
 						placeholder={m.footer_email_placeholder()}
-						class="w-full rounded-md border border-gray-300 bg-white px-4 py-2 outline-none transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-primary-500 sm:flex-1"
+						class="w-full text-black rounded-md border border-gray-300 bg-white px-4 py-2 outline-none transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-primary-500 sm:flex-1"
 					/>
 					<button
 						type="submit"
