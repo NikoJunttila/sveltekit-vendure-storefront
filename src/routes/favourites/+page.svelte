@@ -6,7 +6,8 @@
 	import { GetProduct, AddItemToOrder } from '$src/lib/vendure';
 	import type { ProductDetailCustomFieldsFragment } from '$lib/gql/graphql';
 	import { formatCurrency } from '$src/lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_DEFAULT_CURRENCY } = env;
 	import { toast } from '$src/lib/toast.svelte';
 	import { cartDialogStore } from '$lib/stores';
 	import Image from '$src/lib/components/Image.svelte';

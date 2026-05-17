@@ -4,7 +4,8 @@
 	import type { SearchResultFragment } from '$lib/gql/graphql';
 	import { onMount } from 'svelte';
 	import { formatCurrency } from '$lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_DEFAULT_CURRENCY } = env;
 	import { Heart } from '@lucide/svelte';
 	// import { getContextClient } from '@urql/svelte';
 	// import { toast } from '../toast.svelte';

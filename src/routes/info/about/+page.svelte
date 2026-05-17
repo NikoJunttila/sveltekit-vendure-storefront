@@ -2,7 +2,8 @@
 	import Meta from '$src/lib/components/Meta.svelte';
 	import { fade } from 'svelte/transition';
 	import * as m from '$lib/paraglide/messages.js';
-	import { PUBLIC_SITE_NAME } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_SITE_NAME } = env;
 	// Sample images - replace with your actual image paths
 	const teamPhotos = [
 		{

@@ -2,8 +2,8 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import * as m from '$lib/paraglide/messages.js';
-	import { PUBLIC_GOOGLE_TAG_MANAGER } from '$env/static/public';
-
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_GOOGLE_TAG_MANAGER } = env;
 	// --- Type Definitions ---
 	interface ConsentPreferencesInternal {
 		necessary: boolean;

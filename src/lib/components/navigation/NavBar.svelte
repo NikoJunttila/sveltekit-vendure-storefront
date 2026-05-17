@@ -9,7 +9,8 @@
 	import LanguageSwitch from '../LanguageSwitch.svelte';
 	import { Heart, Menu, Info } from '@lucide/svelte';
 	import * as m from '$lib/paraglide/messages.js';
-	import { PUBLIC_SITE_NAME } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_SITE_NAME } = env;
 	import { arrayToTree } from '../../utils';
 	import MainNavCols from './MainNavCols.svelte';
 	import { fade } from 'svelte/transition';

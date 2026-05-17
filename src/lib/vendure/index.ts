@@ -1,13 +1,13 @@
 import { Client, cacheExchange, fetchExchange } from '@urql/svelte';
 import { dev } from '$app/environment';
-import {
+import { env } from '$env/dynamic/public';
+const {
 	PUBLIC_VENDURE_LANGUAGE,
 	PUBLIC_SHOPAPI_DEV_URL,
 	PUBLIC_SHOPAPI_PROD_URL,
 	PUBLIC_VENDURE_CHANNEL_TOKEN,
 	PUBLIC_VENDURE_SUPPORT_MULTI_LANGUAGE
-} from '$env/static/public';
-
+} = env;
 export * from './collection.graphql';
 export * from './customer.graphql';
 export * from './order.graphql';

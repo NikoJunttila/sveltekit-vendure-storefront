@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_VENDURE_MULTI, PUBLIC_HOMEDELIVERY_PRICE } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const {
+		PUBLIC_DEFAULT_CURRENCY,
+		PUBLIC_VENDURE_MULTI,
+		PUBLIC_HOMEDELIVERY_PRICE
+	} = env;
 	import * as m from '$lib/paraglide/messages';
 
 	interface Props {

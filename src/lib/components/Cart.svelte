@@ -12,7 +12,8 @@
 	import { cartStore, cartDialogStore } from '$lib/stores';
 	import { formatCurrency } from '$lib/utils';
 	import Image from '$lib/components/Image.svelte';
-	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_DEFAULT_CURRENCY } = env;
 	import * as m from '$lib/paraglide/messages.js';
 
 	let order = $derived(useFragment(ActiveOrder, $cartStore));

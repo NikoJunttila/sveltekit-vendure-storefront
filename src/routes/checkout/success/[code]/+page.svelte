@@ -6,7 +6,11 @@
 	import { ActiveOrder, GetOrderByCode } from '$lib/vendure';
 	import { useFragment } from '$lib/gql';
 	import { formatCurrency } from '$src/lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_SITE_EMAIL } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const {
+		PUBLIC_DEFAULT_CURRENCY,
+		PUBLIC_SITE_EMAIL
+	} = env;
 	import * as m from '$lib/paraglide/messages';
 
 	interface Props {

@@ -2,7 +2,8 @@
 	//@ts-nocheck
 	import { userStore } from '$src/lib/stores';
 	import { formatCurrency } from '$src/lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_DEFAULT_CURRENCY } = env;
 	import { getContextClient } from '@urql/svelte';
 	import {
 		updateCustomer,

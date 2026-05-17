@@ -1,15 +1,15 @@
 <script>
 	import * as m from '$lib/paraglide/messages.js';
 	import Meta from '$src/lib/components/Meta.svelte';
-	import {
+	import { env } from '$env/dynamic/public';
+	const {
 		PUBLIC_SITE_ADDRESS,
 		PUBLIC_SITE_CITY,
 		PUBLIC_SITE_STATE,
 		PUBLIC_SITE_ZIP,
 		PUBLIC_SITE_PHONE,
 		PUBLIC_SITE_EMAIL
-	} from '$env/static/public';
-
+	} = env;
 	let name = $state('');
 	let email = $state('');
 	let message = $state('');

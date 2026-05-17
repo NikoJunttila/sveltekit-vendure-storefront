@@ -16,7 +16,11 @@
 		RemoveOrderLine
 	} from '$lib/vendure';
 	import Meta from '$lib/components/Meta.svelte';
-	import { PUBLIC_SITE_NAME, PUBLIC_VENDURE_MULTI } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const {
+		PUBLIC_SITE_NAME,
+		PUBLIC_VENDURE_MULTI
+	} = env;
 	import CheckoutForm from '$src/lib/components/checkout/CheckoutForm.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import Payment from '$src/lib/components/checkout/Payment.svelte';

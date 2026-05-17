@@ -2,7 +2,8 @@
 	import * as m from '$lib/paraglide/messages.js';
 	const effectiveDate = new Date('2025-01-01').toLocaleDateString();
 	import Meta from '$src/lib/components/Meta.svelte';
-	import { PUBLIC_SITE_EMAIL } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_SITE_EMAIL } = env;
 </script>
 
 <Meta

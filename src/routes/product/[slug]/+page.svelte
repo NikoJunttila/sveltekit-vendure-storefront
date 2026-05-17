@@ -17,7 +17,11 @@
 	import JsonLd from '$lib/components/JsonLd.svelte';
 	import Gallery from '$lib/components/Gallery.svelte';
 	import Highlights from '$lib/components/Highlights.svelte';
-	import { PUBLIC_DEFAULT_CURRENCY, PUBLIC_ORGANIZATION } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const {
+		PUBLIC_DEFAULT_CURRENCY,
+		PUBLIC_ORGANIZATION
+	} = env;
 	import * as m from '$lib/paraglide/messages.js';
 	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
 	import { onMount } from 'svelte';

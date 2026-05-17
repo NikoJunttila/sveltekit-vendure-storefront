@@ -4,7 +4,8 @@
 	import * as m from '$lib/paraglide/messages.js';
 
 	// Import public environment variables from SvelteKit
-	import {
+	import { env } from '$env/dynamic/public';
+	const {
 		PUBLIC_ORGANIZATION,
 		PUBLIC_SITE_ADDRESS,
 		PUBLIC_SITE_CITY,
@@ -15,8 +16,7 @@
 		PUBLIC_FACEBOOK_URL,
 		PUBLIC_TWITTER_URL,
 		PUBLIC_YOUTUBE_URL
-	} from '$env/static/public';
-
+	} = env;
 	let year = new Date().getFullYear();
 
 	// Import icon components

@@ -8,8 +8,8 @@
 		type ProductDetailCustomFieldsFragment
 	} from '$lib/gql/graphql';
 	import { GetProducts } from '../vendure';
-	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
-
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_DEFAULT_CURRENCY } = env;
 	const client = getContextClient();
 	const options: ProductListOptions = {
 		take: 8,

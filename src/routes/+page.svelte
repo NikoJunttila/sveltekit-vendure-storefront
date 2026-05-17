@@ -6,8 +6,12 @@
 	import HotProducts from '$src/lib/components/HotProducts.svelte';
 	import NewsletterCTA from '$src/lib/components/NewsletterCTA.svelte';
 	import JsonLd from '$src/lib/components/JsonLd.svelte';
-	import { PUBLIC_SITE_NAME, PUBLIC_SITE_URL, PUBLIC_SITE_IMAGE } from '$env/static/public';
-
+	import { env } from '$env/dynamic/public';
+	const {
+		PUBLIC_SITE_NAME,
+		PUBLIC_SITE_URL,
+		PUBLIC_SITE_IMAGE
+	} = env;
 	let { data } = $props();
 	let topLevelCollections = $derived(data.topCollections);
 

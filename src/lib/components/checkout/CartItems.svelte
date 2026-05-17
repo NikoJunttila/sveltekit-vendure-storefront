@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils';
-	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_DEFAULT_CURRENCY } = env;
 	import Image from '$lib/components/Image.svelte';
 	import * as m from '$lib/paraglide/messages';
 	interface Props {

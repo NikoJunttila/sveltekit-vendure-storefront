@@ -2,7 +2,8 @@
 	import type { Locale } from '$lib/paraglide/runtime';
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import { page } from '$app/state';
-	import { PUBLIC_VENDURE_SUPPORT_MULTI_LANGUAGE } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	const { PUBLIC_VENDURE_SUPPORT_MULTI_LANGUAGE } = env;
 	import { goto } from '$app/navigation';
 
 	function switchToLanguage(newLanguage: Locale) {
