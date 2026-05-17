@@ -1,13 +1,12 @@
 <script lang="ts">
-	import type { AvailableLanguageTag } from '$lib/paraglide/runtime';
-	import { i18n } from '$lib/i18n';
+	import type { Locale } from '$lib/paraglide/runtime';
+	import { localizeHref } from '$lib/paraglide/runtime';
 	import { page } from '$app/state';
 	import { PUBLIC_VENDURE_SUPPORT_MULTI_LANGUAGE } from '$env/static/public';
 	import { goto } from '$app/navigation';
 
-	function switchToLanguage(newLanguage: AvailableLanguageTag) {
-		const canonicalPath = i18n.route(page.url.pathname);
-		const localisedPath = i18n.resolveRoute(canonicalPath, newLanguage);
+	function switchToLanguage(newLanguage: Locale) {
+		const localisedPath = localizeHref(page.url.pathname, { locale: newLanguage });
 		goto(localisedPath);
 		if (PUBLIC_VENDURE_SUPPORT_MULTI_LANGUAGE == 'true') {
 			//force refresh page if using multiple languages on items
@@ -45,6 +44,8 @@
 </div>
 
 <style lang="postcss">
+	@reference "../../app.css";
+
 	.active-lang {
 		@apply z-10 bg-primary-600 text-white; /* Darker background for the active tab */
 	}

@@ -6,13 +6,12 @@
 	import { browser } from '$app/environment';
 	import { GetActiveOrder, GetCustomer } from '$lib/vendure';
 	import { cartStore, userStore } from '$lib/stores';
-	import { i18n } from '$lib/i18n';
 	import NavBar from '$src/lib/components/navigation/NavBar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Theme from '$src/lib/components/Theme.svelte';
-	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import ToastComponent from '$src/lib/components/Toast.svelte';
 	import { onNavigate } from '$app/navigation';
+	import { untrack } from 'svelte';
 	import AnalyticsConsent from '$src/lib/components/AnalyticsConsent.svelte';
 
 	onNavigate((navigation) => {
@@ -27,22 +26,26 @@
 	});
 
 	let { data, children } = $props();
-	const collections = data.collections;
-	const client = data.client;
-	setContextClient(client);
-	const cartQuery = queryStore({
-		client,
-		query: GetActiveOrder,
-		pause: true,
-		requestPolicy: 'network-only',
-		context: { additionalTypenames: ['ActiveOrder'] }
-	});
-	const userQuery = queryStore({
-		client,
-		query: GetCustomer,
-		pause: true,
-		requestPolicy: 'network-only',
-		context: { additionalTypenames: ['ActiveCustomer'] }
+	const collections = $derived(data.collections);
+	const { cartQuery, userQuery } = untrack(() => {
+		const client = data.client;
+		setContextClient(client);
+		return {
+			cartQuery: queryStore({
+				client,
+				query: GetActiveOrder,
+				pause: true,
+				requestPolicy: 'network-only',
+				context: { additionalTypenames: ['ActiveOrder'] }
+			}),
+			userQuery: queryStore({
+				client,
+				query: GetCustomer,
+				pause: true,
+				requestPolicy: 'network-only',
+				context: { additionalTypenames: ['ActiveCustomer'] }
+			})
+		};
 	});
 	$effect(() => {
 		if ($cartQuery.data?.activeOrder) cartStore.set($cartQuery.data.activeOrder);
@@ -67,18 +70,16 @@
 	});
 </script>
 
-<ParaglideJS {i18n}>
-	{#if naked}
-		{@render children?.()}
-	{:else}
-		<Theme />
-		<ToastComponent />
-		<NavBar {collections} />
-		<div class="bg-gradient min-h-svh overflow-hidden">
-			<div class="relative">{@render children?.()}</div>
-			<AnalyticsConsent></AnalyticsConsent>
-			<Footer />
-		</div>
-	{/if}
-	<!-- <Analytics /> -->
-</ParaglideJS>
+{#if naked}
+	{@render children?.()}
+{:else}
+	<Theme />
+	<ToastComponent />
+	<NavBar {collections} />
+	<div class="bg-gradient min-h-svh overflow-hidden">
+		<div class="relative">{@render children?.()}</div>
+		<AnalyticsConsent></AnalyticsConsent>
+		<Footer />
+	</div>
+{/if}
+<!-- <Analytics /> -->

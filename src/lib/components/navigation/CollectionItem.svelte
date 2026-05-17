@@ -1,6 +1,6 @@
 <script lang="ts">
 
-	import { Plus, Minus, MoveRight } from 'lucide-svelte';
+	import { Plus, Minus, MoveRight } from '@lucide/svelte';
 	import { fade } from 'svelte/transition';
 	// Import the same component to allow recursion
 	import CollectionItem from './CollectionItem.svelte';

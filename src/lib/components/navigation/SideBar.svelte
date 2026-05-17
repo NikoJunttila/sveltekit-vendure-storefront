@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onNavigate } from '$app/navigation';
 	import { createDialog } from '@melt-ui/svelte';
-	import Menu from 'lucide-svelte/icons/menu';
-	import X from 'lucide-svelte/icons/x';
+	import Menu from '@lucide/svelte/icons/menu';
+	import X from '@lucide/svelte/icons/x';
 	import { fade, fly } from 'svelte/transition';
 	import { type FragmentType, useFragment } from '$lib/gql';
 	import { Collection } from '$lib/vendure';
@@ -12,7 +12,7 @@
 	import { getContextClient } from '@urql/svelte';
 	import { goto } from '$app/navigation';
 	import { SignOut } from '$lib/vendure';
-	import { MoveRight, Plus, Minus } from 'lucide-svelte';
+	import { MoveRight, Plus, Minus } from '@lucide/svelte';
 	import SidebarCols from './SidebarCols.svelte';
 	import { arrayToTree } from '../../utils';
 
@@ -45,7 +45,7 @@
 
 	let showCollections = $state(true);
 	//@ts-ignore
-	const treeCols = arrayToTree(collections)
+	const treeCols = $derived(arrayToTree(collections));
 </script>
 
 {#if $open}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import House from 'lucide-svelte/icons/house';
+	import House from '@lucide/svelte/icons/house';
 	interface Props {
 		breadcrumbs: any[];
 	}

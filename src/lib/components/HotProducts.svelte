@@ -110,7 +110,8 @@
 	                                p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 						>
 							<div class="text-center text-xl text-white">
-									{formatCurrency(product.variants[0].priceWithTax, PUBLIC_DEFAULT_CURRENCY)}
+								{formatCurrency(product.variants[0].priceWithTax, PUBLIC_DEFAULT_CURRENCY)}
+							</div>
 						</div>
 					</div>
 				</a>

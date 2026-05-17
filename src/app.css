@@ -1,6 +1,38 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/container-queries';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	--color-primary-200: #80b9ff;
+	--color-primary-300: #5fa2f5;
+	--color-primary-400: #60a5fa;
+	--color-primary-500: #3b82f6;
+	--color-primary-600: #2563eb;
+	--color-primary-700: #1d4ed8;
+	--color-primary-800: #1e40af;
+	--color-primary-900: #1e3a8a;
+
+	--color-secondary-400: #f3f4f6;
+	--color-secondary-500: #e5e7eb;
+	--color-secondary-600: #d1d5db;
+	--color-secondary-700: #9ca3af;
+	--color-secondary-800: #6b7280;
+	--color-secondary-900: #4b5563;
+
+	--color-accent-100: #d44c85;
+	--color-accent-200: #b33d6e;
+	--color-accent-300: #8f2d56;
+	--color-accent-400: #8f2d56;
+	--color-accent-500: #7a2649;
+	--color-accent-600: #6e2040;
+	--color-accent-700: #5c1935;
+	--color-accent-800: #3b0e21;
+	--color-accent-900: #260815;
+}
 
 :root {
 	--primary-color: rgba(168, 85, 247, 1);
@@ -31,8 +63,6 @@
 [multiple]:focus,
 textarea:focus,
 select:focus {
-	/* --tw-ring-color: var(--primary-color);
-	border-color: var(--primary-color); */
 	--tw-ring-color: transparent;
 	border-color: transparent;
 }

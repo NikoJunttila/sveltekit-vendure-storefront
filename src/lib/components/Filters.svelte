@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as m from '$lib/paraglide/messages.js';
-	import { Plus, Minus } from 'lucide-svelte';
+	import { Plus, Minus } from '@lucide/svelte';
 
 	interface Props {
 		groupedFacets: Record<string, any>;

@@ -5,7 +5,7 @@
 	import { onMount } from 'svelte';
 	import { formatCurrency } from '$lib/utils';
 	import { PUBLIC_DEFAULT_CURRENCY } from '$env/static/public';
-	import { Heart } from 'lucide-svelte';
+	import { Heart } from '@lucide/svelte';
 	// import { getContextClient } from '@urql/svelte';
 	// import { toast } from '../toast.svelte';
 	// import { AddItemToOrder } from '../vendure';

@@ -24,11 +24,12 @@
 		}
 		return { ...context, ...schema };
 	}
-	const processed_schema = process_schema(schema);
+	const processed_schema = $derived(process_schema(schema));
 
 	// Wrap the line to prevent SvelteKit from thinking it's a real script tag
-	const json_ld_data =
-		`<script type="application/ld+json">${JSON.stringify(processed_schema, null, 2)}</scr` + `ipt>`;
+	const json_ld_data = $derived(
+		`<script type="application/ld+json">${JSON.stringify(processed_schema, null, 2)}</scr` + `ipt>`
+	);
 </script>
 
 <svelte:head>

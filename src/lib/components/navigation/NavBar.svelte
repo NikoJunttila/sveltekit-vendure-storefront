@@ -7,7 +7,7 @@
 	import SideBar from '$lib/components/navigation/SideBar.svelte';
 	import ThemeSwitcher from '../ThemeSwitcher.svelte';
 	import LanguageSwitch from '../LanguageSwitch.svelte';
-	import { Heart, Menu, Info } from 'lucide-svelte';
+	import { Heart, Menu, Info } from '@lucide/svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { PUBLIC_SITE_NAME } from '$env/static/public';
 	import { arrayToTree } from '../../utils';
@@ -19,7 +19,7 @@
 
 	let isDropdownOpen = $state(false);
 
-	const moreCollections = arrayToTree(useFragment(Collection, collections));
+	const moreCollections = $derived(arrayToTree(useFragment(Collection, collections)));
 	function openDropdown() {
 		isDropdownOpen = true;
 	}

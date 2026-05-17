@@ -22,7 +22,7 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import BreadcrumbsComponent from '$src/lib/components/BreadcrumbsComponent.svelte';
 	import { onMount } from 'svelte';
-	import { Heart } from 'lucide-svelte';
+	import { Heart } from '@lucide/svelte';
 	import { browser } from '$app/environment';
 	import { cartDialogStore } from '$lib/stores';
 

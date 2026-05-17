@@ -3,6 +3,7 @@
 	// Most of this is from svelte-themes (https://github.com/beynar/svelte-themes) by @beynar
 	//
 	import { browser } from '$app/environment';
+	import { untrack } from 'svelte';
 	//import { themeStore, setTheme } from '$lib/stores';
 	import { themeStore, setTheme } from '$src/lib/themeStore.svelte';
 
@@ -78,21 +79,25 @@
 		return systemTheme;
 	};
 
-	const initialTheme = getTheme(storageKey, defaultTheme);
-
-	themeStore.setWhole({
-		//@ts-ignore
-		theme: initialTheme,
-		forcedTheme,
-		resolvedTheme: initialTheme === 'system' ? getTheme(storageKey) : initialTheme,
-		themes: enableSystem ? [...themes, 'system'] : themes,
-		systemTheme: (enableSystem ? getTheme(storageKey) : undefined) as 'light' | 'dark' | undefined
+	untrack(() => {
+		const initialTheme = getTheme(storageKey, defaultTheme);
+		themeStore.setWhole({
+			//@ts-ignore
+			theme: initialTheme,
+			forcedTheme,
+			resolvedTheme: initialTheme === 'system' ? getTheme(storageKey) : initialTheme,
+			themes: enableSystem ? [...themes, 'system'] : themes,
+			systemTheme: (enableSystem ? getTheme(storageKey) : undefined) as
+				| 'light'
+				| 'dark'
+				| undefined
+		});
 	});
 
 	let theme = $derived(themeStore.theme.theme);
 	let resolvedTheme = $derived(themeStore.theme.resolvedTheme);
 
-	const attrs = !value ? themes : Object.values(value);
+	const attrs = $derived(!value ? themes : Object.values(value));
 
 	const handleMediaQuery = (e?: any) => {
 		const systemTheme = getSystemTheme(e);

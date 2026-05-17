@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as m from '$lib/paraglide/messages.js';
-	import { Heart } from 'lucide-svelte';
+	import { Heart } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import { getContextClient } from '@urql/svelte';
 	import { GetProduct, AddItemToOrder } from '$src/lib/vendure';

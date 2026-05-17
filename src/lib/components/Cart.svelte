@@ -1,8 +1,8 @@
 <script lang="ts">
-	import X from 'lucide-svelte/icons/x';
-	import ShoppingBag from 'lucide-svelte/icons/shopping-bag';
-	import Plus from 'lucide-svelte/icons/plus'; // Import Plus icon
-	import Minus from 'lucide-svelte/icons/minus'; // Import Minus icon
+	import X from '@lucide/svelte/icons/x';
+	import ShoppingBag from '@lucide/svelte/icons/shopping-bag';
+	import Plus from '@lucide/svelte/icons/plus'; // Import Plus icon
+	import Minus from '@lucide/svelte/icons/minus'; // Import Minus icon
 	import { createDialog } from '@melt-ui/svelte';
 	import { getContextClient } from '@urql/svelte';
 	import { toast } from '$lib/toast.svelte';

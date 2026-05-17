@@ -11,7 +11,7 @@ const config = {
 		vitePreprocess({
 			style: {
 				css: {
-					postcss: join(process.cwd(), 'postcss.config.cjs')
+					postcss: join(process.cwd(), 'postcss.config.js')
 				}
 			}
 		})

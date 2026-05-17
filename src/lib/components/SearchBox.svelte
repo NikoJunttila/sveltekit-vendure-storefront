@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Search from 'lucide-svelte/icons/search';
+	import Search from '@lucide/svelte/icons/search';
 	import { getContextClient, queryStore } from '@urql/svelte';
 	import { useFragment } from '$lib/gql';
 	import { SearchResult, SearchProducts } from '$lib/vendure';

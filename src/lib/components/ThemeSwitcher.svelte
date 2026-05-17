@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Sun from 'lucide-svelte/icons/sun';
-	import Moon from 'lucide-svelte/icons/moon';
+	import Sun from '@lucide/svelte/icons/sun';
+	import Moon from '@lucide/svelte/icons/moon';
 	import { themeStore, setTheme } from '$src/lib/themeStore.svelte';
 	const theme = $derived(themeStore.theme.theme);
 	const resolvedTheme = $derived(themeStore.theme.resolvedTheme);
